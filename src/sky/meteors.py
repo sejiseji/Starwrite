@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-from datetime import datetime, time, tzinfo
+from datetime import datetime, time, timedelta, tzinfo
 
 from astronomy.coordinates import equatorial_to_enu
 from astronomy.events import MeteorShowerEvent
@@ -53,12 +53,12 @@ def adjacent_meteor_event_time(
     event_times = sorted(meteor_peak_datetime(event, current_time.tzinfo) for event in events)
     if direction >= 0:
         for event_time in event_times:
-            if event_time > current_time:
+            if event_time > current_time + timedelta(minutes=1):
                 return event_time
         return event_times[0]
 
     for event_time in reversed(event_times):
-        if event_time < current_time:
+        if event_time < current_time - timedelta(minutes=1):
             return event_time
     return event_times[-1]
 

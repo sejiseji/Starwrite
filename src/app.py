@@ -12,7 +12,7 @@ import pyxel
 
 from astronomy.observer import Observer
 from data.constellations import CONSTELLATIONS
-from data.meteor_showers import METEOR_SHOWERS
+from data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
 from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
 from sky.capture import ScreenPoint, SkyCapture, can_capture
@@ -528,7 +528,14 @@ class StarSkyApp:
         if self.show_event_slider:
             draw_slider(self.slider_side, "EVENT", self.slider_knob_ratio if self.active_slider == "event" else 0.5)
         if self.menu_open:
-            draw_menu_panel(self.show_info, self.show_guides, self.show_constellations, self.slider_side)
+            draw_menu_panel(
+                self.show_info,
+                self.show_guides,
+                self.show_constellations,
+                self.slider_side,
+                EVENT_SOURCE_LABEL,
+                len(METEOR_SHOWERS),
+            )
         draw_menu_button(self.menu_open)
         self._signal_ready()
 

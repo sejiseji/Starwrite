@@ -110,7 +110,7 @@ def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
 
 def menu_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     panel_w = min(width - 16, 244)
-    panel_h = 118
+    panel_h = 146
     button_x, button_y, _, _ = menu_button_rect(width, height)
     x = max(8, min(width - panel_w - 8, button_x + 35 - panel_w // 2))
     return (x, max(8, button_y - panel_h - 6), panel_w, panel_h)
@@ -268,6 +268,8 @@ def draw_menu_panel(
     show_guides: bool,
     show_constellations: bool,
     slider_side: str,
+    event_source_label: str,
+    event_count: int,
 ) -> None:
     x, y, w, h = menu_panel_rect(pyxel.width, pyxel.height)
     pyxel.rect(x, y, w, h, 0)
@@ -278,6 +280,8 @@ def draw_menu_panel(
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["constellations"], "CONST", show_constellations)
     draw_big_text(x + 8, y + 63, "SLIDER", 7)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["side"], slider_side.upper(), True)
+    draw_big_text(x + 8, y + 105, f"EVENT SRC {event_source_label}", 13)
+    draw_big_text(x + 8, y + 118, f"EVENTS {event_count}", 13)
 
 
 def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int, int]]:

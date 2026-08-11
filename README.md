@@ -162,12 +162,19 @@ The prototype uses two star sources:
 - A deterministic synthetic faint-star background generated in code for visual
   density. These synthetic stars are not a scientific catalog.
 
-The prototype includes one meteor-shower event:
+The prototype includes a simple meteor-shower event catalog:
 
-- PER-2026 - Perseids peak display for the local night of 2026-08-12/13.
-  The event uses an approximate radiant of RA 48 deg, Dec +58 deg and a peak
-  expression around 02:00 local time. Meteors are visualized as simplified
-  streaks radiating from the radiant, not as a physical particle simulation.
+- Years: 2006-2046, centered on 2026 and covering 20 years before/after.
+- Recurring showers: 12 major annual showers.
+- Total generated events: 492.
+- Source label shown in the app menu: IMO.
+
+The meteor-shower data is a v0.1 approximation based on the International
+Meteor Organization meteor-shower calendar / working-list style data: shower
+names, typical peak dates, approximate radiants, ZHR, and parent bodies are
+expanded into one event per shower per year. Meteors are visualized as
+simplified streaks radiating from the radiant, not as a physical particle
+simulation or exact year-specific forecast.
 
 For a production catalog, replace `src/data/stars.py` with a properly licensed
 catalog such as HYG Database or Hipparcos-derived data and document the exact
@@ -177,4 +184,6 @@ license in this section.
 
 - Pyxel project: https://github.com/kitao/pyxel
 - Pyxel Web custom tag article by Pyxel author: https://tkitao.hatenablog.com/entry/2022/10/08/174438
-- International Meteor Organization, 2026 Meteor Shower Calendar: https://www.imo.net/
+- International Meteor Organization, major meteor showers: https://www.imo.net/observations/methods/visual-observation/major/
+- International Meteor Organization, meteor shower calendar archive / working list context: https://www.imo.net/resources/calendar/2019/
+- IMO / AMS meteor shower calendar: https://newimo.amsmeteors.org/
