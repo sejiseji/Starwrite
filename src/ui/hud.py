@@ -91,7 +91,7 @@ def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
 
 def menu_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     panel_w = min(width - 16, 244)
-    panel_h = 86
+    panel_h = 118
     button_x, button_y, _, _ = menu_button_rect(width, height)
     x = max(8, min(width - panel_w - 8, button_x + 35 - panel_w // 2))
     return (x, max(8, button_y - panel_h - 6), panel_w, panel_h)
@@ -104,6 +104,7 @@ def panel_toggle_rects(width: int, height: int) -> dict[str, tuple[int, int, int
         "info": (x + 8, y + 34, button_w, 24),
         "guides": (x + 12 + button_w, y + 34, button_w, 24),
         "constellations": (x + 16 + button_w * 2, y + 34, button_w, 24),
+        "side": (x + 8, y + 74, min(96, w - 16), 24),
     }
 
 
@@ -172,6 +173,7 @@ def draw_menu_panel(
     show_info: bool,
     show_guides: bool,
     show_constellations: bool,
+    slider_side: str,
 ) -> None:
     x, y, w, h = menu_panel_rect(pyxel.width, pyxel.height)
     pyxel.rect(x, y, w, h, 0)
@@ -180,3 +182,56 @@ def draw_menu_panel(
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["info"], "INFO", show_info)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["guides"], "GUIDE", show_guides)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["constellations"], "CONST", show_constellations)
+    draw_big_text(x + 8, y + 63, "SLIDER", 7)
+    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["side"], slider_side.upper(), True)
+
+
+def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int, int]]:
+    button_w = 62
+    button_h = 22
+    x = max(6, width - button_w - 6)
+    return {
+        "time": (x, 8, button_w, button_h),
+        "month": (x, 34, button_w, button_h),
+        "reset": (x, 60, button_w, button_h),
+    }
+
+
+def draw_tool_buttons(show_time_slider: bool, show_month_slider: bool) -> None:
+    rects = tool_button_rects(pyxel.width, pyxel.height)
+    draw_button(rects["time"], "TIME", show_time_slider)
+    draw_button(rects["month"], "MONTH", show_month_slider)
+    draw_button(rects["reset"], "RESET", False)
+
+
+def slider_rects(width: int, height: int, side: str) -> dict[str, tuple[int, int, int, int]]:
+    panel_w = 34
+    panel_h = min(210, height - 150)
+    x = width - panel_w - 6 if side == "right" else 6
+    y = max(92, (height - panel_h) // 2)
+    return {
+        "time_minus": (x + 5, y + 8, 24, 22),
+        "time_track": (x + 15, y + 34, 4, panel_h - 68),
+        "time_knob": (x + 8, y + panel_h // 2 - 10, 18, 20),
+        "time_plus": (x + 5, y + panel_h - 30, 24, 22),
+        "month_minus": (x + 5, y + 8, 24, 22),
+        "month_track": (x + 15, y + 34, 4, panel_h - 68),
+        "month_knob": (x + 8, y + panel_h // 2 - 10, 18, 20),
+        "month_plus": (x + 5, y + panel_h - 30, 24, 22),
+        "panel": (x, y, panel_w, panel_h),
+    }
+
+
+def draw_slider(side: str, label: str) -> None:
+    rects = slider_rects(pyxel.width, pyxel.height, side)
+    x, y, w, h = rects["panel"]
+    pyxel.rect(x, y, w, h, 0)
+    pyxel.rectb(x, y, w, h, 13)
+    draw_big_text(x + 5, y - 14, label, 7)
+    draw_button(rects[f"{label.lower()}_minus"], "-", False)
+    track = rects[f"{label.lower()}_track"]
+    pyxel.rect(track[0], track[1], track[2], track[3], 13)
+    knob = rects[f"{label.lower()}_knob"]
+    pyxel.rect(knob[0], knob[1], knob[2], knob[3], 5)
+    pyxel.rectb(knob[0], knob[1], knob[2], knob[3], 10)
+    draw_button(rects[f"{label.lower()}_plus"], "+", False)

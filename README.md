@@ -58,11 +58,25 @@ The browser entrypoint uses Pyxel Web custom tags:
 - `H`: information HUD
 - `ENTER`: capture when the selected constellation is framed
 
+Information HUD and guide lines start hidden.
+
+The upper-right controls are always available:
+
+- `TIME`: toggle the time slider
+- `MONTH`: toggle the month slider
+- `RESET`: reset time and camera view
+
+The current prototype slider uses edge `-` / `+` buttons:
+
+- `TIME`: -/+10 minutes
+- `MONTH`: -/+30 days
+
 The bottom `MENU` button opens a display panel for toggling:
 
 - `INFO`: observation information
 - `GUIDE`: horizontal guide lines
 - `CONST`: constellation lines
+- `SLIDER LEFT/RIGHT`: slider side for right- or left-handed use
 
 ## Test
 

@@ -17,11 +17,21 @@ from sky.camera import SkyCamera
 from sky.capture import SkyCapture, can_capture
 from sky.renderer import SkyRenderer
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
-from ui.hud import draw_hud, draw_menu_button, draw_menu_panel, menu_button_rect, panel_toggle_rects
+from ui.hud import (
+    draw_hud,
+    draw_menu_button,
+    draw_menu_panel,
+    draw_slider,
+    draw_tool_buttons,
+    menu_button_rect,
+    panel_toggle_rects,
+    slider_rects,
+    tool_button_rects,
+)
 
 DESKTOP_SCREEN_SIZE = (320, 240)
 IPHONE16_SCREEN_SIZE = (256, 556)
-SETTINGS_KEY = "starwrite_v01_settings"
+SETTINGS_KEY = "starwrite_v02_settings"
 CAPTURE_KEY = "starwrite_v01_latest_capture"
 
 
@@ -98,9 +108,14 @@ class StarSkyApp:
         )
         self.renderer = SkyRenderer()
         self.mode = settings.get("mode", "TONIGHT")
-        self.show_info = bool(settings.get("show_hud", settings.get("show_info", True)))
-        self.show_guides = bool(settings.get("show_guides", True))
+        self.show_info = bool(settings.get("show_info", False))
+        self.show_guides = bool(settings.get("show_guides", False))
         self.show_constellations = bool(settings.get("show_constellations", True))
+        self.slider_side = settings.get("slider_side", "right")
+        if self.slider_side not in ("left", "right"):
+            self.slider_side = "right"
+        self.show_time_slider = bool(settings.get("show_time_slider", False))
+        self.show_month_slider = bool(settings.get("show_month_slider", False))
         self.menu_open = False
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.latest_capture = self._load_capture()
@@ -228,6 +243,22 @@ class StarSkyApp:
             self.camera.clamp()
 
     def _handle_ui_click(self, point: tuple[int, int]) -> bool:
+        for key, rect in tool_button_rects(SCREEN_WIDTH, SCREEN_HEIGHT).items():
+            if not self._point_in_rect(point, rect):
+                continue
+            if key == "time":
+                self.show_time_slider = not self.show_time_slider
+                if self.show_time_slider:
+                    self.show_month_slider = False
+            elif key == "month":
+                self.show_month_slider = not self.show_month_slider
+                if self.show_month_slider:
+                    self.show_time_slider = False
+            elif key == "reset":
+                self._reset_view()
+            return True
+        if self._handle_slider_click(point):
+            return True
         if self._point_in_rect(point, menu_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
             self.menu_open = not self.menu_open
             return True
@@ -242,8 +273,36 @@ class StarSkyApp:
                 self.show_guides = not self.show_guides
             elif key == "constellations":
                 self.show_constellations = not self.show_constellations
+            elif key == "side":
+                self.slider_side = "left" if self.slider_side == "right" else "right"
             return True
         return self._point_in_rect(point, self._menu_panel_hit_rect())
+
+    def _handle_slider_click(self, point: tuple[int, int]) -> bool:
+        if not (self.show_time_slider or self.show_month_slider):
+            return False
+        label = "time" if self.show_time_slider else "month"
+        rects = slider_rects(SCREEN_WIDTH, SCREEN_HEIGHT, self.slider_side)
+        if self._point_in_rect(point, rects[f"{label}_minus"]):
+            self.clock.add_minutes(-10) if label == "time" else self.clock.add_days(-30)
+            return True
+        if self._point_in_rect(point, rects[f"{label}_plus"]):
+            self.clock.add_minutes(10) if label == "time" else self.clock.add_days(30)
+            return True
+        if self._point_in_rect(point, rects["panel"]):
+            return True
+        return False
+
+    def _reset_view(self) -> None:
+        self.clock.pause()
+        self.clock.current_time = datetime(2026, 8, 10, 21, 0, tzinfo=timezone(timedelta(hours=9)))
+        self.camera.yaw = 0.0
+        self.camera.pitch = math.radians(45.0)
+        self.camera.fov_deg = 75.0
+        self.camera.clamp()
+        self.mode = "TONIGHT"
+        self.show_time_slider = False
+        self.show_month_slider = False
 
     def _menu_panel_hit_rect(self) -> tuple[int, int, int, int]:
         from ui.hud import menu_panel_rect
@@ -327,6 +386,9 @@ class StarSkyApp:
                 "show_info": self.show_info,
                 "show_guides": self.show_guides,
                 "show_constellations": self.show_constellations,
+                "slider_side": self.slider_side,
+                "show_time_slider": self.show_time_slider,
+                "show_month_slider": self.show_month_slider,
             },
         )
 
@@ -352,8 +414,13 @@ class StarSkyApp:
                 self.capture_ready,
                 self.latest_capture,
             )
+        draw_tool_buttons(self.show_time_slider, self.show_month_slider)
+        if self.show_time_slider:
+            draw_slider(self.slider_side, "TIME")
+        if self.show_month_slider:
+            draw_slider(self.slider_side, "MONTH")
         if self.menu_open:
-            draw_menu_panel(self.show_info, self.show_guides, self.show_constellations)
+            draw_menu_panel(self.show_info, self.show_guides, self.show_constellations, self.slider_side)
         draw_menu_button(self.menu_open)
 
 
