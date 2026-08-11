@@ -12,13 +12,15 @@ import pyxel
 
 from astronomy.observer import Observer
 from data.constellations import CONSTELLATIONS
-from data.stars import STARS, STARS_BY_ID
+from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
-from sky.capture import SkyCapture, can_capture
+from sky.capture import ScreenPoint, SkyCapture, can_capture
 from sky.renderer import SkyRenderer
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
 from ui.hud import (
     draw_hud,
+    draw_constellation_labels,
+    draw_focused_star,
     draw_menu_button,
     draw_menu_panel,
     draw_slider,
@@ -456,6 +458,11 @@ class StarSkyApp:
                 self.capture_ready,
                 self.latest_capture,
             )
+        draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected)
+        focused_star = self._focused_star()
+        if focused_star is not None:
+            star_id, point = focused_star
+            draw_focused_star(point, STAR_NAMES[star_id])
         draw_tool_buttons(self.show_time_slider, self.show_month_slider)
         if self.show_time_slider:
             draw_slider(self.slider_side, "TIME", self.slider_knob_ratio if self.active_slider == "time" else 0.5)
@@ -464,6 +471,24 @@ class StarSkyApp:
         if self.menu_open:
             draw_menu_panel(self.show_info, self.show_guides, self.show_constellations, self.slider_side)
         draw_menu_button(self.menu_open)
+
+    def _focused_star(self) -> tuple[int, ScreenPoint] | None:
+        center_x = SCREEN_WIDTH * 0.5
+        center_y = SCREEN_HEIGHT * 0.5
+        best: tuple[int, ScreenPoint] | None = None
+        best_distance = 999999.0
+        for star_id, point in self.projected.items():
+            if star_id not in STAR_NAMES:
+                continue
+            dx = point.x - center_x
+            dy = point.y - center_y
+            distance = dx * dx + dy * dy
+            if distance < best_distance:
+                best = (star_id, point)
+                best_distance = distance
+        if best is None or best_distance > 42 * 42:
+            return None
+        return best
 
 
 StarSkyApp()

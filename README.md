@@ -59,6 +59,8 @@ The browser entrypoint uses Pyxel Web custom tags:
 - `ENTER`: capture when the selected constellation is framed
 
 Information HUD and guide lines start hidden.
+Visible constellations show bold English labels, and the named star closest to
+the screen center is highlighted with a red frame and label.
 
 The upper-right controls are always available:
 

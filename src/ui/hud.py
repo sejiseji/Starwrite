@@ -4,7 +4,7 @@ import pyxel
 
 from astronomy.catalog import Constellation
 from astronomy.observer import Observer
-from sky.capture import SkyCapture
+from sky.capture import ScreenPoint, SkyCapture
 from sky.camera import SkyCamera
 from sky.simulation import SimulationClock
 
@@ -83,6 +83,11 @@ def draw_big_text(x: int, y: int, text: str, col: int) -> None:
         cursor_x += CHAR_STEP
 
 
+def draw_bold_text(x: int, y: int, text: str, col: int) -> None:
+    draw_big_text(x + 1, y, text, 0)
+    draw_big_text(x, y, text, col)
+
+
 def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
     button_w = 70
     button_h = 22
@@ -138,6 +143,54 @@ def draw_hud(
         draw_big_text(8, pyxel.height - 35, "ENTER CAPTURE", 7)
     elif latest_capture is not None:
         draw_big_text(8, pyxel.height - 35, f"CAPTURED {latest_capture.constellation_id}", 11)
+
+
+def draw_constellation_labels(
+    constellations: tuple[Constellation, ...],
+    selected_constellation: Constellation,
+    points: dict[int, ScreenPoint],
+) -> None:
+    for index, constellation in enumerate(constellations):
+        draw_constellation_label(
+            constellation,
+            points,
+            10 if constellation.id == selected_constellation.id else 13,
+            index,
+        )
+
+
+def draw_constellation_label(
+    constellation: Constellation,
+    points: dict[int, ScreenPoint],
+    color: int,
+    index: int,
+) -> None:
+    visible = [points[star_id] for star_id in constellation.main_star_ids if star_id in points]
+    if len(visible) < 2:
+        return
+    center_x = int(sum(point.x for point in visible) / len(visible))
+    center_y = int(sum(point.y for point in visible) / len(visible))
+    label = constellation.name.upper()
+    label_x = max(4, min(pyxel.width - text_width(label) - 4, center_x + 10))
+    label_y = max(88, min(pyxel.height - 76, center_y - 18 + (index % 3) * 12))
+    pyxel.line(center_x, center_y, label_x - 3, label_y + 6, color)
+    draw_bold_text(label_x, label_y, label, color)
+
+
+def draw_focused_star(point: ScreenPoint, name: str) -> None:
+    x = int(point.x)
+    y = int(point.y)
+    pyxel.rectb(x - 5, y - 5, 11, 11, 8)
+    pyxel.rectb(x - 6, y - 6, 13, 13, 8)
+    label = name.upper()
+    label_x = x + 12
+    if label_x + text_width(label) > pyxel.width - 4:
+        label_x = x - text_width(label) - 12
+    label_x = max(4, min(pyxel.width - text_width(label) - 4, label_x))
+    label_y = max(4, min(pyxel.height - 18, y - 7))
+    line_x = label_x - 3 if label_x > x else label_x + text_width(label) + 3
+    pyxel.line(x + 7 if label_x > x else x - 7, y, line_x, label_y + 6, 8)
+    draw_bold_text(label_x, label_y, label, 8)
 
 
 def _hud_lines(
