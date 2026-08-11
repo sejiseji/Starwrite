@@ -51,12 +51,14 @@ class SkyRenderer:
         constellations: tuple[Constellation, ...],
         selected_constellation: Constellation,
         show_constellations: bool,
+        show_guides: bool,
         camera: SkyCamera,
         width: int,
         height: int,
     ) -> None:
         pyxel.cls(0)
-        self.draw_background(width, height)
+        if show_guides:
+            self.draw_background(width, height)
         self.draw_horizon(camera, width, height)
         if show_constellations:
             self.draw_constellations(points, constellations, selected_constellation)

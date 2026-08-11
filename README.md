@@ -51,11 +51,18 @@ The browser entrypoint uses Pyxel Web custom tags:
 - `SPACE`: play / pause
 - `M`: toggle `TONIGHT` / `DATE`
 - `C`: constellation lines
+- `G`: guide lines
 - `TAB`: next constellation
 - `SHIFT+TAB`: previous constellation
 - `F`: frame the selected constellation when it is above the horizon
-- `H`: HUD
+- `H`: information HUD
 - `ENTER`: capture when the selected constellation is framed
+
+The bottom `MENU` button opens a display panel for toggling:
+
+- `INFO`: observation information
+- `GUIDE`: horizontal guide lines
+- `CONST`: constellation lines
 
 ## Test
 

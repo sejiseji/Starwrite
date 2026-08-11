@@ -17,7 +17,7 @@ from sky.camera import SkyCamera
 from sky.capture import SkyCapture, can_capture
 from sky.renderer import SkyRenderer
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
-from ui.hud import draw_hud
+from ui.hud import draw_hud, draw_menu_button, draw_menu_panel, menu_button_rect, panel_toggle_rects
 
 DESKTOP_SCREEN_SIZE = (320, 240)
 IPHONE16_SCREEN_SIZE = (256, 556)
@@ -98,8 +98,10 @@ class StarSkyApp:
         )
         self.renderer = SkyRenderer()
         self.mode = settings.get("mode", "TONIGHT")
-        self.show_hud = bool(settings.get("show_hud", True))
+        self.show_info = bool(settings.get("show_hud", settings.get("show_info", True)))
+        self.show_guides = bool(settings.get("show_guides", True))
         self.show_constellations = bool(settings.get("show_constellations", True))
+        self.menu_open = False
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.latest_capture = self._load_capture()
         self.last_mouse: tuple[int, int] | None = None
@@ -154,7 +156,9 @@ class StarSkyApp:
 
     def _handle_keys(self) -> None:
         if pyxel.btnp(pyxel.KEY_H):
-            self.show_hud = not self.show_hud
+            self.show_info = not self.show_info
+        if pyxel.btnp(pyxel.KEY_G):
+            self.show_guides = not self.show_guides
         if pyxel.btnp(pyxel.KEY_C):
             self.show_constellations = not self.show_constellations
         if pyxel.btnp(pyxel.KEY_SPACE):
@@ -204,6 +208,9 @@ class StarSkyApp:
 
     def _handle_mouse(self) -> None:
         current = (pyxel.mouse_x, pyxel.mouse_y)
+        if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT) and self._handle_ui_click(current):
+            self.last_mouse = None
+            return
         if pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
             if self.last_mouse is not None:
                 dx = current[0] - self.last_mouse[0]
@@ -219,6 +226,34 @@ class StarSkyApp:
         if wheel:
             self.camera.fov_deg -= float(wheel) * 3.0
             self.camera.clamp()
+
+    def _handle_ui_click(self, point: tuple[int, int]) -> bool:
+        if self._point_in_rect(point, menu_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+            self.menu_open = not self.menu_open
+            return True
+        if not self.menu_open:
+            return False
+        for key, rect in panel_toggle_rects(SCREEN_WIDTH, SCREEN_HEIGHT).items():
+            if not self._point_in_rect(point, rect):
+                continue
+            if key == "info":
+                self.show_info = not self.show_info
+            elif key == "guides":
+                self.show_guides = not self.show_guides
+            elif key == "constellations":
+                self.show_constellations = not self.show_constellations
+            return True
+        return self._point_in_rect(point, self._menu_panel_hit_rect())
+
+    def _menu_panel_hit_rect(self) -> tuple[int, int, int, int]:
+        from ui.hud import menu_panel_rect
+
+        return menu_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
+
+    def _point_in_rect(self, point: tuple[int, int], rect: tuple[int, int, int, int]) -> bool:
+        px, py = point
+        x, y, w, h = rect
+        return x <= px < x + w and y <= py < y + h
 
     def _set_latitude(self, value: float) -> None:
         self.observer = Observer(max(-90.0, min(90.0, value)), self.observer.longitude_deg)
@@ -288,7 +323,9 @@ class StarSkyApp:
                 "fov": self.camera.fov_deg,
                 "mode": self.mode,
                 "selected_index": self.selected_index,
-                "show_hud": self.show_hud,
+                "show_hud": self.show_info,
+                "show_info": self.show_info,
+                "show_guides": self.show_guides,
                 "show_constellations": self.show_constellations,
             },
         )
@@ -299,11 +336,12 @@ class StarSkyApp:
             CONSTELLATIONS,
             self.selected_constellation,
             self.show_constellations,
+            self.show_guides,
             self.camera,
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
         )
-        if self.show_hud:
+        if self.show_info:
             draw_hud(
                 self.observer,
                 self.clock,
@@ -314,6 +352,9 @@ class StarSkyApp:
                 self.capture_ready,
                 self.latest_capture,
             )
+        if self.menu_open:
+            draw_menu_panel(self.show_info, self.show_guides, self.show_constellations)
+        draw_menu_button(self.menu_open)
 
 
 StarSkyApp()
