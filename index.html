@@ -32,34 +32,14 @@
         display: grid;
         place-items: center;
         background: radial-gradient(circle at 50% 35%, #151b35 0, #070914 48%, #03040a 100%);
-        opacity: 1;
-        pointer-events: auto;
-        transition:
-          opacity 280ms ease,
-          background 280ms ease;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease;
         z-index: 2147483647;
       }
 
-      .startup-loader.is-loading {
-        background: #000;
-      }
-
-      .startup-loader.is-dismissed {
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .startup-start {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        color: #f5f7ff;
-        font-size: 20px;
-        font-weight: 800;
-        letter-spacing: 0;
-        text-align: center;
-        transition: opacity 180ms ease;
+      .startup-loader.is-visible {
+        opacity: 1;
       }
 
       .startup-scene {
@@ -67,20 +47,6 @@
         width: 180px;
         height: 150px;
         image-rendering: pixelated;
-        opacity: 0;
-        transform: translateY(8px);
-        transition:
-          opacity 420ms ease 160ms,
-          transform 420ms ease 160ms;
-      }
-
-      .startup-loader.is-loading .startup-start {
-        opacity: 0;
-      }
-
-      .startup-loader.is-loading .startup-scene {
-        opacity: 1;
-        transform: translateY(0);
       }
 
       .startup-stars,
@@ -254,15 +220,6 @@
         touch-action: none;
       }
 
-      body:not([data-starwrite-ready="1"]) #pyxel-screen {
-        opacity: 0;
-      }
-
-      body[data-starwrite-ready="1"] #pyxel-screen {
-        opacity: 1;
-        transition: opacity 240ms ease;
-      }
-
       pyxel-run canvas {
         width: 100% !important;
         height: 100% !important;
@@ -284,8 +241,7 @@
     <script src="https://cdn.jsdelivr.net/gh/kitao/pyxel/wasm/pyxel.js"></script>
   </head>
   <body>
-    <div id="startup-loader" class="startup-loader" role="button" tabindex="0" aria-hidden="false">
-      <div class="startup-start">TOUCH TO START</div>
+    <div id="startup-loader" class="startup-loader" aria-hidden="true">
       <div class="startup-scene" role="img" aria-label="Loading star sky">
         <div class="startup-stars"></div>
         <div class="startup-ground"></div>
@@ -297,73 +253,103 @@
     <pyxel-run root="." name="src/app_v2.py"></pyxel-run>
     <script>
       const startupLoader = document.getElementById("startup-loader");
-      const minimumStartupMs = 1500;
+      const pyxelRun = document.querySelector("pyxel-run");
+      const minimumStartupMs = 1200;
       let startupShownAt = 0;
       let startupHideTimer = 0;
+      let startupInteractionSeen = false;
       let startupReady = false;
-      let startupStarted = false;
       let startupDismissed = false;
-      let startupReleaseAttempts = 0;
+      const startupEvents = ["pointerdown", "mousedown", "click", "touchstart", "touchend", "keydown"];
+      const startupHookedTargets = new WeakSet();
 
       function scheduleStartupHide() {
-        if (!startupStarted || startupShownAt === 0) {
+        if (startupShownAt === 0) {
           return;
         }
         const elapsed = performance.now() - startupShownAt;
         const remaining = Math.max(0, minimumStartupMs - elapsed);
         window.clearTimeout(startupHideTimer);
         startupHideTimer = window.setTimeout(() => {
-          document.body.dataset.starwriteReady = "1";
-          startupLoader.classList.add("is-dismissed");
+          startupLoader.classList.remove("is-visible");
           startupLoader.setAttribute("aria-hidden", "true");
           startupDismissed = true;
         }, remaining);
       }
 
-      function releasePyxelStart() {
-        if (startupReady || startupDismissed || startupReleaseAttempts > 300) {
+      function showStartupLoader(_event, force = false) {
+        if (startupDismissed || (startupInteractionSeen && !force)) {
           return;
         }
-        startupReleaseAttempts += 1;
-        if (window.pyxelContext?.resolveInput) {
-          window.pyxelContext.resolveInput();
-          return;
+        startupInteractionSeen = true;
+        window.clearTimeout(startupHideTimer);
+        if (startupShownAt === 0) {
+          startupShownAt = performance.now();
         }
-        document.body.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
-        window.setTimeout(releasePyxelStart, 80);
-      }
-
-      function startLoading() {
-        if (startupStarted || startupDismissed) {
-          return;
-        }
-        startupStarted = true;
-        startupShownAt = performance.now();
-        document.body.dataset.starwriteStarted = "1";
-        startupLoader.classList.add("is-loading");
-        startupLoader.setAttribute("aria-busy", "true");
-        releasePyxelStart();
-        if (startupReady) {
+        startupLoader.classList.add("is-visible");
+        startupLoader.setAttribute("aria-hidden", "false");
+        if (startupReady || document.body.dataset.starwriteReady === "1") {
           scheduleStartupHide();
         }
       }
 
-      function markReady() {
+      function hideStartupLoader() {
         startupReady = true;
-        if (startupStarted) {
-          scheduleStartupHide();
+        if (!startupInteractionSeen) {
+          showStartupLoader(null, true);
+        }
+        scheduleStartupHide();
+      }
+
+      function attachStartupListener(target) {
+        if (!target || startupHookedTargets.has(target)) {
+          return;
+        }
+        try {
+          startupHookedTargets.add(target);
+          for (const eventName of startupEvents) {
+            const options = eventName.startsWith("touch")
+              ? { capture: true, passive: true }
+              : { capture: true };
+            target.addEventListener(eventName, showStartupLoader, options);
+          }
+        } catch (_error) {
+          return;
         }
       }
 
-      startupLoader.addEventListener("click", startLoading);
-      startupLoader.addEventListener("touchstart", startLoading, { passive: true });
-      startupLoader.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          startLoading();
+      function attachDeepStartupListeners() {
+        attachStartupListener(window);
+        attachStartupListener(document);
+        attachStartupListener(document.body);
+        attachStartupListener(pyxelRun);
+        for (const target of document.querySelectorAll("pyxel-run, canvas, button, div")) {
+          attachStartupListener(target);
         }
+        if (pyxelRun.shadowRoot) {
+          attachStartupListener(pyxelRun.shadowRoot);
+          for (const target of pyxelRun.shadowRoot.querySelectorAll("*")) {
+            attachStartupListener(target);
+          }
+        }
+      }
+
+      attachDeepStartupListeners();
+      window.setTimeout(attachDeepStartupListeners, 250);
+      window.setTimeout(attachDeepStartupListeners, 1000);
+      new MutationObserver(attachDeepStartupListeners).observe(document.body, {
+        childList: true,
+        subtree: true,
       });
-      window.addEventListener("starwrite-loading", startLoading);
-      window.addEventListener("starwrite-ready", markReady);
+      window.addEventListener("blur", () => showStartupLoader(null, true));
+      window.addEventListener("starwrite-loading", () => showStartupLoader(null, true));
+      window.addEventListener("starwrite-ready", hideStartupLoader);
+
+      new MutationObserver(() => {
+        if (document.body.dataset.starwriteReady === "1") {
+          hideStartupLoader();
+        }
+      }).observe(document.body, { attributes: true, attributeFilter: ["data-starwrite-ready"] });
     </script>
   </body>
 </html>
