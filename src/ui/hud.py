@@ -17,6 +17,8 @@ LINE_STEP = 13
 
 FONT = {
     " ": ("000", "000", "000", "000", "000"),
+    "(": ("010", "100", "100", "100", "010"),
+    ")": ("010", "001", "001", "001", "010"),
     ".": ("000", "000", "000", "000", "010"),
     ":": ("000", "010", "000", "010", "000"),
     "-": ("000", "000", "111", "000", "000"),
@@ -232,6 +234,21 @@ def draw_event_banner(event_view: MeteorEventView) -> None:
     label = event_view.event.name.upper()
     x = max(4, min(pyxel.width - text_width(label) - 4, (pyxel.width - text_width(label)) // 2))
     draw_bold_text(x, 8, label, 10)
+    period = _event_period_label(event_view)
+    period_x = max(4, min(pyxel.width - text_width(period) - 4, (pyxel.width - text_width(period)) // 2))
+    draw_bold_text(period_x, 21, period, 10)
+
+
+def _event_period_label(event_view: MeteorEventView) -> str:
+    start = event_view.event.display_start
+    end = event_view.event.display_end
+    if start.year == end.year and start.month == end.month:
+        date_range = f"{start:%Y/%m/%d}-{end:%d}"
+    elif start.year == end.year:
+        date_range = f"{start:%Y/%m/%d}-{end:%m/%d}"
+    else:
+        date_range = f"{start:%Y/%m/%d}-{end:%Y/%m/%d}"
+    return f"( {date_range} MIDNIGHT)"
 
 
 def _hud_lines(
