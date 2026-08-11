@@ -59,8 +59,8 @@ The browser entrypoint uses Pyxel Web custom tags:
 - `ENTER`: capture when the selected constellation is framed
 
 Information HUD and guide lines start hidden.
-Visible constellations show bold English labels, and the named star closest to
-the screen center is highlighted with a red frame and label.
+Visible constellations show bold labels in the selected language, and the named
+star closest to the screen center is highlighted with a red frame and label.
 
 The upper-right controls are always available:
 
@@ -112,7 +112,6 @@ This project is static. There is no web build step for v0.1.
 Two publishing options are supported:
 
 - Enable GitHub Pages from the repository branch/root.
-- Or use the included `.github/workflows/pages.yml` workflow.
 
 The deployed root serves `index.html`, which loads Pyxel Web from jsDelivr and
 runs `src/app_v2.py`.
@@ -184,6 +183,12 @@ expanded into one event per shower per year. Meteors are visualized as
 simplified streaks radiating from the radiant, not as a physical particle
 simulation or exact year-specific forecast.
 
+Japanese labels are rendered inside the Pyxel canvas with `pyxel.Font` and the
+bundled `assets/umplus_j10r.bdf` bitmap font from the Pyxel official examples.
+The font metadata identifies it as `umplus` with copyright `Copyright (C)
+2002-2004 COZ`; verify the upstream font license before reusing it outside this
+prototype.
+
 For a production catalog, replace `src/data/stars.py` with a properly licensed
 catalog such as HYG Database or Hipparcos-derived data and document the exact
 license in this section.
@@ -191,6 +196,7 @@ license in this section.
 ## References
 
 - Pyxel project: https://github.com/kitao/pyxel
+- Pyxel custom font sample: https://github.com/kitao/pyxel/blob/main/python/pyxel/examples/13_custom_font.py
 - Pyxel Web custom tag article by Pyxel author: https://tkitao.hatenablog.com/entry/2022/10/08/174438
 - International Meteor Organization, major meteor showers: https://www.imo.net/observations/methods/visual-observation/major/
 - International Meteor Organization, meteor shower calendar archive / working list context: https://www.imo.net/resources/calendar/2019/
