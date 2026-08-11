@@ -11,11 +11,11 @@ class CatalogTests(unittest.TestCase):
     def test_named_stars_have_display_names(self) -> None:
         self.assertEqual({star.id for star in NAMED_STARS}, set(STAR_NAMES))
 
-    def test_prototype_has_25_constellations(self) -> None:
+    def test_prototype_has_44_constellations(self) -> None:
         constellation_ids = {constellation.id for constellation in CONSTELLATIONS}
 
-        self.assertEqual(len(CONSTELLATIONS), 25)
-        self.assertTrue({"AQR", "CAP", "UMI"}.issubset(constellation_ids))
+        self.assertEqual(len(CONSTELLATIONS), 44)
+        self.assertTrue({"AQR", "CAP", "UMI", "SGR", "OPH", "HER", "CMI"}.issubset(constellation_ids))
 
     def test_constellation_star_references_exist(self) -> None:
         for constellation in CONSTELLATIONS:

@@ -134,7 +134,7 @@ gaps caused by Safari's visible toolbar area.
 
 ## Data
 
-The prototype includes 25 constellations:
+The prototype includes 44 constellations:
 
 - ORI - Orion
 - CYG - Cygnus
@@ -161,6 +161,25 @@ The prototype includes 25 constellations:
 - AQR - Aquarius
 - CAP - Capricornus
 - UMI - Ursa Minor
+- CMI - Canis Minor
+- ERI - Eridanus
+- CET - Cetus
+- PSC - Pisces
+- ARI - Aries
+- DEL - Delphinus
+- SGE - Sagitta
+- VUL - Vulpecula
+- SGR - Sagittarius
+- OPH - Ophiuchus
+- HER - Hercules
+- CRB - Corona Borealis
+- LIB - Libra
+- CRV - Corvus
+- HYA - Hydra
+- MON - Monoceros
+- PUP - Puppis
+- VEL - Vela
+- LUP - Lupus
 
 The prototype uses two star sources:
 

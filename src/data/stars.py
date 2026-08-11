@@ -151,6 +151,74 @@ NAMED_STARS: tuple[Star, ...] = (
     star_from_hours(82080, 16.7662, 82.0373, 4.23, 0.90),  # Epsilon Ursae Minoris
     star_from_hours(77055, 15.7343, 77.7945, 4.32, 0.00),  # Zeta Ursae Minoris
     star_from_hours(79822, 16.2918, 75.7547, 4.95, 0.32),  # Eta Ursae Minoris
+    star_from_hours(36188, 7.4525, 8.2893, 2.89, -0.08),  # Gomeisa
+    star_from_hours(23875, 5.1308, -5.0864, 2.79, 0.55),  # Cursa
+    star_from_hours(18543, 3.9672, -13.5085, 2.97, 1.59),  # Zaurak
+    star_from_hours(13847, 2.9710, -40.3047, 3.24, 0.13),  # Acamar
+    star_from_hours(3419, 0.7265, -17.9866, 2.04, 1.02),  # Diphda
+    star_from_hours(14135, 3.0379, 4.0897, 2.54, 1.63),  # Menkar
+    star_from_hours(10826, 2.3224, -2.9776, 3.00, 1.60),  # Mira
+    star_from_hours(12706, 2.7217, -10.6780, 3.73, 1.05),  # Baten Kaitos
+    star_from_hours(9487, 2.0341, 2.7638, 3.82, 0.04),  # Alrescha
+    star_from_hours(7097, 1.5247, 15.3458, 4.27, 0.95),  # Kullat Nunu
+    star_from_hours(8198, 1.7566, 9.1577, 4.27, 1.00),  # Torcular
+    star_from_hours(118268, 23.9885, 6.8633, 4.01, 0.44),  # Omega Piscium
+    star_from_hours(9884, 2.1195, 23.4624, 2.00, 1.15),  # Hamal
+    star_from_hours(8903, 1.9107, 20.8080, 2.64, -0.10),  # Sheratan
+    star_from_hours(8832, 1.8922, 19.2939, 3.88, 0.03),  # Mesarthim
+    star_from_hours(101958, 20.6606, 15.9119, 3.77, -0.02),  # Sualocin
+    star_from_hours(101769, 20.6258, 14.5951, 3.64, 0.04),  # Rotanev
+    star_from_hours(102531, 20.7775, 16.1243, 4.27, 1.02),  # Gamma Delphini
+    star_from_hours(96837, 19.6683, 18.0139, 4.39, 1.43),  # Sham
+    star_from_hours(97365, 19.7898, 18.5343, 3.82, 1.01),  # Delta Sagittae
+    star_from_hours(98337, 19.9825, 19.4921, 3.51, 1.37),  # Gamma Sagittae
+    star_from_hours(95771, 19.4784, 24.6649, 4.44, 1.50),  # Anser
+    star_from_hours(98543, 20.0153, 27.7536, 4.52, 0.95),  # 23 Vulpeculae
+    star_from_hours(99853, 20.2710, 27.8142, 4.57, 1.10),  # 31 Vulpeculae
+    star_from_hours(90185, 18.4029, -34.3846, 1.79, -0.11),  # Kaus Australis
+    star_from_hours(92855, 18.9211, -26.2967, 2.05, -0.13),  # Nunki
+    star_from_hours(93506, 19.0435, -29.8801, 2.60, 0.04),  # Ascella
+    star_from_hours(89931, 18.3499, -29.8281, 2.72, 1.05),  # Kaus Media
+    star_from_hours(90496, 18.4662, -25.4217, 2.82, 1.00),  # Kaus Borealis
+    star_from_hours(88635, 18.0968, -30.4241, 2.98, 1.52),  # Alnasl
+    star_from_hours(86032, 17.5822, 12.5600, 2.08, 0.15),  # Rasalhague
+    star_from_hours(86742, 17.7245, 4.5673, 2.76, 1.16),  # Cebalrai
+    star_from_hours(79593, 16.2391, -3.6943, 2.73, 1.58),  # Yed Prior
+    star_from_hours(84012, 17.1729, -15.7249, 2.43, 0.15),  # Sabik
+    star_from_hours(80816, 16.5037, 21.4896, 2.77, 0.95),  # Kornephoros
+    star_from_hours(84345, 17.2441, 14.3903, 3.35, 1.45),  # Rasalgethi
+    star_from_hours(80170, 16.3290, 19.1530, 3.13, 0.08),  # Sarin
+    star_from_hours(84379, 17.2505, 24.8392, 4.41, 0.55),  # Maasym
+    star_from_hours(76267, 15.5781, 26.7147, 2.22, 0.03),  # Alphecca
+    star_from_hours(75695, 15.4638, 29.1057, 3.68, 0.53),  # Nusakan
+    star_from_hours(76952, 15.7124, 26.2956, 3.84, 0.74),  # Gamma Coronae Borealis
+    star_from_hours(77512, 15.8266, 26.0685, 4.63, 1.00),  # Delta Coronae Borealis
+    star_from_hours(72622, 14.8479, -16.0418, 2.75, 0.14),  # Zubenelgenubi
+    star_from_hours(74785, 15.2834, -9.3831, 2.61, -0.10),  # Zubeneschamali
+    star_from_hours(73714, 15.0678, -25.2819, 3.25, 1.70),  # Brachium
+    star_from_hours(75177, 15.3089, -28.1351, 3.60, 1.40),  # Upsilon Librae
+    star_from_hours(59803, 12.2634, -17.5419, 2.59, -0.08),  # Gienah Corvi
+    star_from_hours(61359, 12.5731, -23.3968, 2.65, 1.33),  # Kraz
+    star_from_hours(60965, 12.4977, -16.5154, 2.95, 0.13),  # Algorab
+    star_from_hours(59316, 12.1687, -22.6198, 3.02, 1.33),  # Minkar
+    star_from_hours(46390, 9.4598, -8.6586, 1.99, 1.44),  # Alphard
+    star_from_hours(64962, 13.3153, -23.1715, 2.99, 0.92),  # Gamma Hydrae
+    star_from_hours(43813, 8.9232, 5.9456, 3.10, 1.00),  # Zeta Hydrae
+    star_from_hours(52943, 10.8271, -16.1937, 3.11, 1.24),  # Nu Hydrae
+    star_from_hours(30867, 6.4803, -7.0329, 3.76, 0.00),  # Beta Monocerotis
+    star_from_hours(30419, 6.3961, 4.5929, 4.39, 1.10),  # Epsilon Monocerotis
+    star_from_hours(34769, 7.1977, -0.4928, 4.15, -0.10),  # Delta Monocerotis
+    star_from_hours(39429, 8.0597, -40.0031, 2.21, -0.27),  # Naos
+    star_from_hours(39757, 8.1257, -24.3043, 2.83, 1.25),  # Tureis
+    star_from_hours(35264, 7.2857, -37.0975, 3.25, 1.20),  # Azmidi
+    star_from_hours(44816, 9.1333, -43.4326, 2.21, 1.70),  # Suhail
+    star_from_hours(39953, 8.1589, -47.3366, 1.75, -0.22),  # Regor
+    star_from_hours(45941, 9.3686, -55.0107, 1.96, 0.00),  # Alsephina
+    star_from_hours(42913, 8.7451, -54.7088, 2.47, -0.18),  # Markeb Velae
+    star_from_hours(71860, 14.6988, -47.3882, 2.30, -0.20),  # Men
+    star_from_hours(73273, 14.9755, -43.1339, 2.68, -0.20),  # Beta Lupi
+    star_from_hours(76297, 15.5857, -41.1668, 2.78, -0.18),  # Gamma Lupi
+    star_from_hours(75141, 15.3027, -40.6475, 3.22, -0.18),  # Delta Lupi
 )
 
 STAR_NAMES: dict[int, str] = {
@@ -281,6 +349,74 @@ STAR_NAMES: dict[int, str] = {
     82080: "Epsilon Ursae Minoris",
     77055: "Zeta Ursae Minoris",
     79822: "Eta Ursae Minoris",
+    36188: "Gomeisa",
+    23875: "Cursa",
+    18543: "Zaurak",
+    13847: "Acamar",
+    3419: "Diphda",
+    14135: "Menkar",
+    10826: "Mira",
+    12706: "Baten Kaitos",
+    9487: "Alrescha",
+    7097: "Kullat Nunu",
+    8198: "Torcular",
+    118268: "Omega Piscium",
+    9884: "Hamal",
+    8903: "Sheratan",
+    8832: "Mesarthim",
+    101958: "Sualocin",
+    101769: "Rotanev",
+    102531: "Gamma Delphini",
+    96837: "Sham",
+    97365: "Delta Sagittae",
+    98337: "Gamma Sagittae",
+    95771: "Anser",
+    98543: "23 Vulpeculae",
+    99853: "31 Vulpeculae",
+    90185: "Kaus Australis",
+    92855: "Nunki",
+    93506: "Ascella",
+    89931: "Kaus Media",
+    90496: "Kaus Borealis",
+    88635: "Alnasl",
+    86032: "Rasalhague",
+    86742: "Cebalrai",
+    79593: "Yed Prior",
+    84012: "Sabik",
+    80816: "Kornephoros",
+    84345: "Rasalgethi",
+    80170: "Sarin",
+    84379: "Maasym",
+    76267: "Alphecca",
+    75695: "Nusakan",
+    76952: "Gamma Coronae Borealis",
+    77512: "Delta Coronae Borealis",
+    72622: "Zubenelgenubi",
+    74785: "Zubeneschamali",
+    73714: "Brachium",
+    75177: "Upsilon Librae",
+    59803: "Gienah Corvi",
+    61359: "Kraz",
+    60965: "Algorab",
+    59316: "Minkar",
+    46390: "Alphard",
+    64962: "Gamma Hydrae",
+    43813: "Zeta Hydrae",
+    52943: "Nu Hydrae",
+    30867: "Beta Monocerotis",
+    30419: "Epsilon Monocerotis",
+    34769: "Delta Monocerotis",
+    39429: "Naos",
+    39757: "Tureis",
+    35264: "Azmidi",
+    44816: "Suhail",
+    39953: "Regor",
+    45941: "Alsephina",
+    42913: "Markeb Velae",
+    71860: "Men",
+    73273: "Beta Lupi",
+    76297: "Gamma Lupi",
+    75141: "Delta Lupi",
 }
 
 
