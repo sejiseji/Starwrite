@@ -15,7 +15,7 @@ GLYPH_W = 3
 GLYPH_H = 5
 CHAR_STEP = 8
 LINE_STEP = 13
-UNICODE_FONT_PATH = "assets/umplus_j10r.bdf"
+UNICODE_FONT_PATH = "assets/starwrite_jp10.bdf"
 _unicode_font = None
 
 FONT = {
