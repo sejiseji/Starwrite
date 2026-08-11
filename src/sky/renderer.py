@@ -76,13 +76,13 @@ class SkyRenderer:
             if radius >= 2:
                 pyxel.circ(x, y, radius, col)
             elif radius == 1:
-                pyxel.pix(x - 1, y, col)
-                pyxel.pix(x, y - 1, col)
-                pyxel.pix(x, y, col)
-                pyxel.pix(x + 1, y, col)
-                pyxel.pix(x, y + 1, col)
+                pyxel.pset(x - 1, y, col)
+                pyxel.pset(x, y - 1, col)
+                pyxel.pset(x, y, col)
+                pyxel.pset(x + 1, y, col)
+                pyxel.pset(x, y + 1, col)
             else:
-                pyxel.pix(x, y, col)
+                pyxel.pset(x, y, col)
 
     def draw_constellations(
         self,
@@ -115,4 +115,3 @@ class SkyRenderer:
                 last = (x, y)
             else:
                 last = None
-
