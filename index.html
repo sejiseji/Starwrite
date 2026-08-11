@@ -262,6 +262,55 @@
       let startupDismissed = false;
       const startupEvents = ["pointerdown", "mousedown", "click", "touchstart", "touchend", "keydown"];
       const startupHookedTargets = new WeakSet();
+      let startupActivationForwarded = false;
+
+      function startupActivationTarget() {
+        if (!pyxelRun) {
+          return null;
+        }
+        if (pyxelRun.shadowRoot) {
+          return pyxelRun.shadowRoot.querySelector("canvas, button, [role='button']") || pyxelRun;
+        }
+        return pyxelRun.querySelector("canvas, button, [role='button']") || pyxelRun;
+      }
+
+      function dispatchPointerLikeEvent(target, type, sourceEvent, clientX, clientY) {
+        const init = {
+          bubbles: true,
+          cancelable: true,
+          clientX,
+          clientY,
+          screenX: sourceEvent?.screenX ?? clientX,
+          screenY: sourceEvent?.screenY ?? clientY,
+          button: 0,
+          buttons: type === "mouseup" || type === "click" ? 0 : 1,
+        };
+        if (type.startsWith("pointer") && window.PointerEvent) {
+          target.dispatchEvent(new PointerEvent(type, { ...init, pointerId: 1, pointerType: "touch", isPrimary: true }));
+          return;
+        }
+        target.dispatchEvent(new MouseEvent(type, init));
+      }
+
+      function nudgePyxelStartFromAnywhere(event) {
+        if (startupActivationForwarded || !event || event.type === "keydown") {
+          return;
+        }
+        const target = startupActivationTarget();
+        if (!target || typeof target.getBoundingClientRect !== "function") {
+          return;
+        }
+        startupActivationForwarded = true;
+        window.setTimeout(() => {
+          const rect = target.getBoundingClientRect();
+          const clientX = rect.left + rect.width * 0.5;
+          const clientY = rect.top + rect.height * 0.5;
+          dispatchPointerLikeEvent(target, "pointerdown", event, clientX, clientY);
+          dispatchPointerLikeEvent(target, "mousedown", event, clientX, clientY);
+          dispatchPointerLikeEvent(target, "mouseup", event, clientX, clientY);
+          dispatchPointerLikeEvent(target, "click", event, clientX, clientY);
+        }, 80);
+      }
 
       function scheduleStartupHide() {
         if (startupShownAt === 0) {
@@ -288,6 +337,7 @@
         }
         startupLoader.classList.add("is-visible");
         startupLoader.setAttribute("aria-hidden", "false");
+        nudgePyxelStartFromAnywhere(_event);
         if (startupReady || document.body.dataset.starwriteReady === "1") {
           scheduleStartupHide();
         }
@@ -321,6 +371,7 @@
       function attachDeepStartupListeners() {
         attachStartupListener(window);
         attachStartupListener(document);
+        attachStartupListener(document.documentElement);
         attachStartupListener(document.body);
         attachStartupListener(pyxelRun);
         for (const target of document.querySelectorAll("pyxel-run, canvas, button, div")) {
