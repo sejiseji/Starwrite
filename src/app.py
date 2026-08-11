@@ -33,7 +33,9 @@ from ui.hud import (
 )
 
 DESKTOP_SCREEN_SIZE = (480, 360)
-IPHONE16_SCREEN_SIZE = (392, 696)
+IPHONE16_SCREEN_HEIGHT = 696
+IPHONE16_MIN_SCREEN_WIDTH = 396
+IPHONE16_MAX_SCREEN_WIDTH = 430
 SETTINGS_KEY = "starwrite_v02_settings"
 CAPTURE_KEY = "starwrite_v01_latest_capture"
 
@@ -46,7 +48,9 @@ def _screen_size() -> tuple[int, int]:
         height = float(window.innerHeight)
         is_portrait_phone = width <= 500 and height / max(width, 1.0) >= 1.7
         if is_portrait_phone:
-            return IPHONE16_SCREEN_SIZE
+            screen_width = int(round(IPHONE16_SCREEN_HEIGHT * width / max(height, 1.0))) + 2
+            screen_width = max(IPHONE16_MIN_SCREEN_WIDTH, min(IPHONE16_MAX_SCREEN_WIDTH, screen_width))
+            return (screen_width, IPHONE16_SCREEN_HEIGHT)
     except Exception:
         pass
     return DESKTOP_SCREEN_SIZE
