@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from ui.localization import CONSTELLATION_NAMES_JA, METEOR_EVENT_NAMES_JA, STAR_NAMES_JA
+from data.font_jp import GLYPHS
 
 
 FONT_PATH = Path("assets/starwrite_jp10.bdf")
@@ -59,6 +60,24 @@ class FontSubsetTests(unittest.TestCase):
         ]
         required = {ord(char) for label in labels for char in label}
         self.assertTrue(required <= _font_encodings())
+
+    def test_embedded_font_data_matches_required_subset(self) -> None:
+        labels = [
+            *CONSTELLATION_NAMES_JA.values(),
+            *METEOR_EVENT_NAMES_JA.values(),
+            *STAR_NAMES_JA.values(),
+            ASCII_PRINTABLE,
+            HIRAGANA,
+            KATAKANA,
+            KATAKANA_PHONETIC_EXTENSIONS,
+            FULLWIDTH_DIGITS,
+            FULLWIDTH_UPPERCASE,
+            FULLWIDTH_LOWERCASE,
+            JAPANESE_PUNCTUATION,
+            JAPANESE_OPERATORS,
+        ]
+        required = {ord(char) for label in labels for char in label}
+        self.assertTrue(required <= set(GLYPHS))
 
 
 if __name__ == "__main__":

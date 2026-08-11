@@ -136,7 +136,7 @@ class StarSkyApp:
         self.show_time_slider = bool(settings.get("show_time_slider", False))
         self.show_month_slider = bool(settings.get("show_month_slider", False))
         self.show_event_slider = bool(settings.get("show_event_slider", False))
-        self.language = normalize_language(settings.get("language", "ja"))
+        self.language = normalize_language(settings.get("language", "en"))
         self.menu_open = False
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.latest_capture = self._load_capture()

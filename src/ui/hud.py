@@ -4,6 +4,7 @@ import pyxel
 
 from astronomy.catalog import Constellation
 from astronomy.observer import Observer
+from data.font_jp import FONT_CELL_HEIGHT, FONT_CELL_WIDTH, FONT_COLUMNS, FONT_IMAGE_BANK, GLYPHS
 from sky.capture import ScreenPoint, SkyCapture
 from sky.camera import SkyCamera
 from sky.meteors import MeteorEventView
@@ -15,10 +16,10 @@ GLYPH_W = 3
 GLYPH_H = 5
 CHAR_STEP = 8
 LINE_STEP = 13
-UNICODE_FONT_PATH = "assets/starwrite_jp10.bdf"
 JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
-_unicode_font = None
+_font_atlas_ready = False
 _display_width_cache: dict[str, int] = {}
+_glyph_locations: dict[int, tuple[int, int, int]] = {}
 
 FONT = {
     " ": ("000", "000", "000", "000", "000"),
@@ -80,15 +81,7 @@ def display_text_width(text: str) -> int:
     cached = _display_width_cache.get(text)
     if cached is not None:
         return cached
-    font = unicode_font()
-    if font is not None:
-        try:
-            width = int(font.text_width(text))
-            _display_width_cache[text] = width
-            return width
-        except Exception:
-            pass
-    width = len(text) * 10
+    width = sum(_glyph_advance(char) for char in text)
     _display_width_cache[text] = width
     return width
 
@@ -127,34 +120,53 @@ def draw_display_bold_text(x: int, y: int, text: str, col: int) -> None:
     if text.isascii():
         draw_bold_text(x, y, text.upper(), col)
         return
-    font = unicode_font()
-    if font is None:
-        pyxel.text(x, y, text, col)
-        return
-    pyxel.text(x + 1, y + 1, text, 0, font)
-    pyxel.text(x, y, text, col, font)
+    _draw_bitmap_text(x + 1, y + 1, text, 0)
+    _draw_bitmap_text(x, y, text, col)
 
 
 def draw_display_text(x: int, y: int, text: str, col: int) -> None:
     if text.isascii():
         draw_big_text(x, y, text.upper(), col)
         return
-    font = unicode_font()
-    if font is None:
-        pyxel.text(x, y, text, col)
+    _draw_bitmap_text(x, y, text, col)
+
+
+def _glyph_advance(char: str) -> int:
+    glyph = GLYPHS.get(ord(char)) or GLYPHS.get(ord("?"))
+    if glyph is None:
+        return FONT_CELL_WIDTH
+    return glyph[0]
+
+
+def _ensure_font_atlas() -> None:
+    global _font_atlas_ready
+    if _font_atlas_ready:
         return
-    pyxel.text(x, y, text, col, font)
+    image = pyxel.image(FONT_IMAGE_BANK)
+    for index, (codepoint, (advance, rows)) in enumerate(GLYPHS.items()):
+        x = index % FONT_COLUMNS * FONT_CELL_WIDTH
+        y = index // FONT_COLUMNS * FONT_CELL_HEIGHT
+        image.set(x, y, list(rows))
+        _glyph_locations[codepoint] = (x, y, advance)
+    _font_atlas_ready = True
 
 
-def unicode_font():
-    global _unicode_font
-    if _unicode_font is not None:
-        return _unicode_font
-    try:
-        _unicode_font = pyxel.Font(UNICODE_FONT_PATH)
-    except Exception:
-        _unicode_font = None
-    return _unicode_font
+def _draw_bitmap_text(x: int, y: int, text: str, col: int) -> None:
+    _ensure_font_atlas()
+    cursor_x = x
+    if col != 7:
+        pyxel.pal(7, col)
+    for char in text:
+        codepoint = ord(char)
+        location = _glyph_locations.get(codepoint) or _glyph_locations.get(ord("?"))
+        if location is None:
+            cursor_x += FONT_CELL_WIDTH
+            continue
+        source_x, source_y, advance = location
+        pyxel.blt(cursor_x, y, FONT_IMAGE_BANK, source_x, source_y, FONT_CELL_WIDTH, FONT_CELL_HEIGHT, 0)
+        cursor_x += advance
+    if col != 7:
+        pyxel.pal()
 
 
 def draw_bold_text_scaled(x: int, y: int, text: str, col: int, scale: int) -> None:
@@ -195,16 +207,6 @@ def draw_button(rect: tuple[int, int, int, int], label: str, active: bool) -> No
     pyxel.rect(x, y, w, h, fill)
     pyxel.rectb(x, y, w, h, edge)
     draw_big_text(x + max(4, (w - text_width(label)) // 2), y + 7, label, 7)
-
-
-def draw_display_button(rect: tuple[int, int, int, int], label: str, active: bool) -> None:
-    x, y, w, h = rect
-    fill = 5 if active else 1
-    edge = 10 if active else 13
-    pyxel.rect(x, y, w, h, fill)
-    pyxel.rectb(x, y, w, h, edge)
-    label_w = display_text_width(label)
-    draw_display_bold_text(x + max(4, (w - label_w) // 2), y + 6, label, 7)
 
 
 def draw_hud(
@@ -408,8 +410,8 @@ def draw_menu_panel(
     draw_big_text(x + 8, y + 105, f"EVENT SRC {event_source_label}", 13)
     draw_big_text(x + 8, y + 118, f"EVENTS {event_count}", 13)
     draw_big_text(x + 8, y + 132, "LANGUAGE", 7)
-    language_label = "日本語" if language == "en" else "English"
-    draw_display_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language_label, True)
+    language_label = "JA" if language == "en" else "EN"
+    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language_label, True)
 
 
 def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int, int]]:
