@@ -35,7 +35,7 @@
         opacity: 0;
         pointer-events: none;
         transition: opacity 180ms ease;
-        z-index: 20;
+        z-index: 2147483647;
       }
 
       .startup-loader.is-visible {
@@ -260,6 +260,8 @@
       let startupInteractionSeen = false;
       let startupReady = false;
       let startupDismissed = false;
+      const startupEvents = ["pointerdown", "mousedown", "click", "touchstart", "touchend", "keydown"];
+      const startupHookedTargets = new WeakSet();
 
       function scheduleStartupHide() {
         if (startupShownAt === 0) {
@@ -299,23 +301,47 @@
         scheduleStartupHide();
       }
 
-      pyxelRun.addEventListener("pointerdown", showStartupLoader, { capture: true });
-      pyxelRun.addEventListener("mousedown", showStartupLoader, { capture: true });
-      pyxelRun.addEventListener("click", showStartupLoader, { capture: true });
-      pyxelRun.addEventListener("touchstart", showStartupLoader, { capture: true, passive: true });
-      pyxelRun.addEventListener("touchend", showStartupLoader, { capture: true, passive: true });
-      window.addEventListener("pointerdown", showStartupLoader, { capture: true });
-      window.addEventListener("mousedown", showStartupLoader, { capture: true });
-      window.addEventListener("click", showStartupLoader, { capture: true });
-      window.addEventListener("touchstart", showStartupLoader, { capture: true, passive: true });
-      window.addEventListener("touchend", showStartupLoader, { capture: true, passive: true });
-      window.addEventListener("keydown", showStartupLoader, { capture: true });
-      document.addEventListener("pointerdown", showStartupLoader, { capture: true });
-      document.addEventListener("mousedown", showStartupLoader, { capture: true });
-      document.addEventListener("click", showStartupLoader, { capture: true });
-      document.addEventListener("touchstart", showStartupLoader, { capture: true, passive: true });
-      document.addEventListener("touchend", showStartupLoader, { capture: true, passive: true });
-      document.addEventListener("keydown", showStartupLoader, { capture: true });
+      function attachStartupListener(target) {
+        if (!target || startupHookedTargets.has(target)) {
+          return;
+        }
+        try {
+          startupHookedTargets.add(target);
+          for (const eventName of startupEvents) {
+            const options = eventName.startsWith("touch")
+              ? { capture: true, passive: true }
+              : { capture: true };
+            target.addEventListener(eventName, showStartupLoader, options);
+          }
+        } catch (_error) {
+          return;
+        }
+      }
+
+      function attachDeepStartupListeners() {
+        attachStartupListener(window);
+        attachStartupListener(document);
+        attachStartupListener(document.body);
+        attachStartupListener(pyxelRun);
+        for (const target of document.querySelectorAll("pyxel-run, canvas, button, div")) {
+          attachStartupListener(target);
+        }
+        if (pyxelRun.shadowRoot) {
+          attachStartupListener(pyxelRun.shadowRoot);
+          for (const target of pyxelRun.shadowRoot.querySelectorAll("*")) {
+            attachStartupListener(target);
+          }
+        }
+      }
+
+      attachDeepStartupListeners();
+      window.setTimeout(attachDeepStartupListeners, 250);
+      window.setTimeout(attachDeepStartupListeners, 1000);
+      new MutationObserver(attachDeepStartupListeners).observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+      window.addEventListener("blur", () => showStartupLoader(null, true));
       window.addEventListener("starwrite-loading", () => showStartupLoader(null, true));
       window.addEventListener("starwrite-ready", hideStartupLoader);
 
