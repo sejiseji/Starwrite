@@ -145,6 +145,11 @@ def draw_hud(
         draw_big_text(8, pyxel.height - 35, f"CAPTURED {latest_capture.constellation_id}", 11)
 
 
+def draw_compact_time(clock: SimulationClock) -> None:
+    draw_bold_text(8, 8, clock.current_time.strftime("%b %d"), 7)
+    draw_bold_text(8, 21, clock.current_time.strftime("%H:%M"), 7)
+
+
 def draw_constellation_labels(
     constellations: tuple[Constellation, ...],
     selected_constellation: Constellation,

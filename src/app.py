@@ -18,6 +18,7 @@ from sky.capture import ScreenPoint, SkyCapture, can_capture
 from sky.renderer import SkyRenderer
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
 from ui.hud import (
+    draw_compact_time,
     draw_hud,
     draw_constellation_labels,
     draw_focused_star,
@@ -458,6 +459,8 @@ class StarSkyApp:
                 self.capture_ready,
                 self.latest_capture,
             )
+        else:
+            draw_compact_time(self.clock)
         draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected)
         focused_star = self._focused_star()
         if focused_star is not None:
