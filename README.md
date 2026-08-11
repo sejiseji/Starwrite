@@ -66,17 +66,20 @@ The upper-right controls are always available:
 
 - `TIME`: toggle the time slider
 - `DAY`: toggle the date slider
+- `EVENT`: toggle the celestial event slider
 - `RESET`: reset time and camera view
 
 The current prototype slider uses edge `+` / `-` buttons:
 
 - `TIME`: +/-15 minutes
 - `DAY`: +/-1 day
+- `EVENT`: next/previous registered event
 
 Dragging a slider knob or track continuously changes the sky:
 
 - `TIME`: up/down maps to about +/-6 hours from the drag start
 - `DAY`: up/down maps to about +/-180 days from the drag start
+- `EVENT`: tap the upper/lower half to jump to the next/previous event
 
 The bottom `MENU` button opens a display panel for toggling:
 

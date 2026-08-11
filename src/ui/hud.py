@@ -287,14 +287,16 @@ def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int
     return {
         "time": (x, 8, button_w, button_h),
         "month": (x, 34, button_w, button_h),
-        "reset": (x, 60, button_w, button_h),
+        "event": (x, 60, button_w, button_h),
+        "reset": (x, 86, button_w, button_h),
     }
 
 
-def draw_tool_buttons(show_time_slider: bool, show_month_slider: bool) -> None:
+def draw_tool_buttons(show_time_slider: bool, show_month_slider: bool, show_event_slider: bool) -> None:
     rects = tool_button_rects(pyxel.width, pyxel.height)
     draw_button(rects["time"], "TIME", show_time_slider)
     draw_button(rects["month"], "DAY", show_month_slider)
+    draw_button(rects["event"], "EVENT", show_event_slider)
     draw_button(rects["reset"], "RESET", False)
 
 
@@ -312,6 +314,10 @@ def slider_rects(width: int, height: int, side: str) -> dict[str, tuple[int, int
         "month_track": (x + 15, y + 34, 4, panel_h - 68),
         "month_knob": (x + 8, y + panel_h // 2 - 10, 18, 20),
         "month_plus": (x + 5, y + panel_h - 30, 24, 22),
+        "event_minus": (x + 5, y + 8, 24, 22),
+        "event_track": (x + 15, y + 34, 4, panel_h - 68),
+        "event_knob": (x + 8, y + panel_h // 2 - 10, 18, 20),
+        "event_plus": (x + 5, y + panel_h - 30, 24, 22),
         "panel": (x, y, panel_w, panel_h),
     }
 

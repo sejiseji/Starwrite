@@ -16,7 +16,7 @@ from data.meteor_showers import METEOR_SHOWERS
 from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
 from sky.capture import ScreenPoint, SkyCapture, can_capture
-from sky.meteors import active_meteor_event
+from sky.meteors import active_meteor_event, adjacent_meteor_event_time
 from sky.renderer import SkyRenderer
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
 from ui.hud import (
@@ -127,6 +127,7 @@ class StarSkyApp:
             self.slider_side = "right"
         self.show_time_slider = bool(settings.get("show_time_slider", False))
         self.show_month_slider = bool(settings.get("show_month_slider", False))
+        self.show_event_slider = bool(settings.get("show_event_slider", False))
         self.menu_open = False
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.latest_capture = self._load_capture()
@@ -282,10 +283,17 @@ class StarSkyApp:
                 self.show_time_slider = not self.show_time_slider
                 if self.show_time_slider:
                     self.show_month_slider = False
+                    self.show_event_slider = False
             elif key == "month":
                 self.show_month_slider = not self.show_month_slider
                 if self.show_month_slider:
                     self.show_time_slider = False
+                    self.show_event_slider = False
+            elif key == "event":
+                self.show_event_slider = not self.show_event_slider
+                if self.show_event_slider:
+                    self.show_time_slider = False
+                    self.show_month_slider = False
             elif key == "reset":
                 self._reset_view()
             return True
@@ -311,15 +319,21 @@ class StarSkyApp:
         return self._point_in_rect(point, self._menu_panel_hit_rect())
 
     def _handle_slider_click(self, point: tuple[int, int]) -> bool:
-        if not (self.show_time_slider or self.show_month_slider):
+        if not (self.show_time_slider or self.show_month_slider or self.show_event_slider):
             return False
-        label = "time" if self.show_time_slider else "month"
+        label = "time" if self.show_time_slider else "month" if self.show_month_slider else "event"
         rects = slider_rects(SCREEN_WIDTH, SCREEN_HEIGHT, self.slider_side)
         if self._point_in_rect(point, rects[f"{label}_minus"]):
-            self.clock.add_minutes(15) if label == "time" else self.clock.add_days(1)
+            self._step_slider(label, 1)
             return True
         if self._point_in_rect(point, rects[f"{label}_plus"]):
-            self.clock.add_minutes(-15) if label == "time" else self.clock.add_days(-1)
+            self._step_slider(label, -1)
+            return True
+        if label == "event" and self._point_in_rect(point, self._expanded_rect(rects["event_track"], 12)):
+            track = rects["event_track"]
+            self._advance_event(1 if point[1] <= track[1] + track[3] // 2 else -1)
+            return True
+        if label == "event" and self._point_in_rect(point, self._expanded_rect(rects["event_knob"], 8)):
             return True
         if self._point_in_rect(point, self._expanded_rect(rects[f"{label}_knob"], 8)):
             self._start_slider_drag(label, point[1])
@@ -331,6 +345,14 @@ class StarSkyApp:
         if self._point_in_rect(point, rects["panel"]):
             return True
         return False
+
+    def _step_slider(self, label: str, direction: int) -> None:
+        if label == "event":
+            self._advance_event(direction)
+        elif label == "time":
+            self.clock.add_minutes(direction * 15)
+        else:
+            self.clock.add_days(direction)
 
     def _start_slider_drag(self, label: str, y: int) -> None:
         self.active_slider = label
@@ -352,6 +374,13 @@ class StarSkyApp:
             days = int(delta_y * 360 / max(1, track[3]))
             self.clock.current_time = self.slider_drag_start_time + timedelta(days=days)
 
+    def _advance_event(self, direction: int) -> None:
+        event_time = adjacent_meteor_event_time(METEOR_SHOWERS, self.clock.current_time, direction)
+        if event_time is None:
+            return
+        self.clock.pause()
+        self.clock.current_time = event_time
+
     def _reset_view(self) -> None:
         self.clock.pause()
         self.clock.current_time = datetime(2026, 8, 10, 21, 0, tzinfo=timezone(timedelta(hours=9)))
@@ -362,6 +391,7 @@ class StarSkyApp:
         self.mode = "TONIGHT"
         self.show_time_slider = False
         self.show_month_slider = False
+        self.show_event_slider = False
 
     def _menu_panel_hit_rect(self) -> tuple[int, int, int, int]:
         from ui.hud import menu_panel_rect
@@ -452,6 +482,7 @@ class StarSkyApp:
                 "slider_side": self.slider_side,
                 "show_time_slider": self.show_time_slider,
                 "show_month_slider": self.show_month_slider,
+                "show_event_slider": self.show_event_slider,
             },
         )
 
@@ -489,11 +520,13 @@ class StarSkyApp:
         if focused_star is not None:
             star_id, point = focused_star
             draw_focused_star(point, STAR_NAMES[star_id])
-        draw_tool_buttons(self.show_time_slider, self.show_month_slider)
+        draw_tool_buttons(self.show_time_slider, self.show_month_slider, self.show_event_slider)
         if self.show_time_slider:
             draw_slider(self.slider_side, "TIME", self.slider_knob_ratio if self.active_slider == "time" else 0.5)
         if self.show_month_slider:
             draw_slider(self.slider_side, "DAY", self.slider_knob_ratio if self.active_slider == "month" else 0.5, "month")
+        if self.show_event_slider:
+            draw_slider(self.slider_side, "EVENT", self.slider_knob_ratio if self.active_slider == "event" else 0.5)
         if self.menu_open:
             draw_menu_panel(self.show_info, self.show_guides, self.show_constellations, self.slider_side)
         draw_menu_button(self.menu_open)

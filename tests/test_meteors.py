@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 
 from astronomy.observer import Observer
 from data.meteor_showers import METEOR_SHOWERS
-from sky.meteors import meteor_activity, meteor_radiant_direction
+from sky.meteors import adjacent_meteor_event_time, meteor_activity, meteor_radiant_direction
 
 
 class MeteorTests(unittest.TestCase):
@@ -29,3 +29,10 @@ class MeteorTests(unittest.TestCase):
         direction = meteor_radiant_direction(event, observer, observation_time)
 
         self.assertAlmostEqual(direction.length(), 1.0)
+
+    def test_adjacent_event_time_uses_registered_peak(self) -> None:
+        current_time = datetime(2026, 8, 10, 21, 0, tzinfo=timezone(timedelta(hours=9)))
+
+        event_time = adjacent_meteor_event_time(METEOR_SHOWERS, current_time, 1)
+
+        self.assertEqual(event_time, datetime(2026, 8, 13, 2, 0, tzinfo=current_time.tzinfo))

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
-from datetime import datetime, time
+from datetime import datetime, time, tzinfo
 
 from astronomy.coordinates import equatorial_to_enu
 from astronomy.events import MeteorShowerEvent
@@ -31,9 +31,36 @@ def meteor_activity(event: MeteorShowerEvent, observation_time: datetime) -> flo
     if not start <= observation_time <= end:
         return 0.0
 
-    peak = datetime.combine(event.display_end, time(event.peak_hour_local, 0), tzinfo=tz)
+    peak = meteor_peak_datetime(event, tz)
     hours_from_peak = abs((observation_time - peak).total_seconds()) / 3600.0
     return max(0.25, 1.0 - hours_from_peak / 10.0)
+
+
+def meteor_peak_datetime(event: MeteorShowerEvent, tz: tzinfo) -> datetime:
+    return datetime.combine(event.display_end, time(event.peak_hour_local, 0), tzinfo=tz)
+
+
+def adjacent_meteor_event_time(
+    events: tuple[MeteorShowerEvent, ...],
+    current_time: datetime,
+    direction: int,
+) -> datetime | None:
+    if current_time.tzinfo is None:
+        raise ValueError("current_time must be timezone-aware")
+    if not events:
+        return None
+
+    event_times = sorted(meteor_peak_datetime(event, current_time.tzinfo) for event in events)
+    if direction >= 0:
+        for event_time in event_times:
+            if event_time > current_time:
+                return event_time
+        return event_times[0]
+
+    for event_time in reversed(event_times):
+        if event_time < current_time:
+            return event_time
+    return event_times[-1]
 
 
 def meteor_radiant_direction(
