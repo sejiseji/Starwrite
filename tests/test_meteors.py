@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 
 from astronomy.observer import Observer
 from data.meteor_showers import EVENT_YEAR_END, EVENT_YEAR_START, METEOR_SHOWERS, RECURRING_METEOR_SHOWERS
-from sky.meteors import adjacent_meteor_event_time, meteor_activity, meteor_radiant_direction
+from sky.meteors import adjacent_meteor_event, adjacent_meteor_event_time, meteor_activity, meteor_radiant_direction
 
 
 class MeteorTests(unittest.TestCase):
@@ -48,3 +48,13 @@ class MeteorTests(unittest.TestCase):
         event_time = adjacent_meteor_event_time(METEOR_SHOWERS, current_time, 1)
 
         self.assertEqual(event_time, datetime(2026, 8, 13, 2, 0, tzinfo=current_time.tzinfo))
+
+    def test_adjacent_event_returns_event_metadata(self) -> None:
+        current_time = datetime(2026, 8, 10, 21, 0, tzinfo=timezone(timedelta(hours=9)))
+
+        event = adjacent_meteor_event(METEOR_SHOWERS, current_time, 1)
+
+        self.assertIsNotNone(event)
+        assert event is not None
+        self.assertEqual(event.id, "PER-2026")
+        self.assertEqual(event.related_constellation_id, "PER")

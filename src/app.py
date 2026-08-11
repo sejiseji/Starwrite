@@ -10,13 +10,20 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 import pyxel
 
+from astronomy.catalog import Constellation
+from astronomy.events import MeteorShowerEvent
 from astronomy.observer import Observer
 from data.constellations import CONSTELLATIONS
 from data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
 from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
 from sky.capture import ScreenPoint, SkyCapture, can_capture
-from sky.meteors import active_meteor_event, adjacent_meteor_event_time
+from sky.meteors import (
+    active_meteor_event,
+    adjacent_meteor_event,
+    meteor_peak_datetime,
+    meteor_radiant_direction,
+)
 from sky.renderer import SkyRenderer
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
 from ui.hud import (
@@ -35,6 +42,7 @@ from ui.hud import (
     slider_rects,
     tool_button_rects,
 )
+from ui.localization import next_language, normalize_language, star_name
 
 DESKTOP_SCREEN_SIZE = (480, 360)
 IPHONE16_SCREEN_HEIGHT = 696
@@ -128,6 +136,7 @@ class StarSkyApp:
         self.show_time_slider = bool(settings.get("show_time_slider", False))
         self.show_month_slider = bool(settings.get("show_month_slider", False))
         self.show_event_slider = bool(settings.get("show_event_slider", False))
+        self.language = normalize_language(settings.get("language", "en"))
         self.menu_open = False
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.latest_capture = self._load_capture()
@@ -315,6 +324,8 @@ class StarSkyApp:
                 self.show_constellations = not self.show_constellations
             elif key == "side":
                 self.slider_side = "left" if self.slider_side == "right" else "right"
+            elif key == "language":
+                self.language = next_language(self.language)
             return True
         return self._point_in_rect(point, self._menu_panel_hit_rect())
 
@@ -375,11 +386,15 @@ class StarSkyApp:
             self.clock.current_time = self.slider_drag_start_time + timedelta(days=days)
 
     def _advance_event(self, direction: int) -> None:
-        event_time = adjacent_meteor_event_time(METEOR_SHOWERS, self.clock.current_time, direction)
-        if event_time is None:
+        event = adjacent_meteor_event(METEOR_SHOWERS, self.clock.current_time, direction)
+        if event is None:
+            return
+        tz = self.clock.current_time.tzinfo
+        if tz is None:
             return
         self.clock.pause()
-        self.clock.current_time = event_time
+        self.clock.current_time = meteor_peak_datetime(event, tz)
+        self._frame_event(event)
 
     def _reset_view(self) -> None:
         self.clock.pause()
@@ -418,8 +433,11 @@ class StarSkyApp:
         self.selected_index = (self.selected_index + delta) % len(CONSTELLATIONS)
 
     def _frame_selected_constellation(self) -> None:
+        self._frame_constellation(self.selected_constellation)
+
+    def _frame_constellation(self, constellation: Constellation) -> bool:
         directions = []
-        for star_id in self.selected_constellation.main_star_ids:
+        for star_id in constellation.main_star_ids:
             star = STARS_BY_ID.get(star_id)
             if star is None:
                 continue
@@ -427,17 +445,33 @@ class StarSkyApp:
             if direction.z > 0:
                 directions.append(direction)
         if not directions:
-            return
+            return False
         x = sum(direction.x for direction in directions) / len(directions)
         y = sum(direction.y for direction in directions) / len(directions)
         z = sum(direction.z for direction in directions) / len(directions)
+        return self._frame_direction(x, y, z)
+
+    def _frame_event(self, event: MeteorShowerEvent) -> None:
+        if event.related_constellation_id is not None:
+            for index, constellation in enumerate(CONSTELLATIONS):
+                if constellation.id != event.related_constellation_id:
+                    continue
+                self.selected_index = index
+                if self._frame_constellation(constellation):
+                    return
+                break
+        direction = meteor_radiant_direction(event, self.observer, self.clock.current_time)
+        self._frame_direction(direction.x, direction.y, direction.z)
+
+    def _frame_direction(self, x: float, y: float, z: float) -> bool:
         length = math.sqrt(x * x + y * y + z * z)
         if length == 0:
-            return
+            return False
         self.camera.yaw = math.atan2(x, y)
         self.camera.pitch = math.asin(max(-1.0, min(1.0, z / length)))
         self.camera.fov_deg = max(self.camera.fov_deg, 70.0)
         self.camera.clamp()
+        return True
 
     def _capture(self) -> None:
         selected = self.selected_constellation
@@ -483,6 +517,7 @@ class StarSkyApp:
                 "show_time_slider": self.show_time_slider,
                 "show_month_slider": self.show_month_slider,
                 "show_event_slider": self.show_event_slider,
+                "language": self.language,
             },
         )
 
@@ -508,18 +543,19 @@ class StarSkyApp:
                 self.show_constellations,
                 self.capture_ready,
                 self.latest_capture,
+                self.language,
             )
         else:
             draw_compact_time(self.clock)
         if self.meteor_event is not None:
-            draw_event_banner(self.meteor_event)
-        draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected)
+            draw_event_banner(self.meteor_event, self.language)
+        draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected, self.language)
         if self.meteor_event is not None:
-            draw_meteor_event(self.meteor_event)
+            draw_meteor_event(self.meteor_event, self.language)
         focused_star = self._focused_star()
         if focused_star is not None:
             star_id, point = focused_star
-            draw_focused_star(point, STAR_NAMES[star_id])
+            draw_focused_star(point, star_name(star_id, STAR_NAMES[star_id], self.language))
         draw_tool_buttons(self.show_time_slider, self.show_month_slider, self.show_event_slider)
         if self.show_time_slider:
             draw_slider(self.slider_side, "TIME", self.slider_knob_ratio if self.active_slider == "time" else 0.5)
@@ -535,6 +571,7 @@ class StarSkyApp:
                 self.slider_side,
                 EVENT_SOURCE_LABEL,
                 len(METEOR_SHOWERS),
+                self.language,
             )
         draw_menu_button(self.menu_open)
         self._signal_ready()

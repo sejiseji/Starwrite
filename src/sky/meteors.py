@@ -45,22 +45,34 @@ def adjacent_meteor_event_time(
     current_time: datetime,
     direction: int,
 ) -> datetime | None:
+    event = adjacent_meteor_event(events, current_time, direction)
+    return meteor_peak_datetime(event, current_time.tzinfo) if event is not None else None
+
+
+def adjacent_meteor_event(
+    events: tuple[MeteorShowerEvent, ...],
+    current_time: datetime,
+    direction: int,
+) -> MeteorShowerEvent | None:
     if current_time.tzinfo is None:
         raise ValueError("current_time must be timezone-aware")
     if not events:
         return None
 
-    event_times = sorted(meteor_peak_datetime(event, current_time.tzinfo) for event in events)
+    event_times = sorted(
+        ((meteor_peak_datetime(event, current_time.tzinfo), event) for event in events),
+        key=lambda item: (item[0], item[1].id),
+    )
     if direction >= 0:
-        for event_time in event_times:
+        for event_time, event in event_times:
             if event_time > current_time + timedelta(minutes=1):
-                return event_time
-        return event_times[0]
+                return event
+        return event_times[0][1]
 
-    for event_time in reversed(event_times):
+    for event_time, event in reversed(event_times):
         if event_time < current_time - timedelta(minutes=1):
-            return event_time
-    return event_times[-1]
+            return event
+    return event_times[-1][1]
 
 
 def meteor_radiant_direction(

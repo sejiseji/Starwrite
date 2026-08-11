@@ -81,12 +81,20 @@ Dragging a slider knob or track continuously changes the sky:
 - `DAY`: up/down maps to about +/-180 days from the drag start
 - `EVENT`: tap the upper/lower half to jump to the next/previous event
 
+When the `EVENT` control jumps to a registered meteor shower, the camera also
+turns toward the related constellation when that constellation exists in the
+current prototype catalog. For showers whose source constellation is not yet in
+the 22-constellation prototype set, the camera turns toward the event radiant
+instead.
+
 The bottom `MENU` button opens a display panel for toggling:
 
 - `INFO`: observation information
 - `GUIDE`: horizontal guide lines
 - `CONST`: constellation lines
 - `SLIDER LEFT/RIGHT`: slider side for right- or left-handed use
+- `LANGUAGE EN/JA`: display language for constellation, named-star, and meteor
+  shower labels
 
 ## Test
 

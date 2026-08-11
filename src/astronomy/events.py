@@ -16,3 +16,4 @@ class MeteorShowerEvent:
     radiant_dec_rad: float
     zhr: int
     parent: str
+    related_constellation_id: str | None = None

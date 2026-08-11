@@ -8,6 +8,7 @@ from sky.capture import ScreenPoint, SkyCapture
 from sky.camera import SkyCamera
 from sky.meteors import MeteorEventView
 from sky.simulation import SimulationClock
+from ui.localization import Language, constellation_name, meteor_event_name
 
 SCALE = 2
 GLYPH_W = 3
@@ -69,6 +70,12 @@ def text_width(text: str) -> int:
     return max(0, len(text) * CHAR_STEP - 2)
 
 
+def display_text_width(text: str) -> int:
+    if text.isascii():
+        return text_width(text)
+    return len(text) * 8
+
+
 def text_width_scaled(text: str, scale: int) -> int:
     return max(0, len(text) * (GLYPH_W * scale + 2) - 2)
 
@@ -99,6 +106,14 @@ def draw_bold_text(x: int, y: int, text: str, col: int) -> None:
     draw_big_text(x, y, text, col)
 
 
+def draw_display_bold_text(x: int, y: int, text: str, col: int) -> None:
+    if text.isascii():
+        draw_bold_text(x, y, text.upper(), col)
+        return
+    pyxel.text(x + 1, y + 1, text, 0)
+    pyxel.text(x, y, text, col)
+
+
 def draw_bold_text_scaled(x: int, y: int, text: str, col: int, scale: int) -> None:
     draw_text_scaled(x + 1, y, text, 0, scale)
     draw_text_scaled(x, y, text, col, scale)
@@ -112,7 +127,7 @@ def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
 
 def menu_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     panel_w = min(width - 16, 244)
-    panel_h = 146
+    panel_h = 178
     button_x, button_y, _, _ = menu_button_rect(width, height)
     x = max(8, min(width - panel_w - 8, button_x + 35 - panel_w // 2))
     return (x, max(8, button_y - panel_h - 6), panel_w, panel_h)
@@ -126,6 +141,7 @@ def panel_toggle_rects(width: int, height: int) -> dict[str, tuple[int, int, int
         "guides": (x + 12 + button_w, y + 34, button_w, 24),
         "constellations": (x + 16 + button_w * 2, y + 34, button_w, 24),
         "side": (x + 8, y + 74, min(96, w - 16), 24),
+        "language": (x + 8, y + 146, min(96, w - 16), 24),
     }
 
 
@@ -147,11 +163,12 @@ def draw_hud(
     show_constellations: bool,
     can_capture: bool,
     latest_capture: SkyCapture | None,
+    language: Language,
 ) -> None:
-    lines = _hud_lines(observer, clock, camera, mode, selected, show_constellations)
+    lines = _hud_lines(observer, clock, camera, mode, selected, show_constellations, language)
     y = 8
     for line in lines:
-        draw_big_text(8, y, line, 7)
+        draw_display_bold_text(8, y, line, 7)
         y += LINE_STEP
 
     if can_capture:
@@ -171,6 +188,7 @@ def draw_constellation_labels(
     constellations: tuple[Constellation, ...],
     selected_constellation: Constellation,
     points: dict[int, ScreenPoint],
+    language: Language,
 ) -> None:
     for index, constellation in enumerate(constellations):
         draw_constellation_label(
@@ -178,6 +196,7 @@ def draw_constellation_labels(
             points,
             10 if constellation.id == selected_constellation.id else 13,
             index,
+            language,
         )
 
 
@@ -186,17 +205,19 @@ def draw_constellation_label(
     points: dict[int, ScreenPoint],
     color: int,
     index: int,
+    language: Language,
 ) -> None:
     visible = [points[star_id] for star_id in constellation.main_star_ids if star_id in points]
     if len(visible) < 2:
         return
     center_x = int(sum(point.x for point in visible) / len(visible))
     center_y = int(sum(point.y for point in visible) / len(visible))
-    label = constellation.name.upper()
-    label_x = max(4, min(pyxel.width - text_width(label) - 4, center_x + 10))
+    label = constellation_name(constellation, language)
+    width = display_text_width(label)
+    label_x = max(4, min(pyxel.width - width - 4, center_x + 10))
     label_y = max(88, min(pyxel.height - 76, center_y - 18 + (index % 3) * 12))
     pyxel.line(center_x, center_y, label_x - 3, label_y + 6, color)
-    draw_bold_text(label_x, label_y, label, color)
+    draw_display_bold_text(label_x, label_y, label, color)
 
 
 def draw_focused_star(point: ScreenPoint, name: str) -> None:
@@ -204,36 +225,39 @@ def draw_focused_star(point: ScreenPoint, name: str) -> None:
     y = int(point.y)
     pyxel.rectb(x - 5, y - 5, 11, 11, 8)
     pyxel.rectb(x - 6, y - 6, 13, 13, 8)
-    label = name.upper()
+    label = name
+    width = display_text_width(label)
     label_x = x + 12
-    if label_x + text_width(label) > pyxel.width - 4:
-        label_x = x - text_width(label) - 12
-    label_x = max(4, min(pyxel.width - text_width(label) - 4, label_x))
+    if label_x + width > pyxel.width - 4:
+        label_x = x - width - 12
+    label_x = max(4, min(pyxel.width - width - 4, label_x))
     label_y = max(4, min(pyxel.height - 18, y - 7))
-    line_x = label_x - 3 if label_x > x else label_x + text_width(label) + 3
+    line_x = label_x - 3 if label_x > x else label_x + width + 3
     pyxel.line(x + 7 if label_x > x else x - 7, y, line_x, label_y + 6, 8)
-    draw_bold_text(label_x, label_y, label, 8)
+    draw_display_bold_text(label_x, label_y, label, 8)
 
 
-def draw_meteor_event(event_view: MeteorEventView) -> None:
+def draw_meteor_event(event_view: MeteorEventView, language: Language) -> None:
     if event_view.radiant_screen is None:
         return
     radiant_x, radiant_y = event_view.radiant_screen
-    label = event_view.event.name.upper()
-    label_x = max(4, min(pyxel.width - text_width(label) - 4, int(radiant_x) + 10))
+    label = meteor_event_name(event_view.event, language)
+    width = display_text_width(label)
+    label_x = max(4, min(pyxel.width - width - 4, int(radiant_x) + 10))
     label_y = max(58, min(pyxel.height - 76, int(radiant_y) - 8))
     if 0 <= radiant_x < pyxel.width and 0 <= radiant_y < pyxel.height:
         x = int(radiant_x)
         y = int(radiant_y)
         pyxel.rectb(x - 4, y - 4, 9, 9, 10)
-        pyxel.line(x, y, label_x - 3 if label_x > x else label_x + text_width(label) + 3, label_y + 6, 10)
-    draw_bold_text(label_x, label_y, label, 10)
+        pyxel.line(x, y, label_x - 3 if label_x > x else label_x + width + 3, label_y + 6, 10)
+    draw_display_bold_text(label_x, label_y, label, 10)
 
 
-def draw_event_banner(event_view: MeteorEventView) -> None:
-    label = event_view.event.name.upper()
-    x = max(4, min(pyxel.width - text_width(label) - 4, (pyxel.width - text_width(label)) // 2))
-    draw_bold_text(x, 8, label, 10)
+def draw_event_banner(event_view: MeteorEventView, language: Language) -> None:
+    label = meteor_event_name(event_view.event, language)
+    width = display_text_width(label)
+    x = max(4, min(pyxel.width - width - 4, (pyxel.width - width) // 2))
+    draw_display_bold_text(x, 8, label, 10)
     period = _event_period_label(event_view)
     period_x = max(4, min(pyxel.width - text_width(period) - 4, (pyxel.width - text_width(period)) // 2))
     draw_bold_text(period_x, 21, period, 10)
@@ -258,6 +282,7 @@ def _hud_lines(
     mode: str,
     selected: Constellation,
     show_constellations: bool,
+    language: Language,
 ) -> list[str]:
     if pyxel.width < 300:
         return [
@@ -272,7 +297,7 @@ def _hud_lines(
         f"LAT {observer.latitude_deg:+04.1f} LON {observer.longitude_deg:+05.1f}",
         clock.current_time.strftime("%Y-%m-%d  %H:%M %z"),
         f"{mode} {'PLAY' if clock.running else 'PAUSE'}",
-        f"{selected.id} {selected.name.upper()} C:{'ON' if show_constellations else 'OFF'} F:{camera.fov_deg:03.0f}",
+        f"{selected.id} {constellation_name(selected, language).upper()} C:{'ON' if show_constellations else 'OFF'} F:{camera.fov_deg:03.0f}",
     ]
 
 
@@ -287,6 +312,7 @@ def draw_menu_panel(
     slider_side: str,
     event_source_label: str,
     event_count: int,
+    language: Language,
 ) -> None:
     x, y, w, h = menu_panel_rect(pyxel.width, pyxel.height)
     pyxel.rect(x, y, w, h, 0)
@@ -299,6 +325,8 @@ def draw_menu_panel(
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["side"], slider_side.upper(), True)
     draw_big_text(x + 8, y + 105, f"EVENT SRC {event_source_label}", 13)
     draw_big_text(x + 8, y + 118, f"EVENTS {event_count}", 13)
+    draw_big_text(x + 8, y + 132, "LANGUAGE", 7)
+    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language.upper(), True)
 
 
 def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int, int]]:
