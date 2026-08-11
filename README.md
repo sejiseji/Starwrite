@@ -79,7 +79,20 @@ Two publishing options are supported:
 - Or use the included `.github/workflows/pages.yml` workflow.
 
 The deployed root serves `index.html`, which loads Pyxel Web from jsDelivr and
-runs `src/app.py`.
+runs `src/app_v2.py`.
+
+## Mobile Display
+
+The browser build detects narrow portrait phones and uses a taller Pyxel
+surface for iPhone-style screens:
+
+- Desktop/default: 320 x 240
+- iPhone portrait: 256 x 556
+
+The HTML viewport uses `viewport-fit=cover`, `100dvh`, and disabled overscroll
+so the Pyxel canvas can fill the available iPhone 16 browser viewport. Apple
+lists iPhone 16 at 1179 x 2556 physical pixels; this prototype targets a
+lighter logical resolution for practical Pyxel Web performance.
 
 ## Data
 

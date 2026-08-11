@@ -19,10 +19,27 @@ from sky.renderer import SkyRenderer
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
 from ui.hud import draw_hud
 
-SCREEN_WIDTH = 240
-SCREEN_HEIGHT = 180
+DESKTOP_SCREEN_SIZE = (320, 240)
+IPHONE16_SCREEN_SIZE = (256, 556)
 SETTINGS_KEY = "starwrite_v01_settings"
 CAPTURE_KEY = "starwrite_v01_latest_capture"
+
+
+def _screen_size() -> tuple[int, int]:
+    try:
+        from js import window  # type: ignore
+
+        width = float(window.innerWidth)
+        height = float(window.innerHeight)
+        is_portrait_phone = width <= 500 and height / max(width, 1.0) >= 1.7
+        if is_portrait_phone:
+            return IPHONE16_SCREEN_SIZE
+    except Exception:
+        pass
+    return DESKTOP_SCREEN_SIZE
+
+
+SCREEN_WIDTH, SCREEN_HEIGHT = _screen_size()
 
 
 def _storage():
