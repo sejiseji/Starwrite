@@ -32,8 +32,8 @@ from ui.hud import (
     tool_button_rects,
 )
 
-DESKTOP_SCREEN_SIZE = (320, 240)
-IPHONE16_SCREEN_SIZE = (256, 556)
+DESKTOP_SCREEN_SIZE = (480, 360)
+IPHONE16_SCREEN_SIZE = (320, 696)
 SETTINGS_KEY = "starwrite_v02_settings"
 CAPTURE_KEY = "starwrite_v01_latest_capture"
 

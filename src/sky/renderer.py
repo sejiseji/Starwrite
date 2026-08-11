@@ -37,9 +37,11 @@ def star_color(color_index: float | None) -> int:
 
 
 def star_radius(magnitude: float) -> int:
-    if magnitude < 0.5:
+    if magnitude < -0.5:
+        return 3
+    if magnitude < 1.0:
         return 2
-    if magnitude < 2.0:
+    if magnitude < 2.5:
         return 1
     return 0
 
@@ -75,7 +77,13 @@ class SkyRenderer:
             y = int(point.y)
             col = star_color(point.color_index)
             radius = star_radius(point.magnitude)
-            if radius >= 2:
+            if radius >= 3:
+                pyxel.circ(x, y, radius, col)
+                pyxel.pset(x - radius - 1, y, 13)
+                pyxel.pset(x + radius + 1, y, 13)
+                pyxel.pset(x, y - radius - 1, 13)
+                pyxel.pset(x, y + radius + 1, 13)
+            elif radius == 2:
                 pyxel.circ(x, y, radius, col)
             elif radius == 1:
                 pyxel.pset(x - 1, y, col)
