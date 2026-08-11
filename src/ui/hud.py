@@ -177,6 +177,16 @@ def draw_button(rect: tuple[int, int, int, int], label: str, active: bool) -> No
     draw_big_text(x + max(4, (w - text_width(label)) // 2), y + 7, label, 7)
 
 
+def draw_display_button(rect: tuple[int, int, int, int], label: str, active: bool) -> None:
+    x, y, w, h = rect
+    fill = 5 if active else 1
+    edge = 10 if active else 13
+    pyxel.rect(x, y, w, h, fill)
+    pyxel.rectb(x, y, w, h, edge)
+    label_w = display_text_width(label)
+    draw_display_bold_text(x + max(4, (w - label_w) // 2), y + 6, label, 7)
+
+
 def draw_hud(
     observer: Observer,
     clock: SimulationClock,
@@ -349,7 +359,8 @@ def draw_menu_panel(
     draw_big_text(x + 8, y + 105, f"EVENT SRC {event_source_label}", 13)
     draw_big_text(x + 8, y + 118, f"EVENTS {event_count}", 13)
     draw_big_text(x + 8, y + 132, "LANGUAGE", 7)
-    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language.upper(), True)
+    language_label = "日本語" if language == "en" else "English"
+    draw_display_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language_label, True)
 
 
 def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int, int]]:

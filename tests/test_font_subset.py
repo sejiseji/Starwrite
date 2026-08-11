@@ -8,6 +8,17 @@ from ui.localization import CONSTELLATION_NAMES_JA, METEOR_EVENT_NAMES_JA, STAR_
 
 
 FONT_PATH = Path("assets/starwrite_jp10.bdf")
+ASCII_PRINTABLE = "".join(
+    char for char in string.printable if char not in {"\t", "\n", "\r", "\x0b", "\x0c"}
+)
+HIRAGANA = "".join(chr(code) for code in range(0x3040, 0x30A0))
+KATAKANA = "".join(chr(code) for code in range(0x30A0, 0x3100))
+KATAKANA_PHONETIC_EXTENSIONS = "".join(chr(code) for code in range(0x31F0, 0x3200))
+FULLWIDTH_DIGITS = "０１２３４５６７８９"
+FULLWIDTH_UPPERCASE = "".join(chr(code) for code in range(0xFF21, 0xFF3B))
+FULLWIDTH_LOWERCASE = "".join(chr(code) for code in range(0xFF41, 0xFF5B))
+JAPANESE_PUNCTUATION = "　。、，．・：；？！ー〜～（）「」『』【】〈〉《》〔〕…‥"
+JAPANESE_OPERATORS = "＋−－×÷＝"
 
 
 def _font_encodings() -> set[int]:
@@ -24,16 +35,29 @@ class FontSubsetTests(unittest.TestCase):
             *CONSTELLATION_NAMES_JA.values(),
             *METEOR_EVENT_NAMES_JA.values(),
             *STAR_NAMES_JA.values(),
-            string.printable,
+            ASCII_PRINTABLE,
         ]
         required = {
             ord(char)
             for label in labels
             for char in label
-            if char not in {"\t", "\n", "\r", "\x0b", "\x0c"}
         }
-        required.add(12288)
         self.assertTrue(FONT_PATH.exists())
+        self.assertTrue(required <= _font_encodings())
+
+    def test_subset_font_covers_baseline_japanese_ui_characters(self) -> None:
+        labels = [
+            ASCII_PRINTABLE,
+            HIRAGANA,
+            KATAKANA,
+            KATAKANA_PHONETIC_EXTENSIONS,
+            FULLWIDTH_DIGITS,
+            FULLWIDTH_UPPERCASE,
+            FULLWIDTH_LOWERCASE,
+            JAPANESE_PUNCTUATION,
+            JAPANESE_OPERATORS,
+        ]
+        required = {ord(char) for label in labels for char in label}
         self.assertTrue(required <= _font_encodings())
 
 

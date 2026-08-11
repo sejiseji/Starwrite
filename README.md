@@ -185,10 +185,14 @@ simulation or exact year-specific forecast.
 
 Japanese labels are rendered inside the Pyxel canvas with `pyxel.Font` and the
 bundled `assets/starwrite_jp10.bdf` bitmap font. This is a subset generated from
-the Pyxel official example font `umplus_j10r.bdf`, keeping only the current app
-labels and printable ASCII used in mixed labels. The source font metadata
-identifies it as `umplus` with copyright `Copyright (C) 2002-2004 COZ`; verify
-the upstream font license before reusing it outside this prototype.
+the Pyxel official example font `umplus_j10r.bdf`, covering the current app
+labels, printable ASCII, practical hiragana / katakana code blocks, full-width
+digits, full-width Latin letters, and common Japanese punctuation / arithmetic
+symbols used by the v0.1 UI. The source font metadata identifies it as `umplus`
+with copyright `Copyright (C) 2002-2004 COZ`; verify the upstream font license
+before reusing it outside this prototype. Full arbitrary Japanese text entry is
+reserved for the later StarLetter scope and should use a complete Japanese font
+instead of extending this UI subset ad hoc.
 
 For a production catalog, replace `src/data/stars.py` with a properly licensed
 catalog such as HYG Database or Hipparcos-derived data and document the exact
