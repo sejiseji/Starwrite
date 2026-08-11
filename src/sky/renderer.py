@@ -20,6 +20,14 @@ LINE_SELECTED = 10
 HORIZON = 13
 
 
+def _dim_star_color(color: int) -> int:
+    if color in (STAR_BLUE_WHITE, STAR_WHITE):
+        return HORIZON
+    if color in (STAR_YELLOW_WHITE, STAR_YELLOW):
+        return STAR_ORANGE
+    return STAR_RED
+
+
 def star_color(color_index: float | None) -> int:
     if color_index is None:
         return STAR_WHITE
@@ -44,6 +52,20 @@ def star_radius(magnitude: float) -> int:
     if magnitude < 2.5:
         return 1
     return 0
+
+
+def twinkle_level(star_id: int, magnitude: float, frame_count: int) -> int:
+    if magnitude < 1.0:
+        return 2 if (frame_count + star_id) % 96 < 5 else 1
+    period = 44 + star_id % 41
+    phase = (frame_count + star_id * 17) % period
+    if magnitude >= 4.2 and phase < 6:
+        return 0
+    if magnitude >= 2.5 and phase < 11:
+        return 2
+    if phase > period - 8:
+        return 0
+    return 1
 
 
 class SkyRenderer:
@@ -72,11 +94,18 @@ class SkyRenderer:
             pyxel.line(0, y, width, y, color)
 
     def draw_stars(self, points: dict[int, ScreenPoint]) -> None:
-        for point in sorted(points.values(), key=lambda p: p.magnitude, reverse=True):
+        frame_count = pyxel.frame_count
+        for star_id, point in sorted(points.items(), key=lambda item: item[1].magnitude, reverse=True):
             x = int(point.x)
             y = int(point.y)
             col = star_color(point.color_index)
             radius = star_radius(point.magnitude)
+            twinkle = twinkle_level(star_id, point.magnitude, frame_count)
+            if twinkle == 0:
+                if radius == 0:
+                    continue
+                col = _dim_star_color(col)
+                radius = max(0, radius - 1)
             if radius >= 3:
                 pyxel.circ(x, y, radius, col)
                 pyxel.pset(x - radius - 1, y, 13)
@@ -85,14 +114,21 @@ class SkyRenderer:
                 pyxel.pset(x, y + radius + 1, 13)
             elif radius == 2:
                 pyxel.circ(x, y, radius, col)
+                if twinkle == 2:
+                    pyxel.pset(x - 3, y, HORIZON)
+                    pyxel.pset(x + 3, y, HORIZON)
             elif radius == 1:
                 pyxel.pset(x - 1, y, col)
                 pyxel.pset(x, y - 1, col)
                 pyxel.pset(x, y, col)
                 pyxel.pset(x + 1, y, col)
                 pyxel.pset(x, y + 1, col)
+                if twinkle == 2:
+                    pyxel.pset(x + 2, y, HORIZON)
             else:
                 pyxel.pset(x, y, col)
+                if twinkle == 2:
+                    pyxel.pset(x + 1, y, HORIZON)
 
     def draw_constellations(
         self,

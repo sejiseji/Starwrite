@@ -66,7 +66,11 @@ def text_width(text: str) -> int:
     return max(0, len(text) * CHAR_STEP - 2)
 
 
-def draw_big_text(x: int, y: int, text: str, col: int) -> None:
+def text_width_scaled(text: str, scale: int) -> int:
+    return max(0, len(text) * (GLYPH_W * scale + 2) - 2)
+
+
+def draw_text_scaled(x: int, y: int, text: str, col: int, scale: int) -> None:
     cursor_x = x
     for char in text.upper():
         glyph = FONT.get(char, FONT[" "])
@@ -74,18 +78,27 @@ def draw_big_text(x: int, y: int, text: str, col: int) -> None:
             for column, bit in enumerate(bits):
                 if bit == "1":
                     pyxel.rect(
-                        cursor_x + column * SCALE,
-                        y + row * SCALE,
-                        SCALE,
-                        SCALE,
+                        cursor_x + column * scale,
+                        y + row * scale,
+                        scale,
+                        scale,
                         col,
                     )
-        cursor_x += CHAR_STEP
+        cursor_x += GLYPH_W * scale + 2
+
+
+def draw_big_text(x: int, y: int, text: str, col: int) -> None:
+    draw_text_scaled(x, y, text, col, SCALE)
 
 
 def draw_bold_text(x: int, y: int, text: str, col: int) -> None:
     draw_big_text(x + 1, y, text, 0)
     draw_big_text(x, y, text, col)
+
+
+def draw_bold_text_scaled(x: int, y: int, text: str, col: int, scale: int) -> None:
+    draw_text_scaled(x + 1, y, text, 0, scale)
+    draw_text_scaled(x, y, text, col, scale)
 
 
 def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
@@ -146,8 +159,9 @@ def draw_hud(
 
 
 def draw_compact_time(clock: SimulationClock) -> None:
-    draw_bold_text(8, 8, clock.current_time.strftime("%b %d"), 7)
-    draw_bold_text(8, 21, clock.current_time.strftime("%H:%M"), 7)
+    scale = 3
+    draw_bold_text_scaled(8, 8, clock.current_time.strftime("%b %d"), 7, scale)
+    draw_bold_text_scaled(8, 27, clock.current_time.strftime("%H:%M"), 7, scale)
 
 
 def draw_constellation_labels(
@@ -264,7 +278,7 @@ def draw_tool_buttons(show_time_slider: bool, show_month_slider: bool) -> None:
 
 def slider_rects(width: int, height: int, side: str) -> dict[str, tuple[int, int, int, int]]:
     panel_w = 34
-    panel_h = min(210, height - 150)
+    panel_h = min(440, max(230, height - 210))
     x = width - panel_w - 6 if side == "right" else 6
     y = max(92, (height - panel_h) // 2)
     return {
