@@ -129,6 +129,7 @@ class StarSkyApp:
         self.slider_knob_ratio = 0.5
         self.projected = {}
         self.capture_ready = False
+        self.ready_signaled = False
 
         pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, title="Starwrite Sky", fps=30)
         pyxel.mouse(True)
@@ -474,6 +475,7 @@ class StarSkyApp:
         if self.menu_open:
             draw_menu_panel(self.show_info, self.show_guides, self.show_constellations, self.slider_side)
         draw_menu_button(self.menu_open)
+        self._signal_ready()
 
     def _focused_star(self) -> tuple[int, ScreenPoint] | None:
         center_x = SCREEN_WIDTH * 0.5
@@ -492,6 +494,18 @@ class StarSkyApp:
         if best is None or best_distance > 42 * 42:
             return None
         return best
+
+    def _signal_ready(self) -> None:
+        if self.ready_signaled:
+            return
+        self.ready_signaled = True
+        try:
+            from js import CustomEvent, document, window  # type: ignore
+
+            document.body.dataset.starwriteReady = "1"
+            window.dispatchEvent(CustomEvent.new("starwrite-ready"))
+        except Exception:
+            pass
 
 
 StarSkyApp()
