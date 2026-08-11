@@ -30,7 +30,14 @@
         display: block;
         width: min(100vw, 960px);
         max-height: 100dvh;
+        aspect-ratio: 4 / 3;
         touch-action: none;
+      }
+
+      pyxel-run canvas {
+        width: 100% !important;
+        height: 100% !important;
+        image-rendering: pixelated;
       }
 
       @media (orientation: portrait) and (max-width: 500px) {
@@ -41,6 +48,7 @@
         pyxel-run {
           width: 100vw;
           height: 100dvh;
+          aspect-ratio: 256 / 556;
         }
       }
     </style>
