@@ -115,7 +115,7 @@ The browser build detects narrow portrait phones and uses a taller Pyxel
 surface for iPhone-style screens:
 
 - Desktop/default: 480 x 360
-- iPhone portrait: 320 x 696
+- iPhone portrait: 392 x 696
 
 The HTML viewport uses `viewport-fit=cover`, `100dvh`, and disabled overscroll
 so the Pyxel canvas can fill the available iPhone 16 browser viewport. Apple

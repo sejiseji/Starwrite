@@ -33,7 +33,7 @@ from ui.hud import (
 )
 
 DESKTOP_SCREEN_SIZE = (480, 360)
-IPHONE16_SCREEN_SIZE = (320, 696)
+IPHONE16_SCREEN_SIZE = (392, 696)
 SETTINGS_KEY = "starwrite_v02_settings"
 CAPTURE_KEY = "starwrite_v01_latest_capture"
 
