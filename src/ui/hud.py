@@ -16,7 +16,9 @@ GLYPH_H = 5
 CHAR_STEP = 8
 LINE_STEP = 13
 UNICODE_FONT_PATH = "assets/starwrite_jp10.bdf"
+JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
 _unicode_font = None
+_display_width_cache: dict[str, int] = {}
 
 FONT = {
     " ": ("000", "000", "000", "000", "000"),
@@ -75,13 +77,20 @@ def text_width(text: str) -> int:
 def display_text_width(text: str) -> int:
     if text.isascii():
         return text_width(text)
+    cached = _display_width_cache.get(text)
+    if cached is not None:
+        return cached
     font = unicode_font()
     if font is not None:
         try:
-            return int(font.text_width(text))
+            width = int(font.text_width(text))
+            _display_width_cache[text] = width
+            return width
         except Exception:
             pass
-    return len(text) * 10
+    width = len(text) * 10
+    _display_width_cache[text] = width
+    return width
 
 
 def text_width_scaled(text: str, scale: int) -> int:
@@ -123,6 +132,17 @@ def draw_display_bold_text(x: int, y: int, text: str, col: int) -> None:
         pyxel.text(x, y, text, col)
         return
     pyxel.text(x + 1, y + 1, text, 0, font)
+    pyxel.text(x, y, text, col, font)
+
+
+def draw_display_text(x: int, y: int, text: str, col: int) -> None:
+    if text.isascii():
+        draw_big_text(x, y, text.upper(), col)
+        return
+    font = unicode_font()
+    if font is None:
+        pyxel.text(x, y, text, col)
+        return
     pyxel.text(x, y, text, col, font)
 
 
@@ -223,34 +243,63 @@ def draw_constellation_labels(
     points: dict[int, ScreenPoint],
     language: Language,
 ) -> None:
-    for index, constellation in enumerate(constellations):
+    candidates = [
+        (index, constellation, _constellation_label_center(constellation, points))
+        for index, constellation in enumerate(constellations)
+    ]
+    visible = [(index, constellation, center) for index, constellation, center in candidates if center is not None]
+    if language == "ja":
+        screen_center_x = pyxel.width * 0.5
+        screen_center_y = pyxel.height * 0.5
+        visible.sort(
+            key=lambda item: (
+                item[1].id != selected_constellation.id,
+                (item[2][0] - screen_center_x) ** 2 + (item[2][1] - screen_center_y) ** 2,
+            )
+        )
+        visible = visible[:JAPANESE_CONSTELLATION_LABEL_LIMIT]
+    for index, constellation, center in visible:
+        selected = constellation.id == selected_constellation.id
         draw_constellation_label(
             constellation,
-            points,
-            10 if constellation.id == selected_constellation.id else 13,
+            center,
+            10 if selected else 13,
             index,
             language,
+            selected,
         )
+
+
+def _constellation_label_center(
+    constellation: Constellation,
+    points: dict[int, ScreenPoint],
+) -> tuple[int, int] | None:
+    visible = [points[star_id] for star_id in constellation.main_star_ids if star_id in points]
+    if len(visible) < 2:
+        return None
+    center_x = int(sum(point.x for point in visible) / len(visible))
+    center_y = int(sum(point.y for point in visible) / len(visible))
+    return center_x, center_y
 
 
 def draw_constellation_label(
     constellation: Constellation,
-    points: dict[int, ScreenPoint],
+    center: tuple[int, int],
     color: int,
     index: int,
     language: Language,
+    selected: bool,
 ) -> None:
-    visible = [points[star_id] for star_id in constellation.main_star_ids if star_id in points]
-    if len(visible) < 2:
-        return
-    center_x = int(sum(point.x for point in visible) / len(visible))
-    center_y = int(sum(point.y for point in visible) / len(visible))
+    center_x, center_y = center
     label = constellation_name(constellation, language)
     width = display_text_width(label)
     label_x = max(4, min(pyxel.width - width - 4, center_x + 10))
     label_y = max(88, min(pyxel.height - 76, center_y - 18 + (index % 3) * 12))
     pyxel.line(center_x, center_y, label_x - 3, label_y + 6, color)
-    draw_display_bold_text(label_x, label_y, label, color)
+    if selected:
+        draw_display_bold_text(label_x, label_y, label, color)
+    else:
+        draw_display_text(label_x, label_y, label, color)
 
 
 def draw_focused_star(point: ScreenPoint, name: str) -> None:
