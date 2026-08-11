@@ -257,21 +257,27 @@
       const minimumStartupMs = 1200;
       let startupShownAt = 0;
       let startupHideTimer = 0;
+      let startupInteractionSeen = false;
+      let startupReady = false;
+      let startupDismissed = false;
 
       function showStartupLoader() {
-        if (document.body.dataset.starwriteReady === "1") {
+        if (startupDismissed || startupInteractionSeen) {
           return;
         }
+        startupInteractionSeen = true;
         window.clearTimeout(startupHideTimer);
-        if (startupShownAt === 0) {
-          startupShownAt = performance.now();
-        }
+        startupShownAt = performance.now();
         startupLoader.classList.add("is-visible");
         startupLoader.setAttribute("aria-hidden", "false");
+        if (startupReady || document.body.dataset.starwriteReady === "1") {
+          hideStartupLoader();
+        }
       }
 
       function hideStartupLoader() {
-        if (startupShownAt === 0) {
+        startupReady = true;
+        if (!startupInteractionSeen || startupShownAt === 0) {
           return;
         }
         const elapsed = performance.now() - startupShownAt;
@@ -280,14 +286,27 @@
         startupHideTimer = window.setTimeout(() => {
           startupLoader.classList.remove("is-visible");
           startupLoader.setAttribute("aria-hidden", "true");
+          startupDismissed = true;
         }, remaining);
       }
 
       pyxelRun.addEventListener("pointerdown", showStartupLoader, { capture: true });
+      pyxelRun.addEventListener("mousedown", showStartupLoader, { capture: true });
       pyxelRun.addEventListener("click", showStartupLoader, { capture: true });
       pyxelRun.addEventListener("touchstart", showStartupLoader, { capture: true, passive: true });
+      pyxelRun.addEventListener("touchend", showStartupLoader, { capture: true, passive: true });
       window.addEventListener("pointerdown", showStartupLoader, { capture: true });
+      window.addEventListener("mousedown", showStartupLoader, { capture: true });
+      window.addEventListener("click", showStartupLoader, { capture: true });
       window.addEventListener("touchstart", showStartupLoader, { capture: true, passive: true });
+      window.addEventListener("touchend", showStartupLoader, { capture: true, passive: true });
+      window.addEventListener("keydown", showStartupLoader, { capture: true });
+      document.addEventListener("pointerdown", showStartupLoader, { capture: true });
+      document.addEventListener("mousedown", showStartupLoader, { capture: true });
+      document.addEventListener("click", showStartupLoader, { capture: true });
+      document.addEventListener("touchstart", showStartupLoader, { capture: true, passive: true });
+      document.addEventListener("touchend", showStartupLoader, { capture: true, passive: true });
+      document.addEventListener("keydown", showStartupLoader, { capture: true });
       window.addEventListener("starwrite-ready", hideStartupLoader);
 
       new MutationObserver(() => {
