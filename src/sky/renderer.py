@@ -18,6 +18,7 @@ STAR_RED = 8
 LINE_DIM = 5
 LINE_SELECTED = 10
 HORIZON = 13
+POLARIS_ID = 11767
 
 
 def _dim_star_color(color: int) -> int:
@@ -95,6 +96,8 @@ class SkyRenderer:
             y = int(point.y)
             col = star_color(point.color_index)
             radius = star_radius(point.magnitude)
+            if star_id == POLARIS_ID:
+                radius = max(radius, 2)
             twinkle = twinkle_level(star_id, point.magnitude, frame_count)
             if twinkle == 0:
                 if radius == 0:

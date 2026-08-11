@@ -299,7 +299,8 @@ def draw_slider(side: str, label: str, knob_ratio: float = 0.5) -> None:
     x, y, w, h = rects["panel"]
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 13)
-    draw_big_text(x + 5, y - 14, label, 7)
+    label_x = max(4, min(pyxel.width - text_width(label) - 4, x + 5))
+    draw_big_text(label_x, y - 14, label, 7)
     draw_button(rects[f"{label.lower()}_minus"], "-", False)
     track = rects[f"{label.lower()}_track"]
     pyxel.rect(track[0], track[1], track[2], track[3], 13)
