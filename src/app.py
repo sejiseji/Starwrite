@@ -21,6 +21,7 @@ from sky.renderer import SkyRenderer
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
 from ui.hud import (
     draw_compact_time,
+    draw_event_banner,
     draw_hud,
     draw_constellation_labels,
     draw_focused_star,
@@ -315,10 +316,10 @@ class StarSkyApp:
         label = "time" if self.show_time_slider else "month"
         rects = slider_rects(SCREEN_WIDTH, SCREEN_HEIGHT, self.slider_side)
         if self._point_in_rect(point, rects[f"{label}_minus"]):
-            self.clock.add_minutes(10) if label == "time" else self.clock.add_days(30)
+            self.clock.add_minutes(15) if label == "time" else self.clock.add_days(1)
             return True
         if self._point_in_rect(point, rects[f"{label}_plus"]):
-            self.clock.add_minutes(-10) if label == "time" else self.clock.add_days(-30)
+            self.clock.add_minutes(-15) if label == "time" else self.clock.add_days(-1)
             return True
         if self._point_in_rect(point, self._expanded_rect(rects[f"{label}_knob"], 8)):
             self._start_slider_drag(label, point[1])
@@ -479,6 +480,8 @@ class StarSkyApp:
             )
         else:
             draw_compact_time(self.clock)
+        if self.meteor_event is not None:
+            draw_event_banner(self.meteor_event)
         draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected)
         if self.meteor_event is not None:
             draw_meteor_event(self.meteor_event)

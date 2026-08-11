@@ -70,8 +70,8 @@ The upper-right controls are always available:
 
 The current prototype slider uses edge `+` / `-` buttons:
 
-- `TIME`: +/-10 minutes
-- `DAY`: +/-30 days
+- `TIME`: +/-15 minutes
+- `DAY`: +/-1 day
 
 Dragging a slider knob or track continuously changes the sky:
 

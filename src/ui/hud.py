@@ -228,6 +228,12 @@ def draw_meteor_event(event_view: MeteorEventView) -> None:
     draw_bold_text(label_x, label_y, label, 10)
 
 
+def draw_event_banner(event_view: MeteorEventView) -> None:
+    label = event_view.event.name.upper()
+    x = max(4, min(pyxel.width - text_width(label) - 4, (pyxel.width - text_width(label)) // 2))
+    draw_bold_text(x, 8, label, 10)
+
+
 def _hud_lines(
     observer: Observer,
     clock: SimulationClock,
