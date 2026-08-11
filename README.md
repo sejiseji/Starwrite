@@ -159,6 +159,13 @@ The prototype uses two star sources:
 - A deterministic synthetic faint-star background generated in code for visual
   density. These synthetic stars are not a scientific catalog.
 
+The prototype includes one meteor-shower event:
+
+- PER-2026 - Perseids peak display for the local night of 2026-08-12/13.
+  The event uses an approximate radiant of RA 48 deg, Dec +58 deg and a peak
+  expression around 02:00 local time. Meteors are visualized as simplified
+  streaks radiating from the radiant, not as a physical particle simulation.
+
 For a production catalog, replace `src/data/stars.py` with a properly licensed
 catalog such as HYG Database or Hipparcos-derived data and document the exact
 license in this section.
@@ -167,3 +174,4 @@ license in this section.
 
 - Pyxel project: https://github.com/kitao/pyxel
 - Pyxel Web custom tag article by Pyxel author: https://tkitao.hatenablog.com/entry/2022/10/08/174438
+- International Meteor Organization, 2026 Meteor Shower Calendar: https://www.imo.net/

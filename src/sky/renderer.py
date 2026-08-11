@@ -7,6 +7,7 @@ import pyxel
 from astronomy.catalog import Constellation
 from .camera import SkyCamera
 from .capture import ScreenPoint
+from .meteors import MeteorEventView
 from .vector import Vec3
 
 STAR_WHITE = 7
@@ -75,6 +76,7 @@ class SkyRenderer:
         camera: SkyCamera,
         width: int,
         height: int,
+        meteor_event: MeteorEventView | None = None,
     ) -> None:
         pyxel.cls(0)
         if show_guides:
@@ -83,6 +85,8 @@ class SkyRenderer:
         if show_constellations:
             self.draw_constellations(points, constellations, selected_constellation)
         self.draw_stars(points)
+        if meteor_event is not None:
+            self.draw_meteors(meteor_event, width, height)
 
     def draw_background(self, width: int, height: int) -> None:
         for y in range(0, height, 12):
@@ -128,6 +132,39 @@ class SkyRenderer:
                 if twinkle == 2:
                     pyxel.pset(x + 1, y, HORIZON)
 
+    def draw_meteors(self, event_view: MeteorEventView, width: int, height: int) -> None:
+        if event_view.radiant_screen is None:
+            return
+        radiant_x, radiant_y = event_view.radiant_screen
+        count = 2 + int(event_view.activity * 3)
+        frame_count = pyxel.frame_count
+        seed_base = sum(ord(char) for char in event_view.event.id)
+        for index in range(count):
+            period = 80 + index * 37
+            age = (frame_count + seed_base + index * 53) % period
+            if age >= 12:
+                continue
+            burst = (frame_count + seed_base + index * 53 - age) // period
+            x = _pseudo_random(seed_base + index * 101 + burst * 17) * width
+            y = _pseudo_random(seed_base + index * 191 + burst * 29) * height
+            dx = x - radiant_x
+            dy = y - radiant_y
+            distance = math.sqrt(dx * dx + dy * dy)
+            if distance < 24.0:
+                continue
+            dx /= distance
+            dy /= distance
+            length = 16 + event_view.activity * 28 + _pseudo_random(seed_base + index * 41 + burst) * 24
+            visible = age / 11.0
+            head_x = x + dx * visible * length
+            head_y = y + dy * visible * length
+            tail_x = head_x - dx * length
+            tail_y = head_y - dy * length
+            color = STAR_YELLOW_WHITE if index == 0 and event_view.activity > 0.75 else STAR_WHITE
+            pyxel.line(int(tail_x), int(tail_y), int(head_x), int(head_y), color)
+            if age < 6:
+                pyxel.pset(int(head_x), int(head_y), 7)
+
     def draw_constellations(
         self,
         points: dict[int, ScreenPoint],
@@ -159,3 +196,7 @@ class SkyRenderer:
                 last = (x, y)
             else:
                 last = None
+
+
+def _pseudo_random(seed: int) -> float:
+    return (math.sin(seed * 12.9898) * 43758.5453) % 1.0

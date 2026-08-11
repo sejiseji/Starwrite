@@ -12,9 +12,11 @@ import pyxel
 
 from astronomy.observer import Observer
 from data.constellations import CONSTELLATIONS
+from data.meteor_showers import METEOR_SHOWERS
 from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
 from sky.capture import ScreenPoint, SkyCapture, can_capture
+from sky.meteors import active_meteor_event
 from sky.renderer import SkyRenderer
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
 from ui.hud import (
@@ -22,6 +24,7 @@ from ui.hud import (
     draw_hud,
     draw_constellation_labels,
     draw_focused_star,
+    draw_meteor_event,
     draw_menu_button,
     draw_menu_panel,
     draw_slider,
@@ -132,6 +135,7 @@ class StarSkyApp:
         self.slider_drag_start_time = self.clock.current_time
         self.slider_knob_ratio = 0.5
         self.projected = {}
+        self.meteor_event = None
         self.capture_ready = False
         self.ready_signaled = False
 
@@ -175,6 +179,14 @@ class StarSkyApp:
         self.capture_ready = can_capture(
             self.selected_constellation,
             self.projected,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT,
+        )
+        self.meteor_event = active_meteor_event(
+            METEOR_SHOWERS,
+            self.observer,
+            self.clock.current_time,
+            self.camera,
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
         )
@@ -452,6 +464,7 @@ class StarSkyApp:
             self.camera,
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
+            self.meteor_event,
         )
         if self.show_info:
             draw_hud(
@@ -467,6 +480,8 @@ class StarSkyApp:
         else:
             draw_compact_time(self.clock)
         draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected)
+        if self.meteor_event is not None:
+            draw_meteor_event(self.meteor_event)
         focused_star = self._focused_star()
         if focused_star is not None:
             star_id, point = focused_star

@@ -6,6 +6,7 @@ from astronomy.catalog import Constellation
 from astronomy.observer import Observer
 from sky.capture import ScreenPoint, SkyCapture
 from sky.camera import SkyCamera
+from sky.meteors import MeteorEventView
 from sky.simulation import SimulationClock
 
 SCALE = 2
@@ -210,6 +211,21 @@ def draw_focused_star(point: ScreenPoint, name: str) -> None:
     line_x = label_x - 3 if label_x > x else label_x + text_width(label) + 3
     pyxel.line(x + 7 if label_x > x else x - 7, y, line_x, label_y + 6, 8)
     draw_bold_text(label_x, label_y, label, 8)
+
+
+def draw_meteor_event(event_view: MeteorEventView) -> None:
+    if event_view.radiant_screen is None:
+        return
+    radiant_x, radiant_y = event_view.radiant_screen
+    label = event_view.event.name.upper()
+    label_x = max(4, min(pyxel.width - text_width(label) - 4, int(radiant_x) + 10))
+    label_y = max(58, min(pyxel.height - 76, int(radiant_y) - 8))
+    if 0 <= radiant_x < pyxel.width and 0 <= radiant_y < pyxel.height:
+        x = int(radiant_x)
+        y = int(radiant_y)
+        pyxel.rectb(x - 4, y - 4, 9, 9, 10)
+        pyxel.line(x, y, label_x - 3 if label_x > x else label_x + text_width(label) + 3, label_y + 6, 10)
+    draw_bold_text(label_x, label_y, label, 10)
 
 
 def _hud_lines(
