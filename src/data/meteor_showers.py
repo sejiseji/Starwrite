@@ -28,16 +28,16 @@ class RecurringMeteorShower:
 RECURRING_METEOR_SHOWERS: tuple[RecurringMeteorShower, ...] = (
     RecurringMeteorShower("QUA", "Quadrantids", 1, 3, 3, 230.0, 49.0, 110, "2003 EH1", "BOO"),
     RecurringMeteorShower("LYR", "Lyrids", 4, 22, 3, 271.0, 34.0, 18, "C/1861 G1 Thatcher", "LYR"),
-    RecurringMeteorShower("ETA", "Eta Aquariids", 5, 6, 3, 338.0, -1.0, 50, "1P/Halley", None),
-    RecurringMeteorShower("SDA", "Southern delta Aquariids", 7, 31, 2, 340.0, -16.0, 25, "96P/Machholz complex", None),
-    RecurringMeteorShower("CAP", "Alpha Capricornids", 7, 30, 2, 307.0, -10.0, 5, "169P/NEAT", None),
+    RecurringMeteorShower("ETA", "Eta Aquariids", 5, 6, 3, 338.0, -1.0, 50, "1P/Halley", "AQR"),
+    RecurringMeteorShower("SDA", "Southern delta Aquariids", 7, 31, 2, 340.0, -16.0, 25, "96P/Machholz complex", "AQR"),
+    RecurringMeteorShower("CAP", "Alpha Capricornids", 7, 30, 2, 307.0, -10.0, 5, "169P/NEAT", "CAP"),
     RecurringMeteorShower("PER", "Perseids", 8, 13, 2, 48.0, 58.0, 100, "109P/Swift-Tuttle", "PER"),
     RecurringMeteorShower("ORI", "Orionids", 10, 21, 3, 95.0, 16.0, 20, "1P/Halley", "ORI"),
     RecurringMeteorShower("STA", "Southern Taurids", 11, 5, 1, 52.0, 13.0, 5, "2P/Encke complex", "TAU"),
     RecurringMeteorShower("NTA", "Northern Taurids", 11, 12, 1, 58.0, 22.0, 5, "2P/Encke complex", "TAU"),
     RecurringMeteorShower("LEO", "Leonids", 11, 17, 3, 152.0, 22.0, 15, "55P/Tempel-Tuttle", "LEO"),
     RecurringMeteorShower("GEM", "Geminids", 12, 14, 2, 112.0, 33.0, 150, "3200 Phaethon", "GEM"),
-    RecurringMeteorShower("URS", "Ursids", 12, 22, 3, 217.0, 76.0, 10, "8P/Tuttle", None),
+    RecurringMeteorShower("URS", "Ursids", 12, 22, 3, 217.0, 76.0, 10, "8P/Tuttle", "UMI"),
 )
 
 

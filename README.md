@@ -3,7 +3,7 @@
 Pyxel-based star sky simulator prototype for GitHub Pages.
 
 The v0.1 scope is intentionally small: render a condition-dependent night sky,
-look around it, show five major constellations, and keep one local
+look around it, show prototype constellations, and keep one local
 `SkyCapture`. StarLetter, networking, backend storage, accounts, planets, moon,
 sun, AR, and high-precision astronomy corrections are not implemented.
 
@@ -82,10 +82,7 @@ Dragging a slider knob or track continuously changes the sky:
 - `EVENT`: tap the upper/lower half to jump to the next/previous event
 
 When the `EVENT` control jumps to a registered meteor shower, the camera also
-turns toward the related constellation when that constellation exists in the
-current prototype catalog. For showers whose source constellation is not yet in
-the 22-constellation prototype set, the camera turns toward the event radiant
-instead.
+turns toward the related constellation in the current prototype catalog.
 
 The bottom `MENU` button opens a display panel for toggling:
 
@@ -137,7 +134,7 @@ gaps caused by Safari's visible toolbar area.
 
 ## Data
 
-The prototype includes 22 constellations:
+The prototype includes 25 constellations:
 
 - ORI - Orion
 - CYG - Cygnus
@@ -161,6 +158,9 @@ The prototype includes 22 constellations:
 - AUR - Auriga
 - DRA - Draco
 - CEP - Cepheus
+- AQR - Aquarius
+- CAP - Capricornus
+- UMI - Ursa Minor
 
 The prototype uses two star sources:
 

@@ -134,6 +134,23 @@ NAMED_STARS: tuple[Star, ...] = (
     star_from_hours(106032, 21.4777, 70.5607, 3.23, 1.10),  # Alfirk
     star_from_hours(116727, 23.6558, 77.6323, 3.21, 1.03),  # Errai
     star_from_hours(109492, 22.1809, 58.2012, 3.35, 1.57),  # Zeta Cephei
+    star_from_hours(109074, 22.0964, -0.3199, 2.94, 0.97),  # Sadalmelik
+    star_from_hours(106278, 21.5260, -5.5712, 2.87, 0.83),  # Sadalsuud
+    star_from_hours(113136, 22.9108, -15.8208, 3.27, 0.04),  # Skat
+    star_from_hours(110395, 22.3609, -1.3873, 3.84, -0.04),  # Sadachbia
+    star_from_hours(102618, 20.7946, -9.4958, 3.77, 0.03),  # Albali
+    star_from_hours(110003, 22.2806, -7.7833, 4.17, 0.98),  # Ancha
+    star_from_hours(107556, 21.7840, -16.1273, 2.85, 0.30),  # Deneb Algedi
+    star_from_hours(100345, 20.3502, -14.7814, 3.05, 0.79),  # Dabih
+    star_from_hours(100064, 20.3009, -12.5449, 3.58, 1.58),  # Algedi
+    star_from_hours(106985, 21.6682, -16.6623, 3.69, 0.31),  # Nashira
+    star_from_hours(104139, 21.0991, -17.2329, 4.13, 1.53),  # Psi Capricorni
+    star_from_hours(72607, 14.8451, 74.1555, 2.08, 1.47),  # Kochab
+    star_from_hours(75097, 15.3455, 71.8340, 3.05, 0.04),  # Pherkad
+    star_from_hours(85822, 17.5369, 86.5863, 4.36, 0.28),  # Yildun
+    star_from_hours(82080, 16.7662, 82.0373, 4.23, 0.90),  # Epsilon Ursae Minoris
+    star_from_hours(77055, 15.7343, 77.7945, 4.32, 0.00),  # Zeta Ursae Minoris
+    star_from_hours(79822, 16.2918, 75.7547, 4.95, 0.32),  # Eta Ursae Minoris
 )
 
 STAR_NAMES: dict[int, str] = {
@@ -247,6 +264,23 @@ STAR_NAMES: dict[int, str] = {
     106032: "Alfirk",
     116727: "Errai",
     109492: "Zeta Cephei",
+    109074: "Sadalmelik",
+    106278: "Sadalsuud",
+    113136: "Skat",
+    110395: "Sadachbia",
+    102618: "Albali",
+    110003: "Ancha",
+    107556: "Deneb Algedi",
+    100345: "Dabih",
+    100064: "Algedi",
+    106985: "Nashira",
+    104139: "Psi Capricorni",
+    72607: "Kochab",
+    75097: "Pherkad",
+    85822: "Yildun",
+    82080: "Epsilon Ursae Minoris",
+    77055: "Zeta Ursae Minoris",
+    79822: "Eta Ursae Minoris",
 }
 
 

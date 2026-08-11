@@ -27,6 +27,7 @@ from sky.meteors import (
 from sky.renderer import SkyRenderer
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
 from ui.hud import (
+    begin_display_text_frame,
     draw_compact_time,
     draw_event_banner,
     draw_hud,
@@ -522,6 +523,7 @@ class StarSkyApp:
         )
 
     def draw(self) -> None:
+        begin_display_text_frame()
         self.renderer.draw(
             self.projected,
             CONSTELLATIONS,

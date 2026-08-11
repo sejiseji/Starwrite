@@ -15,9 +15,11 @@ class LocalizationTests(unittest.TestCase):
 
     def test_constellation_name_can_be_japanese(self) -> None:
         perseus = next(constellation for constellation in CONSTELLATIONS if constellation.id == "PER")
+        aquarius = next(constellation for constellation in CONSTELLATIONS if constellation.id == "AQR")
 
         self.assertEqual(constellation_name(perseus, "ja"), "ペルセウス座")
         self.assertEqual(constellation_name(perseus, "en"), "Perseus")
+        self.assertEqual(constellation_name(aquarius, "ja"), "みずがめ座")
 
     def test_star_name_can_be_japanese(self) -> None:
         self.assertEqual(star_name(11767, "Polaris", "ja"), "ポラリス")

@@ -4,6 +4,7 @@ import unittest
 from datetime import datetime, timedelta, timezone
 
 from astronomy.observer import Observer
+from data.constellations import CONSTELLATIONS
 from data.meteor_showers import EVENT_YEAR_END, EVENT_YEAR_START, METEOR_SHOWERS, RECURRING_METEOR_SHOWERS
 from sky.meteors import adjacent_meteor_event, adjacent_meteor_event_time, meteor_activity, meteor_radiant_direction
 
@@ -58,3 +59,16 @@ class MeteorTests(unittest.TestCase):
         assert event is not None
         self.assertEqual(event.id, "PER-2026")
         self.assertEqual(event.related_constellation_id, "PER")
+
+    def test_all_events_have_related_constellation_in_catalog(self) -> None:
+        constellation_ids = {constellation.id for constellation in CONSTELLATIONS}
+
+        missing = sorted(
+            {
+                event.related_constellation_id
+                for event in METEOR_SHOWERS
+                if event.related_constellation_id not in constellation_ids
+            }
+        )
+
+        self.assertEqual(missing, [])

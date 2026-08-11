@@ -15,6 +15,13 @@ GLYPH_W = 3
 GLYPH_H = 5
 CHAR_STEP = 8
 LINE_STEP = 13
+DOM_COLORS = {
+    0: "#000000",
+    7: "#ffffff",
+    8: "#ff2f87",
+    10: "#ffd447",
+    13: "#b8c0d8",
+}
 
 FONT = {
     " ": ("000", "000", "000", "000", "000"),
@@ -73,7 +80,7 @@ def text_width(text: str) -> int:
 def display_text_width(text: str) -> int:
     if text.isascii():
         return text_width(text)
-    return len(text) * 8
+    return len(text) * 10
 
 
 def text_width_scaled(text: str, scale: int) -> int:
@@ -110,8 +117,63 @@ def draw_display_bold_text(x: int, y: int, text: str, col: int) -> None:
     if text.isascii():
         draw_bold_text(x, y, text.upper(), col)
         return
-    pyxel.text(x + 1, y + 1, text, 0)
-    pyxel.text(x, y, text, col)
+    draw_browser_text(x, y, text, col)
+
+
+def begin_display_text_frame() -> None:
+    try:
+        from js import document  # type: ignore
+
+        layer = document.getElementById("starwrite-label-layer")
+        if layer is None:
+            layer = document.createElement("div")
+            layer.id = "starwrite-label-layer"
+            style = layer.style
+            style.position = "fixed"
+            style.inset = "0"
+            style.pointerEvents = "none"
+            style.zIndex = "2147483000"
+            document.body.appendChild(layer)
+        layer.innerHTML = ""
+    except Exception:
+        pass
+
+
+def draw_browser_text(x: int, y: int, text: str, col: int) -> None:
+    try:
+        from js import document  # type: ignore
+
+        canvas = document.querySelector("pyxel-run canvas")
+        if canvas is None:
+            canvas = document.querySelector("canvas")
+        layer = document.getElementById("starwrite-label-layer")
+        if canvas is None or layer is None:
+            return
+        rect = canvas.getBoundingClientRect()
+        scale_x = rect.width / max(1, pyxel.width)
+        scale_y = rect.height / max(1, pyxel.height)
+        label = document.createElement("div")
+        style = label.style
+        style.position = "fixed"
+        style.left = f"{rect.left + x * scale_x}px"
+        style.top = f"{rect.top + y * scale_y}px"
+        style.color = DOM_COLORS.get(col, "#ffffff")
+        style.fontFamily = (
+            '"Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, '
+            '"Noto Sans JP", sans-serif'
+        )
+        style.fontSize = f"{max(10.0, 10.0 * scale_y)}px"
+        style.fontWeight = "800"
+        style.lineHeight = "1"
+        style.whiteSpace = "nowrap"
+        style.textShadow = "1px 1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000"
+        label.textContent = text
+        layer.appendChild(label)
+    except Exception:
+        try:
+            pyxel.text(x, y, text, col)
+        except Exception:
+            pass
 
 
 def draw_bold_text_scaled(x: int, y: int, text: str, col: int, scale: int) -> None:
