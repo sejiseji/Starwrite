@@ -36,7 +36,7 @@ http://localhost:8000/
 The browser entrypoint uses Pyxel Web custom tags:
 
 ```html
-<pyxel-run root="." name="src/app.py"></pyxel-run>
+<pyxel-run root="." name="src/app_v2.py"></pyxel-run>
 ```
 
 ## Controls
