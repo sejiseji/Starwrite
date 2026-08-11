@@ -254,18 +254,33 @@
     <script>
       const startupLoader = document.getElementById("startup-loader");
       const pyxelRun = document.querySelector("pyxel-run");
+      const minimumStartupMs = 1200;
+      let startupShownAt = 0;
+      let startupHideTimer = 0;
 
       function showStartupLoader() {
         if (document.body.dataset.starwriteReady === "1") {
           return;
+        }
+        window.clearTimeout(startupHideTimer);
+        if (startupShownAt === 0) {
+          startupShownAt = performance.now();
         }
         startupLoader.classList.add("is-visible");
         startupLoader.setAttribute("aria-hidden", "false");
       }
 
       function hideStartupLoader() {
-        startupLoader.classList.remove("is-visible");
-        startupLoader.setAttribute("aria-hidden", "true");
+        if (startupShownAt === 0) {
+          return;
+        }
+        const elapsed = performance.now() - startupShownAt;
+        const remaining = Math.max(0, minimumStartupMs - elapsed);
+        window.clearTimeout(startupHideTimer);
+        startupHideTimer = window.setTimeout(() => {
+          startupLoader.classList.remove("is-visible");
+          startupLoader.setAttribute("aria-hidden", "true");
+        }, remaining);
       }
 
       pyxelRun.addEventListener("pointerdown", showStartupLoader, { capture: true });
