@@ -70,6 +70,70 @@ NAMED_STARS: tuple[Star, ...] = (
     star_from_hours(78820, 16.0906, -19.8055, 2.56, -0.08),  # Acrab
     star_from_hours(80112, 16.3532, -25.5928, 2.89, -0.05),  # Alniyat
     star_from_hours(85696, 17.5127, -37.2958, 2.70, -0.22),  # Lesath
+    star_from_hours(49669, 10.1395, 11.9672, 1.35, -0.11),  # Regulus
+    star_from_hours(57632, 11.8177, 14.5721, 2.14, 0.09),  # Denebola
+    star_from_hours(50583, 10.3330, 19.8415, 2.28, 1.15),  # Algieba
+    star_from_hours(54872, 11.2351, 20.5237, 2.56, 0.12),  # Zosma
+    star_from_hours(54879, 11.2373, 15.4296, 3.33, 0.31),  # Chertan
+    star_from_hours(25428, 5.4382, 28.6075, 1.65, -0.13),  # Elnath
+    star_from_hours(17702, 3.7914, 24.1051, 2.87, -0.09),  # Alcyone
+    star_from_hours(20889, 4.3823, 17.5425, 3.40, 0.98),  # Hyadum I
+    star_from_hours(36850, 7.5766, 31.8886, 1.58, 0.03),  # Castor
+    star_from_hours(31681, 6.6285, 16.3993, 1.93, 0.00),  # Alhena
+    star_from_hours(35550, 7.3354, 21.9823, 3.53, 0.35),  # Wasat
+    star_from_hours(32246, 6.7322, 25.1311, 3.06, 1.40),  # Mebsuta
+    star_from_hours(34088, 7.0685, 20.5703, 4.01, 1.55),  # Mekbuda
+    star_from_hours(30324, 6.3783, -17.9559, 1.98, -0.23),  # Mirzam
+    star_from_hours(34444, 7.1399, -26.3932, 1.83, 0.68),  # Wezen
+    star_from_hours(33579, 6.9771, -28.9721, 1.50, -0.21),  # Adhara
+    star_from_hours(35904, 7.4016, -29.3031, 2.45, -0.07),  # Aludra
+    star_from_hours(92420, 18.8347, 33.3627, 3.52, 0.00),  # Sheliak
+    star_from_hours(93194, 18.9824, 32.6896, 3.24, -0.12),  # Sulafat
+    star_from_hours(92791, 18.9084, 36.8986, 4.30, 0.08),  # Delta Lyrae
+    star_from_hours(97278, 19.7710, 10.6133, 2.72, 1.51),  # Tarazed
+    star_from_hours(98036, 19.9219, 6.4068, 3.71, 0.86),  # Alshain
+    star_from_hours(95501, 19.4249, 3.1148, 3.36, -0.08),  # Deneb el Okab
+    star_from_hours(72105, 14.7498, 27.0742, 2.37, 1.27),  # Izar
+    star_from_hours(73555, 15.0324, 40.3906, 3.49, 1.10),  # Nekkar
+    star_from_hours(71075, 14.5346, 38.3079, 3.03, 0.19),  # Seginus
+    star_from_hours(67927, 13.9114, 18.3977, 2.68, 0.59),  # Muphrid
+    star_from_hours(62434, 12.7953, -59.6888, 1.25, -0.23),  # Mimosa
+    star_from_hours(61084, 12.5194, -57.1132, 1.63, 1.59),  # Gacrux
+    star_from_hours(59747, 12.2524, -58.7489, 2.79, -0.19),  # Delta Crucis
+    star_from_hours(71683, 14.6601, -60.8351, -0.27, 0.71),  # Rigil Kentaurus
+    star_from_hours(68933, 14.1114, -36.3700, 2.06, 1.01),  # Menkent
+    star_from_hours(68002, 13.9257, -47.2884, 2.30, -0.20),  # Theta Centauri
+    star_from_hours(45238, 9.2200, -69.7172, 1.67, 0.20),  # Miaplacidus
+    star_from_hours(41037, 8.3752, -59.5095, 1.86, 1.16),  # Avior
+    star_from_hours(45556, 9.2848, -59.2752, 2.21, 1.20),  # Aspidiske
+    star_from_hours(61941, 12.6943, -1.4494, 2.74, 0.36),  # Porrima
+    star_from_hours(63608, 13.0363, 10.9591, 2.85, 0.94),  # Vindemiatrix
+    star_from_hours(66249, 13.5782, -0.5958, 3.38, 0.37),  # Heze
+    star_from_hours(57757, 11.8449, 1.7647, 3.59, 0.57),  # Zavijava
+    star_from_hours(113963, 23.0793, 15.2053, 2.49, -0.04),  # Markab
+    star_from_hours(113881, 23.0629, 28.0828, 2.42, 1.65),  # Scheat
+    star_from_hours(1067, 0.2206, 15.1836, 2.83, -0.19),  # Algenib
+    star_from_hours(107315, 21.7364, 9.8750, 2.39, 1.52),  # Enif
+    star_from_hours(677, 0.1398, 29.0904, 2.06, -0.04),  # Alpheratz
+    star_from_hours(5447, 1.1622, 35.6206, 2.07, 1.58),  # Mirach
+    star_from_hours(9640, 2.0649, 42.3297, 2.10, 1.37),  # Almach
+    star_from_hours(3092, 0.6555, 30.8610, 3.27, 0.78),  # Delta Andromedae
+    star_from_hours(15863, 3.4054, 49.8612, 1.79, 0.48),  # Mirfak
+    star_from_hours(14576, 3.1361, 40.9556, 2.09, -0.05),  # Algol
+    star_from_hours(17448, 3.7387, 32.2883, 3.84, 0.12),  # Atik
+    star_from_hours(14328, 3.0799, 53.5064, 2.93, 0.72),  # Gamma Persei
+    star_from_hours(28360, 5.9921, 44.9474, 1.90, 0.03),  # Menkalinan
+    star_from_hours(28380, 5.9954, 37.2126, 2.62, 0.08),  # Mahasim
+    star_from_hours(23015, 4.9499, 33.1661, 2.69, 1.49),  # Hassaleh
+    star_from_hours(23416, 5.0328, 43.8233, 3.03, 0.54),  # Almaaz
+    star_from_hours(87833, 17.9434, 51.4889, 2.24, 1.52),  # Eltanin
+    star_from_hours(85670, 17.5072, 52.3014, 2.79, 0.98),  # Rastaban
+    star_from_hours(68756, 14.0732, 64.3759, 3.65, -0.05),  # Thuban
+    star_from_hours(75458, 15.4155, 58.9661, 3.29, 1.16),  # Edasich
+    star_from_hours(105199, 21.3096, 62.5856, 2.45, 0.26),  # Alderamin
+    star_from_hours(106032, 21.4777, 70.5607, 3.23, 1.10),  # Alfirk
+    star_from_hours(116727, 23.6558, 77.6323, 3.21, 1.03),  # Errai
+    star_from_hours(109492, 22.1809, 58.2012, 3.35, 1.57),  # Zeta Cephei
 )
 
 STAR_NAMES: dict[int, str] = {
@@ -119,6 +183,70 @@ STAR_NAMES: dict[int, str] = {
     78820: "Acrab",
     80112: "Alniyat",
     85696: "Lesath",
+    49669: "Regulus",
+    57632: "Denebola",
+    50583: "Algieba",
+    54872: "Zosma",
+    54879: "Chertan",
+    25428: "Elnath",
+    17702: "Alcyone",
+    20889: "Hyadum I",
+    36850: "Castor",
+    31681: "Alhena",
+    35550: "Wasat",
+    32246: "Mebsuta",
+    34088: "Mekbuda",
+    30324: "Mirzam",
+    34444: "Wezen",
+    33579: "Adhara",
+    35904: "Aludra",
+    92420: "Sheliak",
+    93194: "Sulafat",
+    92791: "Delta Lyrae",
+    97278: "Tarazed",
+    98036: "Alshain",
+    95501: "Deneb el Okab",
+    72105: "Izar",
+    73555: "Nekkar",
+    71075: "Seginus",
+    67927: "Muphrid",
+    62434: "Mimosa",
+    61084: "Gacrux",
+    59747: "Delta Crucis",
+    71683: "Rigil Kentaurus",
+    68933: "Menkent",
+    68002: "Theta Centauri",
+    45238: "Miaplacidus",
+    41037: "Avior",
+    45556: "Aspidiske",
+    61941: "Porrima",
+    63608: "Vindemiatrix",
+    66249: "Heze",
+    57757: "Zavijava",
+    113963: "Markab",
+    113881: "Scheat",
+    1067: "Algenib",
+    107315: "Enif",
+    677: "Alpheratz",
+    5447: "Mirach",
+    9640: "Almach",
+    3092: "Delta Andromedae",
+    15863: "Mirfak",
+    14576: "Algol",
+    17448: "Atik",
+    14328: "Gamma Persei",
+    28360: "Menkalinan",
+    28380: "Mahasim",
+    23015: "Hassaleh",
+    23416: "Almaaz",
+    87833: "Eltanin",
+    85670: "Rastaban",
+    68756: "Thuban",
+    75458: "Edasich",
+    105199: "Alderamin",
+    106032: "Alfirk",
+    116727: "Errai",
+    109492: "Zeta Cephei",
 }
 
 

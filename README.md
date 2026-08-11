@@ -124,13 +124,30 @@ lighter logical resolution for practical Pyxel Web performance.
 
 ## Data
 
-The five required constellations are included:
+The prototype includes 22 constellations:
 
 - ORI - Orion
 - CYG - Cygnus
 - CAS - Cassiopeia
 - UMA - Ursa Major
 - SCO - Scorpius
+- LEO - Leo
+- TAU - Taurus
+- GEM - Gemini
+- CMA - Canis Major
+- LYR - Lyra
+- AQL - Aquila
+- BOO - Bootes
+- CRU - Crux
+- CEN - Centaurus
+- CAR - Carina
+- VIR - Virgo
+- PEG - Pegasus
+- AND - Andromeda
+- PER - Perseus
+- AUR - Auriga
+- DRA - Draco
+- CEP - Cepheus
 
 The prototype uses two star sources:
 
