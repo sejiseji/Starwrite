@@ -65,18 +65,18 @@ the screen center is highlighted with a red frame and label.
 The upper-right controls are always available:
 
 - `TIME`: toggle the time slider
-- `MONTH`: toggle the month slider
+- `DAY`: toggle the date slider
 - `RESET`: reset time and camera view
 
-The current prototype slider uses edge `-` / `+` buttons:
+The current prototype slider uses edge `+` / `-` buttons:
 
-- `TIME`: -/+10 minutes
-- `MONTH`: -/+30 days
+- `TIME`: +/-10 minutes
+- `DAY`: +/-30 days
 
 Dragging a slider knob or track continuously changes the sky:
 
 - `TIME`: up/down maps to about +/-6 hours from the drag start
-- `MONTH`: up/down maps to about +/-180 days from the drag start
+- `DAY`: up/down maps to about +/-180 days from the drag start
 
 The bottom `MENU` button opens a display panel for toggling:
 

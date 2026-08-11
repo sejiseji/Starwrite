@@ -315,10 +315,10 @@ class StarSkyApp:
         label = "time" if self.show_time_slider else "month"
         rects = slider_rects(SCREEN_WIDTH, SCREEN_HEIGHT, self.slider_side)
         if self._point_in_rect(point, rects[f"{label}_minus"]):
-            self.clock.add_minutes(-10) if label == "time" else self.clock.add_days(-30)
+            self.clock.add_minutes(10) if label == "time" else self.clock.add_days(30)
             return True
         if self._point_in_rect(point, rects[f"{label}_plus"]):
-            self.clock.add_minutes(10) if label == "time" else self.clock.add_days(30)
+            self.clock.add_minutes(-10) if label == "time" else self.clock.add_days(-30)
             return True
         if self._point_in_rect(point, self._expanded_rect(rects[f"{label}_knob"], 8)):
             self._start_slider_drag(label, point[1])
@@ -490,7 +490,7 @@ class StarSkyApp:
         if self.show_time_slider:
             draw_slider(self.slider_side, "TIME", self.slider_knob_ratio if self.active_slider == "time" else 0.5)
         if self.show_month_slider:
-            draw_slider(self.slider_side, "MONTH", self.slider_knob_ratio if self.active_slider == "month" else 0.5)
+            draw_slider(self.slider_side, "DAY", self.slider_knob_ratio if self.active_slider == "month" else 0.5, "month")
         if self.menu_open:
             draw_menu_panel(self.show_info, self.show_guides, self.show_constellations, self.slider_side)
         draw_menu_button(self.menu_open)

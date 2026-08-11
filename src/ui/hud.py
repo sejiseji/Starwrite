@@ -288,7 +288,7 @@ def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int
 def draw_tool_buttons(show_time_slider: bool, show_month_slider: bool) -> None:
     rects = tool_button_rects(pyxel.width, pyxel.height)
     draw_button(rects["time"], "TIME", show_time_slider)
-    draw_button(rects["month"], "MONTH", show_month_slider)
+    draw_button(rects["month"], "DAY", show_month_slider)
     draw_button(rects["reset"], "RESET", False)
 
 
@@ -310,19 +310,20 @@ def slider_rects(width: int, height: int, side: str) -> dict[str, tuple[int, int
     }
 
 
-def draw_slider(side: str, label: str, knob_ratio: float = 0.5) -> None:
+def draw_slider(side: str, label: str, knob_ratio: float = 0.5, rect_key: str | None = None) -> None:
     rects = slider_rects(pyxel.width, pyxel.height, side)
+    key = rect_key or label.lower()
     x, y, w, h = rects["panel"]
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 13)
     label_x = max(4, min(pyxel.width - text_width(label) - 4, x + 5))
     draw_big_text(label_x, y - 14, label, 7)
-    draw_button(rects[f"{label.lower()}_minus"], "-", False)
-    track = rects[f"{label.lower()}_track"]
+    draw_button(rects[f"{key}_minus"], "+", False)
+    track = rects[f"{key}_track"]
     pyxel.rect(track[0], track[1], track[2], track[3], 13)
-    knob = rects[f"{label.lower()}_knob"]
+    knob = rects[f"{key}_knob"]
     knob_y = int(track[1] + max(0.0, min(1.0, knob_ratio)) * track[3] - knob[3] / 2)
     knob_y = max(track[1], min(track[1] + track[3] - knob[3], knob_y))
     pyxel.rect(knob[0], knob_y, knob[2], knob[3], 5)
     pyxel.rectb(knob[0], knob_y, knob[2], knob[3], 10)
-    draw_button(rects[f"{label.lower()}_plus"], "+", False)
+    draw_button(rects[f"{key}_plus"], "-", False)
