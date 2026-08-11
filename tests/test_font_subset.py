@@ -4,7 +4,12 @@ import string
 import unittest
 from pathlib import Path
 
-from ui.localization import CONSTELLATION_NAMES_JA, METEOR_EVENT_NAMES_JA, STAR_NAMES_JA
+from ui.localization import (
+    CONSTELLATION_NAMES_JA,
+    METEOR_EVENT_NAMES_JA,
+    SKY_FEATURE_NAMES_JA,
+    STAR_NAMES_JA,
+)
 from data.font_jp import GLYPHS
 
 
@@ -35,6 +40,7 @@ class FontSubsetTests(unittest.TestCase):
         labels = [
             *CONSTELLATION_NAMES_JA.values(),
             *METEOR_EVENT_NAMES_JA.values(),
+            *SKY_FEATURE_NAMES_JA.values(),
             *STAR_NAMES_JA.values(),
             ASCII_PRINTABLE,
         ]
@@ -65,6 +71,7 @@ class FontSubsetTests(unittest.TestCase):
         labels = [
             *CONSTELLATION_NAMES_JA.values(),
             *METEOR_EVENT_NAMES_JA.values(),
+            *SKY_FEATURE_NAMES_JA.values(),
             *STAR_NAMES_JA.values(),
             ASCII_PRINTABLE,
             HIRAGANA,

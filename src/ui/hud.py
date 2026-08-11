@@ -4,12 +4,13 @@ import pyxel
 
 from astronomy.catalog import Constellation
 from astronomy.observer import Observer
+from data.sky_features import ASTERISMS, SKY_PATHS, Asterism, SkyPath
 from data.font_jp import FONT_CELL_HEIGHT, FONT_CELL_WIDTH, FONT_COLUMNS, FONT_IMAGE_BANK, GLYPHS
 from sky.capture import ScreenPoint, SkyCapture
 from sky.camera import SkyCamera
 from sky.meteors import MeteorEventView
 from sky.simulation import SimulationClock
-from ui.localization import Language, constellation_name, meteor_event_name
+from ui.localization import Language, constellation_name, meteor_event_name, sky_feature_name
 
 SCALE = 2
 GLYPH_W = 3
@@ -17,6 +18,7 @@ GLYPH_H = 5
 CHAR_STEP = 8
 LINE_STEP = 13
 JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
+FEATURE_COLOR = 11
 _font_atlas_ready = False
 _display_width_cache: dict[str, int] = {}
 _glyph_locations: dict[int, tuple[int, int, int]] = {}
@@ -182,7 +184,7 @@ def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
 
 def menu_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     panel_w = min(width - 16, 244)
-    panel_h = 178
+    panel_h = 208
     button_x, button_y, _, _ = menu_button_rect(width, height)
     x = max(8, min(width - panel_w - 8, button_x + 35 - panel_w // 2))
     return (x, max(8, button_y - panel_h - 6), panel_w, panel_h)
@@ -195,8 +197,9 @@ def panel_toggle_rects(width: int, height: int) -> dict[str, tuple[int, int, int
         "info": (x + 8, y + 34, button_w, 24),
         "guides": (x + 12 + button_w, y + 34, button_w, 24),
         "constellations": (x + 16 + button_w * 2, y + 34, button_w, 24),
-        "side": (x + 8, y + 74, min(96, w - 16), 24),
-        "language": (x + 8, y + 146, min(96, w - 16), 24),
+        "features": (x + 8, y + 64, min(112, w - 16), 24),
+        "side": (x + 8, y + 104, min(96, w - 16), 24),
+        "language": (x + 8, y + 176, min(96, w - 16), 24),
     }
 
 
@@ -304,6 +307,73 @@ def draw_constellation_label(
         draw_display_text(label_x, label_y, label, color)
 
 
+def draw_sky_features(
+    points: dict[int, ScreenPoint],
+    sky_paths: dict[str, list[tuple[float, float] | None]],
+    language: Language,
+) -> None:
+    for path in SKY_PATHS:
+        draw_sky_path(path, sky_paths.get(path.id, []), language)
+    for index, asterism in enumerate(ASTERISMS):
+        draw_asterism(asterism, points, index, language)
+
+
+def draw_asterism(
+    asterism: Asterism,
+    points: dict[int, ScreenPoint],
+    index: int,
+    language: Language,
+) -> None:
+    visible = [points[star_id] for star_id in asterism.star_ids if star_id in points]
+    if len(visible) < 2:
+        return
+    for a_id, b_id in asterism.edges:
+        a = points.get(a_id)
+        b = points.get(b_id)
+        if a is None or b is None:
+            continue
+        pyxel.line(int(a.x), int(a.y), int(b.x), int(b.y), FEATURE_COLOR)
+    center_x = int(sum(point.x for point in visible) / len(visible))
+    center_y = int(sum(point.y for point in visible) / len(visible))
+    label = sky_feature_name(asterism, language)
+    width = display_text_width(label)
+    label_x = max(4, min(pyxel.width - width - 4, center_x + 8))
+    label_y = max(58, min(pyxel.height - 76, center_y - 22 + (index % 2) * 12))
+    pyxel.line(center_x, center_y, label_x - 3, label_y + 6, FEATURE_COLOR)
+    draw_display_text(label_x, label_y, label, FEATURE_COLOR)
+
+
+def draw_sky_path(
+    path: SkyPath,
+    points: list[tuple[float, float] | None],
+    language: Language,
+) -> None:
+    if not points:
+        return
+    last: tuple[float, float] | None = None
+    visible_points: list[tuple[float, float]] = []
+    for index, point in enumerate(points):
+        if point is None:
+            last = None
+            continue
+        x, y = point
+        if 0 <= x < pyxel.width and 0 <= y < pyxel.height:
+            visible_points.append(point)
+        if last is not None and index % 2 == 0:
+            pyxel.line(int(last[0]), int(last[1]), int(x), int(y), FEATURE_COLOR)
+        elif index % 2 == 1:
+            pyxel.pset(int(x), int(y), FEATURE_COLOR)
+        last = point
+    if len(visible_points) < 2:
+        return
+    label_x, label_y = visible_points[len(visible_points) // 2]
+    label = sky_feature_name(path, language)
+    width = display_text_width(label)
+    x = max(4, min(pyxel.width - width - 4, int(label_x) + 8))
+    y = max(58, min(pyxel.height - 76, int(label_y) - 10))
+    draw_display_text(x, y, label, FEATURE_COLOR)
+
+
 def draw_focused_star(point: ScreenPoint, name: str) -> None:
     x = int(point.x)
     y = int(point.y)
@@ -393,6 +463,7 @@ def draw_menu_panel(
     show_info: bool,
     show_guides: bool,
     show_constellations: bool,
+    show_features: bool,
     slider_side: str,
     event_source_label: str,
     event_count: int,
@@ -405,11 +476,12 @@ def draw_menu_panel(
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["info"], "INFO", show_info)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["guides"], "GUIDE", show_guides)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["constellations"], "CONST", show_constellations)
-    draw_big_text(x + 8, y + 63, "SLIDER", 7)
+    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["features"], "FEATURE", show_features)
+    draw_big_text(x + 8, y + 93, "SLIDER", 7)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["side"], slider_side.upper(), True)
-    draw_big_text(x + 8, y + 105, f"EVENT SRC {event_source_label}", 13)
-    draw_big_text(x + 8, y + 118, f"EVENTS {event_count}", 13)
-    draw_big_text(x + 8, y + 132, "LANGUAGE", 7)
+    draw_big_text(x + 8, y + 135, f"EVENT SRC {event_source_label}", 13)
+    draw_big_text(x + 8, y + 148, f"EVENTS {event_count}", 13)
+    draw_big_text(x + 8, y + 162, "LANGUAGE", 7)
     language_label = "JA" if language == "en" else "EN"
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language_label, True)
 

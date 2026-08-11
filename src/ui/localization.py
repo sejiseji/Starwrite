@@ -4,6 +4,7 @@ from typing import Literal
 
 from astronomy.catalog import Constellation
 from astronomy.events import MeteorShowerEvent
+from data.sky_features import Asterism, SkyPath
 
 Language = Literal["en", "ja"]
 
@@ -180,6 +181,14 @@ STAR_NAMES_JA: dict[int, str] = {
     79822: "イータ・こぐま",
 }
 
+SKY_FEATURE_NAMES_JA: dict[str, str] = {
+    "SUMMER_TRIANGLE": "夏の大三角",
+    "WINTER_TRIANGLE": "冬の大三角",
+    "BIG_DIPPER": "北斗七星",
+    "SPRING_ARC": "春の大曲線",
+    "MILKY_WAY": "天の川",
+}
+
 
 def normalize_language(value: object) -> Language:
     return "ja" if value == "ja" else "en"
@@ -205,3 +214,9 @@ def star_name(star_id: int, english_name: str, language: Language) -> str:
     if language == "ja":
         return STAR_NAMES_JA.get(star_id, english_name)
     return english_name
+
+
+def sky_feature_name(feature: Asterism | SkyPath, language: Language) -> str:
+    if language == "ja":
+        return SKY_FEATURE_NAMES_JA.get(feature.id, feature.name)
+    return feature.name

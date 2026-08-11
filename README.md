@@ -89,9 +89,10 @@ The bottom `MENU` button opens a display panel for toggling:
 - `INFO`: observation information
 - `GUIDE`: horizontal guide lines
 - `CONST`: constellation lines
+- `FEATURE`: common sky-feature guide lines and labels
 - `SLIDER LEFT/RIGHT`: slider side for right- or left-handed use
-- `LANGUAGE EN/JA`: display language for constellation, named-star, and meteor
-  shower labels
+- `LANGUAGE EN/JA`: display language for constellation, named-star, meteor
+  shower, and sky-feature labels
 
 ## Test
 
@@ -182,6 +183,16 @@ names, typical peak dates, approximate radiants, ZHR, and parent bodies are
 expanded into one event per shower per year. Meteors are visualized as
 simplified streaks radiating from the radiant, not as a physical particle
 simulation or exact year-specific forecast.
+
+The prototype also includes a small sky-feature overlay controlled by the
+`FEATURE` menu toggle. It uses bright green guide lines and labels for common
+observing references:
+
+- Summer Triangle
+- Winter Triangle
+- Big Dipper
+- Spring Arc
+- Milky Way, shown as an approximate guide path
 
 Japanese labels are rendered inside the Pyxel canvas with a generated bitmap
 font atlas in image bank 2. The source text data is generated from the bundled

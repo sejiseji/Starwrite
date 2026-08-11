@@ -10,11 +10,14 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 import pyxel
 
+from astronomy.coordinates import equatorial_to_enu
 from astronomy.catalog import Constellation
 from astronomy.events import MeteorShowerEvent
 from astronomy.observer import Observer
+from astronomy.time import julian_date, local_sidereal_time
 from data.constellations import CONSTELLATIONS
 from data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
+from data.sky_features import SKY_PATHS
 from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
 from sky.capture import ScreenPoint, SkyCapture, can_capture
@@ -36,6 +39,7 @@ from ui.hud import (
     draw_menu_button,
     draw_menu_panel,
     draw_slider,
+    draw_sky_features,
     draw_tool_buttons,
     menu_button_rect,
     panel_toggle_rects,
@@ -130,6 +134,7 @@ class StarSkyApp:
         self.show_info = bool(settings.get("show_info", False))
         self.show_guides = bool(settings.get("show_guides", False))
         self.show_constellations = bool(settings.get("show_constellations", True))
+        self.show_features = bool(settings.get("show_features", False))
         self.slider_side = settings.get("slider_side", "right")
         if self.slider_side not in ("left", "right"):
             self.slider_side = "right"
@@ -146,6 +151,7 @@ class StarSkyApp:
         self.slider_drag_start_time = self.clock.current_time
         self.slider_knob_ratio = 0.5
         self.projected = {}
+        self.projected_sky_paths: dict[str, list[tuple[float, float] | None]] = {}
         self.meteor_event = None
         self.capture_ready = False
         self.ready_signaled = False
@@ -201,6 +207,7 @@ class StarSkyApp:
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
         )
+        self.projected_sky_paths = self._project_sky_paths() if self.show_features else {}
         if pyxel.frame_count % 30 == 0:
             self._save_settings()
 
@@ -322,6 +329,8 @@ class StarSkyApp:
                 self.show_guides = not self.show_guides
             elif key == "constellations":
                 self.show_constellations = not self.show_constellations
+            elif key == "features":
+                self.show_features = not self.show_features
             elif key == "side":
                 self.slider_side = "left" if self.slider_side == "right" else "right"
             elif key == "language":
@@ -408,6 +417,30 @@ class StarSkyApp:
         self.show_time_slider = False
         self.show_month_slider = False
         self.show_event_slider = False
+
+    def _project_sky_paths(self) -> dict[str, list[tuple[float, float] | None]]:
+        jd = julian_date(self.clock.current_time)
+        lst = local_sidereal_time(jd, math.radians(self.observer.longitude_deg))
+        lat = math.radians(self.observer.latitude_deg)
+        projected_paths: dict[str, list[tuple[float, float] | None]] = {}
+        for path in SKY_PATHS:
+            points: list[tuple[float, float] | None] = []
+            for ra_rad, dec_rad in path.points:
+                direction = equatorial_to_enu(ra_rad, dec_rad, lat, lst)
+                if direction.z <= 0.0:
+                    points.append(None)
+                    continue
+                projected = self.camera.project(direction, SCREEN_WIDTH, SCREEN_HEIGHT)
+                if projected is None:
+                    points.append(None)
+                    continue
+                x, y = projected
+                if -24 <= x <= SCREEN_WIDTH + 24 and -24 <= y <= SCREEN_HEIGHT + 24:
+                    points.append((x, y))
+                else:
+                    points.append(None)
+            projected_paths[path.id] = points
+        return projected_paths
 
     def _menu_panel_hit_rect(self) -> tuple[int, int, int, int]:
         from ui.hud import menu_panel_rect
@@ -514,6 +547,7 @@ class StarSkyApp:
                 "show_info": self.show_info,
                 "show_guides": self.show_guides,
                 "show_constellations": self.show_constellations,
+                "show_features": self.show_features,
                 "slider_side": self.slider_side,
                 "show_time_slider": self.show_time_slider,
                 "show_month_slider": self.show_month_slider,
@@ -551,6 +585,8 @@ class StarSkyApp:
         if self.meteor_event is not None:
             draw_event_banner(self.meteor_event, self.language)
         draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected, self.language)
+        if self.show_features:
+            draw_sky_features(self.projected, self.projected_sky_paths, self.language)
         if self.meteor_event is not None:
             draw_meteor_event(self.meteor_event, self.language)
         focused_star = self._focused_star()
@@ -569,6 +605,7 @@ class StarSkyApp:
                 self.show_info,
                 self.show_guides,
                 self.show_constellations,
+                self.show_features,
                 self.slider_side,
                 EVENT_SOURCE_LABEL,
                 len(METEOR_SHOWERS),
