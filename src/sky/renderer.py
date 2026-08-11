@@ -136,7 +136,8 @@ class SkyRenderer:
         if event_view.radiant_screen is None:
             return
         radiant_x, radiant_y = event_view.radiant_screen
-        count = 2 + int(event_view.activity * 3)
+        shower_strength = min(1.0, event_view.event.zhr / 100.0)
+        count = 5 + int(event_view.activity * 6) + int(shower_strength * 4)
         frame_count = pyxel.frame_count
         seed_base = sum(ord(char) for char in event_view.event.id)
         east = cross(event_view.radiant_direction, Vec3(0.0, 0.0, 1.0))
@@ -146,13 +147,14 @@ class SkyRenderer:
             east = east.normalized()
         northish = cross(east, event_view.radiant_direction).normalized()
         for index in range(count):
-            period = 80 + index * 37
+            period = 58 + int(_pseudo_random(seed_base + index * 83) * 54) + index * 7
             age = (frame_count + seed_base + index * 53) % period
-            if age >= 12:
+            life = 14 + int(_pseudo_random(seed_base + index * 67) * 10) + int(event_view.activity * 5)
+            if age >= life:
                 continue
             burst = (frame_count + seed_base + index * 53 - age) // period
             angle = math.tau * _pseudo_random(seed_base + index * 101 + burst * 17)
-            spread = 0.30 + 0.72 * _pseudo_random(seed_base + index * 191 + burst * 29)
+            spread = 0.22 + 0.98 * _pseudo_random(seed_base + index * 191 + burst * 29)
             start_direction = _add_vec(
                 _scale_vec(event_view.radiant_direction, math.cos(spread)),
                 _add_vec(
@@ -162,8 +164,17 @@ class SkyRenderer:
             ).normalized()
             if start_direction.z <= 0.0:
                 continue
-            length = 16 + event_view.activity * 28 + _pseudo_random(seed_base + index * 41 + burst) * 24
-            visible = age / 11.0
+            brightness = _pseudo_random(seed_base + index * 47 + burst * 31)
+            fireball = brightness > 0.86 or (index == 0 and event_view.activity > 0.72)
+            length = (
+                24
+                + event_view.activity * 44
+                + shower_strength * 18
+                + _pseudo_random(seed_base + index * 41 + burst) * (54 if fireball else 34)
+            )
+            progress = age / max(1, life - 1)
+            visible = _ease_out(progress)
+            fade = 1.0 - progress
             start_projected = event_view.camera.project(start_direction, width, height)
             if start_projected is None:
                 continue
@@ -177,14 +188,66 @@ class SkyRenderer:
             screen_dy /= screen_distance
             head_x = start_x + screen_dx * visible * length
             head_y = start_y + screen_dy * visible * length
-            tail_x = head_x - screen_dx * length
-            tail_y = head_y - screen_dy * length
+            tail_length = length * (0.42 + 0.58 * min(1.0, visible + 0.2))
+            tail_x = head_x - screen_dx * tail_length
+            tail_y = head_y - screen_dy * tail_length
             if not _line_intersects_screen(tail_x, tail_y, head_x, head_y, width, height):
                 continue
-            color = STAR_YELLOW_WHITE if index == 0 and event_view.activity > 0.75 else STAR_WHITE
-            pyxel.line(int(tail_x), int(tail_y), int(head_x), int(head_y), color)
-            if age < 6:
-                pyxel.pset(int(head_x), int(head_y), 7)
+            core_color = STAR_YELLOW_WHITE if fireball else STAR_WHITE
+            head_color = STAR_WHITE if fade > 0.25 else HORIZON
+            self._draw_meteor_streak(tail_x, tail_y, head_x, head_y, core_color, head_color, fireball)
+
+    def _draw_meteor_streak(
+        self,
+        tail_x: float,
+        tail_y: float,
+        head_x: float,
+        head_y: float,
+        core_color: int,
+        head_color: int,
+        fireball: bool,
+    ) -> None:
+        dx = head_x - tail_x
+        dy = head_y - tail_y
+        length = math.sqrt(dx * dx + dy * dy)
+        if length < 1.0:
+            return
+        normal_x = -dy / length
+        normal_y = dx / length
+
+        dim_x = tail_x + dx * 0.46
+        dim_y = tail_y + dy * 0.46
+        mid_x = tail_x + dx * 0.72
+        mid_y = tail_y + dy * 0.72
+        bright_x = tail_x + dx * 0.88
+        bright_y = tail_y + dy * 0.88
+
+        pyxel.line(int(tail_x), int(tail_y), int(dim_x), int(dim_y), 1)
+        pyxel.line(int(dim_x), int(dim_y), int(mid_x), int(mid_y), HORIZON)
+        pyxel.line(int(mid_x), int(mid_y), int(head_x), int(head_y), core_color)
+        pyxel.line(int(bright_x), int(bright_y), int(head_x), int(head_y), head_color)
+
+        if fireball:
+            offset = 1.0
+            pyxel.line(
+                int(mid_x + normal_x * offset),
+                int(mid_y + normal_y * offset),
+                int(head_x + normal_x * offset),
+                int(head_y + normal_y * offset),
+                STAR_YELLOW,
+            )
+            pyxel.line(
+                int(mid_x - normal_x * offset),
+                int(mid_y - normal_y * offset),
+                int(head_x - normal_x * offset),
+                int(head_y - normal_y * offset),
+                HORIZON,
+            )
+            pyxel.circ(int(head_x), int(head_y), 1, head_color)
+            pyxel.pset(int(head_x + normal_x * 3), int(head_y + normal_y * 3), HORIZON)
+            pyxel.pset(int(head_x - normal_x * 3), int(head_y - normal_y * 3), HORIZON)
+        else:
+            pyxel.pset(int(head_x), int(head_y), head_color)
 
     def draw_constellations(
         self,
@@ -221,6 +284,11 @@ class SkyRenderer:
 
 def _pseudo_random(seed: int) -> float:
     return (math.sin(seed * 12.9898) * 43758.5453) % 1.0
+
+
+def _ease_out(value: float) -> float:
+    clamped = max(0.0, min(1.0, value))
+    return 1.0 - (1.0 - clamped) * (1.0 - clamped)
 
 
 def _scale_vec(vector: Vec3, scale: float) -> Vec3:
