@@ -8,7 +8,7 @@ from astronomy.catalog import Constellation
 from .camera import SkyCamera
 from .capture import ScreenPoint
 from .meteors import MeteorEventView
-from .vector import Vec3
+from .vector import Vec3, cross
 
 STAR_WHITE = 7
 STAR_BLUE_WHITE = 12
@@ -81,7 +81,7 @@ class SkyRenderer:
         pyxel.cls(0)
         if show_guides:
             self.draw_background(width, height)
-        self.draw_horizon(camera, width, height)
+            self.draw_horizon(camera, width, height)
         if show_constellations:
             self.draw_constellations(points, constellations, selected_constellation)
         self.draw_stars(points)
@@ -139,27 +139,48 @@ class SkyRenderer:
         count = 2 + int(event_view.activity * 3)
         frame_count = pyxel.frame_count
         seed_base = sum(ord(char) for char in event_view.event.id)
+        east = cross(event_view.radiant_direction, Vec3(0.0, 0.0, 1.0))
+        if east.length() < 0.001:
+            east = Vec3(1.0, 0.0, 0.0)
+        else:
+            east = east.normalized()
+        northish = cross(east, event_view.radiant_direction).normalized()
         for index in range(count):
             period = 80 + index * 37
             age = (frame_count + seed_base + index * 53) % period
             if age >= 12:
                 continue
             burst = (frame_count + seed_base + index * 53 - age) // period
-            x = _pseudo_random(seed_base + index * 101 + burst * 17) * width
-            y = _pseudo_random(seed_base + index * 191 + burst * 29) * height
-            dx = x - radiant_x
-            dy = y - radiant_y
-            distance = math.sqrt(dx * dx + dy * dy)
-            if distance < 24.0:
+            angle = math.tau * _pseudo_random(seed_base + index * 101 + burst * 17)
+            spread = 0.30 + 0.72 * _pseudo_random(seed_base + index * 191 + burst * 29)
+            start_direction = _add_vec(
+                _scale_vec(event_view.radiant_direction, math.cos(spread)),
+                _add_vec(
+                    _scale_vec(east, math.cos(angle) * math.sin(spread)),
+                    _scale_vec(northish, math.sin(angle) * math.sin(spread)),
+                ),
+            ).normalized()
+            if start_direction.z <= 0.0:
                 continue
-            dx /= distance
-            dy /= distance
             length = 16 + event_view.activity * 28 + _pseudo_random(seed_base + index * 41 + burst) * 24
             visible = age / 11.0
-            head_x = x + dx * visible * length
-            head_y = y + dy * visible * length
-            tail_x = head_x - dx * length
-            tail_y = head_y - dy * length
+            start_projected = event_view.camera.project(start_direction, width, height)
+            if start_projected is None:
+                continue
+            start_x, start_y = start_projected
+            screen_dx = start_x - radiant_x
+            screen_dy = start_y - radiant_y
+            screen_distance = math.sqrt(screen_dx * screen_dx + screen_dy * screen_dy)
+            if screen_distance < 24.0:
+                continue
+            screen_dx /= screen_distance
+            screen_dy /= screen_distance
+            head_x = start_x + screen_dx * visible * length
+            head_y = start_y + screen_dy * visible * length
+            tail_x = head_x - screen_dx * length
+            tail_y = head_y - screen_dy * length
+            if not _line_intersects_screen(tail_x, tail_y, head_x, head_y, width, height):
+                continue
             color = STAR_YELLOW_WHITE if index == 0 and event_view.activity > 0.75 else STAR_WHITE
             pyxel.line(int(tail_x), int(tail_y), int(head_x), int(head_y), color)
             if age < 6:
@@ -200,3 +221,20 @@ class SkyRenderer:
 
 def _pseudo_random(seed: int) -> float:
     return (math.sin(seed * 12.9898) * 43758.5453) % 1.0
+
+
+def _scale_vec(vector: Vec3, scale: float) -> Vec3:
+    return Vec3(vector.x * scale, vector.y * scale, vector.z * scale)
+
+
+def _add_vec(a: Vec3, b: Vec3) -> Vec3:
+    return Vec3(a.x + b.x, a.y + b.y, a.z + b.z)
+
+
+def _line_intersects_screen(x1: float, y1: float, x2: float, y2: float, width: int, height: int) -> bool:
+    return (
+        max(x1, x2) >= 0
+        and min(x1, x2) <= width
+        and max(y1, y2) >= 0
+        and min(y1, y2) <= height
+    )

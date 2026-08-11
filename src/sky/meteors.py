@@ -18,6 +18,7 @@ class MeteorEventView:
     radiant_direction: Vec3
     radiant_screen: tuple[float, float] | None
     activity: float
+    camera: SkyCamera
 
 
 def meteor_activity(event: MeteorShowerEvent, observation_time: datetime) -> float:
@@ -67,7 +68,7 @@ def active_meteor_event(
         if radiant.z <= 0.0:
             continue
         projected = camera.project(radiant, screen_width, screen_height)
-        view = MeteorEventView(event, radiant, projected, activity)
+        view = MeteorEventView(event, radiant, projected, activity, camera)
         if best is None or view.activity > best.activity:
             best = view
     return best
