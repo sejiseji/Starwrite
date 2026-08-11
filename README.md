@@ -71,6 +71,11 @@ The current prototype slider uses edge `-` / `+` buttons:
 - `TIME`: -/+10 minutes
 - `MONTH`: -/+30 days
 
+Dragging a slider knob or track continuously changes the sky:
+
+- `TIME`: up/down maps to about +/-6 hours from the drag start
+- `MONTH`: up/down maps to about +/-180 days from the drag start
+
 The bottom `MENU` button opens a display panel for toggling:
 
 - `INFO`: observation information

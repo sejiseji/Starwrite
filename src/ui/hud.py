@@ -222,7 +222,7 @@ def slider_rects(width: int, height: int, side: str) -> dict[str, tuple[int, int
     }
 
 
-def draw_slider(side: str, label: str) -> None:
+def draw_slider(side: str, label: str, knob_ratio: float = 0.5) -> None:
     rects = slider_rects(pyxel.width, pyxel.height, side)
     x, y, w, h = rects["panel"]
     pyxel.rect(x, y, w, h, 0)
@@ -232,6 +232,8 @@ def draw_slider(side: str, label: str) -> None:
     track = rects[f"{label.lower()}_track"]
     pyxel.rect(track[0], track[1], track[2], track[3], 13)
     knob = rects[f"{label.lower()}_knob"]
-    pyxel.rect(knob[0], knob[1], knob[2], knob[3], 5)
-    pyxel.rectb(knob[0], knob[1], knob[2], knob[3], 10)
+    knob_y = int(track[1] + max(0.0, min(1.0, knob_ratio)) * track[3] - knob[3] / 2)
+    knob_y = max(track[1], min(track[1] + track[3] - knob[3], knob_y))
+    pyxel.rect(knob[0], knob_y, knob[2], knob[3], 5)
+    pyxel.rectb(knob[0], knob_y, knob[2], knob[3], 10)
     draw_button(rects[f"{label.lower()}_plus"], "+", False)

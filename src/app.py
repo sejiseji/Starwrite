@@ -120,6 +120,10 @@ class StarSkyApp:
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.latest_capture = self._load_capture()
         self.last_mouse: tuple[int, int] | None = None
+        self.active_slider: str | None = None
+        self.slider_drag_start_y = 0
+        self.slider_drag_start_time = self.clock.current_time
+        self.slider_knob_ratio = 0.5
         self.projected = {}
         self.capture_ready = False
 
@@ -223,6 +227,13 @@ class StarSkyApp:
 
     def _handle_mouse(self) -> None:
         current = (pyxel.mouse_x, pyxel.mouse_y)
+        if self.active_slider is not None:
+            if pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
+                self._update_slider_drag(current[1])
+                self.last_mouse = None
+                return
+            self.active_slider = None
+            self.slider_knob_ratio = 0.5
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT) and self._handle_ui_click(current):
             self.last_mouse = None
             return
@@ -289,9 +300,36 @@ class StarSkyApp:
         if self._point_in_rect(point, rects[f"{label}_plus"]):
             self.clock.add_minutes(10) if label == "time" else self.clock.add_days(30)
             return True
+        if self._point_in_rect(point, self._expanded_rect(rects[f"{label}_knob"], 8)):
+            self._start_slider_drag(label, point[1])
+            return True
+        if self._point_in_rect(point, self._expanded_rect(rects[f"{label}_track"], 12)):
+            self._start_slider_drag(label, point[1])
+            self._update_slider_drag(point[1])
+            return True
         if self._point_in_rect(point, rects["panel"]):
             return True
         return False
+
+    def _start_slider_drag(self, label: str, y: int) -> None:
+        self.active_slider = label
+        self.slider_drag_start_y = y
+        self.slider_drag_start_time = self.clock.current_time
+        self.clock.pause()
+
+    def _update_slider_drag(self, y: int) -> None:
+        if self.active_slider is None:
+            return
+        rects = slider_rects(SCREEN_WIDTH, SCREEN_HEIGHT, self.slider_side)
+        track = rects[f"{self.active_slider}_track"]
+        self.slider_knob_ratio = max(0.0, min(1.0, (y - track[1]) / max(1, track[3])))
+        delta_y = self.slider_drag_start_y - y
+        if self.active_slider == "time":
+            minutes = int(delta_y * 720 / max(1, track[3]))
+            self.clock.current_time = self.slider_drag_start_time + timedelta(minutes=minutes)
+        else:
+            days = int(delta_y * 360 / max(1, track[3]))
+            self.clock.current_time = self.slider_drag_start_time + timedelta(days=days)
 
     def _reset_view(self) -> None:
         self.clock.pause()
@@ -313,6 +351,10 @@ class StarSkyApp:
         px, py = point
         x, y, w, h = rect
         return x <= px < x + w and y <= py < y + h
+
+    def _expanded_rect(self, rect: tuple[int, int, int, int], amount: int) -> tuple[int, int, int, int]:
+        x, y, w, h = rect
+        return (x - amount, y - amount, w + amount * 2, h + amount * 2)
 
     def _set_latitude(self, value: float) -> None:
         self.observer = Observer(max(-90.0, min(90.0, value)), self.observer.longitude_deg)
@@ -416,9 +458,9 @@ class StarSkyApp:
             )
         draw_tool_buttons(self.show_time_slider, self.show_month_slider)
         if self.show_time_slider:
-            draw_slider(self.slider_side, "TIME")
+            draw_slider(self.slider_side, "TIME", self.slider_knob_ratio if self.active_slider == "time" else 0.5)
         if self.show_month_slider:
-            draw_slider(self.slider_side, "MONTH")
+            draw_slider(self.slider_side, "MONTH", self.slider_knob_ratio if self.active_slider == "month" else 0.5)
         if self.menu_open:
             draw_menu_panel(self.show_info, self.show_guides, self.show_constellations, self.slider_side)
         draw_menu_button(self.menu_open)
