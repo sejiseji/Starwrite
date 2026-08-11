@@ -99,7 +99,8 @@
         height: 20px;
         transform-origin: 10px 16px;
         transform: rotate(-12deg);
-        animation: startup-scan 1.6s steps(4, end) infinite;
+        animation: startup-scan 1.4s steps(4, end) infinite;
+        -webkit-animation: startup-scan 1.4s steps(4, end) infinite;
       }
 
       .telescope::before {
@@ -141,7 +142,9 @@
           0 34px 0 #46516f,
           7px 44px 0 #20283e,
           21px 44px 0 #20283e;
-        animation: startup-peek 0.8s steps(2, end) infinite;
+        animation: startup-peek 0.9s steps(3, end) infinite;
+        -webkit-animation: startup-peek 0.9s steps(3, end) infinite;
+        will-change: transform;
       }
 
       .cube-kid::before {
@@ -156,6 +159,8 @@
           13px 0 0 #071019,
           6px 10px 0 #fff0bd,
           10px 10px 0 #fff0bd;
+        animation: startup-blink 1.8s steps(1, end) infinite;
+        -webkit-animation: startup-blink 1.8s steps(1, end) infinite;
       }
 
       .cube-kid::after {
@@ -195,20 +200,77 @@
       @keyframes startup-scan {
         0%,
         100% {
-          transform: rotate(-14deg);
+          transform: rotate(-17deg);
         }
         50% {
-          transform: rotate(-5deg);
+          transform: rotate(-2deg);
         }
       }
 
       @keyframes startup-peek {
         0%,
         100% {
-          transform: translateY(0);
+          transform: translate3d(0, 0, 0);
+        }
+        33% {
+          transform: translate3d(0, -5px, 0);
+        }
+        66% {
+          transform: translate3d(0, 3px, 0);
+        }
+      }
+
+      @keyframes startup-blink {
+        0%,
+        88%,
+        100% {
+          height: 5px;
+          top: 12px;
+        }
+        92% {
+          height: 2px;
+          top: 14px;
+        }
+      }
+
+      @-webkit-keyframes startup-scan {
+        0%,
+        100% {
+          -webkit-transform: rotate(-17deg);
+          transform: rotate(-17deg);
         }
         50% {
-          transform: translateY(2px);
+          -webkit-transform: rotate(-2deg);
+          transform: rotate(-2deg);
+        }
+      }
+
+      @-webkit-keyframes startup-peek {
+        0%,
+        100% {
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+        }
+        33% {
+          -webkit-transform: translate3d(0, -5px, 0);
+          transform: translate3d(0, -5px, 0);
+        }
+        66% {
+          -webkit-transform: translate3d(0, 3px, 0);
+          transform: translate3d(0, 3px, 0);
+        }
+      }
+
+      @-webkit-keyframes startup-blink {
+        0%,
+        88%,
+        100% {
+          height: 5px;
+          top: 12px;
+        }
+        92% {
+          height: 2px;
+          top: 14px;
         }
       }
 
