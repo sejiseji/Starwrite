@@ -226,13 +226,21 @@ captured sky from data and shows the translated text first, followed by the
 original text when it differs. The `LOG` stores up to 100 exchanges in
 localStorage using FIFO trimming.
 
-Japanese labels are rendered inside the Pyxel canvas with a generated bitmap
-font atlas in image bank 2. The source text data is generated from the bundled
-`assets/starwrite_jp10.bdf` bitmap font, which is a subset of the Pyxel official
-example font `umplus_j10r.bdf`. The subset covers the current app labels,
-printable ASCII, practical hiragana / katakana code blocks, full-width digits,
-full-width Latin letters, and common Japanese punctuation / arithmetic symbols
-used by the v0.1 UI. The source font metadata identifies it as `umplus` with
+Japanese labels and preset letters are rendered inside the Pyxel canvas with a
+generated bitmap font atlas split across Pyxel image banks. The checked-in
+source font is `assets/umplus_j10r.bdf`, the Pyxel official example font. The
+runtime subset is `assets/starwrite_jp10.bdf` and `src/data/font_jp.py`;
+regenerate both after adding Japanese text:
+
+```sh
+python3 scripts/build_font_subset.py
+```
+
+The generated subset covers the current app labels, printable ASCII, practical
+hiragana / katakana code blocks, full-width digits, full-width Latin letters,
+common Japanese punctuation / arithmetic symbols, a baseline set of daily-life
+kanji for preset letters, and any kanji currently used by preset letters. The
+source font metadata identifies it as `umplus` with
 copyright `Copyright (C) 2002-2004 COZ`; verify the upstream font license before
 reusing it outside this prototype. Full arbitrary Japanese text entry is
 reserved for the later StarLetter scope and should use a complete Japanese font

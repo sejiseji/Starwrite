@@ -39,6 +39,13 @@ def _capture(
 
 
 class CaptureLetterFlowTests(unittest.TestCase):
+    def test_preset_letter_catalog_has_expected_growth_room(self) -> None:
+        letters = load_letters_from_packs(PRESET_LETTER_PACKS)
+        ids = [letter.id for letter in letters]
+
+        self.assertGreaterEqual(len(letters), 48)
+        self.assertEqual(len(ids), len(set(ids)))
+
     def test_capture_serializes_camera_and_selection(self) -> None:
         capture = _capture("PER", 15863, "PER-2026")
 

@@ -11,7 +11,7 @@ from ui.localization import (
     SKY_FEATURE_NAMES_JA,
     STAR_NAMES_JA,
 )
-from data.font_jp import GLYPHS
+from data.font_jp import FONT_CELL_HEIGHT, FONT_COLUMNS, FONT_IMAGE_BANKS, GLYPHS
 
 
 FONT_PATH = Path("assets/starwrite_jp10.bdf")
@@ -26,6 +26,7 @@ FULLWIDTH_UPPERCASE = "".join(chr(code) for code in range(0xFF21, 0xFF3B))
 FULLWIDTH_LOWERCASE = "".join(chr(code) for code in range(0xFF41, 0xFF5B))
 JAPANESE_PUNCTUATION = "　。、，．・：；？！ー〜～（）「」『』【】〈〉《》〔〕…‥"
 JAPANESE_OPERATORS = "＋−－×÷＝"
+COMMON_LETTER_KANJI = "日本語生活仕事駅帰雨母電話終電"
 
 
 def _preset_letter_texts() -> list[str]:
@@ -74,6 +75,7 @@ class FontSubsetTests(unittest.TestCase):
             FULLWIDTH_LOWERCASE,
             JAPANESE_PUNCTUATION,
             JAPANESE_OPERATORS,
+            COMMON_LETTER_KANJI,
         ]
         required = {ord(char) for label in labels for char in label}
         self.assertTrue(required <= _font_encodings())
@@ -94,9 +96,15 @@ class FontSubsetTests(unittest.TestCase):
             FULLWIDTH_LOWERCASE,
             JAPANESE_PUNCTUATION,
             JAPANESE_OPERATORS,
+            COMMON_LETTER_KANJI,
         ]
         required = {ord(char) for label in labels for char in label}
         self.assertTrue(required <= set(GLYPHS))
+
+    def test_embedded_font_fits_available_pyxel_image_banks(self) -> None:
+        glyphs_per_bank = FONT_COLUMNS * (256 // FONT_CELL_HEIGHT)
+
+        self.assertLessEqual(len(GLYPHS), glyphs_per_bank * len(FONT_IMAGE_BANKS))
 
 
 if __name__ == "__main__":

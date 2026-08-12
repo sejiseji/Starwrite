@@ -5,7 +5,7 @@ import pyxel
 from astronomy.catalog import Constellation
 from astronomy.observer import Observer
 from data.sky_features import ASTERISMS, SKY_PATHS, Asterism, SkyPath
-from data.font_jp import FONT_CELL_HEIGHT, FONT_CELL_WIDTH, FONT_COLUMNS, FONT_IMAGE_BANK, GLYPHS
+from data.font_jp import FONT_CELL_HEIGHT, FONT_CELL_WIDTH, FONT_COLUMNS, FONT_IMAGE_BANKS, GLYPHS
 from sky.capture import ScreenPoint, SkyCapture
 from sky.camera import SkyCamera
 from sky.letters import ExchangeLog, PresetLetter, display_letter_text
@@ -24,7 +24,7 @@ JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
 FEATURE_COLOR = 11
 _font_atlas_ready = False
 _display_width_cache: dict[str, int] = {}
-_glyph_locations: dict[int, tuple[int, int, int]] = {}
+_glyph_locations: dict[int, tuple[int, int, int, int]] = {}
 
 FONT = {
     " ": ("000", "000", "000", "000", "000"),
@@ -147,12 +147,18 @@ def _ensure_font_atlas() -> None:
     global _font_atlas_ready
     if _font_atlas_ready:
         return
-    image = pyxel.image(FONT_IMAGE_BANK)
+    glyphs_per_bank = FONT_COLUMNS * (256 // FONT_CELL_HEIGHT)
     for index, (codepoint, (advance, rows)) in enumerate(GLYPHS.items()):
-        x = index % FONT_COLUMNS * FONT_CELL_WIDTH
-        y = index // FONT_COLUMNS * FONT_CELL_HEIGHT
+        bank_index = index // glyphs_per_bank
+        if bank_index >= len(FONT_IMAGE_BANKS):
+            raise RuntimeError("font atlas exceeded available Pyxel image banks")
+        local_index = index % glyphs_per_bank
+        bank = FONT_IMAGE_BANKS[bank_index]
+        x = local_index % FONT_COLUMNS * FONT_CELL_WIDTH
+        y = local_index // FONT_COLUMNS * FONT_CELL_HEIGHT
+        image = pyxel.image(bank)
         image.set(x, y, list(rows))
-        _glyph_locations[codepoint] = (x, y, advance)
+        _glyph_locations[codepoint] = (bank, x, y, advance)
     _font_atlas_ready = True
 
 
@@ -167,8 +173,8 @@ def _draw_bitmap_text(x: int, y: int, text: str, col: int, scale: int = 1) -> No
         if location is None:
             cursor_x += FONT_CELL_WIDTH * scale
             continue
-        source_x, source_y, advance = location
-        pyxel.blt(cursor_x, y, FONT_IMAGE_BANK, source_x, source_y, FONT_CELL_WIDTH, FONT_CELL_HEIGHT, 0, 0, scale)
+        bank, source_x, source_y, advance = location
+        pyxel.blt(cursor_x, y, bank, source_x, source_y, FONT_CELL_WIDTH, FONT_CELL_HEIGHT, 0, 0, scale)
         cursor_x += advance * scale
     if col != 7:
         pyxel.pal()
