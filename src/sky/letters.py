@@ -8,6 +8,9 @@ from typing import Protocol
 from .capture import SkyCapture, capture_from_dict, capture_to_dict
 
 MAX_LOGS = 100
+MATCH_TOP_LIMIT = 36
+MATCH_RELATIVE_FLOOR = 0.2
+MATCH_SCORE_WEIGHT_SCALE = 120.0
 
 
 class RandomLike(Protocol):
@@ -103,11 +106,14 @@ def match_letter(
     if not candidates:
         candidates = list(letters)
 
-    ranked = sorted(candidates, key=lambda letter: score_letter(capture, letter), reverse=True)
-    best_score = score_letter(capture, ranked[0])
+    scored = [(letter, score_letter(capture, letter)) for letter in candidates]
+    ranked = sorted(scored, key=lambda item: item[1], reverse=True)
+    best_score = ranked[0][1]
     if best_score <= 0.0:
-        return chooser.choice(ranked)
-    top = [letter for letter in ranked[:8] if score_letter(capture, letter) >= best_score * 0.55]
+        return chooser.choice([letter for letter, _score in ranked])
+
+    floor = best_score * MATCH_RELATIVE_FLOOR
+    top = [(letter, score) for letter, score in ranked[:MATCH_TOP_LIMIT] if score >= floor]
     return _weighted_choice(top or ranked[:1], chooser)
 
 
@@ -149,14 +155,18 @@ def append_log(logs: tuple[ExchangeLog, ...], log: ExchangeLog, max_logs: int = 
     return tuple(values)
 
 
-def _weighted_choice(letters: list[PresetLetter], rng: RandomLike) -> PresetLetter:
-    total = sum(max(0.1, letter.weight) for letter in letters)
+def _weighted_choice(letters: list[tuple[PresetLetter, float]], rng: RandomLike) -> PresetLetter:
+    total = sum(_selection_weight(letter, score) for letter, score in letters)
     cursor = rng.random() * total
-    for letter in letters:
-        cursor -= max(0.1, letter.weight)
+    for letter, score in letters:
+        cursor -= _selection_weight(letter, score)
         if cursor <= 0.0:
             return letter
-    return letters[-1]
+    return letters[-1][0]
+
+
+def _selection_weight(letter: PresetLetter, score: float) -> float:
+    return max(0.1, letter.weight) * (1.0 + max(0.0, score) / MATCH_SCORE_WEIGHT_SCALE)
 
 
 def _event_tag(event_id: str | None) -> str | None:

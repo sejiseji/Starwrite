@@ -43,7 +43,7 @@ class CaptureLetterFlowTests(unittest.TestCase):
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)
         ids = [letter.id for letter in letters]
 
-        self.assertGreaterEqual(len(letters), 80)
+        self.assertGreaterEqual(len(letters), 112)
         self.assertEqual(len(ids), len(set(ids)))
 
     def test_preset_letters_all_have_english_text_available(self) -> None:
@@ -87,6 +87,25 @@ class CaptureLetterFlowTests(unittest.TestCase):
         selected = match_letter(_capture("CYG", 102098), letters, seen, rng=random.Random(1))
 
         self.assertNotEqual(selected.id, "base_000_002")
+
+    def test_matcher_avoids_recent_letters_when_possible(self) -> None:
+        letters = load_letters_from_packs(PRESET_LETTER_PACKS)
+        recent = ("base_000_002", "base_001_018", "base_003_012")
+
+        selected = match_letter(_capture("CYG", 102098), letters, set(), recent, rng=random.Random(1))
+
+        self.assertNotIn(selected.id, recent)
+
+    def test_matcher_spreads_repeatable_capture_across_nearby_candidates(self) -> None:
+        letters = load_letters_from_packs(PRESET_LETTER_PACKS)
+        capture = _capture("CYG", 102098)
+
+        selected_ids = {
+            match_letter(capture, letters, set(), rng=random.Random(seed)).id
+            for seed in range(60)
+        }
+
+        self.assertGreaterEqual(len(selected_ids), 5)
 
     def test_display_uses_ui_language_then_original(self) -> None:
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)

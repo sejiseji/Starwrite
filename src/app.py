@@ -672,6 +672,8 @@ class StarSkyApp:
         self.pending_capture = self.latest_capture
         self.pending_letter_id = letter.id
         self.pending_deliver_frame = pyxel.frame_count + delay_frames
+        self.seen_letter_ids.add(letter.id)
+        self._save_letter_store()
 
     def _update_pending_receive(self) -> None:
         if self.pending_deliver_frame is None or pyxel.frame_count < self.pending_deliver_frame:
@@ -687,7 +689,6 @@ class StarSkyApp:
             received_at=received_at,
         )
         self.exchange_logs = append_log(self.exchange_logs, log)
-        self.seen_letter_ids.add(self.pending_letter_id)
         self.unread_log_id = log.id
         self.cut_in_start_frame = pyxel.frame_count
         self.cut_in_message = "なにかとどいたみたい。" if self.language == "ja" else "something arrived."
