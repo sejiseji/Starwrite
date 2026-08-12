@@ -44,7 +44,7 @@ class CaptureLetterFlowTests(unittest.TestCase):
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)
         ids = [letter.id for letter in letters]
 
-        self.assertGreaterEqual(len(letters), 136)
+        self.assertGreaterEqual(len(letters), 192)
         self.assertEqual(len(ids), len(set(ids)))
 
     def test_preset_letters_all_have_english_text_available(self) -> None:
@@ -58,10 +58,13 @@ class CaptureLetterFlowTests(unittest.TestCase):
 
         self.assertEqual(missing, [])
 
-    def test_preset_letters_are_at_least_three_sentences(self) -> None:
+    def test_preset_letters_have_varied_sentence_counts(self) -> None:
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)
         short_texts: list[tuple[str, str, int]] = []
+        original_sentence_counts: dict[int, int] = {}
         for letter in letters:
+            original_count = len([part for part in re.split(r"[.!?。！？]+", letter.original_text) if part.strip()])
+            original_sentence_counts[original_count] = original_sentence_counts.get(original_count, 0) + 1
             texts = [(letter.original_language, letter.original_text), *letter.translations.items()]
             for language, text in texts:
                 sentence_count = len([part for part in re.split(r"[.!?。！？]+", text) if part.strip()])
@@ -69,6 +72,9 @@ class CaptureLetterFlowTests(unittest.TestCase):
                     short_texts.append((letter.id, language, sentence_count))
 
         self.assertEqual(short_texts, [])
+        self.assertGreater(original_sentence_counts.get(3, 0), 0)
+        self.assertGreater(original_sentence_counts.get(4, 0), 0)
+        self.assertGreater(original_sentence_counts.get(5, 0), 0)
 
     def test_capture_serializes_camera_and_selection(self) -> None:
         capture = _capture("PER", 15863, "PER-2026")
