@@ -40,6 +40,7 @@
 
       .startup-loader.is-visible {
         opacity: 1;
+        pointer-events: auto;
       }
 
       .startup-scene {
@@ -47,6 +48,8 @@
         width: 180px;
         height: 150px;
         image-rendering: pixelated;
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
       }
 
       .startup-stars,
@@ -65,6 +68,7 @@
           24px 92px 0 #f5f7ff,
           148px 94px 0 #6ed6ff;
         animation: startup-twinkle 1.2s steps(2, end) infinite;
+        -webkit-animation: startup-twinkle 1.2s steps(2, end) infinite;
       }
 
       .startup-stars::before {
@@ -101,6 +105,7 @@
         transform: rotate(-12deg);
         animation: startup-scan 1.4s steps(4, end) infinite;
         -webkit-animation: startup-scan 1.4s steps(4, end) infinite;
+        will-change: transform;
       }
 
       .telescope::before {
@@ -188,6 +193,16 @@
       }
 
       @keyframes startup-twinkle {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      @-webkit-keyframes startup-twinkle {
         0%,
         100% {
           opacity: 0.6;
@@ -317,8 +332,10 @@
       const startupLoader = document.getElementById("startup-loader");
       const pyxelRun = document.querySelector("pyxel-run");
       const minimumStartupMs = 1200;
+      const startupForwardDelayMs = 720;
       let startupShownAt = 0;
       let startupHideTimer = 0;
+      let startupForwardTimer = 0;
       let startupInteractionSeen = false;
       let startupReady = false;
       let startupDismissed = false;
@@ -348,8 +365,13 @@
           buttons: type === "mouseup" || type === "click" ? 0 : 1,
         };
         if (type.startsWith("pointer") && window.PointerEvent) {
-          target.dispatchEvent(new PointerEvent(type, { ...init, pointerId: 1, pointerType: "touch", isPrimary: true }));
-          return;
+          try {
+            target.dispatchEvent(new PointerEvent(type, { ...init, pointerId: 1, pointerType: "touch", isPrimary: true }));
+            return;
+          } catch (_error) {
+            target.dispatchEvent(new MouseEvent(type.replace("pointer", "mouse"), init));
+            return;
+          }
         }
         target.dispatchEvent(new MouseEvent(type, init));
       }
@@ -363,7 +385,7 @@
           return;
         }
         startupActivationForwarded = true;
-        window.setTimeout(() => {
+        const forwardActivation = () => {
           const rect = target.getBoundingClientRect();
           const clientX = rect.left + rect.width * 0.5;
           const clientY = rect.top + rect.height * 0.5;
@@ -371,7 +393,28 @@
           dispatchPointerLikeEvent(target, "mousedown", event, clientX, clientY);
           dispatchPointerLikeEvent(target, "mouseup", event, clientX, clientY);
           dispatchPointerLikeEvent(target, "click", event, clientX, clientY);
-        }, 80);
+        };
+        const elapsed = startupShownAt ? performance.now() - startupShownAt : 0;
+        const delay = Math.max(0, startupForwardDelayMs - elapsed);
+        window.clearTimeout(startupForwardTimer);
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            startupForwardTimer = window.setTimeout(forwardActivation, delay);
+          });
+        });
+      }
+
+      function captureStartupEvent(event) {
+        if (!event || event.type === "keydown" || startupDismissed || startupActivationForwarded) {
+          return;
+        }
+        if (event.cancelable) {
+          event.preventDefault();
+        }
+        event.stopPropagation();
+        if (typeof event.stopImmediatePropagation === "function") {
+          event.stopImmediatePropagation();
+        }
       }
 
       function scheduleStartupHide() {
@@ -392,6 +435,7 @@
         if (startupDismissed || (startupInteractionSeen && !force)) {
           return;
         }
+        captureStartupEvent(_event);
         startupInteractionSeen = true;
         window.clearTimeout(startupHideTimer);
         if (startupShownAt === 0) {
@@ -421,7 +465,7 @@
           startupHookedTargets.add(target);
           for (const eventName of startupEvents) {
             const options = eventName.startsWith("touch")
-              ? { capture: true, passive: true }
+              ? { capture: true, passive: false }
               : { capture: true };
             target.addEventListener(eventName, showStartupLoader, options);
           }
