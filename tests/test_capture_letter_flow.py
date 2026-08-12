@@ -43,7 +43,7 @@ class CaptureLetterFlowTests(unittest.TestCase):
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)
         ids = [letter.id for letter in letters]
 
-        self.assertGreaterEqual(len(letters), 48)
+        self.assertGreaterEqual(len(letters), 80)
         self.assertEqual(len(ids), len(set(ids)))
 
     def test_capture_serializes_camera_and_selection(self) -> None:
