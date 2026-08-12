@@ -18,8 +18,8 @@ GLYPH_W = 3
 GLYPH_H = 5
 CHAR_STEP = 8
 LINE_STEP = 13
-BODY_TEXT_SCALE = 2
-BODY_LINE_STEP = FONT_CELL_HEIGHT * BODY_TEXT_SCALE + 4
+BODY_TEXT_SCALE = 1
+BODY_LINE_STEP = 15
 JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
 FEATURE_COLOR = 11
 _font_atlas_ready = False
@@ -214,9 +214,9 @@ def log_item_rects(width: int, height: int, count: int) -> list[tuple[int, int, 
 
 def letter_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     x = 18
-    y = max(76, height // 2 - 132)
+    y = max(76, height // 2 - 84)
     w = width - 36
-    h = min(330, height - y - 58)
+    h = min(230, height - y - 44)
     return (x, y, w, h)
 
 
@@ -594,13 +594,11 @@ def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language)
     for line in _wrap_body_lines(primary, w - 20):
         _draw_body_text(x + 10, cursor_y, line, 7)
         cursor_y += BODY_LINE_STEP
-    if original is not None and cursor_y < y + h - 78:
-        cursor_y += 2
+    if original is not None and cursor_y < y + h - 58:
+        cursor_y += 4
         draw_big_text(x + 10, cursor_y, "- ORIGINAL -", 13)
-        cursor_y += 18
-        for line in _wrap_body_lines(original, w - 20)[:3]:
-            if cursor_y > y + h - 48:
-                break
+        cursor_y += 14
+        for line in _wrap_body_lines(original, w - 20)[:5]:
             _draw_body_text(x + 10, cursor_y, line, 13)
             cursor_y += BODY_LINE_STEP
 
@@ -685,6 +683,7 @@ def _body_text_width(text: str) -> int:
 
 
 def _draw_body_text(x: int, y: int, text: str, col: int) -> None:
+    _draw_bitmap_text(x + 1, y, text, col, BODY_TEXT_SCALE)
     _draw_bitmap_text(x, y, text, col, BODY_TEXT_SCALE)
 
 
