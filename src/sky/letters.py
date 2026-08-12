@@ -11,6 +11,93 @@ MAX_LOGS = 100
 MATCH_TOP_LIMIT = 36
 MATCH_RELATIVE_FLOOR = 0.2
 MATCH_SCORE_WEIGHT_SCALE = 120.0
+JAPANESE_SOFT_REPLACEMENTS = (
+    ("真夜中", "まよなか"),
+    ("帰り道", "かえりみち"),
+    ("洗濯物", "せんたくもの"),
+    ("手袋", "てぶくろ"),
+    ("見送った", "見おくった"),
+    ("取りこむ", "とりこむ"),
+    ("間違った", "まちがった"),
+    ("湿って", "しめって"),
+    ("向こう", "むこう"),
+    ("残り", "のこり"),
+    ("渡した", "わたした"),
+    ("空には", "そらには"),
+    ("空に", "そらに"),
+    ("空を", "そらを"),
+    ("空は", "そらは"),
+    ("少しだけ", "すこしだけ"),
+    ("少し", "すこし"),
+    ("明日", "あした"),
+    ("昨日", "きのう"),
+    ("今日", "きょう"),
+    ("最後", "さいご"),
+    ("最初", "さいしょ"),
+    ("全部", "ぜんぶ"),
+    ("一緒", "いっしょ"),
+    ("一枚", "一まい"),
+    ("一回", "一かい"),
+    ("一通", "一つう"),
+    ("二回", "二かい"),
+    ("三つ", "みっつ"),
+    ("一つ", "ひとつ"),
+    ("何も", "なにも"),
+    ("何度", "なんど"),
+    ("誰", "だれ"),
+    ("家に", "いえに"),
+    ("家へ", "いえへ"),
+    ("家は", "いえは"),
+    ("家まで", "いえまで"),
+    ("外へ", "そとへ"),
+    ("外に", "そとに"),
+    ("外で", "そとで"),
+    ("外は", "そとは"),
+    ("窓辺", "まどべ"),
+    ("窓", "まど"),
+    ("屋根", "やね"),
+    ("階段", "かいだん"),
+    ("椅子", "いす"),
+    ("机", "つくえ"),
+    ("袋", "ふくろ"),
+    ("指", "ゆび"),
+    ("足", "あし"),
+    ("冷た", "つめた"),
+    ("寒", "さむ"),
+    ("重", "おも"),
+    ("眠", "ねむ"),
+    ("忘れ", "わすれ"),
+    ("思った", "おもった"),
+    ("思う", "おもう"),
+    ("言う", "いう"),
+    ("言わ", "いわ"),
+    ("聞いた", "きいた"),
+    ("聞こえ", "きこえ"),
+    ("見え", "みえ"),
+    ("見た", "みた"),
+    ("見て", "みて"),
+    ("見る", "みる"),
+    ("開け", "あけ"),
+    ("閉じ", "とじ"),
+    ("食べ", "たべ"),
+    ("飲ん", "のん"),
+    ("買った", "かった"),
+    ("買う", "かう"),
+    ("待って", "まって"),
+    ("歩いた", "あるいた"),
+    ("戻", "もど"),
+    ("帰", "かえ"),
+    ("終わった", "おわった"),
+    ("出て", "でて"),
+    ("出した", "だした"),
+    ("入れ", "いれ"),
+    ("持って", "もって"),
+    ("落と", "おと"),
+    ("洗濯", "せんたく"),
+    ("風呂", "ふろ"),
+    ("冷凍庫", "れいとうこ"),
+    ("電線", "でんせん"),
+)
 
 
 class RandomLike(Protocol):
@@ -122,12 +209,25 @@ def display_letter_text(letter: PresetLetter, language: str) -> tuple[str, str |
         if language == "ja":
             english_text = letter.translations.get("en")
             if english_text is not None:
-                return letter.original_text, english_text
-        return letter.original_text, None
+                return soften_japanese_message(letter.original_text), english_text
+        return _message_for_display(letter.original_text, letter.original_language), None
     translated = letter.translations.get(language)
     if translated is not None:
-        return translated, letter.original_text
-    return letter.original_text, None
+        return _message_for_display(translated, language), _message_for_display(letter.original_text, letter.original_language)
+    return _message_for_display(letter.original_text, letter.original_language), None
+
+
+def soften_japanese_message(text: str) -> str:
+    softened = text
+    for source, replacement in JAPANESE_SOFT_REPLACEMENTS:
+        softened = softened.replace(source, replacement)
+    return softened
+
+
+def _message_for_display(text: str, language: str) -> str:
+    if language == "ja":
+        return soften_japanese_message(text)
+    return text
 
 
 def log_to_dict(log: ExchangeLog) -> dict:

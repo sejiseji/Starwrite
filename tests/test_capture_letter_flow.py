@@ -13,6 +13,7 @@ from sky.letters import (
     load_letters_from_packs,
     match_letter,
     score_letter,
+    soften_japanese_message,
 )
 
 
@@ -124,6 +125,17 @@ class CaptureLetterFlowTests(unittest.TestCase):
 
         self.assertIn("終電", primary)
         self.assertIn("last train", original or "")
+
+    def test_japanese_display_softens_daily_kanji_without_losing_terms(self) -> None:
+        message = "洗濯物を取りこむのを忘れて、少し湿っていた。シミュレーションは自信満々に間違った答えを出した。"
+
+        softened = soften_japanese_message(message)
+
+        self.assertIn("せんたく", softened)
+        self.assertIn("わすれて", softened)
+        self.assertIn("すこし", softened)
+        self.assertIn("シミュレーション", softened)
+        self.assertIn("自信満々", softened)
 
     def test_log_keeps_latest_100_fifo(self) -> None:
         capture = _capture()
