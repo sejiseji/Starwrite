@@ -180,7 +180,8 @@ def draw_bold_text_scaled(x: int, y: int, text: str, col: int, scale: int) -> No
 def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
     button_w = 70
     button_h = 22
-    return ((width - button_w) // 2, height - button_h - 38, button_w, button_h)
+    main_top = main_button_rects(width, height)["letter"][1]
+    return ((width - button_w) // 2, main_top - button_h - 8, button_w, button_h)
 
 
 def main_button_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
