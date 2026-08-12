@@ -19,12 +19,73 @@ class ScreenPoint:
 @dataclass(slots=True, frozen=True)
 class SkyCapture:
     schema_version: int
-    constellation_id: str
-    anchor_star_id: int | None
+    captured_at: datetime
+    latitude_deg: float
+    longitude_deg: float
     camera_yaw: float
     camera_pitch: float
+    camera_roll: float
     fov_deg: float
-    observation_time: datetime
+    selected_constellation_id: str | None
+    selected_star_id: int | None
+    selected_feature_id: str | None
+    selected_event_id: str | None
+    render_seed: int
+
+
+def capture_to_dict(capture: SkyCapture) -> dict:
+    return {
+        "schema_version": capture.schema_version,
+        "captured_at": capture.captured_at.isoformat(),
+        "latitude_deg": capture.latitude_deg,
+        "longitude_deg": capture.longitude_deg,
+        "camera_yaw": capture.camera_yaw,
+        "camera_pitch": capture.camera_pitch,
+        "camera_roll": capture.camera_roll,
+        "fov_deg": capture.fov_deg,
+        "selected_constellation_id": capture.selected_constellation_id,
+        "selected_star_id": capture.selected_star_id,
+        "selected_feature_id": capture.selected_feature_id,
+        "selected_event_id": capture.selected_event_id,
+        "render_seed": capture.render_seed,
+    }
+
+
+def capture_from_dict(data: dict) -> SkyCapture:
+    if "captured_at" in data:
+        captured_at = datetime.fromisoformat(str(data["captured_at"]))
+        return SkyCapture(
+            schema_version=int(data.get("schema_version", 1)),
+            captured_at=captured_at,
+            latitude_deg=float(data["latitude_deg"]),
+            longitude_deg=float(data["longitude_deg"]),
+            camera_yaw=float(data["camera_yaw"]),
+            camera_pitch=float(data["camera_pitch"]),
+            camera_roll=float(data.get("camera_roll", 0.0)),
+            fov_deg=float(data["fov_deg"]),
+            selected_constellation_id=data.get("selected_constellation_id"),
+            selected_star_id=data.get("selected_star_id"),
+            selected_feature_id=data.get("selected_feature_id"),
+            selected_event_id=data.get("selected_event_id"),
+            render_seed=int(data.get("render_seed", 0)),
+        )
+
+    observation_time = datetime.fromisoformat(str(data["observation_time"]))
+    return SkyCapture(
+        schema_version=int(data.get("schema_version", 1)),
+        captured_at=observation_time,
+        latitude_deg=float(data.get("latitude_deg", 35.7)),
+        longitude_deg=float(data.get("longitude_deg", 139.7)),
+        camera_yaw=float(data["camera_yaw"]),
+        camera_pitch=float(data["camera_pitch"]),
+        camera_roll=0.0,
+        fov_deg=float(data["fov_deg"]),
+        selected_constellation_id=data.get("constellation_id"),
+        selected_star_id=data.get("anchor_star_id"),
+        selected_feature_id=None,
+        selected_event_id=None,
+        render_seed=0,
+    )
 
 
 def can_capture(
@@ -46,4 +107,3 @@ def can_capture(
     if not all(margin <= y <= screen_height - margin for y in ys):
         return False
     return max(max(xs) - min(xs), max(ys) - min(ys)) >= min_span
-

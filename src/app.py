@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import random
 import sys
 from datetime import datetime, timedelta, timezone
 
@@ -17,10 +18,20 @@ from astronomy.observer import Observer
 from astronomy.time import julian_date, local_sidereal_time
 from data.constellations import CONSTELLATIONS
 from data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
+from data.preset_letters import PRESET_LETTER_PACKS
 from data.sky_features import SKY_PATHS
 from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
-from sky.capture import ScreenPoint, SkyCapture, can_capture
+from sky.capture import ScreenPoint, SkyCapture, can_capture, capture_from_dict, capture_to_dict
+from sky.letters import (
+    ExchangeLog,
+    PresetLetter,
+    append_log,
+    load_letters_from_packs,
+    log_from_dict,
+    log_to_dict,
+    match_letter,
+)
 from sky.meteors import (
     active_meteor_event,
     adjacent_meteor_event,
@@ -30,11 +41,16 @@ from sky.meteors import (
 from sky.renderer import SkyRenderer
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
 from ui.hud import (
+    back_button_rect,
     draw_compact_time,
+    draw_cut_in,
     draw_event_banner,
     draw_hud,
     draw_constellation_labels,
     draw_focused_star,
+    draw_letter_view,
+    draw_log_list,
+    draw_main_buttons,
     draw_meteor_event,
     draw_menu_button,
     draw_menu_panel,
@@ -42,6 +58,8 @@ from ui.hud import (
     draw_sky_features,
     draw_tool_buttons,
     menu_button_rect,
+    log_item_rects,
+    main_button_rects,
     panel_toggle_rects,
     slider_rects,
     tool_button_rects,
@@ -54,6 +72,8 @@ IPHONE16_MIN_SCREEN_WIDTH = 396
 IPHONE16_MAX_SCREEN_WIDTH = 430
 SETTINGS_KEY = "starwrite_v02_settings"
 CAPTURE_KEY = "starwrite_v01_latest_capture"
+LETTER_STORE_KEY = "starwrite_v01_letter_store"
+CUT_IN_FRAMES = 90
 
 
 def _screen_size() -> tuple[int, int]:
@@ -143,8 +163,21 @@ class StarSkyApp:
         self.show_event_slider = bool(settings.get("show_event_slider", False))
         self.language = normalize_language(settings.get("language", "en"))
         self.menu_open = False
+        self.ui_state = "SKY"
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.latest_capture = self._load_capture()
+        self.letters = load_letters_from_packs(PRESET_LETTER_PACKS)
+        self.letters_by_id: dict[str, PresetLetter] = {letter.id: letter for letter in self.letters}
+        letter_store = self._load_letter_store()
+        self.exchange_logs: tuple[ExchangeLog, ...] = letter_store["logs"]
+        self.seen_letter_ids: set[str] = letter_store["seen_letter_ids"]
+        self.unread_log_id: str | None = letter_store["unread_log_id"]
+        self.pending_capture: SkyCapture | None = None
+        self.pending_letter_id: str | None = None
+        self.pending_deliver_frame: int | None = None
+        self.selected_log_id: str | None = None
+        self.cut_in_start_frame: int | None = None
+        self.cut_in_message = ""
         self.last_mouse: tuple[int, int] | None = None
         self.active_slider: str | None = None
         self.slider_drag_start_y = 0
@@ -169,22 +202,36 @@ class StarSkyApp:
         if not data:
             return None
         try:
-            return SkyCapture(
-                schema_version=int(data["schema_version"]),
-                constellation_id=str(data["constellation_id"]),
-                anchor_star_id=data.get("anchor_star_id"),
-                camera_yaw=float(data["camera_yaw"]),
-                camera_pitch=float(data["camera_pitch"]),
-                fov_deg=float(data["fov_deg"]),
-                observation_time=_aware_datetime(data["observation_time"]),
-            )
+            return capture_from_dict(data)
         except Exception:
             return None
 
+    def _load_letter_store(self) -> dict:
+        data = _load_json(LETTER_STORE_KEY)
+        if int(data.get("schema_version", 1)) != 1:
+            return {"logs": (), "seen_letter_ids": set(), "unread_log_id": None}
+        logs = []
+        for item in data.get("logs", []):
+            try:
+                logs.append(log_from_dict(item))
+            except Exception:
+                continue
+        return {
+            "logs": tuple(logs[-100:]),
+            "seen_letter_ids": {str(value) for value in data.get("seen_letter_ids", [])},
+            "unread_log_id": data.get("unread_log_id"),
+        }
+
     def update(self) -> None:
-        self.clock.update(1.0 / 30.0)
+        if self.ui_state == "SKY":
+            self.clock.update(1.0 / 30.0)
+        self._update_pending_receive()
         self._handle_keys()
         self._handle_mouse()
+        if self.ui_state != "SKY":
+            if pyxel.frame_count % 30 == 0:
+                self._save_settings()
+            return
         self.projected = project_visible_stars(
             STARS,
             self.observer,
@@ -212,6 +259,10 @@ class StarSkyApp:
             self._save_settings()
 
     def _handle_keys(self) -> None:
+        if self.ui_state != "SKY":
+            if self._key_pressed("KEY_ESCAPE") or self._key_pressed("KEY_BACKSPACE"):
+                self._go_back()
+            return
         if pyxel.btnp(pyxel.KEY_H):
             self.show_info = not self.show_info
         if pyxel.btnp(pyxel.KEY_G):
@@ -227,7 +278,7 @@ class StarSkyApp:
             self._select_constellation(-1 if self._shift_pressed() else 1)
         if pyxel.btnp(pyxel.KEY_F):
             self._frame_selected_constellation()
-        if pyxel.btnp(pyxel.KEY_RETURN) and self.capture_ready:
+        if pyxel.btnp(pyxel.KEY_RETURN):
             self._capture()
 
         step = -1 if pyxel.btn(pyxel.KEY_LEFT) else 1 if pyxel.btn(pyxel.KEY_RIGHT) else 0
@@ -263,8 +314,16 @@ class StarSkyApp:
         key_names = ("KEY_SHIFT", "KEY_LSHIFT", "KEY_RSHIFT")
         return any(hasattr(pyxel, name) and pyxel.btn(getattr(pyxel, name)) for name in key_names)
 
+    def _key_pressed(self, key_name: str) -> bool:
+        return hasattr(pyxel, key_name) and pyxel.btnp(getattr(pyxel, key_name))
+
     def _handle_mouse(self) -> None:
         current = (pyxel.mouse_x, pyxel.mouse_y)
+        if self.ui_state != "SKY":
+            if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+                self._handle_modal_click(current)
+            self.last_mouse = None
+            return
         if self.active_slider is not None:
             if pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
                 self._update_slider_drag(current[1])
@@ -292,6 +351,16 @@ class StarSkyApp:
             self.camera.clamp()
 
     def _handle_ui_click(self, point: tuple[int, int]) -> bool:
+        for key, rect in main_button_rects(SCREEN_WIDTH, SCREEN_HEIGHT).items():
+            if not self._point_in_rect(point, rect):
+                continue
+            if key == "letter":
+                self._open_letter()
+            elif key == "log":
+                self.ui_state = "LOG"
+            elif key == "capture":
+                self._capture()
+            return True
         for key, rect in tool_button_rects(SCREEN_WIDTH, SCREEN_HEIGHT).items():
             if not self._point_in_rect(point, rect):
                 continue
@@ -366,6 +435,40 @@ class StarSkyApp:
         if self._point_in_rect(point, rects["panel"]):
             return True
         return False
+
+    def _handle_modal_click(self, point: tuple[int, int]) -> bool:
+        if self._point_in_rect(point, back_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+            self._go_back()
+            return True
+        if self.ui_state == "LOG":
+            visible_logs = tuple(reversed(self.exchange_logs))
+            for index, rect in enumerate(log_item_rects(SCREEN_WIDTH, SCREEN_HEIGHT, len(visible_logs))):
+                if not self._point_in_rect(point, rect):
+                    continue
+                if index < len(visible_logs):
+                    self.selected_log_id = visible_logs[index].id
+                    self.ui_state = "LOG_DETAIL"
+                return True
+        return True
+
+    def _open_letter(self) -> None:
+        target_id = self.unread_log_id
+        if target_id is None and self.exchange_logs:
+            target_id = self.exchange_logs[-1].id
+        if target_id is None:
+            return
+        self.selected_log_id = target_id
+        self.ui_state = "LETTER"
+        if self.unread_log_id == target_id:
+            self.unread_log_id = None
+            self._save_letter_store()
+
+    def _go_back(self) -> None:
+        if self.ui_state == "LOG_DETAIL":
+            self.ui_state = "LOG"
+            return
+        self.ui_state = "SKY"
+        self.selected_log_id = None
 
     def _step_slider(self, label: str, direction: int) -> None:
         if label == "event":
@@ -508,26 +611,63 @@ class StarSkyApp:
         return True
 
     def _capture(self) -> None:
-        selected = self.selected_constellation
+        focused_star = self._focused_star()
         self.latest_capture = SkyCapture(
             schema_version=1,
-            constellation_id=selected.id,
-            anchor_star_id=selected.anchor_star_id,
+            captured_at=self.clock.current_time,
+            latitude_deg=self.observer.latitude_deg,
+            longitude_deg=self.observer.longitude_deg,
             camera_yaw=self.camera.yaw,
             camera_pitch=self.camera.pitch,
+            camera_roll=0.0,
             fov_deg=self.camera.fov_deg,
-            observation_time=self.clock.current_time,
+            selected_constellation_id=self.selected_constellation.id,
+            selected_star_id=focused_star[0] if focused_star is not None else self.selected_constellation.anchor_star_id,
+            selected_feature_id=None,
+            selected_event_id=self.meteor_event.event.id if self.meteor_event is not None else None,
+            render_seed=pyxel.frame_count,
         )
+        _save_json(CAPTURE_KEY, capture_to_dict(self.latest_capture))
+        if self.pending_deliver_frame is not None:
+            return
+        recent_ids = tuple(log.received_letter_id for log in self.exchange_logs[-30:])
+        letter = match_letter(self.latest_capture, self.letters, self.seen_letter_ids, recent_ids)
+        delay_frames = int(random.uniform(5.0, 15.0) * 30.0)
+        self.pending_capture = self.latest_capture
+        self.pending_letter_id = letter.id
+        self.pending_deliver_frame = pyxel.frame_count + delay_frames
+
+    def _update_pending_receive(self) -> None:
+        if self.pending_deliver_frame is None or pyxel.frame_count < self.pending_deliver_frame:
+            return
+        if self.pending_capture is None or self.pending_letter_id is None:
+            self.pending_deliver_frame = None
+            return
+        received_at = self.clock.current_time
+        log = ExchangeLog(
+            id=f"log_{self.pending_letter_id}_{pyxel.frame_count}",
+            capture=self.pending_capture,
+            received_letter_id=self.pending_letter_id,
+            received_at=received_at,
+        )
+        self.exchange_logs = append_log(self.exchange_logs, log)
+        self.seen_letter_ids.add(self.pending_letter_id)
+        self.unread_log_id = log.id
+        self.cut_in_start_frame = pyxel.frame_count
+        self.cut_in_message = "なにかとどいたみたい。" if self.language == "ja" else "something arrived."
+        self.pending_capture = None
+        self.pending_letter_id = None
+        self.pending_deliver_frame = None
+        self._save_letter_store()
+
+    def _save_letter_store(self) -> None:
         _save_json(
-            CAPTURE_KEY,
+            LETTER_STORE_KEY,
             {
-                "schema_version": self.latest_capture.schema_version,
-                "constellation_id": self.latest_capture.constellation_id,
-                "anchor_star_id": self.latest_capture.anchor_star_id,
-                "camera_yaw": self.latest_capture.camera_yaw,
-                "camera_pitch": self.latest_capture.camera_pitch,
-                "fov_deg": self.latest_capture.fov_deg,
-                "observation_time": self.latest_capture.observation_time.isoformat(),
+                "schema_version": 1,
+                "logs": [log_to_dict(log) for log in self.exchange_logs],
+                "seen_letter_ids": sorted(self.seen_letter_ids),
+                "unread_log_id": self.unread_log_id,
             },
         )
 
@@ -557,6 +697,36 @@ class StarSkyApp:
         )
 
     def draw(self) -> None:
+        if self.ui_state == "LOG":
+            self.renderer.draw(
+                self.projected,
+                CONSTELLATIONS,
+                self.selected_constellation,
+                self.show_constellations,
+                self.show_guides,
+                self.camera,
+                SCREEN_WIDTH,
+                SCREEN_HEIGHT,
+                self.meteor_event,
+            )
+            draw_log_list(self.exchange_logs, self.letters_by_id)
+            self._draw_active_cut_in()
+            self._signal_ready()
+            return
+
+        if self.ui_state in ("LETTER", "LOG_DETAIL"):
+            log = self._selected_log()
+            if log is not None:
+                self._draw_capture_background(log.capture)
+                letter = self.letters_by_id.get(log.received_letter_id)
+                if letter is not None:
+                    draw_letter_view(log, letter, self.language)
+                self._draw_active_cut_in()
+            else:
+                self.ui_state = "SKY"
+            self._signal_ready()
+            return
+
         self.renderer.draw(
             self.projected,
             CONSTELLATIONS,
@@ -612,7 +782,61 @@ class StarSkyApp:
                 self.language,
             )
         draw_menu_button(self.menu_open)
+        draw_main_buttons(self.unread_log_id is not None, self.pending_deliver_frame is not None)
+        self._draw_active_cut_in()
         self._signal_ready()
+
+    def _draw_active_cut_in(self) -> None:
+        if self.cut_in_start_frame is not None:
+            age = pyxel.frame_count - self.cut_in_start_frame
+            if age < CUT_IN_FRAMES:
+                draw_cut_in(self.cut_in_message, age, CUT_IN_FRAMES)
+            else:
+                self.cut_in_start_frame = None
+
+    def _draw_capture_background(self, capture: SkyCapture) -> None:
+        observer = Observer(capture.latitude_deg, capture.longitude_deg)
+        camera = SkyCamera(capture.camera_yaw, capture.camera_pitch, capture.fov_deg)
+        projected = project_visible_stars(
+            STARS,
+            observer,
+            capture.captured_at,
+            camera,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT,
+        )
+        selected_constellation = self._constellation_by_id(capture.selected_constellation_id) or self.selected_constellation
+        meteor_event = active_meteor_event(METEOR_SHOWERS, observer, capture.captured_at, camera, SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.renderer.draw(
+            projected,
+            CONSTELLATIONS,
+            selected_constellation,
+            self.show_constellations,
+            self.show_guides,
+            camera,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT,
+            meteor_event,
+        )
+        draw_constellation_labels(CONSTELLATIONS, selected_constellation, projected, self.language)
+        if meteor_event is not None:
+            draw_event_banner(meteor_event, self.language)
+
+    def _constellation_by_id(self, constellation_id: str | None) -> Constellation | None:
+        if constellation_id is None:
+            return None
+        for constellation in CONSTELLATIONS:
+            if constellation.id == constellation_id:
+                return constellation
+        return None
+
+    def _selected_log(self) -> ExchangeLog | None:
+        if self.selected_log_id is None:
+            return None
+        for log in self.exchange_logs:
+            if log.id == self.selected_log_id:
+                return log
+        return None
 
     def _focused_star(self) -> tuple[int, ScreenPoint] | None:
         center_x = SCREEN_WIDTH * 0.5

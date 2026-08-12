@@ -56,11 +56,17 @@ The browser entrypoint uses Pyxel Web custom tags:
 - `SHIFT+TAB`: previous constellation
 - `F`: frame the selected constellation when it is above the horizon
 - `H`: information HUD
-- `ENTER`: capture when the selected constellation is framed
+- `ENTER`: capture the current sky view
 
 Information HUD and guide lines start hidden.
 Visible constellations show bold labels in the selected language, and the named
 star closest to the screen center is highlighted with a red frame and label.
+
+The bottom main controls are:
+
+- `LETTER`: open the latest unread letter, or the latest received letter
+- `LOG`: open the local exchange log
+- `CAPTURE`: save the current sky view and schedule a simulated letter receive
 
 The upper-right controls are always available:
 
@@ -84,7 +90,7 @@ Dragging a slider knob or track continuously changes the sky:
 When the `EVENT` control jumps to a registered meteor shower, the camera also
 turns toward the related constellation in the current prototype catalog.
 
-The bottom `MENU` button opens a display panel for toggling:
+The `MENU` button opens a display panel for toggling:
 
 - `INFO`: observation information
 - `GUIDE`: horizontal guide lines
@@ -212,6 +218,13 @@ observing references:
 - Big Dipper
 - Spring Arc
 - Milky Way, shown as an approximate guide path
+
+The Capture / Letter demo uses local preset letters only. Pressing `CAPTURE`
+stores the current sky view as data, matches a preset letter, waits 5-15
+seconds, then shows a quiet arrival cut-in. The `LETTER` view restores the
+captured sky from data and shows the translated text first, followed by the
+original text when it differs. The `LOG` stores up to 100 exchanges in
+localStorage using FIFO trimming.
 
 Japanese labels are rendered inside the Pyxel canvas with a generated bitmap
 font atlas in image bank 2. The source text data is generated from the bundled

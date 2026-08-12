@@ -4,6 +4,7 @@ import string
 import unittest
 from pathlib import Path
 
+from data.preset_letters import PRESET_LETTER_PACKS
 from ui.localization import (
     CONSTELLATION_NAMES_JA,
     METEOR_EVENT_NAMES_JA,
@@ -27,6 +28,15 @@ JAPANESE_PUNCTUATION = "　。、，．・：；？！ー〜～（）「」『�
 JAPANESE_OPERATORS = "＋−－×÷＝"
 
 
+def _preset_letter_texts() -> list[str]:
+    texts: list[str] = []
+    for pack in PRESET_LETTER_PACKS.values():
+        for letter in pack:
+            texts.append(str(letter["original_text"]))
+            texts.extend(str(value) for value in letter.get("translations", {}).values())
+    return texts
+
+
 def _font_encodings() -> set[int]:
     encodings: set[int] = set()
     for line in FONT_PATH.read_text(encoding="utf-8").splitlines():
@@ -42,6 +52,7 @@ class FontSubsetTests(unittest.TestCase):
             *METEOR_EVENT_NAMES_JA.values(),
             *SKY_FEATURE_NAMES_JA.values(),
             *STAR_NAMES_JA.values(),
+            *_preset_letter_texts(),
             ASCII_PRINTABLE,
         ]
         required = {
@@ -73,6 +84,7 @@ class FontSubsetTests(unittest.TestCase):
             *METEOR_EVENT_NAMES_JA.values(),
             *SKY_FEATURE_NAMES_JA.values(),
             *STAR_NAMES_JA.values(),
+            *_preset_letter_texts(),
             ASCII_PRINTABLE,
             HIRAGANA,
             KATAKANA,

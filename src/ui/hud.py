@@ -8,6 +8,7 @@ from data.sky_features import ASTERISMS, SKY_PATHS, Asterism, SkyPath
 from data.font_jp import FONT_CELL_HEIGHT, FONT_CELL_WIDTH, FONT_COLUMNS, FONT_IMAGE_BANK, GLYPHS
 from sky.capture import ScreenPoint, SkyCapture
 from sky.camera import SkyCamera
+from sky.letters import ExchangeLog, PresetLetter, display_letter_text
 from sky.meteors import MeteorEventView
 from sky.simulation import SimulationClock
 from ui.localization import Language, constellation_name, meteor_event_name, sky_feature_name
@@ -179,7 +180,33 @@ def draw_bold_text_scaled(x: int, y: int, text: str, col: int, scale: int) -> No
 def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
     button_w = 70
     button_h = 22
-    return ((width - button_w) // 2, height - button_h - 8, button_w, button_h)
+    return ((width - button_w) // 2, height - button_h - 38, button_w, button_h)
+
+
+def main_button_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
+    gap = 6
+    side = 8
+    button_h = 26
+    y = height - button_h - 6
+    button_w = max(64, (width - side * 2 - gap * 2) // 3)
+    return {
+        "letter": (side, y, button_w, button_h),
+        "log": (side + button_w + gap, y, button_w, button_h),
+        "capture": (side + (button_w + gap) * 2, y, button_w, button_h),
+    }
+
+
+def back_button_rect(_width: int, _height: int) -> tuple[int, int, int, int]:
+    return (8, 8, 64, 24)
+
+
+def log_item_rects(width: int, height: int, count: int) -> list[tuple[int, int, int, int]]:
+    x = 24
+    y = 76
+    w = width - 48
+    row_h = 24
+    visible_count = min(count, max(0, (height - y - 52) // row_h))
+    return [(x, y + index * row_h, w, row_h - 3) for index in range(visible_count)]
 
 
 def menu_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
@@ -212,6 +239,35 @@ def draw_button(rect: tuple[int, int, int, int], label: str, active: bool) -> No
     draw_big_text(x + max(4, (w - text_width(label)) // 2), y + 7, label, 7)
 
 
+def draw_main_buttons(has_unread: bool, capture_pending: bool) -> None:
+    rects = main_button_rects(pyxel.width, pyxel.height)
+    draw_button(rects["letter"], "LETTER ." if has_unread else "LETTER", has_unread)
+    draw_button(rects["log"], "LOG", False)
+    draw_button(rects["capture"], "CAPTURE" if not capture_pending else "WAIT", False)
+
+
+def draw_back_button() -> None:
+    draw_button(back_button_rect(pyxel.width, pyxel.height), "BACK", False)
+
+
+def draw_cut_in(message: str, frame_age: int, duration_frames: int) -> None:
+    if frame_age < 0 or frame_age >= duration_frames:
+        return
+    edge = max(1, duration_frames // 5)
+    if frame_age < edge:
+        color = 13
+    elif frame_age > duration_frames - edge:
+        color = 13
+    else:
+        color = 7
+    width = display_text_width(message)
+    x = max(8, min(pyxel.width - width - 8, (pyxel.width - width) // 2))
+    y = 42
+    pyxel.rect(max(0, x - 10), y - 8, min(pyxel.width, width + 20), 28, 0)
+    pyxel.rectb(max(0, x - 10), y - 8, min(pyxel.width, width + 20), 28, 1)
+    draw_display_text(x, y, message, color)
+
+
 def draw_hud(
     observer: Observer,
     clock: SimulationClock,
@@ -233,7 +289,7 @@ def draw_hud(
         draw_big_text(8, pyxel.height - 48, f"{selected.id} FOUND", 10)
         draw_big_text(8, pyxel.height - 35, "ENTER CAPTURE", 7)
     elif latest_capture is not None:
-        draw_big_text(8, pyxel.height - 35, f"CAPTURED {latest_capture.constellation_id}", 11)
+        draw_big_text(8, pyxel.height - 35, f"CAPTURED {latest_capture.selected_constellation_id or 'SKY'}", 11)
 
 
 def draw_compact_time(clock: SimulationClock) -> None:
@@ -484,6 +540,116 @@ def draw_menu_panel(
     draw_big_text(x + 8, y + 162, "LANGUAGE", 7)
     language_label = "JA" if language == "en" else "EN"
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language_label, True)
+
+
+def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language) -> None:
+    x = 18
+    y = max(76, pyxel.height // 2 - 84)
+    w = pyxel.width - 36
+    h = min(230, pyxel.height - y - 44)
+    pyxel.rect(x, y, w, h, 0)
+    pyxel.rectb(x, y, w, h, 13)
+    draw_back_button()
+    draw_big_text(x + 10, y + 10, "LETTER", 7)
+
+    primary, original = display_letter_text(letter, language)
+    cursor_y = y + 34
+    for line in _wrap_body_lines(primary, w - 20):
+        _draw_body_text(x + 10, cursor_y, line, 7)
+        cursor_y += 15
+    if original is not None and cursor_y < y + h - 58:
+        cursor_y += 4
+        draw_big_text(x + 10, cursor_y, "- ORIGINAL -", 13)
+        cursor_y += 14
+        for line in _wrap_body_lines(original, w - 20)[:5]:
+            _draw_body_text(x + 10, cursor_y, line, 13)
+            cursor_y += 15
+
+    location = _letter_location(letter)
+    draw_display_text(x + 10, y + h - 22, f"FROM {location}", 13)
+
+
+def draw_log_list(logs: tuple[ExchangeLog, ...], letters_by_id: dict[str, PresetLetter]) -> None:
+    x = 18
+    y = 52
+    w = pyxel.width - 36
+    h = pyxel.height - 96
+    pyxel.rect(x, y, w, h, 0)
+    pyxel.rectb(x, y, w, h, 13)
+    draw_back_button()
+    draw_big_text(x + 10, y + 12, "LOG", 7)
+    visible_logs = tuple(reversed(logs))[: len(log_item_rects(pyxel.width, pyxel.height, len(logs)))]
+    if not visible_logs:
+        draw_big_text(x + 10, y + 42, "NO LETTERS", 13)
+        return
+    for index, log in enumerate(visible_logs):
+        rect = log_item_rects(pyxel.width, pyxel.height, len(logs))[index]
+        letter = letters_by_id.get(log.received_letter_id)
+        label = _log_row_label(log, letter)
+        pyxel.rect(rect[0], rect[1], rect[2], rect[3], 0)
+        pyxel.rectb(rect[0], rect[1], rect[2], rect[3], 1)
+        draw_big_text(rect[0] + 8, rect[1] + 7, label, 13)
+
+
+def _log_row_label(log: ExchangeLog, letter: PresetLetter | None) -> str:
+    constellation = log.capture.selected_constellation_id or "---"
+    country = letter.country_code if letter is not None else "--"
+    return f"{log.received_at:%m.%d} {constellation[:10]:<10} {country}"
+
+
+def _letter_location(letter: PresetLetter) -> str:
+    parts = [letter.country_code]
+    if letter.region:
+        parts.append(letter.region)
+    if letter.city:
+        parts.append(letter.city)
+    return " / ".join(parts)
+
+
+def _wrap_display_lines(text: str, max_width: int) -> list[str]:
+    if not text:
+        return [""]
+    lines: list[str] = []
+    current = ""
+    tokens = text.split(" ") if text.isascii() else list(text)
+    separator = " " if text.isascii() else ""
+    for token in tokens:
+        candidate = token if not current else current + separator + token
+        if current and display_text_width(candidate) > max_width:
+            lines.append(current)
+            current = token
+        else:
+            current = candidate
+    if current:
+        lines.append(current)
+    return lines
+
+
+def _wrap_body_lines(text: str, max_width: int) -> list[str]:
+    if not text:
+        return [""]
+    lines: list[str] = []
+    current = ""
+    tokens = text.split(" ") if text.isascii() else list(text)
+    separator = " " if text.isascii() else ""
+    for token in tokens:
+        candidate = token if not current else current + separator + token
+        if current and _body_text_width(candidate) > max_width:
+            lines.append(current)
+            current = token
+        else:
+            current = candidate
+    if current:
+        lines.append(current)
+    return lines
+
+
+def _body_text_width(text: str) -> int:
+    return sum(_glyph_advance(char) for char in text)
+
+
+def _draw_body_text(x: int, y: int, text: str, col: int) -> None:
+    _draw_bitmap_text(x, y, text, col)
 
 
 def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int, int]]:
