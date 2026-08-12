@@ -292,24 +292,14 @@ def draw_back_button() -> None:
 def draw_cut_in(message: str, frame_age: int, duration_frames: int) -> None:
     if frame_age < 0 or frame_age >= duration_frames:
         return
-    edge = max(1, duration_frames // 5)
-    if frame_age < edge:
-        fill = 3
-        text_color = 7
-    elif frame_age > duration_frames - edge:
-        fill = 3
-        text_color = 7
-    else:
-        fill = 11
-        text_color = 0
     width = display_text_width(message)
-    x = max(8, min(pyxel.width - width - 8, (pyxel.width - width) // 2))
+    x = max(12, min(pyxel.width - width - 12, (pyxel.width - width) // 2))
     y = 42
-    box_x = max(0, x - 10)
-    box_w = min(pyxel.width - box_x, width + 20)
-    pyxel.rect(box_x, y - 8, box_w, 30, fill)
-    pyxel.rectb(box_x, y - 8, box_w, 30, 7)
-    draw_display_bold_text(x, y, message, text_color)
+    box_x = max(0, x - 16)
+    box_w = min(pyxel.width - box_x, width + 32)
+    pyxel.rect(box_x, y - 12, box_w, 38, 3)
+    pyxel.rectb(box_x, y - 12, box_w, 38, 11)
+    draw_display_bold_text(x, y, message, 7)
 
 
 def draw_hud(

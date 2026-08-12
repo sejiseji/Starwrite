@@ -77,7 +77,7 @@ IPHONE16_MAX_SCREEN_WIDTH = 430
 SETTINGS_KEY = "starwrite_v02_settings"
 CAPTURE_KEY = "starwrite_v01_latest_capture"
 LETTER_STORE_KEY = "starwrite_v01_letter_store"
-CUT_IN_FRAMES = 90
+CUT_IN_FRAMES = 150
 
 
 def _screen_size() -> tuple[int, int]:
