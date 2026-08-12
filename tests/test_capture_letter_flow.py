@@ -46,6 +46,17 @@ class CaptureLetterFlowTests(unittest.TestCase):
         self.assertGreaterEqual(len(letters), 80)
         self.assertEqual(len(ids), len(set(ids)))
 
+    def test_preset_letters_all_have_english_text_available(self) -> None:
+        letters = load_letters_from_packs(PRESET_LETTER_PACKS)
+
+        missing = [
+            letter.id
+            for letter in letters
+            if letter.original_language != "en" and "en" not in letter.translations
+        ]
+
+        self.assertEqual(missing, [])
+
     def test_capture_serializes_camera_and_selection(self) -> None:
         capture = _capture("PER", 15863, "PER-2026")
 
@@ -85,6 +96,15 @@ class CaptureLetterFlowTests(unittest.TestCase):
 
         self.assertIn("ポテト", primary)
         self.assertIn("Grabbed chips", original or "")
+
+    def test_display_shows_english_companion_for_japanese_originals(self) -> None:
+        letters = load_letters_from_packs(PRESET_LETTER_PACKS)
+        letter = next(item for item in letters if item.id == "base_001_001")
+
+        primary, original = display_letter_text(letter, "ja")
+
+        self.assertIn("終電", primary)
+        self.assertIn("last train", original or "")
 
     def test_log_keeps_latest_100_fifo(self) -> None:
         capture = _capture()

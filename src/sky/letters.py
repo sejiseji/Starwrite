@@ -113,6 +113,10 @@ def match_letter(
 
 def display_letter_text(letter: PresetLetter, language: str) -> tuple[str, str | None]:
     if letter.original_language == language:
+        if language == "ja":
+            english_text = letter.translations.get("en")
+            if english_text is not None:
+                return letter.original_text, english_text
         return letter.original_text, None
     translated = letter.translations.get(language)
     if translated is not None:
