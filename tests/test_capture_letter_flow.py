@@ -44,7 +44,7 @@ class CaptureLetterFlowTests(unittest.TestCase):
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)
         ids = [letter.id for letter in letters]
 
-        self.assertGreaterEqual(len(letters), 192)
+        self.assertGreaterEqual(len(letters), 216)
         self.assertEqual(len(ids), len(set(ids)))
 
     def test_preset_letters_all_have_english_text_available(self) -> None:
@@ -68,10 +68,11 @@ class CaptureLetterFlowTests(unittest.TestCase):
             texts = [(letter.original_language, letter.original_text), *letter.translations.items()]
             for language, text in texts:
                 sentence_count = len([part for part in re.split(r"[.!?。！？]+", text) if part.strip()])
-                if sentence_count < 3:
+                if sentence_count < 2:
                     short_texts.append((letter.id, language, sentence_count))
 
         self.assertEqual(short_texts, [])
+        self.assertGreater(original_sentence_counts.get(2, 0), 0)
         self.assertGreater(original_sentence_counts.get(3, 0), 0)
         self.assertGreater(original_sentence_counts.get(4, 0), 0)
         self.assertGreater(original_sentence_counts.get(5, 0), 0)
