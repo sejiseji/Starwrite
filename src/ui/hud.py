@@ -18,6 +18,8 @@ GLYPH_W = 3
 GLYPH_H = 5
 CHAR_STEP = 8
 LINE_STEP = 13
+BODY_TEXT_SCALE = 2
+BODY_LINE_STEP = FONT_CELL_HEIGHT * BODY_TEXT_SCALE + 4
 JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
 FEATURE_COLOR = 11
 _font_atlas_ready = False
@@ -154,7 +156,7 @@ def _ensure_font_atlas() -> None:
     _font_atlas_ready = True
 
 
-def _draw_bitmap_text(x: int, y: int, text: str, col: int) -> None:
+def _draw_bitmap_text(x: int, y: int, text: str, col: int, scale: int = 1) -> None:
     _ensure_font_atlas()
     cursor_x = x
     if col != 7:
@@ -163,11 +165,11 @@ def _draw_bitmap_text(x: int, y: int, text: str, col: int) -> None:
         codepoint = ord(char)
         location = _glyph_locations.get(codepoint) or _glyph_locations.get(ord("?"))
         if location is None:
-            cursor_x += FONT_CELL_WIDTH
+            cursor_x += FONT_CELL_WIDTH * scale
             continue
         source_x, source_y, advance = location
-        pyxel.blt(cursor_x, y, FONT_IMAGE_BANK, source_x, source_y, FONT_CELL_WIDTH, FONT_CELL_HEIGHT, 0)
-        cursor_x += advance
+        pyxel.blt(cursor_x, y, FONT_IMAGE_BANK, source_x, source_y, FONT_CELL_WIDTH, FONT_CELL_HEIGHT, 0, 0, scale)
+        cursor_x += advance * scale
     if col != 7:
         pyxel.pal()
 
@@ -212,9 +214,9 @@ def log_item_rects(width: int, height: int, count: int) -> list[tuple[int, int, 
 
 def letter_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     x = 18
-    y = max(76, height // 2 - 84)
+    y = max(76, height // 2 - 132)
     w = width - 36
-    h = min(230, height - y - 44)
+    h = min(330, height - y - 58)
     return (x, y, w, h)
 
 
@@ -253,21 +255,28 @@ def panel_toggle_rects(width: int, height: int) -> dict[str, tuple[int, int, int
     }
 
 
-def draw_button(rect: tuple[int, int, int, int], label: str, active: bool) -> None:
+def draw_button_colored(rect: tuple[int, int, int, int], label: str, fill: int, edge: int, text_col: int) -> None:
     x, y, w, h = rect
-    fill = 5 if active else 1
-    edge = 10 if active else 13
     pyxel.rect(x, y, w, h, fill)
     pyxel.rectb(x, y, w, h, edge)
     text_y = y + max(4, (h - GLYPH_H * SCALE) // 2)
-    draw_big_text(x + max(4, (w - text_width(label)) // 2), text_y, label, 7)
+    draw_big_text(x + max(4, (w - text_width(label)) // 2), text_y, label, text_col)
+
+
+def draw_button(rect: tuple[int, int, int, int], label: str, active: bool) -> None:
+    fill = 5 if active else 1
+    edge = 10 if active else 13
+    draw_button_colored(rect, label, fill, edge, 7)
 
 
 def draw_main_buttons(has_unread: bool, capture_pending: bool) -> None:
     rects = main_button_rects(pyxel.width, pyxel.height)
     draw_button(rects["letter"], "LETTER ." if has_unread else "LETTER", has_unread)
     draw_button(rects["log"], "LOG", False)
-    draw_button(rects["capture"], "CAPTURE" if not capture_pending else "WAIT", False)
+    if capture_pending:
+        draw_button_colored(rects["capture"], "WAIT", 13, 7, 0)
+    else:
+        draw_button(rects["capture"], "CAPTURE", False)
 
 
 def draw_back_button() -> None:
@@ -584,14 +593,16 @@ def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language)
     cursor_y = y + 34
     for line in _wrap_body_lines(primary, w - 20):
         _draw_body_text(x + 10, cursor_y, line, 7)
-        cursor_y += 15
-    if original is not None and cursor_y < y + h - 58:
-        cursor_y += 4
+        cursor_y += BODY_LINE_STEP
+    if original is not None and cursor_y < y + h - 78:
+        cursor_y += 2
         draw_big_text(x + 10, cursor_y, "- ORIGINAL -", 13)
-        cursor_y += 14
-        for line in _wrap_body_lines(original, w - 20)[:5]:
+        cursor_y += 18
+        for line in _wrap_body_lines(original, w - 20)[:3]:
+            if cursor_y > y + h - 48:
+                break
             _draw_body_text(x + 10, cursor_y, line, 13)
-            cursor_y += 15
+            cursor_y += BODY_LINE_STEP
 
     location = _letter_location(letter)
     draw_display_text(x + 10, y + h - 22, f"FROM {location}", 13)
@@ -670,11 +681,11 @@ def _wrap_body_lines(text: str, max_width: int) -> list[str]:
 
 
 def _body_text_width(text: str) -> int:
-    return sum(_glyph_advance(char) for char in text)
+    return sum(_glyph_advance(char) * BODY_TEXT_SCALE for char in text)
 
 
 def _draw_body_text(x: int, y: int, text: str, col: int) -> None:
-    _draw_bitmap_text(x, y, text, col)
+    _draw_bitmap_text(x, y, text, col, BODY_TEXT_SCALE)
 
 
 def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int, int]]:
