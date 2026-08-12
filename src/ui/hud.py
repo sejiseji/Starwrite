@@ -658,6 +658,32 @@ def _wrap_display_lines(text: str, max_width: int) -> list[str]:
 def _wrap_body_lines(text: str, max_width: int) -> list[str]:
     if not text:
         return [""]
+    wrapped: list[str] = []
+    for sentence in _sentence_chunks(text):
+        wrapped.extend(_wrap_body_sentence(sentence, max_width))
+    return wrapped or [""]
+
+
+def _sentence_chunks(text: str) -> list[str]:
+    chunks: list[str] = []
+    current = ""
+    index = 0
+    while index < len(text):
+        char = text[index]
+        current += char
+        next_char = text[index + 1] if index + 1 < len(text) else ""
+        if char in "。！？" or (char in ".!?" and (not next_char or next_char == " ")):
+            chunks.append(current.strip())
+            current = ""
+            while index + 1 < len(text) and text[index + 1] == " ":
+                index += 1
+        index += 1
+    if current.strip():
+        chunks.append(current.strip())
+    return chunks
+
+
+def _wrap_body_sentence(text: str, max_width: int) -> list[str]:
     lines: list[str] = []
     current = ""
     tokens = text.split(" ") if text.isascii() else list(text)

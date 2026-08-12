@@ -324,6 +324,7 @@ class StarSkyApp:
     def _handle_mouse(self) -> None:
         current = (pyxel.mouse_x, pyxel.mouse_y)
         if self.ui_state != "SKY":
+            self._consume_pinch_zoom_delta()
             if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
                 self._handle_modal_click(current)
             self.last_mouse = None
@@ -352,6 +353,10 @@ class StarSkyApp:
         wheel = getattr(pyxel, "mouse_wheel", 0)
         if wheel:
             self.camera.fov_deg -= float(wheel) * 3.0
+            self.camera.clamp()
+        pinch_delta = self._consume_pinch_zoom_delta()
+        if pinch_delta:
+            self.camera.fov_deg -= pinch_delta * 0.08
             self.camera.clamp()
 
     def _handle_ui_click(self, point: tuple[int, int]) -> bool:
@@ -579,6 +584,16 @@ class StarSkyApp:
     def _expanded_rect(self, rect: tuple[int, int, int, int], amount: int) -> tuple[int, int, int, int]:
         x, y, w, h = rect
         return (x - amount, y - amount, w + amount * 2, h + amount * 2)
+
+    def _consume_pinch_zoom_delta(self) -> float:
+        try:
+            from js import window  # type: ignore
+
+            delta = float(getattr(window, "starwritePinchDelta", 0.0))
+            window.starwritePinchDelta = 0.0
+            return delta
+        except Exception:
+            return 0.0
 
     def _set_latitude(self, value: float) -> None:
         self.observer = Observer(max(-90.0, min(90.0, value)), self.observer.longitude_deg)

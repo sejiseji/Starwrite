@@ -508,6 +508,55 @@
           hideStartupLoader();
         }
       }).observe(document.body, { attributes: true, attributeFilter: ["data-starwrite-ready"] });
+
+      window.starwritePinchDelta = 0;
+      let starwriteLastPinchDistance = 0;
+
+      function starwriteTouchDistance(event) {
+        if (!event.touches || event.touches.length < 2) {
+          return 0;
+        }
+        const a = event.touches[0];
+        const b = event.touches[1];
+        return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+      }
+
+      function starwriteHandlePinchStart(event) {
+        if (!event.touches || event.touches.length < 2) {
+          starwriteLastPinchDistance = 0;
+          return;
+        }
+        starwriteLastPinchDistance = starwriteTouchDistance(event);
+        if (event.cancelable) {
+          event.preventDefault();
+        }
+      }
+
+      function starwriteHandlePinchMove(event) {
+        if (!event.touches || event.touches.length < 2) {
+          starwriteLastPinchDistance = 0;
+          return;
+        }
+        const distance = starwriteTouchDistance(event);
+        if (starwriteLastPinchDistance > 0) {
+          window.starwritePinchDelta += distance - starwriteLastPinchDistance;
+        }
+        starwriteLastPinchDistance = distance;
+        if (event.cancelable) {
+          event.preventDefault();
+        }
+      }
+
+      function starwriteHandlePinchEnd(event) {
+        if (!event.touches || event.touches.length < 2) {
+          starwriteLastPinchDistance = 0;
+        }
+      }
+
+      document.addEventListener("touchstart", starwriteHandlePinchStart, { passive: false });
+      document.addEventListener("touchmove", starwriteHandlePinchMove, { passive: false });
+      document.addEventListener("touchend", starwriteHandlePinchEnd, { passive: true });
+      document.addEventListener("touchcancel", starwriteHandlePinchEnd, { passive: true });
     </script>
   </body>
 </html>

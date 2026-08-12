@@ -90,6 +90,12 @@ Dragging a slider knob or track continuously changes the sky:
 When the `EVENT` control jumps to a registered meteor shower, the camera also
 turns toward the related constellation in the current prototype catalog.
 
+Sky view controls:
+
+- Mouse / one-finger drag: look around
+- Mouse wheel / trackpad scroll: zoom
+- Two-finger pinch on touch devices: zoom
+
 The `MENU` button opens a display panel for toggling:
 
 - `INFO`: observation information
