@@ -59,6 +59,9 @@ from ui.hud import (
     draw_tool_buttons,
     menu_button_rect,
     log_item_rects,
+    letter_close_rect,
+    letter_panel_rect,
+    log_panel_rect,
     main_button_rects,
     panel_toggle_rects,
     slider_rects,
@@ -440,7 +443,17 @@ class StarSkyApp:
         if self._point_in_rect(point, back_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
             self._go_back()
             return True
+        if self.ui_state in ("LETTER", "LOG_DETAIL"):
+            if self._point_in_rect(point, letter_close_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+                self._go_back()
+                return True
+            if not self._point_in_rect(point, letter_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+                self._go_back()
+                return True
         if self.ui_state == "LOG":
+            if not self._point_in_rect(point, log_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+                self._go_back()
+                return True
             visible_logs = tuple(reversed(self.exchange_logs))
             for index, rect in enumerate(log_item_rects(SCREEN_WIDTH, SCREEN_HEIGHT, len(visible_logs))):
                 if not self._point_in_rect(point, rect):

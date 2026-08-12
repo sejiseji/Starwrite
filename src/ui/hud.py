@@ -209,6 +209,23 @@ def log_item_rects(width: int, height: int, count: int) -> list[tuple[int, int, 
     return [(x, y + index * row_h, w, row_h - 3) for index in range(visible_count)]
 
 
+def letter_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
+    x = 18
+    y = max(76, height // 2 - 84)
+    w = width - 36
+    h = min(230, height - y - 44)
+    return (x, y, w, h)
+
+
+def letter_close_rect(width: int, height: int) -> tuple[int, int, int, int]:
+    x, y, w, _ = letter_panel_rect(width, height)
+    return (x + w - 30, y + 6, 22, 22)
+
+
+def log_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
+    return (18, 52, width - 36, height - 96)
+
+
 def menu_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     panel_w = min(width - 16, 244)
     panel_h = 208
@@ -265,7 +282,7 @@ def draw_cut_in(message: str, frame_age: int, duration_frames: int) -> None:
     y = 42
     pyxel.rect(max(0, x - 10), y - 8, min(pyxel.width, width + 20), 28, 0)
     pyxel.rectb(max(0, x - 10), y - 8, min(pyxel.width, width + 20), 28, 1)
-    draw_display_text(x, y, message, color)
+    draw_display_bold_text(x, y, message, color)
 
 
 def draw_hud(
@@ -543,14 +560,12 @@ def draw_menu_panel(
 
 
 def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language) -> None:
-    x = 18
-    y = max(76, pyxel.height // 2 - 84)
-    w = pyxel.width - 36
-    h = min(230, pyxel.height - y - 44)
+    x, y, w, h = letter_panel_rect(pyxel.width, pyxel.height)
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 13)
     draw_back_button()
     draw_big_text(x + 10, y + 10, "LETTER", 7)
+    draw_button(letter_close_rect(pyxel.width, pyxel.height), "X", False)
 
     primary, original = display_letter_text(letter, language)
     cursor_y = y + 34
@@ -570,10 +585,7 @@ def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language)
 
 
 def draw_log_list(logs: tuple[ExchangeLog, ...], letters_by_id: dict[str, PresetLetter]) -> None:
-    x = 18
-    y = 52
-    w = pyxel.width - 36
-    h = pyxel.height - 96
+    x, y, w, h = log_panel_rect(pyxel.width, pyxel.height)
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 13)
     draw_back_button()

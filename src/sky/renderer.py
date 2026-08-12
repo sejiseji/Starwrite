@@ -57,7 +57,7 @@ def star_radius(magnitude: float) -> int:
 
 
 def twinkle_level(star_id: int, magnitude: float, frame_count: int) -> int:
-    period = 720 + star_id % 840
+    period = 600 + star_id % 720
     phase = (frame_count + star_id * 17) % period
     pulse_width = 2 if magnitude < 2.5 else 3
     if phase < pulse_width:
