@@ -58,6 +58,7 @@ from ui.hud import (
     draw_sky_features,
     draw_tool_buttons,
     menu_button_rect,
+    menu_close_rect,
     log_item_rects,
     letter_close_rect,
     letter_panel_rect,
@@ -392,6 +393,9 @@ class StarSkyApp:
             return True
         if not self.menu_open:
             return False
+        if self._point_in_rect(point, menu_close_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+            self.menu_open = False
+            return True
         for key, rect in panel_toggle_rects(SCREEN_WIDTH, SCREEN_HEIGHT).items():
             if not self._point_in_rect(point, rect):
                 continue
@@ -408,8 +412,12 @@ class StarSkyApp:
             elif key == "language":
                 self.language = next_language(self.language)
                 self._save_settings()
+            self.menu_open = False
             return True
-        return self._point_in_rect(point, self._menu_panel_hit_rect())
+        if self._point_in_rect(point, self._menu_panel_hit_rect()):
+            return True
+        self.menu_open = False
+        return True
 
     def _handle_slider_click(self, point: tuple[int, int]) -> bool:
         if not (self.show_time_slider or self.show_month_slider or self.show_event_slider):

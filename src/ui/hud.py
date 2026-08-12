@@ -235,6 +235,11 @@ def menu_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     return (x, max(8, button_y - panel_h - 6), panel_w, panel_h)
 
 
+def menu_close_rect(width: int, height: int) -> tuple[int, int, int, int]:
+    x, y, w, _ = menu_panel_rect(width, height)
+    return (x + w - 30, y + 6, 22, 22)
+
+
 def panel_toggle_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
     x, y, w, _ = menu_panel_rect(width, height)
     button_w = max(68, (w - 32) // 3)
@@ -553,6 +558,7 @@ def draw_menu_panel(
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 13)
     draw_big_text(x + 8, y + 8, "DISPLAY", 7)
+    draw_button(menu_close_rect(pyxel.width, pyxel.height), "X", False)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["info"], "INFO", show_info)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["guides"], "GUIDE", show_guides)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["constellations"], "CONST", show_constellations)
