@@ -186,7 +186,7 @@ def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
 def main_button_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
     gap = 6
     side = 8
-    button_h = 26
+    button_h = 38
     y = height - button_h - 6
     button_w = max(64, (width - side * 2 - gap * 2) // 3)
     return {
@@ -253,7 +253,8 @@ def draw_button(rect: tuple[int, int, int, int], label: str, active: bool) -> No
     edge = 10 if active else 13
     pyxel.rect(x, y, w, h, fill)
     pyxel.rectb(x, y, w, h, edge)
-    draw_big_text(x + max(4, (w - text_width(label)) // 2), y + 7, label, 7)
+    text_y = y + max(4, (h - GLYPH_H * SCALE) // 2)
+    draw_big_text(x + max(4, (w - text_width(label)) // 2), text_y, label, 7)
 
 
 def draw_main_buttons(has_unread: bool, capture_pending: bool) -> None:
@@ -272,17 +273,22 @@ def draw_cut_in(message: str, frame_age: int, duration_frames: int) -> None:
         return
     edge = max(1, duration_frames // 5)
     if frame_age < edge:
-        color = 13
+        fill = 3
+        text_color = 7
     elif frame_age > duration_frames - edge:
-        color = 13
+        fill = 3
+        text_color = 7
     else:
-        color = 7
+        fill = 11
+        text_color = 0
     width = display_text_width(message)
     x = max(8, min(pyxel.width - width - 8, (pyxel.width - width) // 2))
     y = 42
-    pyxel.rect(max(0, x - 10), y - 8, min(pyxel.width, width + 20), 28, 0)
-    pyxel.rectb(max(0, x - 10), y - 8, min(pyxel.width, width + 20), 28, 1)
-    draw_display_bold_text(x, y, message, color)
+    box_x = max(0, x - 10)
+    box_w = min(pyxel.width - box_x, width + 20)
+    pyxel.rect(box_x, y - 8, box_w, 30, fill)
+    pyxel.rectb(box_x, y - 8, box_w, 30, 7)
+    draw_display_bold_text(x, y, message, text_color)
 
 
 def draw_hud(
