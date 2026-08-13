@@ -92,8 +92,11 @@ CUT_IN_FRAMES = 150
 LETTER_RECEIVE_DELAY_MIN_SECONDS = 5.0
 LETTER_RECEIVE_DELAY_MAX_SECONDS = 8.0
 PYXEL_TARGET_FPS = 30.0
-LETTER_CHIME_SOUND = 0
-LETTER_CHIME_CHANNEL = 3
+LETTER_CHIME_MELODY_SOUND = 0
+LETTER_CHIME_HARMONY_SOUND = 1
+LETTER_CHIME_MELODY_CHANNEL = 3
+LETTER_CHIME_HARMONY_CHANNEL = 2
+LETTER_CHIME_HARMONY_DELAY_FRAMES = 3
 LETTER_CHIME_REPEAT_OFFSET_FRAMES = CUT_IN_FRAMES // 2
 STAR_TAP_RADIUS_PX = 14
 STAR_TAP_MOVE_TOLERANCE_PX = 6
@@ -210,6 +213,7 @@ class StarSkyApp:
         self.selected_feature_id: str | None = None
         self.cut_in_start_frame: int | None = None
         self.cut_in_second_chime_frame: int | None = None
+        self.cut_in_harmony_chime_frame: int | None = None
         self.cut_in_message = ""
         self.last_mouse: tuple[int, int] | None = None
         self.sky_pointer_down: tuple[int, int] | None = None
@@ -912,17 +916,25 @@ class StarSkyApp:
 
     def _setup_audio(self) -> None:
         try:
-            pyxel.sound(LETTER_CHIME_SOUND).set("e4g4c5e5", "tttt", "7654", "nnnf", 5)
+            pyxel.sound(LETTER_CHIME_MELODY_SOUND).set("e4g4c5e5", "tttt", "7654", "nnnf", 5)
+            pyxel.sound(LETTER_CHIME_HARMONY_SOUND).set("c4e4g4c5", "tttt", "5432", "nnnf", 6)
         except Exception:
             pass
 
     def _play_letter_chime(self) -> None:
         try:
-            pyxel.play(LETTER_CHIME_CHANNEL, LETTER_CHIME_SOUND)
+            pyxel.play(LETTER_CHIME_MELODY_CHANNEL, LETTER_CHIME_MELODY_SOUND)
+            self.cut_in_harmony_chime_frame = pyxel.frame_count + LETTER_CHIME_HARMONY_DELAY_FRAMES
         except Exception:
             pass
 
     def _update_cut_in_audio(self) -> None:
+        if self.cut_in_harmony_chime_frame is not None and pyxel.frame_count >= self.cut_in_harmony_chime_frame:
+            self.cut_in_harmony_chime_frame = None
+            try:
+                pyxel.play(LETTER_CHIME_HARMONY_CHANNEL, LETTER_CHIME_HARMONY_SOUND)
+            except Exception:
+                pass
         if self.cut_in_second_chime_frame is None:
             return
         if pyxel.frame_count < self.cut_in_second_chime_frame:
@@ -1081,6 +1093,7 @@ class StarSkyApp:
             else:
                 self.cut_in_start_frame = None
                 self.cut_in_second_chime_frame = None
+                self.cut_in_harmony_chime_frame = None
 
     def _draw_capture_background(self, capture: SkyCapture) -> None:
         observer = Observer(capture.latitude_deg, capture.longitude_deg)
