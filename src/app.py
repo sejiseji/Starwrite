@@ -92,13 +92,11 @@ CUT_IN_FRAMES = 150
 LETTER_RECEIVE_DELAY_MIN_SECONDS = 5.0
 LETTER_RECEIVE_DELAY_MAX_SECONDS = 8.0
 PYXEL_TARGET_FPS = 30.0
-LETTER_CHIME_MELODY_SOUNDS = (0, 1, 2, 3)
-LETTER_CHIME_HARMONY_SOUNDS = (4, 5, 6, 7)
-LETTER_CHIME_MELODY_CHANNEL = 3
-LETTER_CHIME_HARMONY_CHANNEL = 2
-LETTER_CHIME_NOTE_STEP_FRAMES = 5
-LETTER_CHIME_HARMONY_DELAY_FRAMES = 2
-LETTER_CHIME_REPEAT_OFFSET_FRAMES = CUT_IN_FRAMES // 2
+STARWRITE_SOUND_RESOURCE = "starwrite.pyxres"
+UI_SOUND_CHANNEL = 3
+SOUND_LETTER_RECEIVED = 1
+SOUND_LETTER_OPEN = 2
+SOUND_LETTER_CLOSE = 3
 STAR_TAP_RADIUS_PX = 14
 STAR_TAP_MOVE_TOLERANCE_PX = 6
 
@@ -213,8 +211,6 @@ class StarSkyApp:
         self.selected_star_id: int | None = None
         self.selected_feature_id: str | None = None
         self.cut_in_start_frame: int | None = None
-        self.cut_in_second_chime_frame: int | None = None
-        self.letter_chime_events: list[tuple[int, int, int]] = []
         self.cut_in_message = ""
         self.last_mouse: tuple[int, int] | None = None
         self.sky_pointer_down: tuple[int, int] | None = None
@@ -268,7 +264,6 @@ class StarSkyApp:
         if self.ui_state == "SKY":
             self.clock.update(1.0 / 30.0)
         self._update_pending_receive()
-        self._update_cut_in_audio()
         self._handle_keys()
         self._handle_mouse()
         if self.ui_state != "SKY":
@@ -530,6 +525,7 @@ class StarSkyApp:
                 if index < len(visible_logs):
                     self.selected_log_id = visible_logs[index].id
                     self.ui_state = "LOG_DETAIL"
+                    self._play_ui_sound(SOUND_LETTER_OPEN)
                 return True
         return True
 
@@ -541,16 +537,21 @@ class StarSkyApp:
             return
         self.selected_log_id = target_id
         self.ui_state = "LETTER"
+        self._play_ui_sound(SOUND_LETTER_OPEN)
         if self.unread_log_id == target_id:
             self.unread_log_id = None
             self._save_letter_store()
 
     def _go_back(self) -> None:
+        closing_state = self.ui_state
         if self.ui_state == "LOG_DETAIL":
             self.ui_state = "LOG"
+            self._play_ui_sound(SOUND_LETTER_CLOSE)
             return
         self.ui_state = "SKY"
         self.selected_log_id = None
+        if closing_state != "SKY":
+            self._play_ui_sound(SOUND_LETTER_CLOSE)
 
     def _step_slider(self, label: str, direction: int) -> None:
         if label == "event":
@@ -907,9 +908,8 @@ class StarSkyApp:
         self.exchange_logs = append_log(self.exchange_logs, log)
         self.unread_log_id = log.id
         self.cut_in_start_frame = pyxel.frame_count
-        self.cut_in_second_chime_frame = pyxel.frame_count + LETTER_CHIME_REPEAT_OFFSET_FRAMES
         self.cut_in_message = "なにかとどいたみたい。" if self.language == "ja" else "something arrived."
-        self._play_letter_chime()
+        self._play_ui_sound(SOUND_LETTER_RECEIVED)
         self.pending_capture = None
         self.pending_letter_id = None
         self.pending_deliver_frame = None
@@ -917,47 +917,15 @@ class StarSkyApp:
 
     def _setup_audio(self) -> None:
         try:
-            for sound_id, note, volume in zip(LETTER_CHIME_MELODY_SOUNDS, ("e4", "g4", "c5", "e5"), "7765"):
-                pyxel.sound(sound_id).set(note, "t", volume, "n", 5)
-            for sound_id, note, volume in zip(LETTER_CHIME_HARMONY_SOUNDS, ("c4", "e4", "g4", "c5"), "5543"):
-                pyxel.sound(sound_id).set(note, "t", volume, "n", 6)
+            pyxel.load(STARWRITE_SOUND_RESOURCE)
         except Exception:
             pass
 
-    def _play_letter_chime(self) -> None:
-        base_frame = pyxel.frame_count
-        for index, sound_id in enumerate(LETTER_CHIME_MELODY_SOUNDS):
-            self.letter_chime_events.append(
-                (base_frame + index * LETTER_CHIME_NOTE_STEP_FRAMES, LETTER_CHIME_MELODY_CHANNEL, sound_id)
-            )
-        for index, sound_id in enumerate(LETTER_CHIME_HARMONY_SOUNDS):
-            self.letter_chime_events.append(
-                (
-                    base_frame + LETTER_CHIME_HARMONY_DELAY_FRAMES + index * LETTER_CHIME_NOTE_STEP_FRAMES,
-                    LETTER_CHIME_HARMONY_CHANNEL,
-                    sound_id,
-                )
-            )
-
-    def _update_cut_in_audio(self) -> None:
-        if self.letter_chime_events:
-            remaining: list[tuple[int, int, int]] = []
-            for play_frame, channel, sound_id in self.letter_chime_events:
-                if pyxel.frame_count >= play_frame:
-                    try:
-                        pyxel.play(channel, sound_id)
-                    except Exception:
-                        pass
-                else:
-                    remaining.append((play_frame, channel, sound_id))
-            self.letter_chime_events = remaining
-        if self.cut_in_second_chime_frame is None:
-            return
-        if pyxel.frame_count < self.cut_in_second_chime_frame:
-            return
-        self.cut_in_second_chime_frame = None
-        if self.cut_in_start_frame is not None and pyxel.frame_count - self.cut_in_start_frame < CUT_IN_FRAMES:
-            self._play_letter_chime()
+    def _play_ui_sound(self, sound_id: int) -> None:
+        try:
+            pyxel.play(UI_SOUND_CHANNEL, sound_id)
+        except Exception:
+            pass
 
     def _save_letter_store(self) -> None:
         _save_json(
@@ -1108,8 +1076,6 @@ class StarSkyApp:
                 draw_cut_in(self.cut_in_message, age, CUT_IN_FRAMES)
             else:
                 self.cut_in_start_frame = None
-                self.cut_in_second_chime_frame = None
-                self.letter_chime_events = []
 
     def _draw_capture_background(self, capture: SkyCapture) -> None:
         observer = Observer(capture.latitude_deg, capture.longitude_deg)
