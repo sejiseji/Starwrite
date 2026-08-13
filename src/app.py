@@ -66,6 +66,7 @@ from ui.hud import (
     log_panel_rect,
     main_button_rects,
     panel_toggle_rects,
+    set_desktop_letter_text_mode,
     slider_rects,
     tool_button_rects,
 )
@@ -97,7 +98,19 @@ def _screen_size() -> tuple[int, int]:
     return SMARTPHONE_FIRST_SCREEN_SIZE
 
 
+def _is_desktop_view() -> bool:
+    try:
+        from js import window  # type: ignore
+
+        width = float(window.innerWidth)
+        height = float(window.innerHeight)
+        return width >= 700 and height >= 500
+    except Exception:
+        return False
+
+
 SCREEN_WIDTH, SCREEN_HEIGHT = _screen_size()
+DESKTOP_VIEW = _is_desktop_view()
 
 
 def _storage():
@@ -194,6 +207,7 @@ class StarSkyApp:
         self.capture_ready = False
         self.ready_signaled = False
 
+        set_desktop_letter_text_mode(DESKTOP_VIEW)
         pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, title="Starwrite Sky", fps=30)
         pyxel.mouse(True)
         pyxel.run(self.update, self.draw)

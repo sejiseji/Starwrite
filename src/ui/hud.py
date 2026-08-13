@@ -19,11 +19,13 @@ GLYPH_H = 5
 CHAR_STEP = 8
 LINE_STEP = 13
 BODY_TEXT_SCALE = 1
+DESKTOP_JAPANESE_BODY_TEXT_SCALE = 2
 BODY_LINE_STEP = 15
 BODY_COMPACT_LINE_STEP = 13
 JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
 FEATURE_COLOR = 11
 _font_atlas_ready = False
+_desktop_letter_text_mode = False
 _display_width_cache: dict[str, int] = {}
 _glyph_locations: dict[int, tuple[int, int, int, int]] = {}
 
@@ -115,6 +117,11 @@ def draw_text_scaled(x: int, y: int, text: str, col: int, scale: int) -> None:
 
 def draw_big_text(x: int, y: int, text: str, col: int) -> None:
     draw_text_scaled(x, y, text, col, SCALE)
+
+
+def set_desktop_letter_text_mode(enabled: bool) -> None:
+    global _desktop_letter_text_mode
+    _desktop_letter_text_mode = enabled
 
 
 def draw_bold_text(x: int, y: int, text: str, col: int) -> None:
@@ -601,18 +608,20 @@ def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language)
     draw_button(letter_close_rect(pyxel.width, pyxel.height, panel_rect), "X", False)
 
     primary, original = display_letter_text(letter, language)
-    body_width, line_step, primary_lines, original_lines = _fit_letter_body_lines(primary, original, w - 20, h - 66)
+    body_width, primary_layout, original_layout = _fit_letter_body_lines(primary, original, w - 20, h - 66)
+    primary_scale, primary_line_step, primary_lines = primary_layout
+    original_scale, original_line_step, original_lines = original_layout
     cursor_y = y + 44
     for line in primary_lines:
-        _draw_body_text(x + 10, cursor_y, line, 7)
-        cursor_y += line_step
+        _draw_body_text(x + 10, cursor_y, line, 7, primary_scale)
+        cursor_y += primary_line_step
     if original_lines:
         cursor_y += 2
         draw_big_text(x + 10, cursor_y, "- ORIGINAL -", 13)
         cursor_y += 13
         for line in original_lines:
-            _draw_body_text(x + 10, cursor_y, line, 13)
-            cursor_y += line_step
+            _draw_body_text(x + 10, cursor_y, line, 13, original_scale)
+            cursor_y += original_line_step
 
     location = _letter_location(letter)
     location_lines = _wrap_display_lines(f"FROM {location}", body_width)
@@ -672,12 +681,12 @@ def _wrap_display_lines(text: str, max_width: int) -> list[str]:
     return lines
 
 
-def _wrap_body_lines(text: str, max_width: int) -> list[str]:
+def _wrap_body_lines(text: str, max_width: int, scale: int) -> list[str]:
     if not text:
         return [""]
     wrapped: list[str] = []
     for sentence in _sentence_chunks(text):
-        wrapped.extend(_wrap_body_sentence(sentence, max_width))
+        wrapped.extend(_wrap_body_sentence(sentence, max_width, scale))
     return wrapped or [""]
 
 
@@ -686,17 +695,42 @@ def _fit_letter_body_lines(
     original: str | None,
     max_width: int,
     available_height: int,
-) -> tuple[int, int, list[str], list[str]]:
-    for line_step in (BODY_LINE_STEP, 14, BODY_COMPACT_LINE_STEP):
-        primary_lines = _wrap_body_lines(primary, max_width)
-        original_lines = _wrap_body_lines(original, max_width) if original else []
-        required = len(primary_lines) * line_step
-        if original_lines:
-            required += 15 + len(original_lines) * line_step
+) -> tuple[int, tuple[int, int, list[str]], tuple[int, int, list[str]]]:
+    primary_preferred_scale = _preferred_body_scale(primary)
+    original_preferred_scale = _preferred_body_scale(original or "")
+    scale_pairs = (
+        (primary_preferred_scale, original_preferred_scale),
+        (BODY_TEXT_SCALE, original_preferred_scale),
+        (primary_preferred_scale, BODY_TEXT_SCALE),
+        (BODY_TEXT_SCALE, BODY_TEXT_SCALE),
+    )
+    tried: set[tuple[int, int]] = set()
+    for primary_scale, original_scale in scale_pairs:
+        if (primary_scale, original_scale) in tried:
+            continue
+        tried.add((primary_scale, original_scale))
+        primary_line_step = _body_line_step(primary_scale)
+        original_line_step = _body_line_step(original_scale)
+        primary_lines = _wrap_body_lines(primary, max_width, primary_scale)
+        original_lines = _wrap_body_lines(original, max_width, original_scale) if original else []
+        required = _letter_body_required_height(
+            primary_line_step,
+            primary_lines,
+            original_line_step,
+            original_lines,
+        )
         if required <= available_height:
-            return max_width, line_step, primary_lines, original_lines
-    return max_width, BODY_COMPACT_LINE_STEP, _wrap_body_lines(primary, max_width), (
-        _wrap_body_lines(original, max_width) if original else []
+            return (
+                max_width,
+                (primary_scale, primary_line_step, primary_lines),
+                (original_scale, original_line_step, original_lines),
+            )
+    primary_lines = _wrap_body_lines(primary, max_width, BODY_TEXT_SCALE)
+    original_lines = _wrap_body_lines(original, max_width, BODY_TEXT_SCALE) if original else []
+    return (
+        max_width,
+        (BODY_TEXT_SCALE, BODY_COMPACT_LINE_STEP, primary_lines),
+        (BODY_TEXT_SCALE, BODY_COMPACT_LINE_STEP, original_lines),
     )
 
 
@@ -707,21 +741,31 @@ def _letter_panel_height_for_text(primary: str, original: str | None, max_width:
     stages = (240, 300, 380, 480, max_height) if screen_height >= 520 else (220, 260, max_height)
     for panel_height in stages:
         height = min(panel_height, max_height)
-        _body_width, line_step, primary_lines, original_lines = _fit_letter_body_lines(
+        _body_width, primary_layout, original_layout = _fit_letter_body_lines(
             primary,
             original,
             max_width,
             height - 66,
         )
-        if _letter_body_required_height(line_step, primary_lines, original_lines) <= height - 66:
+        _primary_scale, primary_line_step, primary_lines = primary_layout
+        _original_scale, original_line_step, original_lines = original_layout
+        if (
+            _letter_body_required_height(primary_line_step, primary_lines, original_line_step, original_lines)
+            <= height - 66
+        ):
             return height
     return max_height
 
 
-def _letter_body_required_height(line_step: int, primary_lines: list[str], original_lines: list[str]) -> int:
-    required = len(primary_lines) * line_step
+def _letter_body_required_height(
+    primary_line_step: int,
+    primary_lines: list[str],
+    original_line_step: int,
+    original_lines: list[str],
+) -> int:
+    required = len(primary_lines) * primary_line_step
     if original_lines:
-        required += 15 + len(original_lines) * line_step
+        required += 15 + len(original_lines) * original_line_step
     return required
 
 
@@ -744,14 +788,14 @@ def _sentence_chunks(text: str) -> list[str]:
     return chunks
 
 
-def _wrap_body_sentence(text: str, max_width: int) -> list[str]:
+def _wrap_body_sentence(text: str, max_width: int, scale: int) -> list[str]:
     lines: list[str] = []
     current = ""
     tokens = text.split(" ") if text.isascii() else list(text)
     separator = " " if text.isascii() else ""
     for token in tokens:
         candidate = token if not current else current + separator + token
-        if current and _body_text_width(candidate) > max_width:
+        if current and _body_text_width(candidate, scale) > max_width:
             lines.append(current)
             current = token
         else:
@@ -761,13 +805,26 @@ def _wrap_body_sentence(text: str, max_width: int) -> list[str]:
     return lines
 
 
-def _body_text_width(text: str) -> int:
-    return sum(_glyph_advance(char) * BODY_TEXT_SCALE for char in text)
+def _preferred_body_scale(text: str) -> int:
+    if _desktop_letter_text_mode and text and not text.isascii():
+        return DESKTOP_JAPANESE_BODY_TEXT_SCALE
+    return BODY_TEXT_SCALE
 
 
-def _draw_body_text(x: int, y: int, text: str, col: int) -> None:
-    _draw_bitmap_text(x + 1, y, text, col, BODY_TEXT_SCALE)
-    _draw_bitmap_text(x, y, text, col, BODY_TEXT_SCALE)
+def _body_line_step(scale: int) -> int:
+    if scale <= BODY_TEXT_SCALE:
+        return BODY_LINE_STEP
+    return FONT_CELL_HEIGHT * scale + 3
+
+
+def _body_text_width(text: str, scale: int) -> int:
+    return sum(_glyph_advance(char) * scale for char in text)
+
+
+def _draw_body_text(x: int, y: int, text: str, col: int, scale: int) -> None:
+    shadow_offset = 1 if scale <= BODY_TEXT_SCALE else 2
+    _draw_bitmap_text(x + shadow_offset, y, text, col, scale)
+    _draw_bitmap_text(x, y, text, col, scale)
 
 
 def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int, int]]:
