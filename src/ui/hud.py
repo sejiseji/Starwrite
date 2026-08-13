@@ -629,7 +629,7 @@ def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language)
 
     location = _letter_location(letter)
     location_lines = _wrap_display_lines(f"FROM {location}", body_width)
-    draw_display_text(x + 10, y + h - 18, location_lines[0], 13)
+    draw_display_text(x + 10, y + h - 24, location_lines[0], 13)
 
 
 def _draw_letter_lace_frame(rect: tuple[int, int, int, int]) -> None:
@@ -639,8 +639,6 @@ def _draw_letter_lace_frame(rect: tuple[int, int, int, int]) -> None:
     pyxel.rectb(x + 2, y + 2, w - 4, h - 4, LETTER_LACE_DIM_COLOR)
     _draw_lace_stitches_horizontal(x + 92, x + w - 54, y + 5, 1)
     _draw_lace_stitches_horizontal(x + 92, x + w - 18, y + h - 6, -1)
-    _draw_lace_stitches_vertical(x + 5, y + 48, y + h - 34, 1)
-    _draw_lace_stitches_vertical(x + w - 6, y + 48, y + h - 46, -1)
     _draw_lace_flower(x + w - 52, y + 22)
     _draw_lace_flower(x + w - 22, y + h - 17)
 
@@ -652,15 +650,6 @@ def _draw_lace_stitches_horizontal(start_x: int, end_x: int, y: int, direction: 
         pyxel.line(x, y, x + 3, y + direction * 3, LETTER_LACE_DIM_COLOR)
         pyxel.line(x + 3, y + direction * 3, x + 6, y, LETTER_LACE_DIM_COLOR)
         pyxel.pset(x + 3, y + direction * 2, LETTER_LACE_COLOR)
-
-
-def _draw_lace_stitches_vertical(x: int, start_y: int, end_y: int, direction: int) -> None:
-    if end_y - start_y < 14:
-        return
-    for y in range(start_y, end_y, 12):
-        pyxel.line(x, y, x + direction * 3, y + 3, LETTER_LACE_DIM_COLOR)
-        pyxel.line(x + direction * 3, y + 3, x, y + 6, LETTER_LACE_DIM_COLOR)
-        pyxel.pset(x + direction * 2, y + 3, LETTER_LACE_COLOR)
 
 
 def _draw_lace_flower(cx: int, cy: int) -> None:
