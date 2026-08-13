@@ -80,6 +80,9 @@ SETTINGS_KEY = "starwrite_v02_settings"
 CAPTURE_KEY = "starwrite_v01_latest_capture"
 LETTER_STORE_KEY = "starwrite_v01_letter_store"
 CUT_IN_FRAMES = 150
+LETTER_RECEIVE_DELAY_MIN_SECONDS = 5.0
+LETTER_RECEIVE_DELAY_MAX_SECONDS = 8.0
+PYXEL_TARGET_FPS = 30.0
 
 
 def _screen_size() -> tuple[int, int]:
@@ -693,7 +696,8 @@ class StarSkyApp:
             return
         recent_ids = tuple(log.received_letter_id for log in self.exchange_logs[-30:])
         letter = match_letter(self.latest_capture, self.letters, self.seen_letter_ids, recent_ids)
-        delay_frames = int(random.uniform(5.0, 15.0) * 30.0)
+        delay_seconds = random.uniform(LETTER_RECEIVE_DELAY_MIN_SECONDS, LETTER_RECEIVE_DELAY_MAX_SECONDS)
+        delay_frames = int(delay_seconds * PYXEL_TARGET_FPS)
         self.pending_capture = self.latest_capture
         self.pending_letter_id = letter.id
         self.pending_deliver_frame = pyxel.frame_count + delay_frames
