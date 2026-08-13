@@ -908,7 +908,9 @@ def draw_menu_panel(
     draw_big_text(x + 8, y + 162, "LANGUAGE", 7)
     language_label = "JA" if language == "en" else "EN"
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language_label, True)
-    draw_checkbox(panel_toggle_rects(pyxel.width, pyxel.height)["sound"], "SE", sound_enabled)
+    sound_rect = panel_toggle_rects(pyxel.width, pyxel.height)["sound"]
+    draw_big_text(sound_rect[0], y + 162, "SE", 7)
+    draw_button(sound_rect, "ON" if sound_enabled else "OFF", sound_enabled)
 
 
 def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language) -> None:
