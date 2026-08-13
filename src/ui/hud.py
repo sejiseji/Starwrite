@@ -22,6 +22,7 @@ BODY_TEXT_SCALE = 1
 DESKTOP_JAPANESE_BODY_TEXT_SCALE = 2
 BODY_LINE_STEP = 15
 BODY_COMPACT_LINE_STEP = 13
+LETTER_ORIGINAL_SECTION_GAP = BODY_LINE_STEP
 JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
 FEATURE_COLOR = 11
 _font_atlas_ready = False
@@ -616,7 +617,7 @@ def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language)
         _draw_body_text(x + 10, cursor_y, line, 7, primary_scale)
         cursor_y += primary_line_step
     if original_lines:
-        cursor_y += 2
+        cursor_y += LETTER_ORIGINAL_SECTION_GAP
         draw_big_text(x + 10, cursor_y, "- ORIGINAL -", 13)
         cursor_y += 13
         for line in original_lines:
@@ -765,7 +766,7 @@ def _letter_body_required_height(
 ) -> int:
     required = len(primary_lines) * primary_line_step
     if original_lines:
-        required += 15 + len(original_lines) * original_line_step
+        required += LETTER_ORIGINAL_SECTION_GAP + 13 + len(original_lines) * original_line_step
     return required
 
 
