@@ -665,12 +665,8 @@ def draw_asterism(
         if a is None or b is None:
             continue
         pyxel.line(int(a.x), int(a.y), int(b.x), int(b.y), color)
-    center_x = int(sum(point.x for point in visible) / len(visible))
-    center_y = int(sum(point.y for point in visible) / len(visible))
     label = sky_feature_name(asterism, language)
-    width = display_text_width(label)
-    label_x = max(4, min(pyxel.width - width - 4, center_x + 8))
-    label_y = max(58, min(pyxel.height - 76, center_y - 22 + (index % 2) * 12))
+    center_x, center_y, label_x, label_y, width = _asterism_label_layout(asterism, points, index, language)
     pyxel.line(center_x, center_y, label_x - 3, label_y + 6, color)
     draw_display_text(label_x, label_y, label, color)
 
@@ -699,12 +695,59 @@ def draw_sky_path(
         last = point
     if len(visible_points) < 2:
         return
+    label = sky_feature_name(path, language)
+    x, y, _ = _sky_path_label_layout(path, visible_points, language)
+    draw_display_text(x, y, label, color)
+
+
+def sky_feature_label_hit_rects(
+    points: dict[int, ScreenPoint],
+    sky_paths: dict[str, list[tuple[float, float] | None]],
+    language: Language,
+) -> list[tuple[str, tuple[int, int, int, int]]]:
+    rects: list[tuple[str, tuple[int, int, int, int]]] = []
+    for path in SKY_PATHS:
+        visible_points = [point for point in sky_paths.get(path.id, []) if point is not None and 0 <= point[0] < pyxel.width and 0 <= point[1] < pyxel.height]
+        if len(visible_points) < 2:
+            continue
+        x, y, width = _sky_path_label_layout(path, visible_points, language)
+        rects.append((path.id, (x - 6, y - 5, width + 12, 22)))
+    for index, asterism in enumerate(ASTERISMS):
+        visible = [points[star_id] for star_id in asterism.star_ids if star_id in points]
+        if len(visible) < 2:
+            continue
+        _center_x, _center_y, label_x, label_y, width = _asterism_label_layout(asterism, points, index, language)
+        rects.append((asterism.id, (label_x - 6, label_y - 5, width + 12, 22)))
+    return rects
+
+
+def _asterism_label_layout(
+    asterism: Asterism,
+    points: dict[int, ScreenPoint],
+    index: int,
+    language: Language,
+) -> tuple[int, int, int, int, int]:
+    visible = [points[star_id] for star_id in asterism.star_ids if star_id in points]
+    center_x = int(sum(point.x for point in visible) / len(visible))
+    center_y = int(sum(point.y for point in visible) / len(visible))
+    label = sky_feature_name(asterism, language)
+    width = display_text_width(label)
+    label_x = max(4, min(pyxel.width - width - 4, center_x + 8))
+    label_y = max(58, min(pyxel.height - 76, center_y - 22 + (index % 2) * 12))
+    return (center_x, center_y, label_x, label_y, width)
+
+
+def _sky_path_label_layout(
+    path: SkyPath,
+    visible_points: list[tuple[float, float]],
+    language: Language,
+) -> tuple[int, int, int]:
     label_x, label_y = visible_points[len(visible_points) // 2]
     label = sky_feature_name(path, language)
     width = display_text_width(label)
     x = max(4, min(pyxel.width - width - 4, int(label_x) + 8))
     y = max(58, min(pyxel.height - 76, int(label_y) - 10))
-    draw_display_text(x, y, label, color)
+    return (x, y, width)
 
 
 def draw_focused_star(point: ScreenPoint, name: str) -> None:

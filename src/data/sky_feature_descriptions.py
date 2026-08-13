@@ -1,0 +1,37 @@
+from __future__ import annotations
+
+# Sky-feature summaries imported from starwrite_sky_feature_descriptions_16.json.
+# Keep these descriptions source-authored.
+
+SKY_FEATURE_DESCRIPTIONS: dict[str, dict[str, tuple[str, str]]] = {'SUMMER_TRIANGLE': {'ja': ('ベガ・デネブ・アルタイルを結ぶ。', '夏の天の川をまたぐ大きな三角。'),
+                     'en': ('Vega, Deneb, Altair form it.', 'It spans the summer Milky Way.')},
+ 'WINTER_TRIANGLE': {'ja': ('シリウス・プロキオン・ベテルギウス。', '冬空で明るく締まる三角形。'),
+                     'en': ('Sirius, Procyon, Betelgeuse.', 'A bright triangle in winter skies.')},
+ 'BIG_DIPPER': {'ja': ('七つの星が柄杓の形をつくる。', '北極星を探す目印にもなる。'),
+                'en': ('Seven stars shape a great dipper.', 'Its bowl points toward Polaris.')},
+ 'SPRING_ARC': {'ja': ('北斗七星の柄から南へ弧を描く。', 'アークトゥルス、スピカへ続く。'),
+                'en': ("Arc from the Dipper's handle.", 'It reaches Arcturus and Spica.')},
+ 'SPRING_TRIANGLE': {'ja': ('春の明るい三つの星を結ぶ。', '広い夜空に大きく浮かぶ目印。'),
+                     'en': ('Three bright stars mark spring.', 'A wide guide across the night sky.')},
+ 'GREAT_DIAMOND': {'ja': ('春空の四つの明るい星を結ぶ。', '大きな菱形が季節を縁取る。'),
+                   'en': ('Four bright stars form a diamond.', 'It frames a broad part of spring.')},
+ 'WINTER_HEXAGON': {'ja': ('冬の一等星たちを大きく結ぶ。', '六角形が夜空をぐるりと囲む。'),
+                    'en': ("Winter's bright stars make a hex.", 'Its ring spans the cold sky.')},
+ 'ORION_BELT': {'ja': ('一直線の三つ星が狩人の帯。', 'オリオン座の中心をくっきり飾る。'),
+                'en': ('Three aligned stars form the belt.', "They mark Orion's bright center.")},
+ 'GREAT_SQUARE': {'ja': ('秋空に大きな四角形を描く。', 'ペガスス座を探す入口になる。'),
+                  'en': ('Four stars draw an autumn square.', 'It is a gateway to Pegasus.')},
+ 'NORTHERN_CROSS': {'ja': ('はくちょう座の星が十字に並ぶ。', '天の川に沿って長く横たわる。'),
+                    'en': ('Cygnus stretches into a cross.', 'It lies along the Milky Way.')},
+ 'CASSIOPEIA_W': {'ja': ('五つの星が鋭いW字を描く。', '北の空で見つけやすい形。'),
+                  'en': ('Five stars trace a sharp W.', 'It stands out in northern skies.')},
+ 'POINTER_STARS': {'ja': ('ドゥーベとメラクを結んで延ばす。', 'その先に北極星が待っている。'),
+                   'en': ('Extend Dubhe through Merak north.', 'The line leads to Polaris.')},
+ 'SOUTHERN_CROSS': {'ja': ('南天に小さく鋭い十字を描く。', '南の方角を知る手がかりになる。'),
+                    'en': ('A compact cross marks the south.', 'It helps reveal due south.')},
+ 'SOUTHERN_POINTERS': {'ja': ('明るい二星が南十字を指し示す。', '南天の目印を探す助けになる。'),
+                       'en': ('Two bright stars point to Crux.', 'They help locate Crux.')},
+ 'TEAPOT': {'ja': ('いて座の星が急須の形に並ぶ。', '注ぎ口の先には天の川が濃い。'),
+            'en': ('Sagittarius stars shape a teapot.', 'Its spout faces the Milky Way.')},
+ 'MILKY_WAY': {'ja': ('無数の星が淡い光の帯をつくる。', '私たちの銀河を内側から見る姿。'),
+               'en': ('Countless stars blend into a band.', 'We see our galaxy from within.')}}

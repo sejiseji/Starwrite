@@ -34,6 +34,7 @@ def _import_app_data():
     sys.path.insert(0, str(SRC))
     from data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
     from data.preset_letters import PRESET_LETTER_PACKS
+    from data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
     from data.star_descriptions import STAR_DESCRIPTIONS
     from ui.localization import (
         CONSTELLATION_NAMES_JA,
@@ -45,6 +46,7 @@ def _import_app_data():
     return (
         PRESET_LETTER_PACKS,
         CONSTELLATION_DESCRIPTIONS,
+        SKY_FEATURE_DESCRIPTIONS,
         STAR_DESCRIPTIONS,
         CONSTELLATION_NAMES_JA,
         METEOR_EVENT_NAMES_JA,
@@ -57,6 +59,7 @@ def _required_text() -> str:
     (
         letter_packs,
         constellation_descriptions,
+        sky_feature_descriptions,
         star_descriptions,
         constellation_names,
         meteor_event_names,
@@ -84,6 +87,9 @@ def _required_text() -> str:
             parts.append(str(letter["original_text"]))
             parts.extend(str(value) for value in letter.get("translations", {}).values())
     for descriptions in constellation_descriptions.values():
+        for lines in descriptions.values():
+            parts.extend(lines)
+    for descriptions in sky_feature_descriptions.values():
         for lines in descriptions.values():
             parts.extend(lines)
     for descriptions in star_descriptions.values():

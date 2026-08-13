@@ -6,6 +6,7 @@ from pathlib import Path
 
 from data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
 from data.preset_letters import PRESET_LETTER_PACKS
+from data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
 from data.star_descriptions import STAR_DESCRIPTIONS
 from ui.localization import (
     CONSTELLATION_NAMES_JA,
@@ -56,6 +57,14 @@ def _star_description_texts() -> list[str]:
     return texts
 
 
+def _sky_feature_description_texts() -> list[str]:
+    texts: list[str] = []
+    for descriptions in SKY_FEATURE_DESCRIPTIONS.values():
+        for lines in descriptions.values():
+            texts.extend(lines)
+    return texts
+
+
 def _font_encodings() -> set[int]:
     encodings: set[int] = set()
     for line in FONT_PATH.read_text(encoding="utf-8").splitlines():
@@ -72,6 +81,7 @@ class FontSubsetTests(unittest.TestCase):
             *SKY_FEATURE_NAMES_JA.values(),
             *STAR_NAMES_JA.values(),
             *_constellation_description_texts(),
+            *_sky_feature_description_texts(),
             *_star_description_texts(),
             *_preset_letter_texts(),
             ASCII_PRINTABLE,
@@ -107,6 +117,7 @@ class FontSubsetTests(unittest.TestCase):
             *SKY_FEATURE_NAMES_JA.values(),
             *STAR_NAMES_JA.values(),
             *_constellation_description_texts(),
+            *_sky_feature_description_texts(),
             *_star_description_texts(),
             *_preset_letter_texts(),
             ASCII_PRINTABLE,

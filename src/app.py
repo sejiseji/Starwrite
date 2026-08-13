@@ -20,7 +20,8 @@ from astronomy.time import julian_date, local_sidereal_time
 from data.constellations import CONSTELLATIONS
 from data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
 from data.preset_letters import PRESET_LETTER_PACKS
-from data.sky_features import SKY_PATHS
+from data.sky_features import ASTERISMS, SKY_PATHS
+from data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
 from data.star_descriptions import STAR_DESCRIPTIONS
 from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
@@ -74,10 +75,11 @@ from ui.hud import (
     main_button_rects,
     panel_toggle_rects,
     set_desktop_letter_text_mode,
+    sky_feature_label_hit_rects,
     slider_rects,
     tool_button_rects,
 )
-from ui.localization import constellation_name, next_language, normalize_language, star_name
+from ui.localization import constellation_name, next_language, normalize_language, sky_feature_name, star_name
 
 IPHONE16_SCREEN_HEIGHT = 696
 IPHONE16_MIN_SCREEN_WIDTH = 396
@@ -202,6 +204,7 @@ class StarSkyApp:
         self.pending_deliver_frame: int | None = None
         self.selected_log_id: str | None = None
         self.selected_star_id: int | None = None
+        self.selected_feature_id: str | None = None
         self.cut_in_start_frame: int | None = None
         self.cut_in_message = ""
         self.last_mouse: tuple[int, int] | None = None
@@ -451,6 +454,8 @@ class StarSkyApp:
                 self.show_constellations = not self.show_constellations
             elif key == "features":
                 self.show_features = not self.show_features
+                if not self.show_features:
+                    self.selected_feature_id = None
             elif key == "side":
                 self.slider_side = "left" if self.slider_side == "right" else "right"
             elif key == "language":
@@ -586,6 +591,8 @@ class StarSkyApp:
         self.show_time_slider = False
         self.show_month_slider = False
         self.show_event_slider = False
+        self.selected_star_id = None
+        self.selected_feature_id = None
 
     def _project_sky_paths(self) -> dict[str, list[tuple[float, float] | None]]:
         jd = julian_date(self.clock.current_time)
@@ -659,6 +666,7 @@ class StarSkyApp:
     def _select_constellation(self, delta: int) -> None:
         self.selected_index = (self.selected_index + delta) % len(CONSTELLATIONS)
         self.selected_star_id = None
+        self.selected_feature_id = None
 
     def _selected_constellation_anchor_label(self) -> str | None:
         star_id = self.selected_constellation.anchor_star_id
@@ -674,8 +682,11 @@ class StarSkyApp:
     def _select_constellation_at_point(self, point: tuple[int, int]) -> bool:
         if self._select_focused_star_at_point(point):
             return True
+        if self._select_sky_feature_at_point(point):
+            return True
         if self._select_constellation_label_at_point(point):
             self.selected_star_id = None
+            self.selected_feature_id = None
             return True
         star_id = self._nearest_constellation_star_id(point, STAR_TAP_RADIUS_PX)
         if star_id is None:
@@ -684,6 +695,7 @@ class StarSkyApp:
             if star_id in constellation.main_star_ids:
                 self.selected_index = index
                 self.selected_star_id = None
+                self.selected_feature_id = None
                 return True
         return False
 
@@ -699,7 +711,18 @@ class StarSkyApp:
         if not self._point_in_rect(point, focused_star_hit_rect(screen_point, label)):
             return False
         self.selected_star_id = star_id
+        self.selected_feature_id = None
         return True
+
+    def _select_sky_feature_at_point(self, point: tuple[int, int]) -> bool:
+        if not self.show_features:
+            return False
+        for feature_id, rect in sky_feature_label_hit_rects(self.projected, self.projected_sky_paths, self.language):
+            if self._point_in_rect(point, rect):
+                self.selected_feature_id = feature_id
+                self.selected_star_id = None
+                return True
+        return False
 
     def _selected_star_summary(self) -> tuple[str, tuple[str, str]] | None:
         if self.selected_star_id is None:
@@ -725,10 +748,29 @@ class StarSkyApp:
             line2 = f"star in {constellation.name}" if constellation is not None else "named star"
         return (title, (line1, line2))
 
+    def _selected_feature_summary(self) -> tuple[str, tuple[str, str]] | None:
+        if self.selected_feature_id is None:
+            return None
+        feature = self._sky_feature_by_id(self.selected_feature_id)
+        if feature is None:
+            return None
+        descriptions = SKY_FEATURE_DESCRIPTIONS.get(self.selected_feature_id, {})
+        lines = descriptions.get(self.language)
+        if lines is None:
+            return None
+        title = sky_feature_name(feature, self.language)
+        return (title.upper() if self.language == "en" else title, lines)
+
     def _constellation_for_star(self, star_id: int) -> Constellation | None:
         for constellation in CONSTELLATIONS:
             if star_id in constellation.main_star_ids:
                 return constellation
+        return None
+
+    def _sky_feature_by_id(self, feature_id: str):
+        for feature in (*ASTERISMS, *SKY_PATHS):
+            if feature.id == feature_id:
+                return feature
         return None
 
     def _select_constellation_label_at_point(self, point: tuple[int, int]) -> bool:
@@ -957,7 +999,7 @@ class StarSkyApp:
             self.selected_constellation,
             self.language,
             self._selected_constellation_anchor_label(),
-            self._selected_star_summary(),
+            self._selected_star_summary() or self._selected_feature_summary(),
         )
         if self.meteor_event is not None:
             draw_event_banner(self.meteor_event, self.language)
