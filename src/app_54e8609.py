@@ -65,6 +65,7 @@ from ui.hud_54e8609 import (
     draw_slider,
     draw_sky_features,
     draw_tool_buttons,
+    focused_star_hit_rect,
     menu_button_rect,
     menu_close_rect,
     log_item_rects,
@@ -78,7 +79,7 @@ from ui.hud_54e8609 import (
     slider_rects,
     tool_button_rects,
 )
-from ui.localization import next_language, normalize_language, star_name
+from ui.localization import constellation_name, next_language, normalize_language, star_name
 
 IPHONE16_SCREEN_HEIGHT = 696
 IPHONE16_MIN_SCREEN_WIDTH = 396
@@ -202,6 +203,7 @@ class StarSkyApp:
         self.pending_letter_id: str | None = None
         self.pending_deliver_frame: int | None = None
         self.selected_log_id: str | None = None
+        self.selected_star_id: int | None = None
         self.cut_in_start_frame: int | None = None
         self.cut_in_message = ""
         self.last_mouse: tuple[int, int] | None = None
@@ -658,6 +660,7 @@ class StarSkyApp:
 
     def _select_constellation(self, delta: int) -> None:
         self.selected_index = (self.selected_index + delta) % len(CONSTELLATIONS)
+        self.selected_star_id = None
 
     def _selected_constellation_anchor_label(self) -> str | None:
         star_id = self.selected_constellation.anchor_star_id
@@ -671,7 +674,10 @@ class StarSkyApp:
         return star_name(star_id, english_name, self.language)
 
     def _select_constellation_at_point(self, point: tuple[int, int]) -> bool:
+        if self._select_focused_star_at_point(point):
+            return True
         if self._select_constellation_label_at_point(point):
+            self.selected_star_id = None
             return True
         star_id = self._nearest_constellation_star_id(point, STAR_TAP_RADIUS_PX)
         if star_id is None:
@@ -679,8 +685,49 @@ class StarSkyApp:
         for index, constellation in enumerate(CONSTELLATIONS):
             if star_id in constellation.main_star_ids:
                 self.selected_index = index
+                self.selected_star_id = None
                 return True
         return False
+
+    def _select_focused_star_at_point(self, point: tuple[int, int]) -> bool:
+        focused_star = self._focused_star()
+        if focused_star is None:
+            return False
+        star_id, screen_point = focused_star
+        english_name = STAR_NAMES.get(star_id)
+        if english_name is None:
+            return False
+        label = star_name(star_id, english_name, self.language)
+        if not self._point_in_rect(point, focused_star_hit_rect(screen_point, label)):
+            return False
+        self.selected_star_id = star_id
+        return True
+
+    def _selected_star_summary(self) -> tuple[str, tuple[str, str]] | None:
+        if self.selected_star_id is None:
+            return None
+        star = STARS_BY_ID.get(self.selected_star_id)
+        english_name = STAR_NAMES.get(self.selected_star_id)
+        if star is None or english_name is None:
+            return None
+        name = star_name(self.selected_star_id, english_name, self.language)
+        constellation = self._constellation_for_star(self.selected_star_id)
+        constellation_label = constellation_name(constellation, self.language) if constellation is not None else None
+        if self.language == "ja":
+            title = f"STAR  {name}"
+            line1 = f"明るさ {star.magnitude:.1f}"
+            line2 = f"{constellation_label}の星" if constellation_label is not None else "名のある星"
+        else:
+            title = f"STAR  {name.upper()}"
+            line1 = f"magnitude {star.magnitude:.1f}"
+            line2 = f"star in {constellation.name}" if constellation is not None else "named star"
+        return (title, (line1, line2))
+
+    def _constellation_for_star(self, star_id: int) -> Constellation | None:
+        for constellation in CONSTELLATIONS:
+            if star_id in constellation.main_star_ids:
+                return constellation
+        return None
 
     def _select_constellation_label_at_point(self, point: tuple[int, int]) -> bool:
         for index, rect in constellation_label_hit_rects(
@@ -908,6 +955,7 @@ class StarSkyApp:
             self.selected_constellation,
             self.language,
             self._selected_constellation_anchor_label(),
+            self._selected_star_summary(),
         )
         if self.meteor_event is not None:
             draw_event_banner(self.meteor_event, self.language)

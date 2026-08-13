@@ -490,6 +490,7 @@ def draw_selected_constellation_summary(
     constellation: Constellation,
     language: Language,
     anchor_star_label: str | None,
+    star_summary: tuple[str, tuple[str, str]] | None = None,
 ) -> None:
     tool_left = tool_button_rects(pyxel.width, pyxel.height)["time"][0]
     x = 8
@@ -500,10 +501,16 @@ def draw_selected_constellation_summary(
         return
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 1)
-    name = constellation_name(constellation, language)
-    title = f"{constellation.id}  {name.upper() if language == 'en' else name}"
-    draw_display_text(x + 7, y + 5, _clip_display_text(title, w - 14), 10)
-    for index, line in enumerate(_constellation_summary_lines(constellation, language, anchor_star_label)):
+    if star_summary is not None:
+        title, lines = star_summary
+        title_color = 8
+    else:
+        name = constellation_name(constellation, language)
+        title = f"{constellation.id}  {name.upper() if language == 'en' else name}"
+        lines = _constellation_summary_lines(constellation, language, anchor_star_label)
+        title_color = 10
+    draw_display_text(x + 7, y + 5, _clip_display_text(title, w - 14), title_color)
+    for index, line in enumerate(lines):
         draw_display_text(x + 7, y + 19 + index * 13, _clip_display_text(line, w - 14), 13)
 
 
@@ -705,16 +712,33 @@ def draw_focused_star(point: ScreenPoint, name: str) -> None:
     y = int(point.y)
     pyxel.rectb(x - 5, y - 5, 11, 11, 8)
     pyxel.rectb(x - 6, y - 6, 13, 13, 8)
-    label = name
-    width = display_text_width(label)
+    label_x, label_y, width = _focused_star_label_layout(point, name)
+    line_x = label_x - 3 if label_x > x else label_x + width + 3
+    pyxel.line(x + 7 if label_x > x else x - 7, y, line_x, label_y + 6, 8)
+    draw_display_bold_text(label_x, label_y, name, 8)
+
+
+def focused_star_hit_rect(point: ScreenPoint, name: str) -> tuple[int, int, int, int]:
+    label_x, label_y, width = _focused_star_label_layout(point, name)
+    star_x = int(point.x)
+    star_y = int(point.y)
+    x1 = min(label_x - 6, star_x - 10)
+    y1 = min(label_y - 6, star_y - 10)
+    x2 = max(label_x + width + 6, star_x + 10)
+    y2 = max(label_y + 20, star_y + 10)
+    return (x1, y1, x2 - x1, y2 - y1)
+
+
+def _focused_star_label_layout(point: ScreenPoint, name: str) -> tuple[int, int, int]:
+    x = int(point.x)
+    y = int(point.y)
+    width = display_text_width(name)
     label_x = x + 12
     if label_x + width > pyxel.width - 4:
         label_x = x - width - 12
     label_x = max(4, min(pyxel.width - width - 4, label_x))
     label_y = max(4, min(pyxel.height - 18, y - 7))
-    line_x = label_x - 3 if label_x > x else label_x + width + 3
-    pyxel.line(x + 7 if label_x > x else x - 7, y, line_x, label_y + 6, 8)
-    draw_display_bold_text(label_x, label_y, label, 8)
+    return (label_x, label_y, width)
 
 
 def draw_focused_moon(point: tuple[float, float], moon: MoonState, language: Language) -> None:

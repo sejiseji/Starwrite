@@ -11,6 +11,9 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 import pyxel
 
+if not hasattr(pyxel, "pix") and hasattr(pyxel, "pset"):
+    pyxel.pix = pyxel.pset
+
 from astronomy.coordinates import equatorial_to_enu
 from astronomy.catalog import Constellation
 from astronomy.events import MeteorShowerEvent
@@ -42,7 +45,7 @@ from sky.meteors import (
 from sky.moon import MoonController
 from sky.renderer import SkyRenderer, moon_screen_point
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
-from ui.hud import (
+from ui.hud_star_focus import (
     back_button_rect,
     constellation_label_hit_rects,
     draw_compact_time,
