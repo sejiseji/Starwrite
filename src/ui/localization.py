@@ -357,6 +357,17 @@ SKY_FEATURE_NAMES_JA: dict[str, str] = {
     "WINTER_TRIANGLE": "冬の大三角",
     "BIG_DIPPER": "北斗七星",
     "SPRING_ARC": "春の大曲線",
+    "SPRING_TRIANGLE": "春の大三角",
+    "GREAT_DIAMOND": "春のダイヤモンド",
+    "WINTER_HEXAGON": "冬のダイヤモンド",
+    "ORION_BELT": "オリオンの三つ星",
+    "GREAT_SQUARE": "秋の四辺形",
+    "NORTHERN_CROSS": "北十字",
+    "CASSIOPEIA_W": "カシオペヤのW",
+    "POINTER_STARS": "北極星の指極星",
+    "SOUTHERN_CROSS": "南十字",
+    "SOUTHERN_POINTERS": "南の指極星",
+    "TEAPOT": "ティーポット",
     "MILKY_WAY": "天の川",
 }
 
