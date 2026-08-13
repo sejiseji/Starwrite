@@ -20,6 +20,7 @@ CHAR_STEP = 8
 LINE_STEP = 13
 BODY_TEXT_SCALE = 1
 BODY_LINE_STEP = 15
+BODY_COMPACT_LINE_STEP = 13
 JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
 FEATURE_COLOR = 11
 _font_atlas_ready = False
@@ -219,16 +220,16 @@ def log_item_rects(width: int, height: int, count: int) -> list[tuple[int, int, 
 
 
 def letter_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
-    x = 18
-    y = max(76, height // 2 - 84)
-    w = width - 36
-    h = min(230, height - y - 44)
+    x = 8 if width <= 430 else 14
+    y = 42 if height >= 520 else 38
+    w = width - x * 2
+    h = max(220, height - y - (14 if height >= 520 else 10))
     return (x, y, w, h)
 
 
 def letter_close_rect(width: int, height: int) -> tuple[int, int, int, int]:
     x, y, w, _ = letter_panel_rect(width, height)
-    return (x + w - 30, y + 6, 22, 22)
+    return (x + w - 38, y + 8, 30, 30)
 
 
 def log_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
@@ -586,20 +587,22 @@ def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language)
     draw_button(letter_close_rect(pyxel.width, pyxel.height), "X", False)
 
     primary, original = display_letter_text(letter, language)
-    cursor_y = y + 34
-    for line in _wrap_body_lines(primary, w - 20):
+    body_width, line_step, primary_lines, original_lines = _fit_letter_body_lines(primary, original, w - 20, h - 66)
+    cursor_y = y + 44
+    for line in primary_lines:
         _draw_body_text(x + 10, cursor_y, line, 7)
-        cursor_y += BODY_LINE_STEP
-    if original is not None and cursor_y < y + h - 58:
-        cursor_y += 4
+        cursor_y += line_step
+    if original_lines:
+        cursor_y += 2
         draw_big_text(x + 10, cursor_y, "- ORIGINAL -", 13)
-        cursor_y += 14
-        for line in _wrap_body_lines(original, w - 20)[:5]:
+        cursor_y += 13
+        for line in original_lines:
             _draw_body_text(x + 10, cursor_y, line, 13)
-            cursor_y += BODY_LINE_STEP
+            cursor_y += line_step
 
     location = _letter_location(letter)
-    draw_display_text(x + 10, y + h - 22, f"FROM {location}", 13)
+    location_lines = _wrap_display_lines(f"FROM {location}", body_width)
+    draw_display_text(x + 10, y + h - 18, location_lines[0], 13)
 
 
 def draw_log_list(logs: tuple[ExchangeLog, ...], letters_by_id: dict[str, PresetLetter]) -> None:
@@ -662,6 +665,25 @@ def _wrap_body_lines(text: str, max_width: int) -> list[str]:
     for sentence in _sentence_chunks(text):
         wrapped.extend(_wrap_body_sentence(sentence, max_width))
     return wrapped or [""]
+
+
+def _fit_letter_body_lines(
+    primary: str,
+    original: str | None,
+    max_width: int,
+    available_height: int,
+) -> tuple[int, int, list[str], list[str]]:
+    for line_step in (BODY_LINE_STEP, 14, BODY_COMPACT_LINE_STEP):
+        primary_lines = _wrap_body_lines(primary, max_width)
+        original_lines = _wrap_body_lines(original, max_width) if original else []
+        required = len(primary_lines) * line_step
+        if original_lines:
+            required += 15 + len(original_lines) * line_step
+        if required <= available_height:
+            return max_width, line_step, primary_lines, original_lines
+    return max_width, BODY_COMPACT_LINE_STEP, _wrap_body_lines(primary, max_width), (
+        _wrap_body_lines(original, max_width) if original else []
+    )
 
 
 def _sentence_chunks(text: str) -> list[str]:

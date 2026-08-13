@@ -457,7 +457,7 @@ class StarSkyApp:
             self._go_back()
             return True
         if self.ui_state in ("LETTER", "LOG_DETAIL"):
-            if self._point_in_rect(point, letter_close_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+            if self._point_in_rect(point, self._expanded_rect(letter_close_rect(SCREEN_WIDTH, SCREEN_HEIGHT), 6)):
                 self._go_back()
                 return True
             if not self._point_in_rect(point, letter_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
