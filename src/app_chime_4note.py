@@ -47,7 +47,7 @@ from sky.meteors import (
 from sky.moon import MoonController
 from sky.renderer import SkyRenderer, moon_screen_point
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
-from ui.hud_54e8609 import (
+from ui.hud import (
     back_button_rect,
     constellation_label_hit_rects,
     draw_compact_time,
