@@ -1,8 +1,5 @@
 from __future__ import annotations
 
-from .preset_letters_extra import EXTRA_LETTER_INDEX_PACKS, EXTRA_PRESET_LETTER_PACKS
-
-
 LETTER_INDEX: dict = {
     "packs": [
         {
@@ -226,7 +223,6 @@ LETTER_INDEX: dict = {
         }
     ]
 }
-LETTER_INDEX["packs"].extend(EXTRA_LETTER_INDEX_PACKS)
 
 
 def _letter(
@@ -3147,4 +3143,3 @@ PRESET_LETTER_PACKS: dict[str, tuple[dict, ...]] = {
         ),
     ),
 }
-PRESET_LETTER_PACKS.update(EXTRA_PRESET_LETTER_PACKS)
