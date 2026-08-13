@@ -219,6 +219,77 @@ NAMED_STARS: tuple[Star, ...] = (
     star_from_hours(73273, 14.9755, -43.1339, 2.68, -0.20),  # Beta Lupi
     star_from_hours(76297, 15.5857, -41.1668, 2.78, -0.18),  # Gamma Lupi
     star_from_hours(75141, 15.3027, -40.6475, 3.22, -0.18),  # Delta Lupi
+    star_from_hours(25985, 5.5455, -17.8223, 2.58, 0.21),  # Arneb
+    star_from_hours(25606, 5.4708, -20.7594, 2.81, 0.81),  # Nihal
+    star_from_hours(23685, 5.0910, -22.3710, 3.19, 1.46),  # Epsilon Leporis
+    star_from_hours(24305, 5.2155, -16.2055, 3.29, -0.11),  # Mu Leporis
+    star_from_hours(27288, 5.7826, -14.8219, 3.55, 0.10),  # Zeta Leporis
+    star_from_hours(27072, 5.7411, -22.4484, 3.59, 0.48),  # Gamma Leporis
+    star_from_hours(27654, 5.8554, -20.8791, 3.76, 0.98),  # Delta Leporis
+    star_from_hours(40526, 8.2753, 9.1855, 3.53, 1.48),  # Tarf
+    star_from_hours(42911, 8.7447, 18.1543, 3.94, 1.08),  # Asellus Australis
+    star_from_hours(42806, 8.7214, 21.4685, 4.66, 0.01),  # Asellus Borealis
+    star_from_hours(43103, 8.7783, 28.7599, 4.03, 1.01),  # Iota Cancri
+    star_from_hours(44066, 8.9748, 11.8577, 4.26, 0.14),  # Acubens
+    star_from_hours(40167, 8.2035, 17.6478, 4.67, 0.53),  # Tegmine
+    star_from_hours(77070, 15.7378, 6.4256, 2.63, 1.17),  # Unukalhai
+    star_from_hours(77233, 15.7698, 15.4218, 3.65, 0.07),  # Beta Serpentis
+    star_from_hours(78072, 15.9409, 15.6616, 3.85, 0.48),  # Gamma Serpentis
+    star_from_hours(76276, 15.5800, 10.5389, 3.80, 0.27),  # Delta Serpentis
+    star_from_hours(77622, 15.8469, 4.4777, 3.71, 0.15),  # Epsilon Serpentis
+    star_from_hours(89962, 18.3552, -2.8988, 3.23, 0.94),  # Eta Serpentis
+    star_from_hours(86263, 17.6264, -15.3986, 3.54, 0.26),  # Xi Serpentis
+    star_from_hours(63125, 12.9338, 38.3184, 2.89, -0.12),  # Cor Caroli
+    star_from_hours(61317, 12.5624, 41.3575, 4.24, 0.59),  # Chara
+    star_from_hours(66234, 13.5742, 49.0160, 4.68, 0.13),  # 24 Canum Venaticorum
+    star_from_hours(60742, 12.4490, 28.2684, 4.35, 1.13),  # Gamma Comae Berenices
+    star_from_hours(64394, 13.1979, 27.8782, 4.23, 0.57),  # Beta Comae Berenices
+    star_from_hours(64241, 13.1665, 17.5294, 4.32, 0.46),  # Diadem
+    star_from_hours(60202, 12.3453, 17.7929, 4.72, 1.01),  # 11 Comae Berenices
+    star_from_hours(63355, 12.9821, 17.4094, 4.76, 1.57),  # 36 Comae Berenices
+    star_from_hours(8796, 1.8847, 29.5788, 3.42, 0.49),  # Mothallah
+    star_from_hours(10064, 2.1591, 34.9873, 3.00, 0.14),  # Beta Trianguli
+    star_from_hours(10670, 2.2886, 33.8472, 4.03, 0.02),  # Gamma Trianguli
+    star_from_hours(111169, 22.5215, 50.2825, 3.76, 0.03),  # Alpha Lacertae
+    star_from_hours(110538, 22.3927, 52.2290, 4.42, 1.02),  # Beta Lacertae
+    star_from_hours(111022, 22.4922, 47.7069, 4.34, 1.68),  # 5 Lacertae
+    star_from_hours(111944, 22.6752, 44.2763, 4.50, 1.32),  # 11 Lacertae
+    star_from_hours(109937, 22.2662, 37.7487, 4.14, 1.45),  # 1 Lacertae
+    star_from_hours(33449, 6.9546, 58.4228, 4.35, 0.85),  # 15 Lyncis
+    star_from_hours(36145, 7.4452, 49.2115, 4.61, 0.00),  # 21 Lyncis
+    star_from_hours(41075, 8.3806, 43.1881, 4.25, 1.55),  # Alsciaukat
+    star_from_hours(45688, 9.3141, 36.8026, 3.82, 0.07),  # 38 Lyncis
+    star_from_hours(45860, 9.3509, 34.3926, 3.14, 1.55),  # Alpha Lyncis
+    star_from_hours(100751, 20.4275, -56.7351, 1.94, -0.12),  # Peacock
+    star_from_hours(102395, 20.7493, -66.2032, 3.42, 0.16),  # Beta Pavonis
+    star_from_hours(99240, 20.1452, -66.1821, 3.55, 0.75),  # Delta Pavonis
+    star_from_hours(105858, 21.4407, -65.3662, 4.21, 0.49),  # Gamma Pavonis
+    star_from_hours(86929, 17.7622, -64.7239, 3.61, 1.16),  # Eta Pavonis
+    star_from_hours(85792, 17.5307, -49.8761, 2.84, -0.14),  # Alpha Arae
+    star_from_hours(85258, 17.4217, -55.5299, 2.84, 1.48),  # Beta Arae
+    star_from_hours(83081, 16.9770, -55.9901, 3.12, 1.55),  # Zeta Arae
+    star_from_hours(85267, 17.4232, -56.3777, 3.31, -0.15),  # Gamma Arae
+    star_from_hours(85727, 17.5183, -60.6838, 3.60, -0.10),  # Delta Arae
+    star_from_hours(88714, 18.1105, -50.0915, 3.65, -0.10),  # Theta Arae
+    star_from_hours(82363, 16.8298, -59.0414, 3.77, 1.56),  # Eta Arae
+    star_from_hours(109268, 22.1372, -46.9610, 1.73, -0.07),  # Alnair
+    star_from_hours(112122, 22.7111, -46.8846, 2.07, 1.61),  # Tiaki
+    star_from_hours(108085, 21.8988, -37.3649, 3.00, -0.08),  # Aldhanab
+    star_from_hours(112623, 22.8092, -51.3169, 3.49, 0.08),  # Epsilon Gruis
+    star_from_hours(114421, 23.1726, -45.2467, 3.88, 1.00),  # Iota Gruis
+    star_from_hours(110997, 22.4878, -43.4956, 3.97, 1.02),  # Delta Gruis
+    star_from_hours(2081, 0.4381, -42.3060, 2.40, 1.08),  # Ankaa
+    star_from_hours(5165, 1.1014, -46.7184, 3.32, 0.89),  # Beta Phoenicis
+    star_from_hours(6867, 1.4728, -43.3182, 3.41, 1.54),  # Gamma Phoenicis
+    star_from_hours(765, 0.1568, -45.7474, 3.88, 1.01),  # Epsilon Phoenicis
+    star_from_hours(7083, 1.5209, -49.0727, 3.93, 0.97),  # Delta Phoenicis
+    star_from_hours(5348, 1.1397, -55.2458, 3.94, -0.12),  # Wurren
+    star_from_hours(26634, 5.6608, -34.0741, 2.65, -0.12),  # Phact
+    star_from_hours(27628, 5.8493, -35.7683, 3.12, 1.15),  # Wazn
+    star_from_hours(30277, 6.3686, -33.4364, 3.85, 0.86),  # Delta Columbae
+    star_from_hours(25859, 5.5202, -35.4705, 3.86, 1.13),  # Epsilon Columbae
+    star_from_hours(28328, 5.9858, -42.8151, 3.96, 1.15),  # Eta Columbae
+    star_from_hours(28199, 5.9589, -35.2833, 4.36, -0.17),  # Gamma Columbae
 )
 
 STAR_NAMES: dict[int, str] = {
@@ -417,6 +488,77 @@ STAR_NAMES: dict[int, str] = {
     73273: "Beta Lupi",
     76297: "Gamma Lupi",
     75141: "Delta Lupi",
+    25985: "Arneb",
+    25606: "Nihal",
+    23685: "Epsilon Leporis",
+    24305: "Mu Leporis",
+    27288: "Zeta Leporis",
+    27072: "Gamma Leporis",
+    27654: "Delta Leporis",
+    40526: "Tarf",
+    42911: "Asellus Australis",
+    42806: "Asellus Borealis",
+    43103: "Iota Cancri",
+    44066: "Acubens",
+    40167: "Tegmine",
+    77070: "Unukalhai",
+    77233: "Beta Serpentis",
+    78072: "Gamma Serpentis",
+    76276: "Delta Serpentis",
+    77622: "Epsilon Serpentis",
+    89962: "Eta Serpentis",
+    86263: "Xi Serpentis",
+    63125: "Cor Caroli",
+    61317: "Chara",
+    66234: "24 Canum Venaticorum",
+    60742: "Gamma Comae Berenices",
+    64394: "Beta Comae Berenices",
+    64241: "Diadem",
+    60202: "11 Comae Berenices",
+    63355: "36 Comae Berenices",
+    8796: "Mothallah",
+    10064: "Beta Trianguli",
+    10670: "Gamma Trianguli",
+    111169: "Alpha Lacertae",
+    110538: "Beta Lacertae",
+    111022: "5 Lacertae",
+    111944: "11 Lacertae",
+    109937: "1 Lacertae",
+    33449: "15 Lyncis",
+    36145: "21 Lyncis",
+    41075: "Alsciaukat",
+    45688: "38 Lyncis",
+    45860: "Alpha Lyncis",
+    100751: "Peacock",
+    102395: "Beta Pavonis",
+    99240: "Delta Pavonis",
+    105858: "Gamma Pavonis",
+    86929: "Eta Pavonis",
+    85792: "Alpha Arae",
+    85258: "Beta Arae",
+    83081: "Zeta Arae",
+    85267: "Gamma Arae",
+    85727: "Delta Arae",
+    88714: "Theta Arae",
+    82363: "Eta Arae",
+    109268: "Alnair",
+    112122: "Tiaki",
+    108085: "Aldhanab",
+    112623: "Epsilon Gruis",
+    114421: "Iota Gruis",
+    110997: "Delta Gruis",
+    2081: "Ankaa",
+    5165: "Beta Phoenicis",
+    6867: "Gamma Phoenicis",
+    765: "Epsilon Phoenicis",
+    7083: "Delta Phoenicis",
+    5348: "Wurren",
+    26634: "Phact",
+    27628: "Wazn",
+    30277: "Delta Columbae",
+    25859: "Epsilon Columbae",
+    28328: "Eta Columbae",
+    28199: "Gamma Columbae",
 }
 
 

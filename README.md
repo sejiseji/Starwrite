@@ -146,7 +146,7 @@ gaps caused by Safari's visible toolbar area.
 
 ## Data
 
-The prototype includes 44 constellations:
+The prototype includes 57 constellations:
 
 - ORI - Orion
 - CYG - Cygnus
@@ -192,12 +192,26 @@ The prototype includes 44 constellations:
 - PUP - Puppis
 - VEL - Vela
 - LUP - Lupus
+- LEP - Lepus
+- CNC - Cancer
+- SER - Serpens
+- CVN - Canes Venatici
+- COM - Coma Berenices
+- TRI - Triangulum
+- LAC - Lacerta
+- LYN - Lynx
+- PAV - Pavo
+- ARA - Ara
+- GRU - Grus
+- PHE - Phoenix
+- COL - Columba
 
 The prototype uses two star sources:
 
 - A small hand-entered set of bright named stars with approximate J2000-style
   RA/Dec, visual magnitude, and color-index values derived from commonly
-  published astronomical facts.
+  published astronomical facts. Prototype additions after the initial 44
+  constellations use selected bright-star rows from HYG Database v4.1.
 - A deterministic synthetic faint-star background generated in code for visual
   density. These synthetic stars are not a scientific catalog.
 
@@ -226,7 +240,7 @@ observing references:
 - Milky Way, shown as an approximate guide path
 
 The Capture / Letter demo uses local preset letters only. Pressing `CAPTURE`
-stores the current sky view as data, matches a preset letter, waits 5-15
+stores the current sky view as data, matches a preset letter, waits 5-8
 seconds, then shows a quiet arrival cut-in. The `LETTER` view restores the
 captured sky from data and shows the translated text first, followed by the
 original text when it differs. The `LOG` stores up to 100 exchanges in
@@ -261,6 +275,7 @@ license in this section.
 - Pyxel project: https://github.com/kitao/pyxel
 - Pyxel custom font sample: https://github.com/kitao/pyxel/blob/main/python/pyxel/examples/13_custom_font.py
 - Pyxel Web custom tag article by Pyxel author: https://tkitao.hatenablog.com/entry/2022/10/08/174438
+- HYG Database: https://github.com/astronexus/HYG-Database
 - International Meteor Organization, major meteor showers: https://www.imo.net/observations/methods/visual-observation/major/
 - International Meteor Organization, meteor shower calendar archive / working list context: https://www.imo.net/resources/calendar/2019/
 - IMO / AMS meteor shower calendar: https://newimo.amsmeteors.org/
