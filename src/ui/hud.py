@@ -29,10 +29,10 @@ JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
 FEATURE_COLOR = 11
 LETTER_LACE_COLOR = 13
 LETTER_LACE_DIM_COLOR = 1
-_font_atlas_ready = False
 _desktop_letter_text_mode = False
 _display_width_cache: dict[str, int] = {}
 _glyph_locations: dict[int, tuple[int, int, int, int]] = {}
+_font_atlas_next_index = 0
 
 FONT = {
     " ": ("000", "000", "000", "000", "000"),
@@ -156,33 +156,43 @@ def _glyph_advance(char: str) -> int:
     return glyph[0]
 
 
-def _ensure_font_atlas() -> None:
-    global _font_atlas_ready
-    if _font_atlas_ready:
-        return
+def _font_atlas_capacity() -> int:
+    return FONT_COLUMNS * (256 // FONT_CELL_HEIGHT) * len(FONT_IMAGE_BANKS)
+
+
+def _glyph_location_for(codepoint: int) -> tuple[int, int, int, int] | None:
+    global _font_atlas_next_index
+    location = _glyph_locations.get(codepoint)
+    if location is not None:
+        return location
+
+    glyph = GLYPHS.get(codepoint) or GLYPHS.get(ord("?"))
+    if glyph is None:
+        return None
+    if _font_atlas_next_index >= _font_atlas_capacity():
+        _glyph_locations.clear()
+        _font_atlas_next_index = 0
+
     glyphs_per_bank = FONT_COLUMNS * (256 // FONT_CELL_HEIGHT)
-    for index, (codepoint, (advance, rows)) in enumerate(GLYPHS.items()):
-        bank_index = index // glyphs_per_bank
-        if bank_index >= len(FONT_IMAGE_BANKS):
-            raise RuntimeError("font atlas exceeded available Pyxel image banks")
-        local_index = index % glyphs_per_bank
-        bank = FONT_IMAGE_BANKS[bank_index]
-        x = local_index % FONT_COLUMNS * FONT_CELL_WIDTH
-        y = local_index // FONT_COLUMNS * FONT_CELL_HEIGHT
-        image = pyxel.image(bank)
-        image.set(x, y, list(rows))
-        _glyph_locations[codepoint] = (bank, x, y, advance)
-    _font_atlas_ready = True
+    bank_index = _font_atlas_next_index // glyphs_per_bank
+    local_index = _font_atlas_next_index % glyphs_per_bank
+    bank = FONT_IMAGE_BANKS[bank_index]
+    x = local_index % FONT_COLUMNS * FONT_CELL_WIDTH
+    y = local_index // FONT_COLUMNS * FONT_CELL_HEIGHT
+    advance, rows = glyph
+    pyxel.image(bank).set(x, y, list(rows))
+    location = (bank, x, y, advance)
+    _glyph_locations[codepoint] = location
+    _font_atlas_next_index += 1
+    return location
 
 
 def _draw_bitmap_text(x: int, y: int, text: str, col: int, scale: int = 1) -> None:
-    _ensure_font_atlas()
     cursor_x = x
     if col != 7:
         pyxel.pal(7, col)
     for char in text:
-        codepoint = ord(char)
-        location = _glyph_locations.get(codepoint) or _glyph_locations.get(ord("?"))
+        location = _glyph_location_for(ord(char))
         if location is None:
             cursor_x += FONT_CELL_WIDTH * scale
             continue

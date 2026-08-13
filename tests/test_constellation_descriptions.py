@@ -22,6 +22,20 @@ class ConstellationDescriptionTests(unittest.TestCase):
             for line in descriptions["en"]:
                 self.assertLessEqual(len(line), 34, constellation_id)
 
+    def test_descriptions_keep_source_authored_copy(self) -> None:
+        self.assertEqual(
+            CONSTELLATION_DESCRIPTIONS["ORI"]["ja"],
+            ("三つ星を帯に並べた狩人。", "冬空でひときわ堂々と立つ。"),
+        )
+        self.assertEqual(
+            CONSTELLATION_DESCRIPTIONS["CYG"]["ja"],
+            ("十字の翼で天の川を渡る。", "尾には青白いデネブが光る。"),
+        )
+        self.assertEqual(
+            CONSTELLATION_DESCRIPTIONS["CAS"]["ja"],
+            ("五つの星が描く折れた王座。", "北の空で季節ごとに向きを変える。"),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

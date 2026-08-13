@@ -112,10 +112,11 @@ class FontSubsetTests(unittest.TestCase):
         required = {ord(char) for label in labels for char in label}
         self.assertTrue(required <= set(GLYPHS))
 
-    def test_embedded_font_fits_available_pyxel_image_banks(self) -> None:
+    def test_embedded_font_has_a_positive_lazy_atlas_capacity(self) -> None:
         glyphs_per_bank = FONT_COLUMNS * (256 // FONT_CELL_HEIGHT)
 
-        self.assertLessEqual(len(GLYPHS), glyphs_per_bank * len(FONT_IMAGE_BANKS))
+        self.assertGreater(glyphs_per_bank * len(FONT_IMAGE_BANKS), 0)
+        self.assertGreater(len(GLYPHS), 0)
 
 
 if __name__ == "__main__":
