@@ -98,14 +98,18 @@ STARWRITE_SOUND_RESOURCES = (
     "../starwrite.pyxres",
 )
 UI_SOUND_CHANNEL = 3
+SOUND_RESET = 0
 SOUND_LETTER_RECEIVED = 1
 SOUND_LETTER_OPEN = 2
 SOUND_LETTER_CLOSE = 3
+SOUND_TOOL_ON = 4
 SOUND_LETTER_RECEIVED_REPEAT_DELAY_FRAMES = CUT_IN_FRAMES // 2
 STARWRITE_SOUND_FALLBACKS = {
+    SOUND_RESET: ("f#2e2d2d3e3f3g3a3", "t" * 8, "4" * 8, "n" * 8, 5),
     SOUND_LETTER_RECEIVED: ("g3d4g4g4g3d4g4g4", "t" * 8, "4" * 8, "n" * 8, 8),
     SOUND_LETTER_OPEN: ("f3f3b3b3f#4f#4", "t" * 6, "4" * 6, "n" * 6, 4),
     SOUND_LETTER_CLOSE: ("f3d3a2d2", "t" * 4, "4" * 4, "n" * 4, 4),
+    SOUND_TOOL_ON: ("c5", "t", "4", "n", 4),
 }
 STAR_TAP_RADIUS_PX = 14
 STAR_TAP_MOVE_TOLERANCE_PX = 6
@@ -435,22 +439,29 @@ class StarSkyApp:
             if not self._point_in_rect(point, rect):
                 continue
             if key == "time":
-                self.show_time_slider = not self.show_time_slider
+                next_state = not self.show_time_slider
+                self.show_time_slider = next_state
                 if self.show_time_slider:
                     self.show_month_slider = False
                     self.show_event_slider = False
+                self._play_ui_sound(SOUND_TOOL_ON if next_state else SOUND_LETTER_CLOSE)
             elif key == "month":
-                self.show_month_slider = not self.show_month_slider
+                next_state = not self.show_month_slider
+                self.show_month_slider = next_state
                 if self.show_month_slider:
                     self.show_time_slider = False
                     self.show_event_slider = False
+                self._play_ui_sound(SOUND_TOOL_ON if next_state else SOUND_LETTER_CLOSE)
             elif key == "event":
-                self.show_event_slider = not self.show_event_slider
+                next_state = not self.show_event_slider
+                self.show_event_slider = next_state
                 if self.show_event_slider:
                     self.show_time_slider = False
                     self.show_month_slider = False
+                self._play_ui_sound(SOUND_TOOL_ON if next_state else SOUND_LETTER_CLOSE)
             elif key == "reset":
                 self._reset_view()
+                self._play_ui_sound(SOUND_RESET)
             return True
         if self._handle_slider_click(point):
             return True
