@@ -25,6 +25,8 @@ BODY_COMPACT_LINE_STEP = 13
 LETTER_ORIGINAL_SECTION_GAP = BODY_LINE_STEP
 JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
 FEATURE_COLOR = 11
+LETTER_LACE_COLOR = 13
+LETTER_LACE_DIM_COLOR = 1
 _font_atlas_ready = False
 _desktop_letter_text_mode = False
 _display_width_cache: dict[str, int] = {}
@@ -604,6 +606,7 @@ def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language)
     x, y, w, h = panel_rect
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 13)
+    _draw_letter_lace_frame(panel_rect)
     draw_back_button()
     draw_big_text(x + 10, y + 10, "LETTER", 7)
     draw_button(letter_close_rect(pyxel.width, pyxel.height, panel_rect), "X", False)
@@ -627,6 +630,47 @@ def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language)
     location = _letter_location(letter)
     location_lines = _wrap_display_lines(f"FROM {location}", body_width)
     draw_display_text(x + 10, y + h - 18, location_lines[0], 13)
+
+
+def _draw_letter_lace_frame(rect: tuple[int, int, int, int]) -> None:
+    x, y, w, h = rect
+    if w < 120 or h < 160:
+        return
+    pyxel.rectb(x + 2, y + 2, w - 4, h - 4, LETTER_LACE_DIM_COLOR)
+    _draw_lace_stitches_horizontal(x + 92, x + w - 54, y + 5, 1)
+    _draw_lace_stitches_horizontal(x + 92, x + w - 18, y + h - 6, -1)
+    _draw_lace_stitches_vertical(x + 5, y + 48, y + h - 34, 1)
+    _draw_lace_stitches_vertical(x + w - 6, y + 48, y + h - 46, -1)
+    _draw_lace_flower(x + w - 52, y + 22)
+    _draw_lace_flower(x + w - 22, y + h - 17)
+
+
+def _draw_lace_stitches_horizontal(start_x: int, end_x: int, y: int, direction: int) -> None:
+    if end_x - start_x < 14:
+        return
+    for x in range(start_x, end_x, 12):
+        pyxel.line(x, y, x + 3, y + direction * 3, LETTER_LACE_DIM_COLOR)
+        pyxel.line(x + 3, y + direction * 3, x + 6, y, LETTER_LACE_DIM_COLOR)
+        pyxel.pset(x + 3, y + direction * 2, LETTER_LACE_COLOR)
+
+
+def _draw_lace_stitches_vertical(x: int, start_y: int, end_y: int, direction: int) -> None:
+    if end_y - start_y < 14:
+        return
+    for y in range(start_y, end_y, 12):
+        pyxel.line(x, y, x + direction * 3, y + 3, LETTER_LACE_DIM_COLOR)
+        pyxel.line(x + direction * 3, y + 3, x, y + 6, LETTER_LACE_DIM_COLOR)
+        pyxel.pset(x + direction * 2, y + 3, LETTER_LACE_COLOR)
+
+
+def _draw_lace_flower(cx: int, cy: int) -> None:
+    pyxel.pset(cx, cy, 7)
+    for dx, dy in ((-3, 0), (3, 0), (0, -3), (0, 3), (-2, -2), (2, -2), (-2, 2), (2, 2)):
+        pyxel.pset(cx + dx, cy + dy, LETTER_LACE_COLOR)
+    pyxel.line(cx - 5, cy, cx - 2, cy, LETTER_LACE_DIM_COLOR)
+    pyxel.line(cx + 2, cy, cx + 5, cy, LETTER_LACE_DIM_COLOR)
+    pyxel.line(cx, cy - 5, cx, cy - 2, LETTER_LACE_DIM_COLOR)
+    pyxel.line(cx, cy + 2, cx, cy + 5, LETTER_LACE_DIM_COLOR)
 
 
 def draw_log_list(logs: tuple[ExchangeLog, ...], letters_by_id: dict[str, PresetLetter]) -> None:
