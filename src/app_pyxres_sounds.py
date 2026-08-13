@@ -95,7 +95,7 @@ CUT_IN_FRAMES = 150
 LETTER_RECEIVE_DELAY_MIN_SECONDS = 5.0
 LETTER_RECEIVE_DELAY_MAX_SECONDS = 8.0
 PYXEL_TARGET_FPS = 30.0
-STARWRITE_SOUND_RESOURCE = "starwrite.pyxres"
+STARWRITE_SOUND_RESOURCES = ("starwrite.pyxres", "./starwrite.pyxres", "../starwrite.pyxres")
 UI_SOUND_CHANNEL = 3
 SOUND_LETTER_RECEIVED = 1
 SOUND_LETTER_OPEN = 2
@@ -227,6 +227,7 @@ class StarSkyApp:
         self.meteor_event = None
         self.capture_ready = False
         self.ready_signaled = False
+        self.audio_ready = False
 
         set_desktop_letter_text_mode(DESKTOP_VIEW)
         pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, title="Starwrite Sky", fps=30)
@@ -919,12 +920,18 @@ class StarSkyApp:
         self._save_letter_store()
 
     def _setup_audio(self) -> None:
-        try:
-            pyxel.load(STARWRITE_SOUND_RESOURCE)
-        except Exception:
-            pass
+        for resource in STARWRITE_SOUND_RESOURCES:
+            try:
+                pyxel.load(resource)
+                self.audio_ready = True
+                return
+            except Exception:
+                continue
+        self.audio_ready = False
 
     def _play_ui_sound(self, sound_id: int) -> None:
+        if not self.audio_ready:
+            self._setup_audio()
         try:
             pyxel.play(UI_SOUND_CHANNEL, sound_id)
         except Exception:
