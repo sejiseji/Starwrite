@@ -13,12 +13,12 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 ## Catalog Summary
 
-- Total letters: 216
-- Indexed pack count: 216
-- Packs: 8
-- Original languages: {'en': 117, 'ja': 99}
-- Sentence counts: {2: 2, 3: 158, 4: 48, 5: 8}
-- Top countries: [('JP', 99), ('US', 8), ('FI', 5), ('BR', 5), ('CA', 5), ('AU', 4), ('ZA', 4), ('NZ', 4), ('FR', 4), ('IN', 4), ('MX', 4), ('GB', 4), ('IT', 4), ('CL', 3), ('KR', 3), ('DE', 3), ('AR', 3), ('EG', 3), ('TH', 3), ('PT', 3)]
+- Total letters: 316
+- Indexed pack count: 316
+- Packs: 12
+- Original languages: {'en': 167, 'ja': 149}
+- Sentence counts: {2: 3, 3: 250, 4: 54, 5: 9}
+- Top countries: [('JP', 149), ('US', 11), ('FI', 9), ('BR', 8), ('CA', 8), ('AU', 7), ('NZ', 6), ('FR', 6), ('IN', 6), ('DE', 6), ('MX', 6), ('GB', 6), ('IT', 6), ('ZA', 5), ('SG', 5), ('KR', 4), ('AR', 4), ('PT', 4), ('CL', 3), ('ES', 3)]
 
 ## Letters
 
@@ -4141,3 +4141,1911 @@ Use it to review tone, coherence, repetition, and translation quality.
 **Translation `ja`**
 
 > モーテルのケトルは、思ったより大きな音で切れた。欠けたマグにお茶を注いだ。カーテンの外で、おおいぬ座が明るかった。
+
+### Pack `base_008`
+
+#### `base_008_001`
+
+- Location: JP / Tokyo / Kokubunji
+- Original language: `ja`
+- Constellations: ORI
+- Anchor star IDs: 27989, 24436
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> バイト帰りにコンビニで肉まんを買った。店を出てすぐ一口食べたら、思ったより熱くて一人で「っあっつ」って言った。誰も見てなかったので助かった。たぶん今日いちばん大きな声だった。
+
+**Translation `en`**
+
+> I bought a steamed bun at the convenience store after my shift. I took a bite right outside, realized it was way hotter than expected, and yelped to myself. Thankfully, nobody saw me. That was probably the loudest thing I said all day.
+
+#### `base_008_002`
+
+- Location: CA / Ontario / Toronto
+- Original language: `en`
+- Constellations: UMA
+- Anchor star IDs: 54061
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> My daughter refused to sleep because her stuffed rabbit was "looking lonely." We found it a smaller stuffed bear and put them both under the blanket. She was asleep five minutes later. I am apparently middle management for toys now.
+
+**Translation `ja`**
+
+> 娘が、ぬいぐるみのウサギが「さみしそう」だから寝ないと言い出した。小さいクマを隣に置いて、二匹まとめて布団をかけた。五分後には寝ていた。どうやら私は、ぬいぐるみ界の中間管理職になったらしい。
+
+#### `base_008_003`
+
+- Location: JP / Osaka / Osaka
+- Original language: `ja`
+- Constellations: LYR
+- Anchor star IDs: 91262
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 今日の商談、普通にめっちゃ緊張した。でも終わってから先輩に「よかったじゃん」って言われたので、もうそれだけ信じることにした。帰りにネイル一本欠けた。そこまで含めて今日って感じ。おつ。
+
+**Translation `en`**
+
+> I was seriously nervous about a client meeting today. But afterward my senior said, "You did good," so I decided to believe exactly that and nothing else. Then I chipped one nail on the way home. Honestly, that pretty much completes the day. I'm done.
+
+#### `base_008_004`
+
+- Location: FI / Pirkanmaa / Tampere
+- Original language: `en`
+- Constellations: CYG
+- Anchor star IDs: 102098
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.1
+
+**Original**
+
+> I spent most of the evening trying to prove something that turned out to be false. The counterexample fit in three lines, which felt unnecessarily rude. I went outside with coffee and found Cygnus between the buildings. At least the stars did not require a proof.
+
+**Translation `ja`**
+
+> 夕方のほとんどを、実は偽だった命題の証明に使った。反例は三行で書けた。ちょっと失礼なくらい短い。コーヒーを持って外に出ると、建物の間に白鳥座が見えた。少なくとも星を見るのに証明はいらなかった。
+
+#### `base_008_005`
+
+- Location: JP / Okayama / Kurashiki
+- Original language: `ja`
+- Constellations: AQL
+- Anchor star IDs: 97649
+- Season tags: summer
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 祖母から桃が届いた。箱を開けた瞬間に部屋が甘い匂いになって、まだ一個も食べてないのに少し得した気分になった。電話したら「硬いうちに食べるな」と先に釘を刺された。
+
+**Translation `en`**
+
+> A box of peaches arrived from my grandmother. The room smelled sweet the moment I opened it, and I felt like I had already gained something before eating even one. When I called her, the first thing she said was, "Don't eat them while they're still hard."
+
+#### `base_008_006`
+
+- Location: GB / England / Manchester
+- Original language: `en`
+- Constellations: CYG
+- Anchor star IDs: 102098
+- Season tags: summer
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The rehearsal was terrible until the last song. Then, for reasons nobody could explain, all four of us landed on the ending together. We packed up before we had time to ruin the achievement.
+
+**Translation `ja`**
+
+> 練習は最後の曲までひどかった。でもなぜか最後だけ、四人全員がぴたりと同じところに着地した。せっかくなので、もう一度やって台無しにする前に片づけた。
+
+#### `base_008_007`
+
+- Location: JP / Fukuoka / Fukuoka
+- Original language: `ja`
+- Constellations: LEO
+- Anchor star IDs: 49669
+- Season tags: spring
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 夜勤明けに自販機でコーヒーを買ったら、冷たい方を押していた。飲んだら普通においしかったので、もう間違いではないことにした。朝の空だけ妙に元気だった。
+
+**Translation `en`**
+
+> After my night shift, I bought coffee from a vending machine and realized I had pressed the cold one. It tasted perfectly good, so I decided it was no longer a mistake. The morning sky looked annoyingly energetic.
+
+#### `base_008_008`
+
+- Location: IT / Lazio / Rome
+- Original language: `en`
+- Constellations: BOO
+- Anchor star IDs: 69673
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I burned the first batch of garlic and opened every window. The second batch behaved. My apartment now smells like both failure and dinner.
+
+**Translation `ja`**
+
+> 最初のにんにくを焦がして、窓を全部開けた。二回目はちゃんと焼けた。今の部屋は、失敗と夕飯の両方の匂いがする。
+
+#### `base_008_009`
+
+- Location: JP / Hokkaido / Sapporo
+- Original language: `ja`
+- Constellations: GEM
+- Anchor star IDs: 37826, 36850
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 母から「雪すごい？」とメッセージが来た。窓の写真を送ったら、雪よりベランダに出しっぱなしのサンダルを注意された。見るところ、そこなんだ。
+
+**Translation `en`**
+
+> My mother texted to ask if the snow was bad. I sent her a photo through the window, and instead of commenting on the snow she told me to bring in the sandals I had left on the balcony. Of course that is what she noticed.
+
+#### `base_008_010`
+
+- Location: US / Oregon / Portland
+- Original language: `en`
+- Constellations: LYR
+- Anchor star IDs: 91262
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I washed one plate because the sink was getting embarrassing. Then I washed a second because the first one looked lonely in the rack. Somehow that turned into all of them. I resent how effective this was.
+
+**Translation `ja`**
+
+> 流しがさすがにひどくなってきたので、皿を一枚だけ洗った。一枚だけ水切りかごにあるのが妙で、もう一枚洗った。気づいたら全部終わっていた。この方法が有効だったことがちょっと悔しい。
+
+#### `base_008_011`
+
+- Location: JP / Kyoto / Kyoto
+- Original language: `ja`
+- Constellations: PEG
+- Anchor star IDs: 113963
+- Season tags: autumn
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 古いノートを整理していたら、大学一年の自分が書いた「絶対あとで分かる」というメモが出てきた。分からない。絶対とか書くな。
+
+**Translation `en`**
+
+> While sorting old notebooks, I found a note from my first year at university that said, "I will definitely understand this later." I do not. Do not write "definitely," younger me.
+
+#### `base_008_012`
+
+- Location: NZ / Canterbury / Christchurch
+- Original language: `en`
+- Constellations: SGR
+- Anchor star IDs: 90185, 92855
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The baby slept long enough for me to make tea. Not long enough for me to drink it hot, obviously. I found the mug again an hour later and considered that a partial victory.
+
+**Translation `ja`**
+
+> 赤ちゃんが、お茶を入れるくらいの時間は寝てくれた。当然、熱いうちに飲むほど長くは寝てくれなかった。一時間後にマグを見つけて、部分的な勝利ということにした。
+
+#### `base_008_013`
+
+- Location: JP / Kanagawa / Yokohama
+- Original language: `ja`
+- Constellations: CMA
+- Anchor star IDs: 32349
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 友だちの返信を待ちながらアイスを食べていた。返事より先にアイスが溶けたので、そっちを優先した。大事な判断だったと思う。
+
+**Translation `en`**
+
+> I was eating ice cream while waiting for a friend's reply. The ice cream started melting before the reply came, so I prioritized the ice cream. I stand by that decision.
+
+#### `base_008_014`
+
+- Location: DE / Berlin / Berlin
+- Original language: `en`
+- Constellations: VIR
+- Anchor star IDs: 65474
+- Season tags: spring
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I did not finish the paper today. I did clean the sink, answer two emails, and finally replace the dead bulb in the hallway. Academic progress remains disputed, but the hallway is excellent.
+
+**Translation `ja`**
+
+> 今日は論文が終わらなかった。その代わり、流しを掃除して、メールを二通返して、廊下の切れた電球をやっと交換した。研究の進捗は議論の余地があるけど、廊下は最高。
+
+#### `base_008_015`
+
+- Location: JP / Okinawa / Naha
+- Original language: `ja`
+- Constellations: SGR
+- Anchor star IDs: 90185, 92855
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 海から戻って髪を洗ったのに、まだ少し塩っぽい気がする。気のせいかもしれないけど、今日はもう一回洗う気はない。明日の私、頼んだ。
+
+**Translation `en`**
+
+> I washed my hair after coming back from the sea, but it still feels slightly salty. Maybe I am imagining it, but I am not washing it again tonight. Tomorrow me can handle this.
+
+#### `base_008_016`
+
+- Location: BR / Sao Paulo / Sao Paulo
+- Original language: `en`
+- Constellations: SCO
+- Anchor star IDs: 80763
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The bus was late enough that three strangers started comparing arrival times on their phones. Nobody was angry anymore; we had become a tiny committee. When the bus finally came, we all nodded like the meeting had concluded.
+
+**Translation `ja`**
+
+> バスがかなり遅れて、知らない三人でスマホの到着予定を見比べる流れになった。途中から誰も怒っていなくて、小さな委員会みたいになっていた。バスが来たとき、会議終了みたいにみんなでうなずいた。
+
+#### `base_008_017`
+
+- Location: JP / Aichi / Nagoya
+- Original language: `ja`
+- Constellations: AQL
+- Anchor star IDs: 97649
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 洗濯機の終了音を完全に聞き逃した。二時間後に気づいて、ちょっとだけ洗濯物と目が合った気がした。そのまま干した。問題なし。
+
+**Translation `en`**
+
+> I completely missed the washing machine's end chime. I noticed two hours later and felt, briefly, as if the laundry was judging me. I hung it up anyway. No problem.
+
+#### `base_008_018`
+
+- Location: FR / Occitanie / Toulouse
+- Original language: `en`
+- Constellations: CAS
+- Anchor star IDs: 3179, 4427
+- Season tags: autumn
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> My neighbor's radio, usually loud enough to identify the station, was silent tonight. I could hear my own steps on the stairs instead. It turns out I walk with much more drama than expected.
+
+**Translation `ja`**
+
+> いつも局名まで分かるくらい大きい隣人のラジオが、今夜は静かだった。代わりに階段を上る自分の足音がよく聞こえた。思ったより大げさな歩き方をしているらしい。
+
+#### `base_008_019`
+
+- Location: JP / Nagano / Matsumoto
+- Original language: `ja`
+- Constellations: PER
+- Anchor star IDs: 15863
+- Season tags: autumn
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 山の宿で廊下の時計が妙に大きく聞こえた。眠れないので一度外に出たら、寒すぎて三分で戻った。眠気より寒さの方が仕事が早い。
+
+**Translation `en`**
+
+> At a mountain inn, the hallway clock sounded unusually loud. I could not sleep, so I went outside for a while and came back three minutes later because it was freezing. Cold works faster than sleepiness.
+
+#### `base_008_020`
+
+- Location: IN / Karnataka / Bengaluru
+- Original language: `en`
+- Constellations: HER
+- Anchor star IDs: 80816
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> A student asked a question about symmetry that was better than the example I had prepared. I spent the walk home thinking about it. Teaching is inconvenient like that; sometimes the questions follow you.
+
+**Translation `ja`**
+
+> 学生から、用意していた例より面白い対称性の質問が出た。帰り道もずっとそのことを考えていた。教える仕事はこういうところが困る。質問が家までついてくる。
+
+#### `base_008_021`
+
+- Location: JP / Nara / Nara
+- Original language: `ja`
+- Constellations: LEO
+- Anchor star IDs: 49669
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 駅から歩いていたら靴ずれが痛くなって、途中のベンチで絆創膏を貼った。立ち上がったら鹿がこっちを見ていた。たぶん何も評価してないけど、ちょっと恥ずかしかった。
+
+**Translation `en`**
+
+> My shoe started rubbing on the walk from the station, so I stopped at a bench to put on a bandage. When I stood up, a deer was looking at me. It was probably judging nothing, but I still felt slightly embarrassed.
+
+#### `base_008_022`
+
+- Location: AU / Victoria / Melbourne
+- Original language: `en`
+- Constellations: CAR
+- Anchor star IDs: 30438
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I bought chips after my shift and ate half of them before getting home. The paper bag left salt on my fingers and a suspicious grease mark on my jacket. Worth it.
+
+**Translation `ja`**
+
+> 仕事のあとにポテトを買って、家に着く前に半分食べた。指は塩だらけで、上着には怪しい油染みができた。それでも買ってよかった。
+
+#### `base_008_023`
+
+- Location: JP / Miyagi / Sendai
+- Original language: `ja`
+- Constellations: UMA
+- Anchor star IDs: 54061
+- Season tags: spring
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> スーパーの袋が指に食い込んでいたので、途中で左右を持ち替えた。牛乳、卵、ちょっと高いチョコ。チョコだけは絶対に置いてこない。
+
+**Translation `en`**
+
+> The grocery bag was digging into my fingers, so I switched hands halfway home. Milk, eggs, and slightly expensive chocolate. The chocolate is the one thing I absolutely refuse to abandon.
+
+#### `base_008_024`
+
+- Location: SE / Vastra Gotaland / Gothenburg
+- Original language: `en`
+- Constellations: UMA
+- Anchor star IDs: 54061
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The tram window was dark enough to show my reflection. I looked tired, so I tried smiling at it. That looked worse, and I stopped.
+
+**Translation `ja`**
+
+> トラムの窓が暗くて、自分の顔が映っていた。疲れて見えたので笑ってみた。そっちの方がひどくて、やめた。
+
+#### `base_008_025`
+
+- Location: JP / Shizuoka / Hamamatsu
+- Original language: `ja`
+- Constellations: AQL
+- Anchor star IDs: 97649
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 父の古いラジオを直そうとして、ねじを一本なくした。床を二十分探して、結局ひざの裏にくっついていた。ラジオはまだ鳴らない。
+
+**Translation `en`**
+
+> I tried to fix my father's old radio and lost one screw. I searched the floor for twenty minutes before finding it stuck behind my knee. The radio still does not work.
+
+### Pack `base_009`
+
+#### `base_009_001`
+
+- Location: MX / Jalisco / Guadalajara
+- Original language: `en`
+- Constellations: LEO
+- Anchor star IDs: 49669
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> Someone in the next courtyard laughed so hard that another person started laughing without knowing why. I could not see either of them. I still joined in a little.
+
+**Translation `ja`**
+
+> 隣の中庭で誰かが大笑いして、その声につられて別の人まで笑い始めた。どちらの姿も見えなかった。私もちょっとだけ笑った。
+
+#### `base_009_002`
+
+- Location: JP / Kagoshima / Kagoshima
+- Original language: `ja`
+- Constellations: PER
+- Anchor star IDs: 15863
+- Season tags: summer
+- Time tags: late
+- Event tags: PER
+- Weight: 1.2
+
+**Original**
+
+> 流星群を見るつもりで外に出たのに、虫よけを忘れた。流れ星は一つ見た。刺された数については集計しない。
+
+**Translation `en`**
+
+> I went outside to watch the meteor shower and forgot insect repellent. I saw one meteor. I am choosing not to compile statistics on the bites.
+
+#### `base_009_003`
+
+- Location: NL / North Holland / Amsterdam
+- Original language: `en`
+- Constellations: CYG
+- Anchor star IDs: 102098
+- Season tags: summer
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I left the party early and decided not to invent an excuse. I just said I was tired. Nobody objected, which was almost disappointing after all the imaginary explanations I had prepared.
+
+**Translation `ja`**
+
+> パーティーを早めに出るとき、うまい言い訳を作るのをやめて「疲れたから帰る」と言った。誰も気にしなかった。頭の中で用意した大量の説明が少しもったいなかった。
+
+#### `base_009_004`
+
+- Location: JP / Toyama / Toyama
+- Original language: `ja`
+- Constellations: AUR
+- Anchor star IDs: 24608
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 雪かきのあと、手袋の中まで冷たかった。玄関で外したら、片方の靴下も少し濡れていた。今日はもう細かいことを追及しない。
+
+**Translation `en`**
+
+> After shoveling snow, even the inside of my gloves was cold. When I took them off at the entrance, I noticed one sock was damp too. I am not investigating any further tonight.
+
+#### `base_009_005`
+
+- Location: SG / Central / Singapore
+- Original language: `en`
+- Constellations: ORI
+- Anchor star IDs: 27989, 24436
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> Someone brought durian into the elevator. Everyone noticed. Everyone also performed the impressive social feat of acting like nobody noticed.
+
+**Translation `ja`**
+
+> 誰かがエレベーターにドリアンを持ち込んだ。全員気づいていた。そして全員、誰も気づいていないふりをするという高度な共同作業をやってのけた。
+
+#### `base_009_006`
+
+- Location: JP / Saitama / Saitama
+- Original language: `ja`
+- Constellations: PSC
+- Anchor star IDs: 9487
+- Season tags: autumn
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 古本屋で前に読んだ本をまた買った。家に帰って棚を見てから気づいた。二冊並べると、私の好みだけはかなり明確。
+
+**Translation `en`**
+
+> I bought a used book I had already read. I noticed only after getting home and seeing the other copy on my shelf. Side by side, they make my taste extremely clear.
+
+#### `base_009_007`
+
+- Location: PL / Masovian / Warsaw
+- Original language: `en`
+- Constellations: PEG
+- Anchor star IDs: 113963
+- Season tags: autumn
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I wrote a paragraph, deleted it, and kept the title. Then I changed the title. Technically the document has evolved.
+
+**Translation `ja`**
+
+> 一段落書いて消して、題名だけ残した。そのあと題名も変えた。技術的には、文書は進化している。
+
+#### `base_009_008`
+
+- Location: JP / Wakayama / Wakayama
+- Original language: `ja`
+- Constellations: DEL
+- Anchor star IDs: 101958
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 海辺のベンチに誰かのタオルが置きっぱなしだった。風で落ちそうだったので、端だけ少し内側に寄せた。持ち主にはたぶん永遠に知られない親切。
+
+**Translation `en`**
+
+> There was a towel left on a seaside bench. The wind looked ready to blow it off, so I moved one edge a little farther in. Its owner will probably never know about this act of heroism.
+
+#### `base_009_009`
+
+- Location: AT / Vienna / Vienna
+- Original language: `en`
+- Constellations: CRB
+- Anchor star IDs: 76267
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The violin student upstairs practiced the same scale for nearly an hour. When it finally stopped, the silence felt wrong for about thirty seconds. Apparently I had adapted.
+
+**Translation `ja`**
+
+> 上の階のバイオリンの学生が、同じ音階を一時間近く練習していた。やっと止まったら、三十秒くらい静けさの方が変に感じた。どうやら順応していたらしい。
+
+#### `base_009_010`
+
+- Location: JP / Tochigi / Utsunomiya
+- Original language: `ja`
+- Constellations: TAU
+- Anchor star IDs: 21421
+- Season tags: winter
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 餃子を焼きすぎて、底がかなり黒くなった。一個食べてみたら意外といけたので、残りも「香ばしい」という扱いにした。言葉は便利。
+
+**Translation `en`**
+
+> I overcooked the dumplings and the bottoms got pretty dark. One tasted surprisingly fine, so I reclassified the rest as "nicely charred." Language is useful.
+
+#### `base_009_011`
+
+- Location: CH / Zurich / Zurich
+- Original language: `en`
+- Constellations: MON
+- Anchor star IDs: 30867
+- Season tags: winter
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The train left exactly on time while I was still coming down the stairs. I know this is what schedules are for. It still felt personal.
+
+**Translation `ja`**
+
+> 私がまだ階段を下りている途中で、電車がぴったり定刻に出た。時刻表とはそういうものだと分かっている。それでも少し個人的な攻撃に感じた。
+
+#### `base_009_012`
+
+- Location: JP / Chiba / Chiba
+- Original language: `ja`
+- Constellations: UMI
+- Anchor star IDs: 11767
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 猫がベランダでずっと一点を見ていたので、隣にしゃがんで同じ方向を見た。特に何もなかった。猫だけは最後まで納得していない顔だった。
+
+**Translation `en`**
+
+> My cat kept staring at one spot from the balcony, so I crouched beside it and looked in the same direction. There was nothing there. The cat remained unconvinced.
+
+#### `base_009_013`
+
+- Location: CZ / Prague / Prague
+- Original language: `en`
+- Constellations: DRA
+- Anchor star IDs: 87833
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I bought a notebook because the cover was exactly the blue I wanted. I still have no plan for what to write in it. For now, owning the correct blue notebook seems sufficient.
+
+**Translation `ja`**
+
+> 欲しかった青色そのものだったので、ノートを一冊買った。何を書くかはまだ決めていない。今のところ、正しい青のノートを持っているだけで十分。
+
+#### `base_009_014`
+
+- Location: JP / Kumamoto / Kumamoto
+- Original language: `ja`
+- Constellations: SCO
+- Anchor star IDs: 80763
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 冷蔵庫の奥から、いつ買ったか分からないジャムが出てきた。ふたが全然開かない。過去の私から現在の私への強めの封印。
+
+**Translation `en`**
+
+> I found a jar of jam in the back of the fridge and could not remember buying it. The lid would not open at all. Apparently past me sealed it against present me.
+
+#### `base_009_015`
+
+- Location: HU / Budapest / Budapest
+- Original language: `en`
+- Constellations: CAP
+- Anchor star IDs: 107556
+- Season tags: autumn
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The bridge lights made the river look more awake than I was. I stopped for a minute anyway. Being the sleepier object in the scene was strangely calming.
+
+**Translation `ja`**
+
+> 橋の灯りで、川の方が私より起きているように見えた。それでも一分だけ立ち止まった。その場で一番眠そうなのが自分だと思うと、妙に落ち着いた。
+
+#### `base_009_016`
+
+- Location: JP / Gifu / Gifu
+- Original language: `ja`
+- Constellations: LYR
+- Anchor star IDs: 91262
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 川沿いを歩いていたら、知らない虫の声がずっと同じ間隔で聞こえた。途中から勝手に四拍子だと思って歩いた。たぶん虫はそんなつもりじゃない。
+
+**Translation `en`**
+
+> While walking by the river, I kept hearing an insect call at the same interval. After a while I decided it was in four-four time and walked to it. The insect probably had no such intention.
+
+#### `base_009_017`
+
+- Location: MY / Penang / George Town
+- Original language: `en`
+- Constellations: SGR
+- Anchor star IDs: 90185, 92855
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I spilled coffee on a receipt and tried to read the total before the ink spread. I lost the race. The purchase will now remain financially mysterious.
+
+**Translation `ja`**
+
+> レシートにコーヒーをこぼして、文字がにじむ前に合計金額を読もうとした。間に合わなかった。この買い物の会計は、もう少し謎のままにしておく。
+
+#### `base_009_018`
+
+- Location: JP / Yamagata / Yamagata
+- Original language: `ja`
+- Constellations: CEP
+- Anchor star IDs: 105199
+- Season tags: autumn
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 夜の台所でりんごを薄く切っていたら、最後の一枚だけ妙にきれいに切れた。誰に見せるでもないので、そのまま食べた。自己ベストは自己処理。
+
+**Translation `en`**
+
+> I was slicing an apple thinly in the kitchen at night, and the last slice came out strangely perfect. There was nobody to show, so I ate it. Personal best, personally handled.
+
+#### `base_009_019`
+
+- Location: UA / Lviv / Lviv
+- Original language: `en`
+- Constellations: HER
+- Anchor star IDs: 80816
+- Season tags: summer
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I sharpened two pencils and used neither of them. The work still did not start, but the pencils are excellent now. Preparation has its own suspicious satisfaction.
+
+**Translation `ja`**
+
+> 鉛筆を二本削って、結局どちらも使わなかった。作業は始まっていないけど、鉛筆だけは最高の状態になった。準備には怪しい満足感がある。
+
+#### `base_009_020`
+
+- Location: JP / Tokushima / Tokushima
+- Original language: `ja`
+- Constellations: AQL
+- Anchor star IDs: 97649
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 洗い物を残したまま外に出た。五分くらい歩いて戻ったら、当然まだそこにあった。知ってたけど、ちょっとだけ期待してた。
+
+**Translation `en`**
+
+> I went outside with dishes still in the sink. I came back after about five minutes, and of course they were still there. I knew they would be, but I had hoped a little.
+
+#### `base_009_021`
+
+- Location: RO / Cluj / Cluj-Napoca
+- Original language: `en`
+- Constellations: ARI
+- Anchor star IDs: 9884
+- Season tags: autumn
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The bakery was closed, but the street still smelled like bread. I stood there long enough to make this feel like an appointment I had missed. Tomorrow I am coming earlier.
+
+**Translation `ja`**
+
+> パン屋は閉まっていたけど、通りにはまだパンの匂いが残っていた。少し立っていたら、約束に遅れたみたいな気分になった。明日はもう少し早く来る。
+
+#### `base_009_022`
+
+- Location: JP / Gunma / Maebashi
+- Original language: `ja`
+- Constellations: OPH
+- Anchor star IDs: 86032
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 自転車のライトが弱くなって、帰り道だけ妙に慎重になった。普段なら気にしない段差まで全部よけた。安全運転には電池残量が効くらしい。
+
+**Translation `en`**
+
+> My bicycle light was getting weak, so I rode home with unusual care. I avoided every little bump I normally ignore. Apparently battery anxiety is good for road safety.
+
+#### `base_009_023`
+
+- Location: CO / Antioquia / Medellin
+- Original language: `en`
+- Constellations: LIB
+- Anchor star IDs: 74785
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> My cousin sent me a voice message that was mostly traffic noise. I listened to the whole thing because every twenty seconds there was one actual sentence. It felt like receiving a badly tuned radio station from one specific person.
+
+**Translation `ja`**
+
+> いとこから音声メッセージが来たけど、ほとんど車の音だった。二十秒に一回くらいちゃんとした文章が入るので、結局最後まで聞いた。一人専用の調子の悪いラジオみたいだった。
+
+#### `base_009_024`
+
+- Location: JP / Mie / Tsu
+- Original language: `ja`
+- Constellations: PER
+- Anchor star IDs: 15863
+- Season tags: summer
+- Time tags: late
+- Event tags: PER
+- Weight: 1.2
+
+**Original**
+
+> 小さな流れ星を見た気がした。願いごとは全然間に合わなかった。間に合っても、たぶん同じことを願ったと思う。
+
+**Translation `en`**
+
+> I think I saw a small meteor. I was nowhere near fast enough to make a wish. Even if I had been, I probably would have wished for the same thing.
+
+#### `base_009_025`
+
+- Location: FI / Uusimaa / Helsinki
+- Original language: `en`
+- Constellations: VUL
+- Anchor star IDs: 95771
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I cleaned my desk and found three batteries, one old ticket, and no pen. I had started cleaning because I needed a pen. The desk is cleaner, but the original mission remains unresolved.
+
+**Translation `ja`**
+
+> 机を片づけたら、電池が三つと古い切符が一枚出てきた。ペンが必要で片づけ始めたのに、ペンは出てこなかった。机はきれいになったけど、本来の任務は未解決。
+
+### Pack `base_010`
+
+#### `base_010_001`
+
+- Location: JP / Chiba / Ichikawa
+- Original language: `ja`
+- Constellations: CYG
+- Anchor star IDs: 102098
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 洗濯物を取り込むのを忘れて、少し湿っていた。明日また着るシャツなので、部屋の一番風が当たるところにかけた。計画的な失敗処理。
+
+**Translation `en`**
+
+> I forgot to bring in the laundry, so it was a little damp. One shirt is for tomorrow, so I hung it where it gets the most air in the room. Strategic failure management.
+
+#### `base_010_002`
+
+- Location: US / Minnesota / Minneapolis
+- Original language: `en`
+- Constellations: ORI
+- Anchor star IDs: 27989, 24436
+- Season tags: winter
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The freezer made a strange noise at midnight. I opened it, found nothing wrong, and closed it again. Ten minutes later it made the same noise, which felt unnecessarily smug.
+
+**Translation `ja`**
+
+> 真夜中に冷凍庫が変な音を出した。開けても何もおかしくなくて、また閉めた。十分後に同じ音を出されて、ちょっと得意げに聞こえた。
+
+#### `base_010_003`
+
+- Location: JP / Ehime / Matsuyama
+- Original language: `ja`
+- Constellations: UMA
+- Anchor star IDs: 54061
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 風呂上がりにサンダルで外へ出たら、床が思ったより冷たかった。三歩で後悔したけど、そのまま十歩くらい歩いた。戻るタイミングだけ妙に難しい。
+
+**Translation `en`**
+
+> I stepped outside in sandals after a bath, and the ground was colder than expected. I regretted it after three steps but kept going for about ten. Choosing the exact moment to turn back somehow became difficult.
+
+#### `base_010_004`
+
+- Location: PT / Lisbon / Lisbon
+- Original language: `en`
+- Constellations: CAS
+- Anchor star IDs: 3179
+- Season tags: autumn
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I bought oranges because they looked brighter than everything else in the shop. One rolled out of the bag when I got home and traveled impressively far across the kitchen. It has been promoted to first orange eaten.
+
+**Translation `ja`**
+
+> 店の中で何より明るく見えたので、オレンジを買った。家で袋から一個転がって、台所をかなり遠くまで移動した。その一個から先に食べることにした。
+
+#### `base_010_005`
+
+- Location: JP / Toyama / Toyama
+- Original language: `ja`
+- Constellations: PEG
+- Anchor star IDs: 113963
+- Season tags: autumn
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 今日の会議で言うつもりだったことを、帰宅して靴を脱いだ瞬間に思い出した。忘れないうちにスマホへメモした。明日の私にだけは、ちゃんと届いてほしい。
+
+**Translation `en`**
+
+> I remembered what I meant to say in today's meeting the moment I took off my shoes at home. I put it in my phone before I could forget again. I only need the message to reach tomorrow me.
+
+#### `base_010_006`
+
+- Location: ZA / Gauteng / Johannesburg
+- Original language: `en`
+- Constellations: SCO
+- Anchor star IDs: 80763
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> My aunt laughed so hard at dinner that the table shook and one spoon fell off. Nobody picked it up until she finished laughing. It felt rude to interrupt the event.
+
+**Translation `ja`**
+
+> 夕飯でおばが大笑いして、テーブルが揺れてスプーンが一本落ちた。笑い終わるまで誰も拾わなかった。あの場面を止める方が無粋な気がした。
+
+#### `base_010_007`
+
+- Location: JP / Kumamoto / Kumamoto
+- Original language: `ja`
+- Constellations: AQL
+- Anchor star IDs: 97649
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> コンビニの前でアイスを急いで食べたのに、最後だけ溶けて指についた。急いだ意味が薄い。とりあえず袋で拭いて勝負終了。
+
+**Translation `en`**
+
+> I ate ice cream quickly in front of the convenience store, but the last bit still melted onto my fingers. So much for rushing. I wiped it with the wrapper and called the match.
+
+#### `base_010_008`
+
+- Location: CA / Quebec / Montreal
+- Original language: `en`
+- Constellations: UMA
+- Anchor star IDs: 54061
+- Season tags: spring
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I practiced saying sorry in my head before meeting a friend. The conversation went fine and I never used the speech. I am keeping the apology in storage in case future me needs it.
+
+**Translation `ja`**
+
+> 友だちに会う前、頭の中で謝り方を何度も練習した。話は普通に終わって、そのセリフは一度も使わなかった。未来の私が必要になるかもしれないので、保管しておく。
+
+#### `base_010_009`
+
+- Location: JP / Hyogo / Kobe
+- Original language: `ja`
+- Constellations: AQR
+- Anchor star IDs: 109074
+- Season tags: autumn
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 港のベンチでパンの最後のひとかけを食べた。袋を丸める音だけ妙に大きかった。食べ終わると、急に手持ち無沙汰になった。
+
+**Translation `en`**
+
+> I ate the last piece of bread on a bench by the harbor. The sound of crumpling the bag seemed strangely loud. Once I finished, my hands suddenly had nothing to do.
+
+#### `base_010_010`
+
+- Location: GB / England / Manchester
+- Original language: `en`
+- Constellations: CYG
+- Anchor star IDs: 102098
+- Season tags: summer
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The rehearsal room smelled like old cables and instant coffee. We got one chorus right, maybe. Nobody wanted to say it too confidently, so we just played the next song.
+
+**Translation `ja`**
+
+> 練習室は古いケーブルとインスタントコーヒーの匂いがした。サビが一回だけ合った気がする。誰も自信満々には言わず、そのまま次の曲をやった。
+
+#### `base_010_011`
+
+- Location: JP / Okayama / Okayama
+- Original language: `ja`
+- Constellations: TAU
+- Anchor star IDs: 21421
+- Season tags: winter
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 父から届いたみかんを三つ食べた。食べすぎた気がしたけど、箱はまだ全然減ってない。量の圧が強い。
+
+**Translation `en`**
+
+> I ate three mandarins my father sent me. It felt like too many, but the box still looks completely full. The quantity has presence.
+
+#### `base_010_012`
+
+- Location: BR / Parana / Curitiba
+- Original language: `en`
+- Constellations: LEO
+- Anchor star IDs: 49669
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The dog refused to come inside, so I waited on the steps pretending I was not cold. After five minutes, the dog changed its mind. I had no such luxury because my feet were already numb.
+
+**Translation `ja`**
+
+> 犬が家に入りたがらないので、寒くないふりをして階段で待った。五分後、犬は気が変わった。こっちはもう足が冷えていて、選択肢はなかった。
+
+#### `base_010_013`
+
+- Location: JP / Yamanashi / Kofu
+- Original language: `ja`
+- Constellations: PER
+- Anchor star IDs: 15863
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 車の窓を少し開けたら、桃の匂いがした気がした。山梨だからそう思っただけかもしれない。気のせいでも、いい匂いなら採用。
+
+**Translation `en`**
+
+> I opened the car window a little and thought I smelled peaches. Maybe I only thought that because this is Yamanashi. If an imaginary smell is good, I am keeping it.
+
+#### `base_010_014`
+
+- Location: DE / Hamburg / Hamburg
+- Original language: `en`
+- Constellations: HER
+- Anchor star IDs: 80816
+- Season tags: summer
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I sent an email without the attachment and noticed immediately. I sent a second email with only the attachment and no explanation. Together, the two messages contain everything required.
+
+**Translation `ja`**
+
+> 添付なしでメールを送って、すぐ気づいた。二通目は説明なしで添付だけ送った。二通合わせれば必要なものは全部ある。
+
+#### `base_010_015`
+
+- Location: JP / Nara / Nara
+- Original language: `ja`
+- Constellations: AND
+- Anchor star IDs: 677
+- Season tags: autumn
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 古い映画を途中から見始めた。最後まで見ても、誰が味方なのか完全には分からなかった。でも爆発する車だけはちゃんと分かった。
+
+**Translation `en`**
+
+> I started watching an old movie halfway through. Even by the end, I was not entirely sure who was on whose side. The exploding car was perfectly clear, though.
+
+#### `base_010_016`
+
+- Location: AU / Queensland / Brisbane
+- Original language: `en`
+- Constellations: SGR
+- Anchor star IDs: 90185, 92855
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I watered the plants later than usual and the hose slapped the wall once. It startled me enough that I apologized to the wall. Nobody benefited from this apology.
+
+**Translation `ja`**
+
+> いつもより遅い時間に植物へ水をやっていたら、ホースが壁に一回当たった。びっくりして壁に謝った。誰の役にも立たない謝罪だった。
+
+#### `base_010_017`
+
+- Location: JP / Gifu / Takayama
+- Original language: `ja`
+- Constellations: AUR
+- Anchor star IDs: 24608
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 旅館の廊下で、自分のスリッパの音だけがしていた。途中から左右で音が違うことに気づいた。部屋に戻るまで、ずっと気になった。
+
+**Translation `en`**
+
+> In the inn hallway, the only sound was my own slippers. Halfway down, I noticed the left and right one sounded different. I could not stop noticing until I reached my room.
+
+#### `base_010_018`
+
+- Location: IN / Maharashtra / Pune
+- Original language: `en`
+- Constellations: BOO
+- Anchor star IDs: 69673
+- Season tags: spring
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> My simulation finished with the wrong answer and impressive confidence. I stared at the result long enough for the confidence to become insulting. Tomorrow I will find out which one of us is wrong.
+
+**Translation `ja`**
+
+> シミュレーションが、かなり自信満々に間違った答えを出した。しばらく見ていたら、その自信が少し腹立たしくなってきた。どっちが間違っているかは明日確認する。
+
+#### `base_010_019`
+
+- Location: JP / Aomori / Aomori
+- Original language: `ja`
+- Constellations: GEM
+- Anchor star IDs: 37826, 36850
+- Season tags: winter
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 雪かきを少しだけするつもりだった。気づいたら隣の家との境目まできれいにしていた。腰だけが作業量を正確に覚えている。
+
+**Translation `en`**
+
+> I meant to shovel just a little snow. Somehow I ended up clearing all the way to the boundary with the neighbor's house. My lower back remembers the exact workload.
+
+#### `base_010_020`
+
+- Location: MX / Yucatan / Merida
+- Original language: `en`
+- Constellations: VIR
+- Anchor star IDs: 65474
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The fan kept lifting one corner of my receipt while I did calculations on the back. I pinned it down with a spoon. The spoon has now contributed more to this budget than expected.
+
+**Translation `ja`**
+
+> 扇風機でレシートの角が何度もめくれるので、裏で計算しながらスプーンで押さえた。今日の予算管理には、スプーンが想定以上に貢献している。
+
+#### `base_010_021`
+
+- Location: JP / Shiga / Otsu
+- Original language: `ja`
+- Constellations: DRA
+- Anchor star IDs: 87833
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 湖のそばで電話を切ったあと、しばらくスマホを持ったまま立っていた。話したかったことを半分くらい言い忘れた気がする。でも今かけ直すほどではない。
+
+**Translation `en`**
+
+> After ending a call by the lake, I stood there for a while still holding my phone. I think I forgot to say about half of what I meant to say. Not enough to call back right now, though.
+
+#### `base_010_022`
+
+- Location: IT / Veneto / Padua
+- Original language: `en`
+- Constellations: ARI
+- Anchor star IDs: 13209
+- Season tags: autumn
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The library lights clicked off row by row while I copied one useful sentence. I finished the last word before my table went dark. Tiny victory, very specific conditions.
+
+**Translation `ja`**
+
+> 図書館の明かりが列ごとに消えていく中で、役に立ちそうな文を一つ写した。自分の机が暗くなる前に、最後の単語まで書けた。かなり条件付きの小さな勝利。
+
+#### `base_010_023`
+
+- Location: JP / Tokushima / Tokushima
+- Original language: `ja`
+- Constellations: CEP
+- Anchor star IDs: 106032
+- Season tags: autumn
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 店を閉めたあと、レジの下から一円玉が出てきた。得したのか帳尻が合ったのか分からない。とりあえずレジに戻した。
+
+**Translation `en`**
+
+> After closing the shop, I found a one-yen coin under the register. I could not tell whether I had gained money or corrected an old mistake. I put it back in the register.
+
+#### `base_010_024`
+
+- Location: AR / Cordoba / Cordoba
+- Original language: `en`
+- Constellations: CMA
+- Anchor star IDs: 32349
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I cut my own bangs and understood the problem immediately. The mirror was honest in a way I did not appreciate. I have moved the scissors somewhere less accessible.
+
+**Translation `ja`**
+
+> 前髪を自分で切って、すぐ問題を理解した。鏡はありがたくない方向に正直だった。ハサミは少し取りにくい場所へ移した。
+
+#### `base_010_025`
+
+- Location: JP / Akita / Akita
+- Original language: `ja`
+- Constellations: CAS
+- Anchor star IDs: 4427
+- Season tags: autumn
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 祖母が送ってくれた漬物を少しだけ出した。ご飯が思ったより進んで、先に米がなくなった。漬物側の勝ち。
+
+**Translation `en`**
+
+> I put out just a little of the pickles my grandmother sent. I ate more rice than expected and ran out of rice first. The pickles win.
+
+### Pack `base_011`
+
+#### `base_011_001`
+
+- Location: FR / Brittany / Rennes
+- Original language: `en`
+- Constellations: AQR
+- Anchor star IDs: 109074
+- Season tags: autumn
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I could not see the sea from my street, but the wind smelled like it had recently spoken to it. That is not scientific, but I am keeping the description.
+
+**Translation `ja`**
+
+> この通りから海は見えないけど、風はさっき海と話してきたみたいな匂いがした。科学的ではないけど、この表現は残す。
+
+#### `base_011_002`
+
+- Location: JP / Saitama / Kawagoe
+- Original language: `ja`
+- Constellations: LYR
+- Anchor star IDs: 91262
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 古いゲーム機の電源が一回で入った。思わず「えらい」と言った。機械に対する褒め方として正しいかは知らない。
+
+**Translation `en`**
+
+> An old game console turned on at the first try. I actually said, "good job." I have no idea whether that is the correct way to praise hardware.
+
+#### `base_011_003`
+
+- Location: SG / Central / Singapore
+- Original language: `en`
+- Constellations: ORI
+- Anchor star IDs: 27989, 24436
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I missed my stop by one station because the book finally got interesting. On the platform back, I considered blaming the book. The book has declined to comment.
+
+**Translation `ja`**
+
+> 本が急に面白くなって、一駅乗り過ごした。戻るホームで、本のせいにしようかと思った。本からのコメントはない。
+
+#### `base_011_004`
+
+- Location: JP / Miyazaki / Miyazaki
+- Original language: `ja`
+- Constellations: PER
+- Anchor star IDs: 15863
+- Season tags: summer
+- Time tags: late
+- Event tags: PER
+- Weight: 1.2
+
+**Original**
+
+> 流星群を待っていたら、先に蚊取り線香が終わった。新しいのを出すか迷っている間に、流れ星が一つ来た。タイミングだけは向こうが上手だった。
+
+**Translation `en`**
+
+> While I was waiting for the meteor shower, the mosquito coil ran out first. I was debating whether to light another when one meteor appeared. The sky won on timing.
+
+#### `base_011_005`
+
+- Location: FI / Lapland / Rovaniemi
+- Original language: `en`
+- Constellations: UMI
+- Anchor star IDs: 11767
+- Season tags: winter
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The kettle clicked off and the room became very quiet. I held the cup with both hands and waited for it to cool. This is the only kind of waiting I am good at tonight.
+
+**Translation `ja`**
+
+> ケトルが切れて、部屋が急に静かになった。両手でカップを持って、少し冷めるのを待った。今夜うまくできる待ち時間は、たぶんこれくらい。
+
+#### `base_011_006`
+
+- Location: JP / Tokyo / Koenji
+- Original language: `ja`
+- Constellations: CYG
+- Anchor star IDs: 102098
+- Season tags: summer
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 夜のコインランドリーで、隣の人が分厚い本を読んでいた。表紙だけ見ても何の本か分からなかった。乾燥機よりそっちが気になったけど、最後まで聞けなかった。
+
+**Translation `en`**
+
+> At the laundromat at night, the person next to me was reading a very thick book. I could not tell what it was from the cover. I became more curious about the book than the dryer, but never asked.
+
+#### `base_011_007`
+
+- Location: US / New Mexico / Santa Fe
+- Original language: `en`
+- Constellations: ORI
+- Anchor star IDs: 27989, 24436
+- Season tags: winter
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I forgot bread in the oven and the smoke alarm announced the mistake to the entire house. Nothing actually burned enough to matter. The alarm still gave a full performance.
+
+**Translation `ja`**
+
+> パンをオーブンに入れたまま忘れて、火災報知器が家中に失敗を知らせた。実際には大したことはなかった。報知器だけは全力だった。
+
+#### `base_011_008`
+
+- Location: JP / Yamaguchi / Shimonoseki
+- Original language: `ja`
+- Constellations: CAS
+- Anchor star IDs: 3179, 4427
+- Season tags: autumn
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> フェリー乗り場で温かいお茶を買った。カップを持った手だけ先に元気になった。残りの私はまだ起動中。
+
+**Translation `en`**
+
+> I bought hot tea at the ferry terminal. The hand holding the cup woke up first. The rest of me is still booting.
+
+#### `base_011_009`
+
+- Location: FI / Southwest Finland / Turku
+- Original language: `en`
+- Constellations: UMI
+- Anchor star IDs: 11767
+- Season tags: winter
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The last bus left before I reached the stop. I checked the schedule twice, as if pity might update it. The schedule remained professional.
+
+**Translation `ja`**
+
+> バス停に着く前に最終バスが出ていた。時刻表を二回見た。かわいそうだから更新してくれるわけもなく、時刻表は最後まで仕事に忠実だった。
+
+#### `base_011_010`
+
+- Location: JP / Kagawa / Takamatsu
+- Original language: `ja`
+- Constellations: AQL
+- Anchor star IDs: 97649
+- Season tags: summer
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> うどん屋の裏で、店の人がホースを巻いていた。水の音が止まった瞬間、道が急に静かになった。さっきまで気づかなかった冷蔵庫の音まで聞こえた。
+
+**Translation `en`**
+
+> Behind the noodle shop, someone was coiling a hose. The street became suddenly quiet the moment the water stopped. I could even hear a refrigerator I had not noticed before.
+
+#### `base_011_011`
+
+- Location: AU / Tasmania / Hobart
+- Original language: `en`
+- Constellations: SCO
+- Anchor star IDs: 80763
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I carried fish and chips home wrapped in paper. The vinegar leaked through before I reached the top of the hill. My left hand now knows far too much about dinner.
+
+**Translation `ja`**
+
+> 紙に包んだフィッシュアンドチップスを持って帰った。坂を上りきる前に、酢が紙からしみてきた。左手だけ夕飯について詳しくなりすぎた。
+
+#### `base_011_012`
+
+- Location: JP / Ibaraki / Mito
+- Original language: `ja`
+- Constellations: LYR
+- Anchor star IDs: 91262
+- Season tags: summer
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 研究室のポットに、誰かが少しだけお湯を残していた。ありがたいけど、カップ一杯には少し足りない。水を足して、感謝も少し薄めた。
+
+**Translation `en`**
+
+> Someone left a little hot water in the lab kettle. I was grateful, but it was not quite enough for a full cup. I added water and diluted the gratitude slightly.
+
+#### `base_011_013`
+
+- Location: CA / Nova Scotia / Halifax
+- Original language: `en`
+- Constellations: UMA
+- Anchor star IDs: 54061
+- Season tags: spring
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I called my sister from the harbor and mostly listened. She told me three unrelated stories and forgot the question I had asked. By the end I had forgotten it too.
+
+**Translation `ja`**
+
+> 港から姉に電話して、ほとんど聞き役だった。姉は関係ない話を三つして、私が最初にした質問を忘れた。最後には私も忘れていた。
+
+#### `base_011_014`
+
+- Location: JP / Fukui / Fukui
+- Original language: `ja`
+- Constellations: PEG
+- Anchor star IDs: 113963
+- Season tags: autumn
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 閉店後の本屋で、床に落ちたしおりを拾った。どの本のものか分からないので、レジ横に置いた。明日、誰かが探しに来るかもしれない。
+
+**Translation `en`**
+
+> After the bookstore closed, I picked up a bookmark from the floor. I could not tell which book it belonged to, so I left it by the register. Maybe someone will come looking for it tomorrow.
+
+#### `base_011_015`
+
+- Location: IE / Galway / Galway
+- Original language: `en`
+- Constellations: GEM
+- Anchor star IDs: 37826, 36850
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The pub door opened and released half a chorus into the street. I knew the song but not enough of the words to join in. I contributed one correct word and continued walking.
+
+**Translation `ja`**
+
+> パブのドアが開いて、サビの半分だけ通りに流れてきた。知っている曲だけど、歌詞は参加できるほど覚えていない。正しい単語を一個だけ口にして、そのまま歩いた。
+
+#### `base_011_016`
+
+- Location: JP / Iwate / Morioka
+- Original language: `ja`
+- Constellations: AUR
+- Anchor star IDs: 24608
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 雪の上に、きつねか犬か分からない足あとがあった。写真を撮って友だちに送ったら「知らん」と返ってきた。調査はそこで終了。
+
+**Translation `en`**
+
+> There were tracks in the snow, maybe a fox, maybe a dog. I sent a photo to a friend and got back, "no idea." The investigation ended there.
+
+#### `base_011_017`
+
+- Location: NZ / Otago / Dunedin
+- Original language: `en`
+- Constellations: SGR
+- Anchor star IDs: 90185, 92855
+- Season tags: winter
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> My spreadsheet finally balanced after dinner. I did not cheer because that seemed dangerous. I saved three copies instead.
+
+**Translation `ja`**
+
+> 夕食のあと、表計算の数字がやっと合った。声を出して喜ぶと何か起きそうなので、静かに三つ保存した。
+
+#### `base_011_018`
+
+- Location: JP / Toyama / Takaoka
+- Original language: `ja`
+- Constellations: CEP
+- Anchor star IDs: 106032
+- Season tags: autumn
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 祖母の家の古い時計が、まだちゃんと動いていた。時刻は七分ずれているのに、秒針だけは妙にまじめ。直す気は誰にもないらしい。
+
+**Translation `en`**
+
+> The old clock at my grandmother's house was still running. It was seven minutes off, but the second hand remained impressively serious. Apparently nobody intends to fix it.
+
+#### `base_011_019`
+
+- Location: KR / Busan / Busan
+- Original language: `en`
+- Constellations: LEO
+- Anchor star IDs: 49669
+- Season tags: spring
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I bought a cheap umbrella because the sky looked undecided. It never rained. I carried the umbrella home like evidence from a case that did not happen.
+
+**Translation `ja`**
+
+> 空が決めかねている感じだったので、安い傘を買った。結局、雨は降らなかった。起きなかった事件の証拠品みたいに、傘を持って帰った。
+
+#### `base_011_020`
+
+- Location: JP / Oita / Beppu
+- Original language: `ja`
+- Constellations: TAU
+- Anchor star IDs: 21421
+- Season tags: winter
+- Time tags: evening
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 宿の人に近道を教えてもらった。歩いてみたら、たぶん普通の道より坂が多い。距離では近いという意味だったのかもしれない。
+
+**Translation `en`**
+
+> The innkeeper showed me a shortcut. After walking it, I am pretty sure it had more hills than the normal route. Maybe they meant shorter only in distance.
+
+#### `base_011_021`
+
+- Location: ES / Andalusia / Granada
+- Original language: `en`
+- Constellations: VIR
+- Anchor star IDs: 65474
+- Season tags: spring
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> I tried to remember a formula while waiting for laundry. The formula disappeared halfway through the spin cycle. I remembered the detergent brand instead, which is less useful.
+
+**Translation `ja`**
+
+> 洗濯を待ちながら公式を思い出そうとした。脱水の途中で完全に消えた。代わりに洗剤の商品名だけ覚えた。あまり役に立たない。
+
+#### `base_011_022`
+
+- Location: JP / Miyagi / Ishinomaki
+- Original language: `ja`
+- Constellations: ORI
+- Anchor star IDs: 27989, 24436
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 港の自販機で温かいココアを買った。缶が取り出し口で一瞬引っかかって、本気で焦った。出てきた瞬間、思ったよりうれしかった。
+
+**Translation `en`**
+
+> I bought hot cocoa from a vending machine by the harbor. The can got stuck in the slot for a second, and I panicked for real. When it finally dropped, I was happier than the situation deserved.
+
+#### `base_011_023`
+
+- Location: BR / Bahia / Salvador
+- Original language: `en`
+- Constellations: SCO
+- Anchor star IDs: 80763
+- Season tags: winter
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> My neighbor played the same song three times. By the third time, I knew where the chorus started. I am not saying I like it, but I am now involved.
+
+**Translation `ja`**
+
+> 隣の人が同じ曲を三回かけた。三回目には、サビがどこから始まるか分かった。好きになったとは言わないけど、もう無関係ではない。
+
+#### `base_011_024`
+
+- Location: JP / Nagano / Ueda
+- Original language: `ja`
+- Constellations: PER
+- Anchor star IDs: 15863
+- Season tags: autumn
+- Time tags: night
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> 道の駅で買ったりんごを、車の中で一つ食べた。皮をむく道具がないので、そのままかじった。思っていたより酸っぱくて、一口目だけ顔が変になった。
+
+**Translation `en`**
+
+> I ate one apple in the car after buying it at a roadside station. I had nothing to peel it with, so I bit straight into it. It was more sour than expected, and my face betrayed me on the first bite.
+
+#### `base_011_025`
+
+- Location: DE / Saxony / Leipzig
+- Original language: `en`
+- Constellations: HER
+- Anchor star IDs: 80816
+- Season tags: summer
+- Time tags: late
+- Event tags: -
+- Weight: 1.0
+
+**Original**
+
+> The printer jammed on the last page. I opened every panel I was allowed to open and found nothing useful. After ten minutes, I printed the page on another printer and declared diplomacy exhausted.
+
+**Translation `ja`**
+
+> プリンターが最後の一枚で詰まった。開けていい場所を全部開けたけど、何も見つからなかった。十分後、別のプリンターで印刷して、交渉終了ということにした。
