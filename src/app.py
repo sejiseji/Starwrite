@@ -21,6 +21,7 @@ from data.constellations import CONSTELLATIONS
 from data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
 from data.preset_letters import PRESET_LETTER_PACKS
 from data.sky_features import SKY_PATHS
+from data.star_descriptions import STAR_DESCRIPTIONS
 from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
 from sky.capture import ScreenPoint, SkyCapture, can_capture, capture_from_dict, capture_to_dict
@@ -708,6 +709,10 @@ class StarSkyApp:
         if star is None or english_name is None:
             return None
         name = star_name(self.selected_star_id, english_name, self.language)
+        description = STAR_DESCRIPTIONS.get(self.selected_star_id, {})
+        description_lines = description.get(self.language)
+        if isinstance(description_lines, tuple) and len(description_lines) == 2:
+            return (f"STAR  {name.upper() if self.language == 'en' else name}", description_lines)
         constellation = self._constellation_for_star(self.selected_star_id)
         constellation_label = constellation_name(constellation, self.language) if constellation is not None else None
         if self.language == "ja":

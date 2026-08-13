@@ -6,6 +6,7 @@ from pathlib import Path
 
 from data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
 from data.preset_letters import PRESET_LETTER_PACKS
+from data.star_descriptions import STAR_DESCRIPTIONS
 from ui.localization import (
     CONSTELLATION_NAMES_JA,
     METEOR_EVENT_NAMES_JA,
@@ -47,6 +48,14 @@ def _constellation_description_texts() -> list[str]:
     return texts
 
 
+def _star_description_texts() -> list[str]:
+    texts: list[str] = []
+    for descriptions in STAR_DESCRIPTIONS.values():
+        for key in ("ja", "en"):
+            texts.extend(descriptions.get(key, ()))
+    return texts
+
+
 def _font_encodings() -> set[int]:
     encodings: set[int] = set()
     for line in FONT_PATH.read_text(encoding="utf-8").splitlines():
@@ -63,6 +72,7 @@ class FontSubsetTests(unittest.TestCase):
             *SKY_FEATURE_NAMES_JA.values(),
             *STAR_NAMES_JA.values(),
             *_constellation_description_texts(),
+            *_star_description_texts(),
             *_preset_letter_texts(),
             ASCII_PRINTABLE,
         ]
@@ -97,6 +107,7 @@ class FontSubsetTests(unittest.TestCase):
             *SKY_FEATURE_NAMES_JA.values(),
             *STAR_NAMES_JA.values(),
             *_constellation_description_texts(),
+            *_star_description_texts(),
             *_preset_letter_texts(),
             ASCII_PRINTABLE,
             HIRAGANA,
