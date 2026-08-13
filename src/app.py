@@ -14,6 +14,7 @@ import pyxel
 from astronomy.coordinates import equatorial_to_enu
 from astronomy.catalog import Constellation
 from astronomy.events import MeteorShowerEvent
+from astronomy.moon import moon_light_level, moon_state_from_dict, moon_state_to_dict
 from astronomy.observer import Observer
 from astronomy.time import julian_date, local_sidereal_time
 from data.constellations import CONSTELLATIONS
@@ -38,7 +39,8 @@ from sky.meteors import (
     meteor_peak_datetime,
     meteor_radiant_direction,
 )
-from sky.renderer import SkyRenderer
+from sky.moon import MoonController
+from sky.renderer import SkyRenderer, moon_screen_point
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
 from ui.hud import (
     back_button_rect,
@@ -48,6 +50,7 @@ from ui.hud import (
     draw_hud,
     draw_constellation_labels,
     draw_focused_star,
+    draw_focused_moon,
     draw_letter_view,
     draw_log_list,
     draw_main_buttons,
@@ -164,6 +167,7 @@ class StarSkyApp:
             float(settings.get("fov", 75.0)),
         )
         self.renderer = SkyRenderer()
+        self.moon = MoonController()
         self.mode = settings.get("mode", "TONIGHT")
         self.show_info = bool(settings.get("show_info", False))
         self.show_guides = bool(settings.get("show_guides", False))
@@ -247,6 +251,7 @@ class StarSkyApp:
             if pyxel.frame_count % 30 == 0:
                 self._save_settings()
             return
+        self.moon.update(self.clock.current_time, self.observer.latitude_deg, self.observer.longitude_deg)
         self.projected = project_visible_stars(
             STARS,
             self.observer,
@@ -602,6 +607,11 @@ class StarSkyApp:
         x, y, w, h = rect
         return x <= px < x + w and y <= py < y + h
 
+    def _point_near_center(self, point: tuple[float, float], radius: int) -> bool:
+        dx = point[0] - SCREEN_WIDTH * 0.5
+        dy = point[1] - SCREEN_HEIGHT * 0.5
+        return dx * dx + dy * dy <= radius * radius
+
     def _expanded_rect(self, rect: tuple[int, int, int, int], amount: int) -> tuple[int, int, int, int]:
         x, y, w, h = rect
         return (x - amount, y - amount, w + amount * 2, h + amount * 2)
@@ -683,6 +693,7 @@ class StarSkyApp:
             selected_feature_id=None,
             selected_event_id=self.meteor_event.event.id if self.meteor_event is not None else None,
             render_seed=pyxel.frame_count,
+            moon=moon_state_to_dict(self.moon.state) if self.moon.state is not None else None,
         )
         _save_json(CAPTURE_KEY, capture_to_dict(self.latest_capture))
         if self.pending_deliver_frame is not None:
@@ -767,6 +778,8 @@ class StarSkyApp:
                 SCREEN_WIDTH,
                 SCREEN_HEIGHT,
                 self.meteor_event,
+                self.moon.state,
+                self.observer.latitude_deg,
             )
             draw_log_list(self.exchange_logs, self.letters_by_id)
             self._draw_active_cut_in()
@@ -796,6 +809,8 @@ class StarSkyApp:
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
             self.meteor_event,
+            self.moon.state,
+            self.observer.latitude_deg,
         )
         if self.show_info:
             draw_hud(
@@ -815,13 +830,17 @@ class StarSkyApp:
             draw_event_banner(self.meteor_event, self.language)
         draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected, self.language)
         if self.show_features:
-            draw_sky_features(self.projected, self.projected_sky_paths, self.language)
+            draw_sky_features(self.projected, self.projected_sky_paths, self.language, moon_light_level(self.moon.state))
         if self.meteor_event is not None:
             draw_meteor_event(self.meteor_event, self.language)
         focused_star = self._focused_star()
         if focused_star is not None:
             star_id, point = focused_star
             draw_focused_star(point, star_name(star_id, STAR_NAMES[star_id], self.language))
+        else:
+            moon_point = moon_screen_point(self.moon.state, self.camera, SCREEN_WIDTH, SCREEN_HEIGHT)
+            if moon_point is not None and self._point_near_center(moon_point, 46):
+                draw_focused_moon(moon_point, self.moon.state, self.language)
         draw_tool_buttons(self.show_time_slider, self.show_month_slider, self.show_event_slider)
         if self.show_time_slider:
             draw_slider(self.slider_side, "TIME", self.slider_knob_ratio if self.active_slider == "time" else 0.5)
@@ -876,6 +895,8 @@ class StarSkyApp:
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
             meteor_event,
+            moon_state_from_dict(capture.moon),
+            capture.latitude_deg,
         )
         draw_constellation_labels(CONSTELLATIONS, selected_constellation, projected, self.language)
         if meteor_event is not None:

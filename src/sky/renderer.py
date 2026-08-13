@@ -5,6 +5,7 @@ import math
 import pyxel
 
 from astronomy.catalog import Constellation
+from astronomy.moon import MoonState, moon_light_level
 from .camera import SkyCamera
 from .capture import ScreenPoint
 from .meteors import MeteorEventView
@@ -20,6 +21,8 @@ LINE_DIM = 5
 LINE_SELECTED = 10
 HORIZON = 13
 POLARIS_ID = 11767
+MOON_RADIUS_PX = 5
+BASE_LIMIT_MAG = 6.2
 
 
 def _dim_star_color(color: int) -> int:
@@ -65,6 +68,24 @@ def twinkle_level(star_id: int, magnitude: float, frame_count: int) -> int:
     return 1
 
 
+def moon_direction(state: MoonState) -> Vec3:
+    az = math.radians(state.azimuth_deg)
+    alt = math.radians(state.altitude_deg)
+    cos_alt = math.cos(alt)
+    return Vec3(math.sin(az) * cos_alt, math.cos(az) * cos_alt, math.sin(alt)).normalized()
+
+
+def moon_screen_point(
+    state: MoonState | None,
+    camera: SkyCamera,
+    width: int,
+    height: int,
+) -> tuple[float, float] | None:
+    if state is None or not state.visible:
+        return None
+    return camera.project(moon_direction(state), width, height)
+
+
 class SkyRenderer:
     def draw(
         self,
@@ -77,14 +98,18 @@ class SkyRenderer:
         width: int,
         height: int,
         meteor_event: MeteorEventView | None = None,
+        moon_state: MoonState | None = None,
+        observer_latitude_deg: float = 0.0,
     ) -> None:
         pyxel.cls(0)
+        moon_light = moon_light_level(moon_state)
         if show_guides:
             self.draw_background(width, height)
             self.draw_horizon(camera, width, height)
         if show_constellations:
             self.draw_constellations(points, constellations, selected_constellation)
-        self.draw_stars(points)
+        self.draw_stars(points, moon_light)
+        self.draw_moon(moon_state, camera, width, height, observer_latitude_deg)
         if meteor_event is not None:
             self.draw_meteors(meteor_event, width, height)
 
@@ -93,9 +118,12 @@ class SkyRenderer:
             color = 1 if y < height * 0.65 else 0
             pyxel.line(0, y, width, y, color)
 
-    def draw_stars(self, points: dict[int, ScreenPoint]) -> None:
+    def draw_stars(self, points: dict[int, ScreenPoint], moon_light: float = 0.0) -> None:
         frame_count = pyxel.frame_count
+        effective_limit_mag = BASE_LIMIT_MAG - moon_light * 1.5
         for star_id, point in sorted(points.items(), key=lambda item: item[1].magnitude, reverse=True):
+            if point.magnitude > effective_limit_mag and star_id != POLARIS_ID:
+                continue
             x = int(point.x)
             y = int(point.y)
             col = star_color(point.color_index)
@@ -131,6 +159,41 @@ class SkyRenderer:
                 pyxel.pset(x, y, col)
                 if twinkle == 2:
                     pyxel.pset(x + 1, y, HORIZON)
+
+    def draw_moon(
+        self,
+        state: MoonState | None,
+        camera: SkyCamera,
+        width: int,
+        height: int,
+        observer_latitude_deg: float,
+    ) -> None:
+        projected = moon_screen_point(state, camera, width, height)
+        if state is None or projected is None:
+            return
+        x, y = int(projected[0]), int(projected[1])
+        if x < -MOON_RADIUS_PX or width + MOON_RADIUS_PX < x:
+            return
+        if y < -MOON_RADIUS_PX or height + MOON_RADIUS_PX < y:
+            return
+        lit_color = STAR_YELLOW if state.altitude_deg < 5.0 else STAR_YELLOW_WHITE
+        dark_color = 1
+        edge_color = STAR_WHITE if state.illumination > 0.85 else HORIZON
+        radius = MOON_RADIUS_PX
+        lit_side = 1 if state.waxing else -1
+        if observer_latitude_deg < 0.0:
+            lit_side *= -1
+        threshold = 1.0 - 2.0 * max(0.0, min(1.0, state.illumination))
+        for dy in range(-radius, radius + 1):
+            for dx in range(-radius, radius + 1):
+                if dx * dx + dy * dy > radius * radius:
+                    continue
+                normalized_x = lit_side * dx / radius
+                color = lit_color if normalized_x >= threshold else dark_color
+                pyxel.pset(x + dx, y + dy, color)
+        pyxel.circb(x, y, radius, edge_color)
+        if state.illumination > 0.08:
+            pyxel.pset(x + lit_side * (radius + 1), y, edge_color)
 
     def draw_meteors(self, event_view: MeteorEventView, width: int, height: int) -> None:
         if event_view.radiant_screen is None:

@@ -5,12 +5,14 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Protocol
 
+from astronomy.moon import moon_tags_from_capture_data
 from .capture import SkyCapture, capture_from_dict, capture_to_dict
 
 MAX_LOGS = 100
 ANCHOR_STAR_SCORE = 12.0
 CONSTELLATION_SCORE = 8.0
 EVENT_SCORE = 18.0
+MOON_SCORE = 7.0
 TIME_SCORE = 10.0
 SEASON_SCORE = 8.0
 MATCH_SCORE_WEIGHT_SCALE = 180.0
@@ -38,6 +40,7 @@ class PresetLetter:
     season_tags: tuple[str, ...]
     time_tags: tuple[str, ...]
     event_tags: tuple[str, ...]
+    moon_tags: tuple[str, ...] = ()
     weight: float = 1.0
 
 
@@ -63,6 +66,7 @@ def letter_from_dict(data: dict) -> PresetLetter:
         season_tags=tuple(str(value) for value in data.get("season_tags", ())),
         time_tags=tuple(str(value) for value in data.get("time_tags", ())),
         event_tags=tuple(str(value) for value in data.get("event_tags", ())),
+        moon_tags=tuple(str(value) for value in data.get("moon_tags", ())),
         weight=float(data.get("weight", 1.0)),
     )
 
@@ -85,6 +89,8 @@ def score_letter(capture: SkyCapture, letter: PresetLetter) -> float:
     event_tag = _event_tag(capture.selected_event_id)
     if event_tag is not None and event_tag in letter.event_tags:
         score += EVENT_SCORE
+    if letter.moon_tags and set(moon_tags_from_capture_data(capture.moon)).intersection(letter.moon_tags):
+        score += MOON_SCORE
     if _time_tag(capture.captured_at.hour) in letter.time_tags:
         score += TIME_SCORE
     if _season_tag(capture.captured_at.month) in letter.season_tags:

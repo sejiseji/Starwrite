@@ -3,6 +3,7 @@ from __future__ import annotations
 import pyxel
 
 from astronomy.catalog import Constellation
+from astronomy.moon import MoonState
 from astronomy.observer import Observer
 from data.sky_features import ASTERISMS, SKY_PATHS, Asterism, SkyPath
 from data.font_jp import FONT_CELL_HEIGHT, FONT_CELL_WIDTH, FONT_COLUMNS, FONT_IMAGE_BANKS, GLYPHS
@@ -425,11 +426,13 @@ def draw_sky_features(
     points: dict[int, ScreenPoint],
     sky_paths: dict[str, list[tuple[float, float] | None]],
     language: Language,
+    moon_light: float = 0.0,
 ) -> None:
+    color = 5 if moon_light > 0.65 else FEATURE_COLOR
     for path in SKY_PATHS:
-        draw_sky_path(path, sky_paths.get(path.id, []), language)
+        draw_sky_path(path, sky_paths.get(path.id, []), language, color)
     for index, asterism in enumerate(ASTERISMS):
-        draw_asterism(asterism, points, index, language)
+        draw_asterism(asterism, points, index, language, color)
 
 
 def draw_asterism(
@@ -437,6 +440,7 @@ def draw_asterism(
     points: dict[int, ScreenPoint],
     index: int,
     language: Language,
+    color: int = FEATURE_COLOR,
 ) -> None:
     visible = [points[star_id] for star_id in asterism.star_ids if star_id in points]
     if len(visible) < 2:
@@ -446,21 +450,22 @@ def draw_asterism(
         b = points.get(b_id)
         if a is None or b is None:
             continue
-        pyxel.line(int(a.x), int(a.y), int(b.x), int(b.y), FEATURE_COLOR)
+        pyxel.line(int(a.x), int(a.y), int(b.x), int(b.y), color)
     center_x = int(sum(point.x for point in visible) / len(visible))
     center_y = int(sum(point.y for point in visible) / len(visible))
     label = sky_feature_name(asterism, language)
     width = display_text_width(label)
     label_x = max(4, min(pyxel.width - width - 4, center_x + 8))
     label_y = max(58, min(pyxel.height - 76, center_y - 22 + (index % 2) * 12))
-    pyxel.line(center_x, center_y, label_x - 3, label_y + 6, FEATURE_COLOR)
-    draw_display_text(label_x, label_y, label, FEATURE_COLOR)
+    pyxel.line(center_x, center_y, label_x - 3, label_y + 6, color)
+    draw_display_text(label_x, label_y, label, color)
 
 
 def draw_sky_path(
     path: SkyPath,
     points: list[tuple[float, float] | None],
     language: Language,
+    color: int = FEATURE_COLOR,
 ) -> None:
     if not points:
         return
@@ -474,9 +479,9 @@ def draw_sky_path(
         if 0 <= x < pyxel.width and 0 <= y < pyxel.height:
             visible_points.append(point)
         if last is not None and index % 2 == 0:
-            pyxel.line(int(last[0]), int(last[1]), int(x), int(y), FEATURE_COLOR)
+            pyxel.line(int(last[0]), int(last[1]), int(x), int(y), color)
         elif index % 2 == 1:
-            pyxel.pset(int(x), int(y), FEATURE_COLOR)
+            pyxel.pset(int(x), int(y), color)
         last = point
     if len(visible_points) < 2:
         return
@@ -485,7 +490,7 @@ def draw_sky_path(
     width = display_text_width(label)
     x = max(4, min(pyxel.width - width - 4, int(label_x) + 8))
     y = max(58, min(pyxel.height - 76, int(label_y) - 10))
-    draw_display_text(x, y, label, FEATURE_COLOR)
+    draw_display_text(x, y, label, color)
 
 
 def draw_focused_star(point: ScreenPoint, name: str) -> None:
@@ -503,6 +508,24 @@ def draw_focused_star(point: ScreenPoint, name: str) -> None:
     line_x = label_x - 3 if label_x > x else label_x + width + 3
     pyxel.line(x + 7 if label_x > x else x - 7, y, line_x, label_y + 6, 8)
     draw_display_bold_text(label_x, label_y, label, 8)
+
+
+def draw_focused_moon(point: tuple[float, float], moon: MoonState, language: Language) -> None:
+    x = int(point[0])
+    y = int(point[1])
+    pyxel.rectb(x - 8, y - 8, 17, 17, 10)
+    pyxel.rectb(x - 9, y - 9, 19, 19, 7)
+    phase = int(round(moon.illumination * 100.0))
+    label = f"月 {phase}%" if language == "ja" else f"MOON {phase}%"
+    width = display_text_width(label)
+    label_x = x + 14
+    if label_x + width > pyxel.width - 4:
+        label_x = x - width - 14
+    label_x = max(4, min(pyxel.width - width - 4, label_x))
+    label_y = max(4, min(pyxel.height - 18, y - 7))
+    line_x = label_x - 3 if label_x > x else label_x + width + 3
+    pyxel.line(x + 9 if label_x > x else x - 9, y, line_x, label_y + 6, 10)
+    draw_display_text(label_x, label_y, label, 10)
 
 
 def draw_meteor_event(event_view: MeteorEventView, language: Language) -> None:

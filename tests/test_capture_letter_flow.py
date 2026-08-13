@@ -3,9 +3,11 @@ from __future__ import annotations
 import random
 import re
 import unittest
+from dataclasses import replace
 from datetime import datetime, timedelta, timezone
 
 from data.preset_letters import LETTER_INDEX, PRESET_LETTER_PACKS
+from astronomy.moon import compute_moon, moon_state_to_dict
 from sky.capture import SkyCapture, capture_from_dict, capture_to_dict
 from sky.letters import (
     ExchangeLog,
@@ -133,6 +135,17 @@ class CaptureLetterFlowTests(unittest.TestCase):
         self.assertEqual(restored.selected_constellation_id, "PER")
         self.assertEqual(restored.selected_star_id, 15863)
         self.assertEqual(restored.selected_event_id, "PER-2026")
+
+    def test_capture_contains_moon_state(self) -> None:
+        capture = _capture("PER", 15863, "PER-2026")
+        moon = compute_moon(capture.captured_at, capture.latitude_deg, capture.longitude_deg)
+        capture = replace(capture, moon=moon_state_to_dict(moon))
+
+        restored = capture_from_dict(capture_to_dict(capture))
+
+        self.assertIsNotNone(restored.moon)
+        self.assertIn("illumination", restored.moon or {})
+        self.assertIn("phase", restored.moon or {})
 
     def test_anchor_match_scores_higher_than_constellation_only(self) -> None:
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)

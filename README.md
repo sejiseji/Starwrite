@@ -4,8 +4,8 @@ Pyxel-based star sky simulator prototype for GitHub Pages.
 
 The v0.1 scope is intentionally small: render a condition-dependent night sky,
 look around it, show prototype constellations, and keep one local
-`SkyCapture`. StarLetter, networking, backend storage, accounts, planets, moon,
-sun, AR, and high-precision astronomy corrections are not implemented.
+`SkyCapture`. StarLetter, networking, backend storage, accounts, planets, sun,
+AR, and high-precision astronomy corrections are not implemented.
 
 ## Run Locally
 
@@ -61,6 +61,9 @@ The browser entrypoint uses Pyxel Web custom tags:
 Information HUD and guide lines start hidden.
 Visible constellations show bold labels in the selected language, and the named
 star closest to the screen center is highlighted with a red frame and label.
+The moon is rendered from the current observation time and location. When it is
+near the screen center, a compact `MOON` / `月` focus label shows its
+illumination percentage.
 
 The bottom main controls are:
 
@@ -218,6 +221,10 @@ The prototype uses two star sources:
 The prototype includes a simple meteor-shower event catalog:
 
 - Years: 2006-2046, centered on 2026 and covering 20 years before/after.
+
+Moon position and phase use a compact low-precision lunar ephemeris in
+`src/astronomy/moon.py`. It is intended for Starwrite's visual sky context and
+local Capture/Letter matching tags, not observatory-grade measurement.
 - Recurring showers: 12 major annual showers.
 - Total generated events: 492.
 - Source label shown in the app menu: IMO.

@@ -31,6 +31,7 @@ class SkyCapture:
     selected_feature_id: str | None
     selected_event_id: str | None
     render_seed: int
+    moon: dict | None = None
 
 
 def capture_to_dict(capture: SkyCapture) -> dict:
@@ -48,6 +49,7 @@ def capture_to_dict(capture: SkyCapture) -> dict:
         "selected_feature_id": capture.selected_feature_id,
         "selected_event_id": capture.selected_event_id,
         "render_seed": capture.render_seed,
+        "moon": capture.moon,
     }
 
 
@@ -68,6 +70,7 @@ def capture_from_dict(data: dict) -> SkyCapture:
             selected_feature_id=data.get("selected_feature_id"),
             selected_event_id=data.get("selected_event_id"),
             render_seed=int(data.get("render_seed", 0)),
+            moon=data.get("moon"),
         )
 
     observation_time = datetime.fromisoformat(str(data["observation_time"]))
@@ -85,6 +88,7 @@ def capture_from_dict(data: dict) -> SkyCapture:
         selected_feature_id=None,
         selected_event_id=None,
         render_seed=0,
+        moon=data.get("moon"),
     )
 
 
