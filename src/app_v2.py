@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import pyxel
 
+APP_ENTRY_VERSION = "46ac44c-constellation-summaries"
+
 if not hasattr(pyxel, "pix") and hasattr(pyxel, "pset"):
     pyxel.pix = pyxel.pset
 

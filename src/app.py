@@ -896,11 +896,11 @@ class StarSkyApp:
             )
         else:
             draw_compact_time(self.clock)
-            draw_selected_constellation_summary(
-                self.selected_constellation,
-                self.language,
-                self._selected_constellation_anchor_label(),
-            )
+        draw_selected_constellation_summary(
+            self.selected_constellation,
+            self.language,
+            self._selected_constellation_anchor_label(),
+        )
         if self.meteor_event is not None:
             draw_event_banner(self.meteor_event, self.language)
         draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected, self.language)
