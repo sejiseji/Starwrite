@@ -101,6 +101,7 @@ UI_SOUND_CHANNEL = 3
 SOUND_LETTER_RECEIVED = 1
 SOUND_LETTER_OPEN = 2
 SOUND_LETTER_CLOSE = 3
+SOUND_LETTER_RECEIVED_REPEAT_DELAY_FRAMES = CUT_IN_FRAMES // 2
 STARWRITE_SOUND_FALLBACKS = {
     SOUND_LETTER_RECEIVED: ("g3d4g4g4g3d4g4g4", "t" * 8, "4" * 8, "n" * 8, 8),
     SOUND_LETTER_OPEN: ("f3f3b3b3f#4f#4", "t" * 6, "4" * 6, "n" * 6, 4),
@@ -234,6 +235,7 @@ class StarSkyApp:
         self.capture_ready = False
         self.ready_signaled = False
         self.audio_ready = False
+        self.scheduled_ui_sounds: list[tuple[int, int]] = []
 
         set_desktop_letter_text_mode(DESKTOP_VIEW)
         pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, title="Starwrite Sky", fps=30)
@@ -274,6 +276,7 @@ class StarSkyApp:
         if self.ui_state == "SKY":
             self.clock.update(1.0 / 30.0)
         self._update_pending_receive()
+        self._update_scheduled_ui_sounds()
         self._handle_keys()
         self._handle_mouse()
         if self.ui_state != "SKY":
@@ -919,7 +922,7 @@ class StarSkyApp:
         self.unread_log_id = log.id
         self.cut_in_start_frame = pyxel.frame_count
         self.cut_in_message = "なにかとどいたみたい。" if self.language == "ja" else "something arrived."
-        self._play_ui_sound(SOUND_LETTER_RECEIVED)
+        self._play_letter_received_sound()
         self.pending_capture = None
         self.pending_letter_id = None
         self.pending_deliver_frame = None
@@ -952,6 +955,23 @@ class StarSkyApp:
             pyxel.play(UI_SOUND_CHANNEL, sound_id)
         except Exception:
             pass
+
+    def _play_letter_received_sound(self) -> None:
+        self._play_ui_sound(SOUND_LETTER_RECEIVED)
+        self.scheduled_ui_sounds.append(
+            (pyxel.frame_count + SOUND_LETTER_RECEIVED_REPEAT_DELAY_FRAMES, SOUND_LETTER_RECEIVED)
+        )
+
+    def _update_scheduled_ui_sounds(self) -> None:
+        if not self.scheduled_ui_sounds:
+            return
+        remaining: list[tuple[int, int]] = []
+        for play_frame, sound_id in self.scheduled_ui_sounds:
+            if pyxel.frame_count >= play_frame:
+                self._play_ui_sound(sound_id)
+            else:
+                remaining.append((play_frame, sound_id))
+        self.scheduled_ui_sounds = remaining
 
     def _save_letter_store(self) -> None:
         _save_json(
