@@ -5,7 +5,7 @@ import math
 import os
 import random
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -146,15 +146,8 @@ def _save_json(key: str, value: dict) -> None:
         pass
 
 
-def _aware_datetime(value: str | None) -> datetime:
-    if value:
-        try:
-            parsed = datetime.fromisoformat(value)
-            if parsed.tzinfo is not None:
-                return parsed
-        except ValueError:
-            pass
-    return datetime(2026, 8, 10, 21, 0, tzinfo=timezone(timedelta(hours=9)))
+def _current_observation_datetime() -> datetime:
+    return datetime.now().astimezone().replace(second=0, microsecond=0)
 
 
 class StarSkyApp:
@@ -164,7 +157,7 @@ class StarSkyApp:
             float(settings.get("latitude", 35.7)),
             float(settings.get("longitude", 139.7)),
         )
-        self.clock = SimulationClock(_aware_datetime(settings.get("time")))
+        self.clock = SimulationClock(_current_observation_datetime())
         self.camera = SkyCamera(
             float(settings.get("yaw", 0.0)),
             float(settings.get("pitch", math.radians(45.0))),
@@ -556,7 +549,7 @@ class StarSkyApp:
 
     def _reset_view(self) -> None:
         self.clock.pause()
-        self.clock.current_time = datetime(2026, 8, 10, 21, 0, tzinfo=timezone(timedelta(hours=9)))
+        self.clock.current_time = _current_observation_datetime()
         self.camera.yaw = 0.0
         self.camera.pitch = math.radians(45.0)
         self.camera.fov_deg = 75.0
