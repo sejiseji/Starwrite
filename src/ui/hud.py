@@ -822,12 +822,6 @@ def _body_text_width(text: str, scale: int) -> int:
 
 
 def _draw_body_text(x: int, y: int, text: str, col: int, scale: int) -> None:
-    if scale > BODY_TEXT_SCALE and text and not text.isascii():
-        _draw_bitmap_text(x + 1, y + 1, text, 0, scale)
-        _draw_bitmap_text(x, y, text, col, scale)
-        return
-    shadow_offset = 1 if scale <= BODY_TEXT_SCALE else 2
-    _draw_bitmap_text(x + shadow_offset, y, text, col, scale)
     _draw_bitmap_text(x, y, text, col, scale)
 
 
