@@ -105,9 +105,9 @@ SOUND_LETTER_RECEIVED = 1
 SOUND_LETTER_OPEN = 2
 SOUND_LETTER_CLOSE = 3
 STARWRITE_SOUND_FALLBACKS = {
-    SOUND_LETTER_RECEIVED: ("g3d4g4g4g3d4g4g4", "t" * 8, "", "n" * 8, 8),
-    SOUND_LETTER_OPEN: ("f3f3b3b3f#4f#4", "t" * 6, "", "n" * 6, 4),
-    SOUND_LETTER_CLOSE: ("f3d3a2d2", "t" * 4, "", "n" * 4, 4),
+    SOUND_LETTER_RECEIVED: ("g3d4g4g4g3d4g4g4", "t" * 8, "4" * 8, "n" * 8, 8),
+    SOUND_LETTER_OPEN: ("f3f3b3b3f#4f#4", "t" * 6, "4" * 6, "n" * 6, 4),
+    SOUND_LETTER_CLOSE: ("f3d3a2d2", "t" * 4, "4" * 4, "n" * 4, 4),
 }
 STAR_TAP_RADIUS_PX = 14
 STAR_TAP_MOVE_TOLERANCE_PX = 6
