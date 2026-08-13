@@ -363,6 +363,47 @@ def draw_constellation_labels(
     points: dict[int, ScreenPoint],
     language: Language,
 ) -> None:
+    for index, constellation, center in _visible_constellation_label_entries(
+        constellations,
+        selected_constellation,
+        points,
+        language,
+    ):
+        selected = constellation.id == selected_constellation.id
+        draw_constellation_label(
+            constellation,
+            center,
+            10 if selected else 13,
+            index,
+            language,
+            selected,
+        )
+
+
+def constellation_label_hit_rects(
+    constellations: tuple[Constellation, ...],
+    selected_constellation: Constellation,
+    points: dict[int, ScreenPoint],
+    language: Language,
+) -> list[tuple[int, tuple[int, int, int, int]]]:
+    rects: list[tuple[int, tuple[int, int, int, int]]] = []
+    for index, constellation, center in _visible_constellation_label_entries(
+        constellations,
+        selected_constellation,
+        points,
+        language,
+    ):
+        label_x, label_y, width = _constellation_label_layout(constellation, center, index, language)
+        rects.append((index, (label_x - 6, label_y - 5, width + 12, 22)))
+    return rects
+
+
+def _visible_constellation_label_entries(
+    constellations: tuple[Constellation, ...],
+    selected_constellation: Constellation,
+    points: dict[int, ScreenPoint],
+    language: Language,
+) -> list[tuple[int, Constellation, tuple[int, int]]]:
     candidates = [
         (index, constellation, _constellation_label_center(constellation, points))
         for index, constellation in enumerate(constellations)
@@ -378,16 +419,7 @@ def draw_constellation_labels(
             )
         )
         visible = visible[:JAPANESE_CONSTELLATION_LABEL_LIMIT]
-    for index, constellation, center in visible:
-        selected = constellation.id == selected_constellation.id
-        draw_constellation_label(
-            constellation,
-            center,
-            10 if selected else 13,
-            index,
-            language,
-            selected,
-        )
+    return visible
 
 
 def _constellation_label_center(
@@ -411,15 +443,27 @@ def draw_constellation_label(
     selected: bool,
 ) -> None:
     center_x, center_y = center
+    label_x, label_y, width = _constellation_label_layout(constellation, center, index, language)
     label = constellation_name(constellation, language)
-    width = display_text_width(label)
-    label_x = max(4, min(pyxel.width - width - 4, center_x + 10))
-    label_y = max(88, min(pyxel.height - 76, center_y - 18 + (index % 3) * 12))
     pyxel.line(center_x, center_y, label_x - 3, label_y + 6, color)
     if selected:
         draw_display_bold_text(label_x, label_y, label, color)
     else:
         draw_display_text(label_x, label_y, label, color)
+
+
+def _constellation_label_layout(
+    constellation: Constellation,
+    center: tuple[int, int],
+    index: int,
+    language: Language,
+) -> tuple[int, int, int]:
+    center_x, center_y = center
+    label = constellation_name(constellation, language)
+    width = display_text_width(label)
+    label_x = max(4, min(pyxel.width - width - 4, center_x + 10))
+    label_y = max(88, min(pyxel.height - 76, center_y - 18 + (index % 3) * 12))
+    return label_x, label_y, width
 
 
 def draw_sky_features(

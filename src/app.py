@@ -44,6 +44,7 @@ from sky.renderer import SkyRenderer, moon_screen_point
 from sky.simulation import SimulationClock, project_visible_stars, star_direction
 from ui.hud import (
     back_button_rect,
+    constellation_label_hit_rects,
     draw_compact_time,
     draw_cut_in,
     draw_event_banner,
@@ -655,11 +656,25 @@ class StarSkyApp:
         self.selected_index = (self.selected_index + delta) % len(CONSTELLATIONS)
 
     def _select_constellation_at_point(self, point: tuple[int, int]) -> bool:
+        if self._select_constellation_label_at_point(point):
+            return True
         star_id = self._nearest_constellation_star_id(point, STAR_TAP_RADIUS_PX)
         if star_id is None:
             return False
         for index, constellation in enumerate(CONSTELLATIONS):
             if star_id in constellation.main_star_ids:
+                self.selected_index = index
+                return True
+        return False
+
+    def _select_constellation_label_at_point(self, point: tuple[int, int]) -> bool:
+        for index, rect in constellation_label_hit_rects(
+            CONSTELLATIONS,
+            self.selected_constellation,
+            self.projected,
+            self.language,
+        ):
+            if self._point_in_rect(point, rect):
                 self.selected_index = index
                 return True
         return False
