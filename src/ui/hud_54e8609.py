@@ -490,7 +490,7 @@ def draw_selected_constellation_summary(
     constellation: Constellation,
     language: Language,
     anchor_star_label: str | None,
-    star_summary: tuple[str, tuple[str, str]] | None = None,
+    panel_summary: tuple[str, tuple[str, str], int] | None = None,
 ) -> None:
     tool_left = tool_button_rects(pyxel.width, pyxel.height)["time"][0]
     x = 8
@@ -501,9 +501,8 @@ def draw_selected_constellation_summary(
         return
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 1)
-    if star_summary is not None:
-        title, lines = star_summary
-        title_color = 8
+    if panel_summary is not None:
+        title, lines, title_color = panel_summary
     else:
         name = constellation_name(constellation, language)
         title = f"{constellation.id}  {name.upper() if language == 'en' else name}"

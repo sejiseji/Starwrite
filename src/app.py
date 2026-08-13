@@ -724,7 +724,7 @@ class StarSkyApp:
                 return True
         return False
 
-    def _selected_star_summary(self) -> tuple[str, tuple[str, str]] | None:
+    def _selected_star_summary(self) -> tuple[str, tuple[str, str], int] | None:
         if self.selected_star_id is None:
             return None
         star = STARS_BY_ID.get(self.selected_star_id)
@@ -735,7 +735,7 @@ class StarSkyApp:
         description = STAR_DESCRIPTIONS.get(self.selected_star_id, {})
         description_lines = description.get(self.language)
         if isinstance(description_lines, tuple) and len(description_lines) == 2:
-            return (f"STAR  {name.upper() if self.language == 'en' else name}", description_lines)
+            return (f"STAR  {name.upper() if self.language == 'en' else name}", description_lines, 8)
         constellation = self._constellation_for_star(self.selected_star_id)
         constellation_label = constellation_name(constellation, self.language) if constellation is not None else None
         if self.language == "ja":
@@ -746,9 +746,9 @@ class StarSkyApp:
             title = f"STAR  {name.upper()}"
             line1 = f"magnitude {star.magnitude:.1f}"
             line2 = f"star in {constellation.name}" if constellation is not None else "named star"
-        return (title, (line1, line2))
+        return (title, (line1, line2), 8)
 
-    def _selected_feature_summary(self) -> tuple[str, tuple[str, str]] | None:
+    def _selected_feature_summary(self) -> tuple[str, tuple[str, str], int] | None:
         if self.selected_feature_id is None:
             return None
         feature = self._sky_feature_by_id(self.selected_feature_id)
@@ -759,7 +759,7 @@ class StarSkyApp:
         if lines is None:
             return None
         title = sky_feature_name(feature, self.language)
-        return (title.upper() if self.language == "en" else title, lines)
+        return (title.upper() if self.language == "en" else title, lines, 11)
 
     def _constellation_for_star(self, star_id: int) -> Constellation | None:
         for constellation in CONSTELLATIONS:
