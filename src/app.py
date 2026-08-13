@@ -896,6 +896,11 @@ class StarSkyApp:
             )
         else:
             draw_compact_time(self.clock)
+        draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected, self.language)
+        if self.show_features:
+            draw_sky_features(self.projected, self.projected_sky_paths, self.language, moon_light_level(self.moon.state))
+        if self.meteor_event is not None:
+            draw_meteor_event(self.meteor_event, self.language)
         draw_selected_constellation_summary(
             self.selected_constellation,
             self.language,
@@ -903,11 +908,6 @@ class StarSkyApp:
         )
         if self.meteor_event is not None:
             draw_event_banner(self.meteor_event, self.language)
-        draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected, self.language)
-        if self.show_features:
-            draw_sky_features(self.projected, self.projected_sky_paths, self.language, moon_light_level(self.moon.state))
-        if self.meteor_event is not None:
-            draw_meteor_event(self.meteor_event, self.language)
         focused_star = self._focused_star()
         if focused_star is not None:
             star_id, point = focused_star
