@@ -58,6 +58,7 @@ from ui.hud import (
     draw_meteor_event,
     draw_menu_button,
     draw_menu_panel,
+    draw_selected_constellation_summary,
     draw_slider,
     draw_sky_features,
     draw_tool_buttons,
@@ -655,6 +656,17 @@ class StarSkyApp:
     def _select_constellation(self, delta: int) -> None:
         self.selected_index = (self.selected_index + delta) % len(CONSTELLATIONS)
 
+    def _selected_constellation_anchor_label(self) -> str | None:
+        star_id = self.selected_constellation.anchor_star_id
+        if star_id is None and self.selected_constellation.main_star_ids:
+            star_id = self.selected_constellation.main_star_ids[0]
+        if star_id is None:
+            return None
+        english_name = STAR_NAMES.get(star_id)
+        if english_name is None:
+            return None
+        return star_name(star_id, english_name, self.language)
+
     def _select_constellation_at_point(self, point: tuple[int, int]) -> bool:
         if self._select_constellation_label_at_point(point):
             return True
@@ -884,6 +896,11 @@ class StarSkyApp:
             )
         else:
             draw_compact_time(self.clock)
+            draw_selected_constellation_summary(
+                self.selected_constellation,
+                self.language,
+                self._selected_constellation_anchor_label(),
+            )
         if self.meteor_event is not None:
             draw_event_banner(self.meteor_event, self.language)
         draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected, self.language)

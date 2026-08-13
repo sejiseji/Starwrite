@@ -357,6 +357,34 @@ def draw_compact_time(clock: SimulationClock) -> None:
     draw_bold_text_scaled(8, 27, clock.current_time.strftime("%H:%M"), 7, scale)
 
 
+def draw_selected_constellation_summary(
+    constellation: Constellation,
+    language: Language,
+    anchor_star_label: str | None,
+) -> None:
+    tool_left = tool_button_rects(pyxel.width, pyxel.height)["time"][0]
+    x = 8
+    y = 50
+    w = tool_left - x - 8
+    h = 35
+    if w < 140:
+        return
+    pyxel.rect(x, y, w, h, 0)
+    pyxel.rectb(x, y, w, h, 1)
+    name = constellation_name(constellation, language)
+    title = f"{constellation.id}  {name.upper() if language == 'en' else name}"
+    draw_display_text(x + 7, y + 5, _clip_display_text(title, w - 14), 10)
+    if anchor_star_label:
+        description = (
+            f"{anchor_star_label}をふくむ星座"
+            if language == "ja"
+            else f"includes {anchor_star_label}"
+        )
+    else:
+        description = "この星座" if language == "ja" else "selected constellation"
+    draw_display_text(x + 7, y + 19, _clip_display_text(description, w - 14), 13)
+
+
 def draw_constellation_labels(
     constellations: tuple[Constellation, ...],
     selected_constellation: Constellation,
@@ -780,6 +808,16 @@ def _wrap_display_lines(text: str, max_width: int) -> list[str]:
     if current:
         lines.append(current)
     return lines
+
+
+def _clip_display_text(text: str, max_width: int) -> str:
+    if display_text_width(text) <= max_width:
+        return text
+    suffix = "..."
+    clipped = text
+    while clipped and display_text_width(clipped + suffix) > max_width:
+        clipped = clipped[:-1]
+    return clipped + suffix if clipped else suffix
 
 
 def _wrap_body_lines(text: str, max_width: int, scale: int) -> list[str]:
