@@ -167,7 +167,7 @@ class CaptureLetterFlowTests(unittest.TestCase):
             for seed in range(60)
         }
 
-        self.assertGreaterEqual(len(selected_ids), 5)
+        self.assertGreaterEqual(len(selected_ids), 40)
 
     def test_display_uses_ui_language_then_original(self) -> None:
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)

@@ -8,9 +8,12 @@ from typing import Protocol
 from .capture import SkyCapture, capture_from_dict, capture_to_dict
 
 MAX_LOGS = 100
-MATCH_TOP_LIMIT = 36
-MATCH_RELATIVE_FLOOR = 0.2
-MATCH_SCORE_WEIGHT_SCALE = 120.0
+ANCHOR_STAR_SCORE = 12.0
+CONSTELLATION_SCORE = 8.0
+EVENT_SCORE = 18.0
+TIME_SCORE = 10.0
+SEASON_SCORE = 8.0
+MATCH_SCORE_WEIGHT_SCALE = 180.0
 
 
 class RandomLike(Protocol):
@@ -76,16 +79,16 @@ def load_letters_from_packs(packs: dict[str, tuple[dict, ...]], pack_ids: tuple[
 def score_letter(capture: SkyCapture, letter: PresetLetter) -> float:
     score = 0.0
     if capture.selected_star_id is not None and capture.selected_star_id in letter.anchor_star_ids:
-        score += 100.0
+        score += ANCHOR_STAR_SCORE
     if capture.selected_constellation_id is not None and capture.selected_constellation_id in letter.constellation_ids:
-        score += 60.0
+        score += CONSTELLATION_SCORE
     event_tag = _event_tag(capture.selected_event_id)
     if event_tag is not None and event_tag in letter.event_tags:
-        score += 30.0
+        score += EVENT_SCORE
     if _time_tag(capture.captured_at.hour) in letter.time_tags:
-        score += 15.0
+        score += TIME_SCORE
     if _season_tag(capture.captured_at.month) in letter.season_tags:
-        score += 10.0
+        score += SEASON_SCORE
     return score * max(0.1, letter.weight)
 
 
@@ -112,9 +115,7 @@ def match_letter(
     if best_score <= 0.0:
         return chooser.choice([letter for letter, _score in ranked])
 
-    floor = best_score * MATCH_RELATIVE_FLOOR
-    top = [(letter, score) for letter, score in ranked[:MATCH_TOP_LIMIT] if score >= floor]
-    return _weighted_choice(top or ranked[:1], chooser)
+    return _weighted_choice(ranked, chooser)
 
 
 def display_letter_text(letter: PresetLetter, language: str) -> tuple[str, str | None]:
