@@ -290,7 +290,7 @@ class StarSkyApp:
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
         )
-        self.projected_sky_paths = self._project_sky_paths() if self.show_features else {}
+        self.projected_sky_paths = self._project_sky_paths()
         if pyxel.frame_count % 30 == 0:
             self._save_settings()
 
@@ -598,9 +598,17 @@ class StarSkyApp:
         self.selected_feature_id = None
 
     def _project_sky_paths(self) -> dict[str, list[tuple[float, float] | None]]:
-        jd = julian_date(self.clock.current_time)
-        lst = local_sidereal_time(jd, math.radians(self.observer.longitude_deg))
-        lat = math.radians(self.observer.latitude_deg)
+        return self._project_sky_paths_for(self.camera, self.observer, self.clock.current_time)
+
+    def _project_sky_paths_for(
+        self,
+        camera: SkyCamera,
+        observer: Observer,
+        observation_time: datetime,
+    ) -> dict[str, list[tuple[float, float] | None]]:
+        jd = julian_date(observation_time)
+        lst = local_sidereal_time(jd, math.radians(observer.longitude_deg))
+        lat = math.radians(observer.latitude_deg)
         projected_paths: dict[str, list[tuple[float, float] | None]] = {}
         for path in SKY_PATHS:
             points: list[tuple[float, float] | None] = []
@@ -609,7 +617,7 @@ class StarSkyApp:
                 if direction.z <= 0.0:
                     points.append(None)
                     continue
-                projected = self.camera.project(direction, SCREEN_WIDTH, SCREEN_HEIGHT)
+                projected = camera.project(direction, SCREEN_WIDTH, SCREEN_HEIGHT)
                 if projected is None:
                     points.append(None)
                     continue
@@ -947,6 +955,7 @@ class StarSkyApp:
                 self.meteor_event,
                 self.moon.state,
                 self.observer.latitude_deg,
+                self.projected_sky_paths,
             )
             draw_log_list(self.exchange_logs, self.letters_by_id)
             self._draw_active_cut_in()
@@ -978,6 +987,7 @@ class StarSkyApp:
             self.meteor_event,
             self.moon.state,
             self.observer.latitude_deg,
+            self.projected_sky_paths,
         )
         if self.show_info:
             draw_hud(
@@ -1058,6 +1068,7 @@ class StarSkyApp:
         )
         selected_constellation = self._constellation_by_id(capture.selected_constellation_id) or self.selected_constellation
         meteor_event = active_meteor_event(METEOR_SHOWERS, observer, capture.captured_at, camera, SCREEN_WIDTH, SCREEN_HEIGHT)
+        projected_sky_paths = self._project_sky_paths_for(camera, observer, capture.captured_at)
         self.renderer.draw(
             projected,
             CONSTELLATIONS,
@@ -1070,6 +1081,7 @@ class StarSkyApp:
             meteor_event,
             moon_state_from_dict(capture.moon),
             capture.latitude_deg,
+            projected_sky_paths,
         )
         draw_constellation_labels(CONSTELLATIONS, selected_constellation, projected, self.language)
         if meteor_event is not None:

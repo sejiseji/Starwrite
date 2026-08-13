@@ -11,6 +11,7 @@ from .capture import ScreenPoint
 from .meteors import MeteorEventView
 from .vector import Vec3, cross
 
+MILKY_WAY_PATH_ID = "MILKY_WAY"
 STAR_WHITE = 7
 STAR_BLUE_WHITE = 12
 STAR_YELLOW_WHITE = 10
@@ -23,6 +24,8 @@ HORIZON = 13
 POLARIS_ID = 11767
 MOON_RADIUS_PX = 5
 BASE_LIMIT_MAG = 6.2
+MILKY_WAY_BAND_WIDTH_PX = 30.0
+MILKY_WAY_SEGMENT_PARTICLES = 20
 
 
 def _dim_star_color(color: int) -> int:
@@ -100,12 +103,19 @@ class SkyRenderer:
         meteor_event: MeteorEventView | None = None,
         moon_state: MoonState | None = None,
         observer_latitude_deg: float = 0.0,
+        sky_paths: dict[str, list[tuple[float, float] | None]] | None = None,
     ) -> None:
         pyxel.cls(0)
         moon_light = moon_light_level(moon_state)
         if show_guides:
             self.draw_background(width, height)
             self.draw_horizon(camera, width, height)
+        self.draw_milky_way(
+            [] if sky_paths is None else sky_paths.get(MILKY_WAY_PATH_ID, []),
+            moon_light,
+            width,
+            height,
+        )
         if show_constellations:
             self.draw_constellations(points, constellations, selected_constellation)
         self.draw_stars(points, moon_light)
@@ -159,6 +169,73 @@ class SkyRenderer:
                 pyxel.pset(x, y, col)
                 if twinkle == 2:
                     pyxel.pset(x + 1, y, HORIZON)
+
+    def draw_milky_way(
+        self,
+        points: list[tuple[float, float] | None],
+        moon_light: float,
+        width: int,
+        height: int,
+    ) -> None:
+        if len(points) < 2:
+            return
+        strength = max(0.0, min(1.0, 1.0 - moon_light * 0.9))
+        if strength <= 0.08:
+            return
+
+        frame_count = pyxel.frame_count
+        band_width = MILKY_WAY_BAND_WIDTH_PX * (0.55 + strength * 0.45)
+        samples = max(6, int(MILKY_WAY_SEGMENT_PARTICLES * strength))
+        for segment_index in range(len(points) - 1):
+            start = points[segment_index]
+            end = points[segment_index + 1]
+            if start is None or end is None:
+                continue
+            x1, y1 = start
+            x2, y2 = end
+            dx = x2 - x1
+            dy = y2 - y1
+            length = math.sqrt(dx * dx + dy * dy)
+            if length < 2.0:
+                continue
+            tangent_x = dx / length
+            tangent_y = dy / length
+            normal_x = -tangent_y
+            normal_y = tangent_x
+
+            for sample_index in range(samples):
+                seed = segment_index * 4099 + sample_index * 197 + 23
+                t = (sample_index + 0.5 + (_pseudo_random(seed) - 0.5) * 0.75) / samples
+                spread = _pseudo_random(seed + 1) * 2.0 - 1.0
+                core_bias = spread * abs(spread)
+                offset = core_bias * band_width * (0.35 + _pseudo_random(seed + 2) * 0.65)
+                jitter = (_pseudo_random(seed + 3) - 0.5) * 8.0
+                x = x1 + dx * t + normal_x * offset + tangent_x * jitter
+                y = y1 + dy * t + normal_y * offset + tangent_y * jitter
+                if x < -2 or width + 2 < x or y < -2 or height + 2 < y:
+                    continue
+
+                distance_from_core = abs(offset) / max(1.0, band_width)
+                bright_chance = max(0.06, 0.38 * strength * (1.0 - distance_from_core))
+                warm_chance = 0.12 + 0.12 * (1.0 - distance_from_core)
+                grain = _pseudo_random(seed + 4)
+                if grain < bright_chance:
+                    color = STAR_WHITE
+                elif grain < bright_chance + warm_chance:
+                    color = STAR_YELLOW_WHITE
+                elif distance_from_core < 0.5:
+                    color = HORIZON
+                else:
+                    color = LINE_DIM
+
+                pulse_period = 420 + int(_pseudo_random(seed + 5) * 360)
+                if (frame_count + seed) % pulse_period < 2 and color in (STAR_WHITE, STAR_YELLOW_WHITE):
+                    color = STAR_YELLOW
+                px = int(x)
+                py = int(y)
+                pyxel.pset(px, py, color)
+                if strength > 0.72 and distance_from_core < 0.32 and _pseudo_random(seed + 6) > 0.93:
+                    pyxel.pset(px + 1, py, HORIZON)
 
     def draw_moon(
         self,
