@@ -44,7 +44,7 @@ class CaptureLetterFlowTests(unittest.TestCase):
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)
         ids = [letter.id for letter in letters]
 
-        self.assertEqual(len(letters), 316)
+        self.assertEqual(len(letters), 391)
         self.assertEqual(len(ids), len(set(ids)))
 
     def test_preset_letter_index_counts_match_packs(self) -> None:
@@ -52,7 +52,7 @@ class CaptureLetterFlowTests(unittest.TestCase):
         actual_counts = {pack_id: len(pack) for pack_id, pack in PRESET_LETTER_PACKS.items()}
 
         self.assertEqual(actual_counts, indexed_counts)
-        self.assertEqual(sum(indexed_counts.values()), 316)
+        self.assertEqual(sum(indexed_counts.values()), 391)
 
     def test_preset_letters_all_have_english_text_available(self) -> None:
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)
