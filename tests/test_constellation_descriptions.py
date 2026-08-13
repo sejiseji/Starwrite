@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 
 from data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
 from data.constellations import CONSTELLATIONS
@@ -35,6 +36,12 @@ class ConstellationDescriptionTests(unittest.TestCase):
             CONSTELLATION_DESCRIPTIONS["CAS"]["ja"],
             ("五つの星が描く折れた王座。", "北の空で季節ごとに向きを変える。"),
         )
+
+    def test_old_anchor_copy_fallback_is_not_used(self) -> None:
+        hud_source = Path("src/ui/hud.py").read_text(encoding="utf-8")
+
+        self.assertNotIn("ふくむ星座", hud_source)
+        self.assertNotIn("includes {anchor_star_label}", hud_source)
 
 
 if __name__ == "__main__":
