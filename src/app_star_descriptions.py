@@ -100,6 +100,11 @@ UI_SOUND_CHANNEL = 3
 SOUND_LETTER_RECEIVED = 1
 SOUND_LETTER_OPEN = 2
 SOUND_LETTER_CLOSE = 3
+STARWRITE_SOUND_FALLBACKS = {
+    SOUND_LETTER_RECEIVED: ("g3d4g4g4g3d4g4g4", "t" * 8, "2" * 8, "n" * 8, 8),
+    SOUND_LETTER_OPEN: ("f3f3b3b3f#4f#4", "t" * 6, "2" * 6, "n" * 6, 4),
+    SOUND_LETTER_CLOSE: ("f3d3a2d2", "t" * 4, "2" * 4, "n" * 4, 4),
+}
 STAR_TAP_RADIUS_PX = 14
 STAR_TAP_MOVE_TOLERANCE_PX = 6
 
@@ -923,11 +928,21 @@ class StarSkyApp:
         for resource in STARWRITE_SOUND_RESOURCES:
             try:
                 pyxel.load(resource)
+                self._setup_audio_fallback_sounds()
                 self.audio_ready = True
                 return
             except Exception:
                 continue
-        self.audio_ready = False
+        self._setup_audio_fallback_sounds()
+        self.audio_ready = True
+
+    def _setup_audio_fallback_sounds(self) -> None:
+        for sound_id, definition in STARWRITE_SOUND_FALLBACKS.items():
+            try:
+                notes, tones, volumes, effects, speed = definition
+                pyxel.sound(sound_id).set(notes, tones, volumes, effects, speed)
+            except Exception:
+                continue
 
     def _play_ui_sound(self, sound_id: int) -> None:
         if not self.audio_ready:
