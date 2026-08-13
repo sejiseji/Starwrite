@@ -62,6 +62,7 @@ from ui.hud import (
     log_item_rects,
     letter_close_rect,
     letter_panel_rect,
+    letter_view_panel_rect,
     log_panel_rect,
     main_button_rects,
     panel_toggle_rects,
@@ -457,10 +458,11 @@ class StarSkyApp:
             self._go_back()
             return True
         if self.ui_state in ("LETTER", "LOG_DETAIL"):
-            if self._point_in_rect(point, self._expanded_rect(letter_close_rect(SCREEN_WIDTH, SCREEN_HEIGHT), 6)):
+            letter_panel = self._active_letter_panel_rect()
+            if self._point_in_rect(point, self._expanded_rect(letter_close_rect(SCREEN_WIDTH, SCREEN_HEIGHT, letter_panel), 6)):
                 self._go_back()
                 return True
-            if not self._point_in_rect(point, letter_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+            if not self._point_in_rect(point, letter_panel):
                 self._go_back()
                 return True
         if self.ui_state == "LOG":
@@ -575,6 +577,15 @@ class StarSkyApp:
         from ui.hud import menu_panel_rect
 
         return menu_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
+
+    def _active_letter_panel_rect(self) -> tuple[int, int, int, int]:
+        log = self._selected_log()
+        if log is None:
+            return letter_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
+        letter = self.letters_by_id.get(log.received_letter_id)
+        if letter is None:
+            return letter_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
+        return letter_view_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT, letter, self.language)
 
     def _point_in_rect(self, point: tuple[int, int], rect: tuple[int, int, int, int]) -> bool:
         px, py = point

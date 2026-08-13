@@ -221,14 +221,27 @@ def log_item_rects(width: int, height: int, count: int) -> list[tuple[int, int, 
 
 def letter_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     x = 8 if width <= 430 else 14
-    y = 42 if height >= 520 else 38
     w = width - x * 2
-    h = max(220, height - y - (14 if height >= 520 else 10))
+    h = 260 if height >= 520 else 220
+    y = max(42 if height >= 520 else 38, (height - h) // 2)
     return (x, y, w, h)
 
 
-def letter_close_rect(width: int, height: int) -> tuple[int, int, int, int]:
-    x, y, w, _ = letter_panel_rect(width, height)
+def letter_view_panel_rect(width: int, height: int, letter: PresetLetter, language: Language) -> tuple[int, int, int, int]:
+    x = 8 if width <= 430 else 14
+    w = width - x * 2
+    primary, original = display_letter_text(letter, language)
+    h = _letter_panel_height_for_text(primary, original, w - 20, height)
+    y = max(42 if height >= 520 else 38, (height - h) // 2)
+    return (x, y, w, h)
+
+
+def letter_close_rect(
+    width: int,
+    height: int,
+    panel_rect: tuple[int, int, int, int] | None = None,
+) -> tuple[int, int, int, int]:
+    x, y, w, _ = panel_rect or letter_panel_rect(width, height)
     return (x + w - 38, y + 8, 30, 30)
 
 
@@ -579,12 +592,13 @@ def draw_menu_panel(
 
 
 def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language) -> None:
-    x, y, w, h = letter_panel_rect(pyxel.width, pyxel.height)
+    panel_rect = letter_view_panel_rect(pyxel.width, pyxel.height, letter, language)
+    x, y, w, h = panel_rect
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 13)
     draw_back_button()
     draw_big_text(x + 10, y + 10, "LETTER", 7)
-    draw_button(letter_close_rect(pyxel.width, pyxel.height), "X", False)
+    draw_button(letter_close_rect(pyxel.width, pyxel.height, panel_rect), "X", False)
 
     primary, original = display_letter_text(letter, language)
     body_width, line_step, primary_lines, original_lines = _fit_letter_body_lines(primary, original, w - 20, h - 66)
@@ -684,6 +698,31 @@ def _fit_letter_body_lines(
     return max_width, BODY_COMPACT_LINE_STEP, _wrap_body_lines(primary, max_width), (
         _wrap_body_lines(original, max_width) if original else []
     )
+
+
+def _letter_panel_height_for_text(primary: str, original: str | None, max_width: int, screen_height: int) -> int:
+    top_min = 42 if screen_height >= 520 else 38
+    bottom_margin = 14 if screen_height >= 520 else 10
+    max_height = max(220, screen_height - top_min - bottom_margin)
+    stages = (240, 300, 380, 480, max_height) if screen_height >= 520 else (220, 260, max_height)
+    for panel_height in stages:
+        height = min(panel_height, max_height)
+        _body_width, line_step, primary_lines, original_lines = _fit_letter_body_lines(
+            primary,
+            original,
+            max_width,
+            height - 66,
+        )
+        if _letter_body_required_height(line_step, primary_lines, original_lines) <= height - 66:
+            return height
+    return max_height
+
+
+def _letter_body_required_height(line_step: int, primary_lines: list[str], original_lines: list[str]) -> int:
+    required = len(primary_lines) * line_step
+    if original_lines:
+        required += 15 + len(original_lines) * line_step
+    return required
 
 
 def _sentence_chunks(text: str) -> list[str]:
