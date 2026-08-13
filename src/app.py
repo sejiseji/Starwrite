@@ -71,10 +71,10 @@ from ui.hud import (
 )
 from ui.localization import next_language, normalize_language, star_name
 
-DESKTOP_SCREEN_SIZE = (480, 360)
 IPHONE16_SCREEN_HEIGHT = 696
 IPHONE16_MIN_SCREEN_WIDTH = 396
 IPHONE16_MAX_SCREEN_WIDTH = 430
+SMARTPHONE_FIRST_SCREEN_SIZE = (IPHONE16_MIN_SCREEN_WIDTH, IPHONE16_SCREEN_HEIGHT)
 SETTINGS_KEY = "starwrite_v02_settings"
 CAPTURE_KEY = "starwrite_v01_latest_capture"
 LETTER_STORE_KEY = "starwrite_v01_letter_store"
@@ -94,7 +94,7 @@ def _screen_size() -> tuple[int, int]:
             return (screen_width, IPHONE16_SCREEN_HEIGHT)
     except Exception:
         pass
-    return DESKTOP_SCREEN_SIZE
+    return SMARTPHONE_FIRST_SCREEN_SIZE
 
 
 SCREEN_WIDTH, SCREEN_HEIGHT = _screen_size()
