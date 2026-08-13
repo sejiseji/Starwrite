@@ -17,7 +17,7 @@ Use it to review tone, coherence, repetition, and translation quality.
 - Indexed pack count: 500
 - Packs: 17
 - Original languages: {'en': 297, 'ja': 203}
-- Sentence counts: {2: 11, 3: 336, 4: 133, 5: 20}
+- Sentence counts: {2: 10, 3: 277, 4: 160, 5: 49, 6: 3, 7: 1}
 - Top countries: [('JP', 156), ('US', 26), ('CA', 17), ('AU', 12), ('IT', 12), ('TH', 11), ('SE', 10), ('TR', 10), ('EG', 10), ('PL', 10), ('PH', 9), ('FI', 8), ('BR', 8), ('ZA', 8), ('NZ', 8), ('FR', 8), ('IN', 8), ('MX', 8), ('GB', 8), ('PE', 8)]
 
 ## Letters
@@ -381,11 +381,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> My umbrella turned inside out before the rain stopped. By the time I got home, Altair was between the cables. After that, I forgot what I had been thinking about.
+> My umbrella turned inside out before the rain stopped. By the time I got home, Altair was between the cables. The broken umbrella took the thought away with it.
 
 **Translation `ja`**
 
-> 雨がやむ前に、傘がひっくり返った。家につくころ、電線の間にアルタイルが見えた。そのあと、何を考えていたか忘れた。
+> 雨がやむ前に、傘がひっくり返った。家につくころ、電線の間にアルタイルが見えた。ひっくり返った傘が、考えごとまで持っていった。
 
 #### `base_001_004`
 
@@ -457,11 +457,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I reheated yesterday's soup and added too much salt. Antares looked red enough to forgive it. Only the thing in my hand felt properly real.
+> I reheated yesterday's soup and added too much salt. Antares looked red enough to forgive it. The bowl in my hand felt more reliable than my cooking.
 
 **Translation `ja`**
 
-> きのうのスープを温め直して、塩を入れすぎた。アンタレスは、それを許してくれそうなくらい赤かった。手の中のものだけが、ちゃんと重かった。
+> きのうのスープを温め直して、塩を入れすぎた。アンタレスは、それを許してくれそうなくらい赤かった。手の中の器だけは、料理より信用できた。
 
 #### `base_001_008`
 
@@ -476,11 +476,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 夜勤明けのそらは、いつもすこしだけ他人のものみたいだ。自販機の前で缶コーヒーを飲んで、木星ではなく星を見た。風が止むまで、そこに立っていた。
+> 夜勤明けのそらは、いつもすこしだけ他人のものみたいだ。自販機の前で缶コーヒーを飲んで、木星ではなく星を見た。缶がぬるくなるまで、そこに立っていた。
 
 **Translation `en`**
 
-> The sky after a night shift always feels a little like it belongs to someone else. I drank canned coffee by a vending machine and looked at stars, not Jupiter. I stood there until the wind settled.
+> The sky after a night shift always feels a little like it belongs to someone else. I drank canned coffee by a vending machine and looked at stars, not Jupiter. I stayed there until the can grew lukewarm.
 
 #### `base_001_009`
 
@@ -495,11 +495,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The tram windows were dark enough to show my face. Behind it, the Big Dipper was moving with the city lights. Even on a nameless day, night arrived properly.
+> The tram windows were dark enough to show my face. Behind it, the Big Dipper was moving with the city lights. The day had no name, but the tram still knew where to go.
 
 **Translation `ja`**
 
-> トラムのまどが暗くて、自分の顔がうつった。その向こうで北斗七星が街の灯りと一緒に動いていた。名前のない日でも、夜はちゃんと来た。
+> トラムのまどが暗くて、自分の顔がうつった。その向こうで北斗七星が街の灯りと一緒に動いていた。名前のない日でも、トラムは行き先を知っていた。
 
 #### `base_001_010`
 
@@ -514,11 +514,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I ate noodles standing up because every chair was taken. Steam hit my glasses, then Cygnus came back into focus. I stayed outside for one more minute, beside the station lights. The paper bag made the errand feel less invented.
+> I ate noodles standing up because every chair was taken. Steam hit my glasses, then Cygnus came back into focus. I stayed by the shop sign until my glasses cleared. The paper bag made the errand feel less invented.
 
 **Translation `ja`**
 
-> 席がなくて、立ったまま麺を食べた。湯気で眼鏡がくもり、そのあと白鳥座がまた見えた。そのまま、もうすこしだけ外にいた、駅の明かりのそばで。紙袋の角が手に当たって、ちゃんと買い物をした気がした。
+> 席がなくて、立ったまま麺を食べた。湯気で眼鏡がくもり、そのあと白鳥座がまた見えた。眼鏡が戻るまで、店の看板のそばにいた。紙袋の角が手に当たって、ちゃんと買い物をした気がした。
 
 #### `base_001_011`
 
@@ -571,11 +571,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 山の宿で、廊下の時計だけが大きく聞こえた。外に出るとペルセウス座がいて、ねむけがすこし遅れた。なぜか、その時間だけは急がなくてよかった、駅の明かりのそばで。
+> 山の宿で、廊下の時計だけが大きく聞こえた。外に出るとペルセウス座がいて、ねむけがすこし遅れた。部屋の鍵を持ったまま、急ぐ理由を忘れていた。
 
 **Translation `en`**
 
-> At a mountain inn, only the hallway clock sounded loud. Outside, Perseus was there, and my sleepiness arrived a little late. For some reason, I did not have to hurry just then, beside the station lights.
+> At a mountain inn, only the hallway clock sounded loud. Outside, Perseus was there, and my sleepiness arrived a little late. With the room key in my hand, I forgot why I needed to hurry.
 
 #### `base_001_014`
 
@@ -590,11 +590,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I counted coins twice before buying bread. The sky above the stall had Taurus in it, patient and bright. My keys made a small sound in my pocket, beside the station lights. A little dust from the platform followed my shoes home. My palm had gone a little cold.
+> I counted coins twice before buying bread. The sky above the stall had Taurus in it, patient and bright. The coins clicked once in my palm. A little dust from the platform followed my shoes home. My palm had gone a little cold.
 
 **Translation `ja`**
 
-> パンを買う前に、小銭を二回数えた。屋台の上のそらには、おうし座がいて、明るく待っていた。ポケットの中で鍵が小さく鳴った、駅の明かりのそばで。ホームのほこりが少しだけ、くつについて帰った。手のひらが、少し冷えていた。
+> パンを買う前に、小銭を二回数えた。屋台の上のそらには、おうし座がいて、明るく待っていた。手のひらで小銭が一度だけ鳴った。ホームのほこりが少しだけ、くつについて帰った。手のひらが、少し冷えていた。
 
 #### `base_001_015`
 
@@ -609,11 +609,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 友だちの返信を待っている間に、アイスがすこし溶けた。返事は来なかったけど、シリウスはずっと明るかった。それで今日がすこしましになった、駅の明かりのそばで。
+> 友だちの返信を待っている間に、アイスがすこし溶けた。返事は来なかったけど、シリウスはずっと明るかった。溶けた分だけ、今日の角が少し丸くなった。
 
 **Translation `en`**
 
-> While I waited for a friend's reply, my ice cream softened a little. The reply did not come, but Sirius stayed bright. It made the day feel a little less crooked, beside the station lights.
+> While I waited for a friend's reply, my ice cream softened a little. The reply did not come, but Sirius stayed bright. The melted part made the day feel a little less sharp.
 
 #### `base_001_016`
 
@@ -628,11 +628,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> My brother borrowed my charger again. I complained, then forgot about it when Orion rose over the building. I smiled a little without telling anyone, beside the station lights.
+> My brother borrowed my charger again. I complained, then forgot about it when Orion rose over the building. I kept the small laugh to myself.
 
 **Translation `ja`**
 
-> 弟がまた充電器を借りていった。文句を言ったけど、ビルの上にオリオン座が出てきて忘れた。だれにも言わないまま、少し笑った、駅の明かりのそばで。
+> 弟がまた充電器を借りていった。文句を言ったけど、ビルの上にオリオン座が出てきて忘れた。小さく笑ったことは、自分だけにしておいた。
 
 #### `base_001_017`
 
@@ -723,11 +723,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 海から戻ったあとも、髪に塩の感じが残っていた。ベランダでタオルを干して、いて座を見つけた。足もとは暗いのに、気持ちは少し軽かった、駅の明かりのそばで。
+> 海から戻ったあとも、髪に塩の感じが残っていた。ベランダでタオルを干して、いて座を見つけた。足もとは暗いのに、気持ちは少し軽かった。
 
 **Translation `en`**
 
-> After coming back from the sea, my hair still felt salty. I hung a towel on the balcony and found Sagittarius. The ground was dark, but I felt a little lighter, beside the station lights.
+> After coming back from the sea, my hair still felt salty. I hung a towel on the balcony and found Sagittarius. The ground was dark, but I felt a little lighter.
 
 #### `base_001_022`
 
@@ -894,11 +894,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I woke up too early and made toast in the dark. The house stayed asleep. Ursa Major was still outside. That was enough cargo for the night.
+> I woke up too early and made toast in the dark. The house stayed asleep. Ursa Major was still outside. I ate standing by the window so I would not wake anyone.
 
 **Translation `ja`**
 
-> 早く起きすぎて、暗い台所でトーストを焼いた。家はまだ眠っていた。おおぐま座は外にいた。荷物があるぶん、帰る理由も少しはっきりした。
+> 早く起きすぎて、暗い台所でトーストを焼いた。家はまだ眠っていた。おおぐま座は外にいた。だれも起こさないように、窓辺で立ったまま食べた。
 
 #### `base_001_031`
 
@@ -932,11 +932,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The library closed before I finished the chapter. I carried the book home under Auriga and kept one finger on the page. After that, I forgot what I had been thinking about, beside the station lights.
+> The library closed before I finished the chapter. I carried the book home under Auriga and kept one finger on the page. After that, I forgot what I had been thinking about.
 
 **Translation `ja`**
 
-> 章を読み終える前に図書館が閉まった。ぎょしゃ座の下を本を持って帰り、ページに指をはさんだままだった。そのあと、何を考えていたか忘れた、駅の明かりのそばで。
+> 章を読み終える前に図書館が閉まった。ぎょしゃ座の下を本を持って帰り、ページに指をはさんだままだった。そのあと、何を考えていたか忘れた。
 
 ### Pack `base_002`
 
@@ -1048,11 +1048,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A dog followed me for two blocks, then chose a better plan. I bought mango and looked for Leo over the wires. Only the thing in my hand felt properly real, beside the station lights. The canal went dark before I stopped thinking about it. I wanted to remember that.
+> A dog followed me for two blocks, then chose a better plan. I bought mango and looked for Leo over the wires. The mango had the only honest weight in the evening. The canal went dark before I stopped thinking about it. I wanted to keep that small detour.
 
 **Translation `ja`**
 
-> 犬が二つ先の角までついてきて、それからもっと良い予定を選んだ。マンゴーを買って、電線の上にしし座を探した。手の中のものだけが、ちゃんと重かった、駅の明かりのそばで。運河が暗くなっても、まだ少し考えていた。それを覚えていたいと思った。
+> 犬が二つ先の角までついてきて、それからもっと良い予定を選んだ。マンゴーを買って、電線の上にしし座を探した。その夕方で、マンゴーだけが正直な重さだった。運河が暗くなっても、まだ少し考えていた。その小さな遠回りを覚えておきたいと思った。
 
 #### `base_002_007`
 
@@ -1067,11 +1067,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 米を研いでいる間に、きょうの失敗をひとつ忘れた。炊飯器の音がして、外にはペルセウス座があった。風が止むまで、そこに立っていた、駅の明かりのそばで。
+> 米を研いでいる間に、きょうの失敗をひとつ忘れた。炊飯器の音がして、外にはペルセウス座があった。湯気の匂いが戻るまで、そこに立っていた。
 
 **Translation `en`**
 
-> While rinsing rice, I forgot one of today's failures. The rice cooker clicked, and Perseus was outside. I stood there until the wind settled, beside the station lights.
+> While rinsing rice, I forgot one of today's failures. The rice cooker clicked, and Perseus was outside. I stood there until the smell of steam came back.
 
 #### `base_002_008`
 
@@ -1086,11 +1086,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I sent the email without the attachment, then sent the attachment without any words. The second email felt lonelier. Even on a nameless day, night arrived properly, beside the station lights.
+> I sent the email without the attachment, then sent the attachment without any words. The second email felt lonelier. Even a nameless day can leave two records in the outbox.
 
 **Translation `ja`**
 
-> 添付なしでメールを送り、そのあと何も書かずに添付だけ送った。二通目のほうがすこしさみしかった。名前のない日でも、夜はちゃんと来た、駅の明かりのそばで。
+> 添付なしでメールを送り、そのあと何も書かずに添付だけ送った。二通目のほうがすこしさみしかった。名前のない日でも、送信箱には二通残る。
 
 #### `base_002_009`
 
@@ -1105,11 +1105,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 風呂上がりに外へ出たら、髪がすぐ冷えた。サンダルのまま見上げたそらに、はくちょう座がいた。そのまま、もうすこしだけ外にいた、通りが静かなまま。
+> 風呂上がりに外へ出たら、髪がすぐ冷えた。サンダルのまま見上げたそらに、はくちょう座がいた。足先が冷えるまで、玄関の前に残った。
 
 **Translation `en`**
 
-> I stepped outside after a bath and my hair cooled right away. In sandals, I looked up and found Cygnus. I stayed outside for one more minute, while the street stayed quiet.
+> I stepped outside after a bath and my hair cooled right away. In sandals, I looked up and found Cygnus. I stayed by the entrance until my toes cooled.
 
 #### `base_002_010`
 
@@ -1181,7 +1181,7 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 猫がベランダの端で月ではなく何かを見ていた。まねして見上げると、こぐま座があった。なぜか、その時間だけは急がなくてよかった、通りが静かなまま。
+> 猫がベランダの端で月ではなく何かを見ていた。まねして見上げると、こぐま座があった。猫が動くまで、こちらも急がなくてよかった。
 
 **Translation `en`**
 
@@ -1276,11 +1276,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I found one clean shirt at the bottom of the basket. It felt like winning a small argument with the week. My keys made a small sound in my pocket, while the street stayed quiet. It made my hands useful on the way back.
+> I found one clean shirt at the bottom of the basket. It felt like winning a small argument with the week. My keys made a small sound in my pocket. It made my hands useful on the way back.
 
 **Translation `ja`**
 
-> かごの底から、きれいなシャツを一枚見つけた。一週間との小さな口げんかに勝った気がした。ポケットの中で鍵が小さく鳴った、通りが静かなまま。指が少し痛いくらいで、今日の重さにはちょうどよかった。
+> かごの底から、きれいなシャツを一枚見つけた。一週間との小さな口げんかに勝った気がした。ポケットの中で鍵が小さく鳴った。指が少し痛いくらいで、今日の重さにはちょうどよかった。
 
 #### `base_002_019`
 
@@ -1295,11 +1295,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 川沿いを歩いていたら、知らない虫の声がずっとついてきた。こと座のあたりだけそらが濃かった。それで今日がすこしましになった、通りが静かなまま。
+> 川沿いを歩いていたら、知らない虫の声がずっとついてきた。こと座のあたりだけそらが濃かった。それで今日がすこしましになった。
 
 **Translation `en`**
 
-> As I walked by the river, an insect sound I did not know followed me. The sky around Lyra looked darker. It made the day feel a little less crooked, while the street stayed quiet.
+> As I walked by the river, an insect sound I did not know followed me. The sky around Lyra looked darker. It made the day feel a little less crooked.
 
 #### `base_002_020`
 
@@ -1428,11 +1428,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The bakery window was dark, but it still smelled like morning. Aries was above the closed sign. I smiled a little without telling anyone, while the street stayed quiet. It became the part of the day I did not want to edit.
+> The bakery window was dark, but it still smelled like morning. Aries was above the closed sign. I laughed under my breath. It became the part of the day I did not want to edit.
 
 **Translation `ja`**
 
-> パン屋のまどは暗かったけど、まだ朝みたいなにおいがした。閉店の札の上におひつじ座があった。だれにも言わないまま、少し笑った、通りが静かなまま。今日の中で、消したくない場所になった。
+> パン屋のまどは暗かったけど、まだ朝みたいなにおいがした。閉店の札の上におひつじ座があった。声に出さないくらいで笑った。今日の中で、消したくない場所になった。
 
 #### `base_002_027`
 
@@ -1447,11 +1447,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 自転車のライトが弱くなって、帰り道がすこしだけ慎重になった。上を見ると、へびつかい座がいた。足もとは暗いのに、気持ちは少し軽かった、通りが静かなまま。
+> 自転車のライトが弱くなって、帰り道がすこしだけ慎重になった。上を見ると、へびつかい座がいた。足もとは暗いのに、ペダルだけ少し軽かった。
 
 **Translation `en`**
 
-> My bicycle light grew weak, so the ride home became a little more careful. When I looked up, Ophiuchus was there. The ground was dark, but I felt a little lighter, while the street stayed quiet.
+> My bicycle light grew weak, so the ride home became a little more careful. When I looked up, Ophiuchus was there. The ground was dark, but the pedals felt a little lighter.
 
 #### `base_002_028`
 
@@ -1504,11 +1504,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The train left exactly on time, which made me feel personally accused. Monoceros was invisible, but I looked where it should be. Going back inside felt like a small loss, beside the station lights. The hose made a small silver line on the ground. Tomorrow still felt a little far away.
+> The train left exactly on time, which made me feel personally accused. Monoceros was invisible, but I looked where it should be. Returning indoors felt like admitting the timetable was right. The hose made a small silver line on the ground. Tomorrow still felt a little far away.
 
 **Translation `ja`**
 
-> 電車がぴったり時間通りに出て、なぜか責められた気がした。いっかくじゅう座は見えなかったけど、あるはずの場所を見た。部屋にもどるのが、少しだけ惜しかった。ホースの水が、地面に細い銀色の線を作っていた。明日のことは、まだ少し遠かった。
+> 電車がぴったり時間通りに出て、なぜか責められた気がした。いっかくじゅう座は見えなかったけど、あるはずの場所を見た。部屋にもどると、時刻表の正しさを認めるみたいだった。ホースの水が、地面に細い銀色の線を作っていた。明日のことは、まだ少し遠かった。
 
 #### `base_002_031`
 
@@ -1542,11 +1542,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I cleaned the desk and found three batteries, no pen, and an old ticket. Vulpecula was somewhere in the busy stars. After that, I forgot what I had been thinking about, while the street stayed quiet.
+> I cleaned the desk and found three batteries, no pen, and an old ticket. Vulpecula was somewhere in the busy stars. After that, I forgot what I had been thinking about.
 
 **Translation `ja`**
 
-> 机を片づけたら、電池が三つ、ペンはなし、古い切符が一枚出てきた。こぎつね座は、にぎやかな星のどこかにいた。そのあと、何を考えていたか忘れた、通りが静かなまま。
+> 机を片づけたら、電池が三つ、ペンはなし、古い切符が一枚出てきた。こぎつね座は、にぎやかな星のどこかにいた。そのあと、何を考えていたか忘れた。
 
 ### Pack `base_003`
 
@@ -1582,11 +1582,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The freezer made a strange sound at midnight. I opened it, found nothing wrong, and stayed by the window with Orion. Only the thing in my hand felt properly real, while the street stayed quiet. The bike lock clicked, and that was enough of an ending.
+> The freezer made a strange sound at midnight. I opened it, found nothing wrong, and stayed by the window with Orion. Only the thing in my hand felt properly real. The bike lock clicked, and that was enough of an ending.
 
 **Translation `ja`**
 
-> 真夜中に冷凍庫が変な音を出した。開けてもなにもなくて、そのまま窓辺でオリオン座を見ていた。手の中のものだけが、ちゃんと重かった、通りが静かなまま。自転車の鍵が鳴って、それで終わりにした。
+> 真夜中に冷凍庫が変な音を出した。開けてもなにもなくて、そのまま窓辺でオリオン座を見ていた。手の中のものだけが、ちゃんと重かった。自転車の鍵が鳴って、それで終わりにした。
 
 #### `base_003_003`
 
@@ -1601,11 +1601,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 風呂上がりに外へ出たら、サンダルが冷たかった。おおぐま座の形だけはすぐ分かった。風が止むまで、そこに立っていた、通りが静かなまま。
+> 風呂上がりに外へ出たら、サンダルが冷たかった。おおぐま座の形だけはすぐ分かった。風が止むまで、そこに立っていた。
 
 **Translation `en`**
 
-> After a bath I stepped outside, and my sandals were cold. I could recognize Ursa Major right away. I stood there until the wind settled, while the street stayed quiet.
+> After a bath I stepped outside, and my sandals were cold. I could recognize Ursa Major right away. I stood there until the wind settled.
 
 #### `base_003_004`
 
@@ -1620,11 +1620,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I bought oranges because they looked louder than everything else. Cassiopeia was above the street when I carried them home. Even on a nameless day, night arrived properly, while the street stayed quiet.
+> I bought oranges because they looked louder than everything else. Cassiopeia was above the street when I carried them home. Even on a nameless day, night arrived properly.
 
 **Translation `ja`**
 
-> ほかの何より目立って見えたから、オレンジを買った。袋を下げて帰る道の上にカシオペヤ座があった。名前のない日でも、夜はちゃんと来た、通りが静かなまま。
+> ほかの何より目立って見えたから、オレンジを買った。袋を下げて帰る道の上にカシオペヤ座があった。名前のない日でも、夜はちゃんと来た。
 
 #### `base_003_005`
 
@@ -1658,11 +1658,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The night market smelled like smoke and sweet rice. I looked up between two signs and found Vega. I stayed outside for one more minute, near the doorway. The extra weight kept the walk from feeling blank.
+> The night market smelled like smoke and sweet rice. I looked up between two signs and found Vega. I lingered until the bag stopped steaming. The extra weight kept the walk from feeling blank.
 
 **Translation `ja`**
 
-> 夜市は煙と甘い米のにおいがした。二つの看板の間を見上げると、ベガがあった。そのまま、もうすこしだけ外にいた、入口の近くで。両手がふさがっていると、考えごとも少しゆっくりになる、駅の明かりのそばで。
+> 夜市は煙と甘い米のにおいがした。二つの看板の間を見上げると、ベガがあった。袋の湯気が落ち着くまで、そこにいた。両手がふさがっていると、考えごとも少しゆっくりになる。
 
 #### `base_003_007`
 
@@ -1677,11 +1677,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 今日の会議で言うつもりだったことを、帰ってから思い出した。机にメモして、外でペガスス座を見た。ロード画面が終わっても、まだ少し動きたくなかった。
+> 今日の会議で言うつもりだったことを、帰ってから思い出した。机にメモして、外でペガスス座を見た。そのころには、言えなかったことも少しだけ急ぎではなくなっていた。
 
 **Translation `en`**
 
-> I remembered what I meant to say in today's meeting only after I got home. I wrote it down, then went outside and saw Pegasus. The loading screen finished before I was ready to move.
+> I remembered what I meant to say in today's meeting only after I got home. I wrote it down, then went outside and saw Pegasus. By then the sentence felt less urgent, which was probably good.
 
 #### `base_003_008`
 
@@ -1696,11 +1696,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> My aunt laughed so hard that the table shook. Later, Scorpius was bright enough to make the yard feel awake. For some reason, I did not have to hurry just then, while the street stayed quiet.
+> My aunt laughed so hard that the table shook. Later, Scorpius was bright enough to make the yard feel awake. I let the dishes wait a little longer than usual.
 
 **Translation `ja`**
 
-> おばが大笑いして、テーブルがゆれた。そのあと、さそり座が明るくて庭まで起きているみたいだった。なぜか、その時間だけは急がなくてよかった、入口の近くで。
+> おばが大笑いして、テーブルがゆれた。そのあと、さそり座が明るくて庭まで起きているみたいだった。いつもより少しだけ、皿を待たせた。
 
 #### `base_003_009`
 
@@ -1734,11 +1734,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I practiced saying sorry in my head and never used it. The Big Dipper was tilted over the rooftops. My keys made a small sound in my pocket, near the doorway. The ticket in my pocket kept bending at the same place, beside the station lights.
+> I practiced saying sorry in my head and never used it. The Big Dipper was tilted over the rooftops. My key ring tapped the ticket in my pocket. The ticket kept bending at the same place.
 
 **Translation `ja`**
 
-> ごめんと言う練習を頭の中でしたけど、結局使わなかった。北斗七星が屋根の上でかたむいていた。ポケットの中で鍵が小さく鳴った、入口の近くで。ポケットの切符だけが、同じところで折れていた、駅の明かりのそばで。
+> ごめんと言う練習を頭の中でしたけど、結局使わなかった。北斗七星が屋根の上でかたむいていた。ポケットの中で鍵の輪が切符に当たった。切符だけが、同じところで折れていた。
 
 #### `base_003_011`
 
@@ -1753,11 +1753,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 港のベンチで、パンの最後のひとかけを食べた。袋を丸める音が大きくて、みずがめ座は低かった。それで今日がすこしましになった、入口の近くで。
+> 港のベンチで、パンの最後のひとかけを食べた。袋を丸める音が大きくて、みずがめ座は低かった。空腹が消えた分だけ、今日の形がましになった。
 
 **Translation `en`**
 
-> On a bench by the port, I ate the last piece of bread. The bag sounded loud when I folded it, and Aquarius was low. It made the day feel a little less crooked, near the doorway.
+> On a bench by the port, I ate the last piece of bread. The bag sounded loud when I folded it, and Aquarius was low. With the hunger gone, the day found a better shape.
 
 #### `base_003_012`
 
@@ -1848,11 +1848,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I sent the email without the attachment, then sent another email about the attachment. Hercules did not judge me. I smiled a little without telling anyone, near the doorway.
+> I sent the email without the attachment, then sent another email about the attachment. Hercules did not judge me. I allowed myself one quiet laugh.
 
 **Translation `ja`**
 
-> 添付を忘れてメールを送り、そのあと添付についてのメールをもう一通送った。ヘルクレス座はなにも言わなかった。だれにも言わないまま、少し笑った、入口の近くで。
+> 添付を忘れてメールを送り、そのあと添付についてのメールをもう一通送った。ヘルクレス座はなにも言わなかった。小さく一回だけ笑うことにした。
 
 #### `base_003_017`
 
@@ -1886,11 +1886,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I watered the plants too late, and the hose clicked against the wall. Sagittarius was bright above the dark fence. The ground was dark, but I felt a little lighter, near the doorway. The back step stopped feeling borrowed after a while.
+> I watered the plants too late, and the hose clicked against the wall. Sagittarius was bright above the dark fence. The ground was dark, but I felt a little lighter. The back step stopped feeling borrowed after a while.
 
 **Translation `ja`**
 
-> 遅い時間に植物へ水をやった。ホースが壁に当たって音を立てた。暗いフェンスの上にいて座が明るかった。裏口の段が、借り物みたいでなくなるまでいた、駅の明かりのそばで。
+> 遅い時間に植物へ水をやった。ホースが壁に当たって音を立てた。暗いフェンスの上にいて座が明るかった。裏口の段が、借り物みたいでなくなるまでいた。
 
 #### `base_003_019`
 
@@ -1905,11 +1905,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 旅館の廊下で、自分のスリッパの音だけがした。外は冷えていて、ぎょしゃ座の星がきれいだった。部屋にもどるのが、少しだけ惜しかった、駅の明かりのそばで。
+> 旅館の廊下で、自分のスリッパの音だけがした。外は冷えていて、ぎょしゃ座の星がきれいだった。部屋にもどるのが、少しだけ惜しかった。
 
 **Translation `en`**
 
-> In the inn hallway, only my own slippers made sound. Outside was cold, and the stars of Auriga looked clean. Going back inside felt like a small loss, while the street stayed quiet.
+> In the inn hallway, only my own slippers made sound. Outside was cold, and the stars of Auriga looked clean. Going back inside felt like a small loss.
 
 #### `base_003_020`
 
@@ -1924,11 +1924,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> My simulation finished with the wrong answer very confidently. I shut the laptop and let Bootes have the rest of the night. After that, I forgot what I had been thinking about, near the doorway.
+> My simulation finished with the wrong answer very confidently. I shut the laptop and let Bootes have the rest of the night. The wrong answer stayed inside the screen for once.
 
 **Translation `ja`**
 
-> シミュレーションは自信満々にまちがった答えを出した。ノートパソコンを閉じて、残りの夜をうしかい座に渡した。そのあと、何を考えていたか忘れた、入口の近くで。
+> シミュレーションは自信満々にまちがった答えを出した。ノートパソコンを閉じて、残りの夜をうしかい座に渡した。まちがった答えは、めずらしく画面の中に残った。
 
 #### `base_003_021`
 
@@ -1943,11 +1943,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 雪かきをすこしだけして、すぐ腰が重くなった。息が白くて、ふたご座の下で休んだ。手の中のものだけが、ちゃんと重かった、入口の近くで。
+> 雪かきをすこしだけして、すぐ腰が重くなった。息が白くて、ふたご座の下で休んだ。スコップの重さだけは、はっきり本物だった。
 
 **Translation `en`**
 
-> I shoveled snow for a little while, and my back got heavy fast. My breath was white, and I rested under Gemini. Only the thing in my hand felt properly real, near the doorway.
+> I shoveled snow for a little while, and my back got heavy fast. My breath was white, and I rested under Gemini. The shovel's weight was the only thing that felt clearly real.
 
 #### `base_003_022`
 
@@ -1962,11 +1962,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The fan made the receipt flutter on the table. I kept doing sums on the back of it. Virgo was pale but there. The hallway light made the evening look smaller, beside the station lights. A receipt folded in my pocket.
+> The fan made the receipt flutter on the table. I kept doing sums on the back of it. Virgo was pale but there. The hallway light made the evening look smaller. A receipt folded in my pocket.
 
 **Translation `ja`**
 
-> 扇風機でレシートが机の上でゆれた。その裏に計算を続けた。おとめ座は淡いけれど、そこにあった。廊下の明かりで、夜が少し小さく見えた、駅の明かりのそばで。ポケットの中で、レシートが折れた。
+> 扇風機でレシートが机の上でゆれた。その裏に計算を続けた。おとめ座は淡いけれど、そこにあった。廊下の明かりで、夜が少し小さく見えた。ポケットの中で、レシートが折れた。
 
 #### `base_003_023`
 
@@ -1981,11 +1981,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 湖のそばで電話を切ったあと、しばらくなにも持っていない手を見ていた。そらにはりゅう座が続いていた。風が止むまで、そこに立っていた、入口の近くで。
+> 湖のそばで電話を切ったあと、しばらくなにも持っていない手を見ていた。そらにはりゅう座が続いていた。波の音が薄くなるまで、そこに立っていた。
 
 **Translation `en`**
 
-> After ending a call by the lake, I stared for a while at the hand that held nothing. Draco continued across the sky. I stood there until the wind settled, near the doorway.
+> After ending a call by the lake, I stared for a while at the hand that held nothing. Draco continued across the sky. I stood there until the sound of the waves thinned out.
 
 #### `base_003_024`
 
@@ -2019,11 +2019,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 店を閉めたあと、レジ下から一円玉が出てきた。得したような、負けたような気分でケフェウス座を見た。名前のない日でも、夜はちゃんと来た、入口の近くで。
+> 店を閉めたあと、レジ下から一円玉が出てきた。得したような、負けたような気分でケフェウス座を見た。名前のない日でも、一円はちゃんと光った。
 
 **Translation `en`**
 
-> After closing the shop, I found a one-yen coin under the register. Feeling both lucky and defeated, I looked at Cepheus. Even on a nameless day, night arrived properly, near the doorway.
+> After closing the shop, I found a one-yen coin under the register. Feeling both lucky and defeated, I looked at Cepheus. Even on a nameless day, the coin shone properly.
 
 #### `base_003_026`
 
@@ -2042,7 +2042,7 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Translation `ja`**
 
-> 前髪を自分で切って、すぐ問題を理解した。鏡は正直だった。おおいぬ座のほうがやさしかった。紙袋の角が手に当たって、ちゃんと買い物をした気がした、駅の明かりのそばで。
+> 前髪を自分で切って、すぐ問題を理解した。鏡は正直だった。おおいぬ座のほうがやさしかった。紙袋の角が手に当たって、ちゃんと買い物をした気がした。
 
 #### `base_003_027`
 
@@ -2076,11 +2076,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The sea was not visible from here, but the wind kept insisting. Aquarius sat low in a gap between apartments. I stayed outside for one more minute, after the wind moved on.
+> The sea was not visible from here, but the wind kept insisting. Aquarius sat low in a gap between apartments. I stayed until the wind changed its mind.
 
 **Translation `ja`**
 
-> ここから海は見えないのに、風だけがそう言い張っていた。みずがめ座はマンションの隙間に低くあった。そのまま、もうすこしだけ外にいた、風が過ぎたあとで。
+> ここから海は見えないのに、風だけがそう言い張っていた。みずがめ座はマンションの隙間に低くあった。風の言い方が変わるまで、そこにいた。
 
 #### `base_003_029`
 
@@ -2114,11 +2114,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I missed my stop by one station because the book finally got good. Orion was over the platform when I crossed back. For some reason, I did not have to hurry just then, near the doorway. A little dust from the platform followed my shoes home, beside the station lights.
+> I missed my stop by one station because the book finally got good. Orion was over the platform when I crossed back. Missing the stop made the extra platform feel permitted. A little dust from the platform followed my shoes home.
 
 **Translation `ja`**
 
-> 本が急に面白くなって、一駅乗り過ごした。戻るホームの上にオリオン座があった。なぜか、その時間だけは急がなくてよかった、風が過ぎたあとで。ホームのほこりが少しだけ、くつについて帰った、駅の明かりのそばで。
+> 本が急に面白くなって、一駅乗り過ごした。戻るホームの上にオリオン座があった。乗り過ごしたせいで、余分なホームにいても許された気がした。ホームのほこりが少しだけ、くつについて帰った。
 
 #### `base_003_031`
 
@@ -2133,11 +2133,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> ペルセウス座流星群を待っていたら、先に蚊取り線香が終わった。流れ星はそのあと、ひとつだけ来た。ポケットの中で鍵が小さく鳴った、風が過ぎたあとで。
+> ペルセウス座流星群を待っていたら、先に蚊取り線香が終わった。流れ星はそのあと、ひとつだけ来た。ポケットの中で鍵が小さく鳴った。
 
 **Translation `en`**
 
-> While I waited for the Perseids, the mosquito coil finished first. One meteor came after that. My keys made a small sound in my pocket, after the wind moved on.
+> While I waited for the Perseids, the mosquito coil finished first. One meteor came after that. My keys made a small sound in my pocket.
 
 #### `base_003_032`
 
@@ -2152,7 +2152,7 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The kettle clicked off and the room became very quiet. I held the cup with both hands and looked north, where Polaris kept its job. It made the day feel a little less crooked, after the wind moved on.
+> The kettle clicked off and the room became very quiet. I held the cup with both hands and looked north, where Polaris kept its job. It made the day feel a little less crooked.
 
 **Translation `ja`**
 
@@ -2268,11 +2268,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I walked home with fish and chips wrapped in paper. The vinegar leaked through before the hill was over. Scorpius was bright enough to forgive the mess. The umbrella finally stopped dripping by my shoe, beside the station lights.
+> I walked home with fish and chips wrapped in paper. The vinegar leaked through before the hill was over. Scorpius was bright enough to forgive the mess. The umbrella finally stopped dripping by my shoe.
 
 **Translation `ja`**
 
-> 紙に包んだフィッシュアンドチップスを持って帰った。坂の途中で、酢が紙からしみてきた。さそり座は、そのくらい許してくれそうに明るかった。傘のしずくが、くつの横でやっと止まった、駅の明かりのそばで。
+> 紙に包んだフィッシュアンドチップスを持って帰った。坂の途中で、酢が紙からしみてきた。さそり座は、そのくらい許してくれそうに明るかった。傘のしずくが、くつの横でやっと止まった。
 
 #### `base_004_007`
 
@@ -2344,11 +2344,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The pub door opened and let one bright song into the street. I did not know the words, but I knew the chorus was coming. Gemini was above the roofs when it did. I put the notebook down without opening it again, beside the station lights.
+> The pub door opened and let one bright song into the street. I did not know the words, but I knew the chorus was coming. Gemini was above the roofs when it did. I waited until the song ended before walking on.
 
 **Translation `ja`**
 
-> パブのドアが開いて、明るい歌が道に出てきた。歌詞は知らないけど、サビが来るのは分かった。ふたご座は、その屋根の上にあった。ノートは開き直さず、そのまま机に置いた、駅の明かりのそばで。
+> パブのドアが開いて、明るい歌が道に出てきた。歌詞は知らないけど、サビが来るのは分かった。ふたご座は、その屋根の上にあった。曲が終わるまで待ってから、また歩き出した。
 
 #### `base_004_011`
 
@@ -2420,11 +2420,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I bought a cheap umbrella because the sky looked undecided. It did not rain, so I carried it like a promise. Leo was rising above the station lights. At least the umbrella gave the weather a reason. It felt like I had a little time left over, beside the station lights.
+> I bought a cheap umbrella because the sky looked undecided. It did not rain, so I carried it like a promise. Leo was rising above the station lights. At least the umbrella gave the weather a reason. It felt like I had a little time left over.
 
 **Translation `ja`**
 
-> そらが決めかねているようで、安い傘を買った。雨は降らず、約束みたいに持って歩いた。駅の灯りの上に、しし座が上がっていた。荷物があるぶん、帰る理由も少しはっきりした、駅の明かりのそばで。少しだけ、時間が余った感じがした、駅の明かりのそばで。
+> そらが決めかねているようで、安い傘を買った。雨は降らず、約束みたいに持って歩いた。駅の灯りの上に、しし座が上がっていた。荷物があるぶん、帰る理由も少しはっきりした。少しだけ、時間が余った感じがした。
 
 #### `base_004_015`
 
@@ -2496,11 +2496,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> My neighbor played the same song three times. By the third time, I was almost on its side. Antares was red above the laundry lines. The sky looked rinsed, though the street was still messy, beside the station lights.
+> My neighbor played the same song three times. By the third time, I was almost on its side. Antares was red above the laundry lines. The sky looked rinsed, though the street was still messy.
 
 **Translation `ja`**
 
-> となりの人が、同じ曲を三回かけた。三回目には、少し味方になっていた。物干しの上で、アンタレスが赤かった。道はまだ散らかっていたけど、空だけ洗ったみたいだった、駅の明かりのそばで。
+> となりの人が、同じ曲を三回かけた。三回目には、少し味方になっていた。物干しの上で、アンタレスが赤かった。道はまだ散らかっていたけど、空だけ洗ったみたいだった。
 
 #### `base_004_019`
 
@@ -2650,11 +2650,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The train platform smelled like wet concrete. I tried to answer a message and typed only one word. Vega was sharp between two office towers. The bread heel tasted better than it looked, beside the station lights.
+> The train platform smelled like wet concrete. I tried to answer a message and typed only one word. Vega was sharp between two office towers. The bread heel tasted better than it looked.
 
 **Translation `ja`**
 
-> 電車のホームは、ぬれたコンクリートのにおいがした。返事を打とうとして、一語だけで止まった。二つのビルの間で、ベガがくっきりしていた。パンの端は、見た目よりずっとおいしかった、駅の明かりのそばで。
+> 電車のホームは、ぬれたコンクリートのにおいがした。返事を打とうとして、一語だけで止まった。二つのビルの間で、ベガがくっきりしていた。パンの端は、見た目よりずっとおいしかった。
 
 #### `base_005_003`
 
@@ -2726,11 +2726,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I washed a coffee stain from my sleeve in the office sink. It faded, but not enough to be forgotten. Draco was long and quiet above the bike racks. The bike lock clicked, and that was enough of an ending, beside the station lights.
+> I washed a coffee stain from my sleeve in the office sink. It faded, but not enough to be forgotten. Draco was long and quiet above the bike racks. The bike lock clicked, and that was enough of an ending.
 
 **Translation `ja`**
 
-> 会社の流しで、袖についたコーヒーのしみを洗った。薄くはなったけど、忘れるほどではなかった。駐輪場の上で、りゅう座が長く静かだった。自転車の鍵が鳴って、それで終わりにした、駅の明かりのそばで。
+> 会社の流しで、袖についたコーヒーのしみを洗った。薄くはなったけど、忘れるほどではなかった。駐輪場の上で、りゅう座が長く静かだった。自転車の鍵が鳴って、それで終わりにした。
 
 #### `base_005_007`
 
@@ -2806,7 +2806,7 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Translation `ja`**
 
-> エレベーターは、先に私の階以外の全部で止まった。誰かがドリアンを買っていて、みんな気づかないふりをした。やっと外へ出ると、棟の上にオリオン座があった。指が少し痛いくらいで、今日の重さにはちょうどよかった、駅の明かりのそばで。
+> エレベーターは、先に私の階以外の全部で止まった。誰かがドリアンを買っていて、みんな気づかないふりをした。やっと外へ出ると、棟の上にオリオン座があった。指が少し痛いくらいで、今日の重さにはちょうどよかった。
 
 #### `base_005_011`
 
@@ -2878,11 +2878,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> I called my father to ask one simple question. He answered it, then talked about his neighbor's broken gate for eight minutes. Leo was rising when I hung up. The last note of the song kept changing shape in my head, beside the station lights. My palm had gone a little cold, beside the station lights.
+> I called my father to ask one simple question. He answered it, then talked about his neighbor's broken gate for eight minutes. Leo was rising when I hung up. The last note of the song kept changing shape in my head. My palm had gone a little cold.
 
 **Translation `ja`**
 
-> 父に、簡単なことをひとつ聞くために電話した。答えはすぐ返ってきて、そのあと近所の壊れた門の話が八分続いた。電話を切るころ、しし座が上がっていた。歌の最後の音だけが、頭の中で形を変えていた、駅の明かりのそばで。手のひらが、少し冷えていた、駅の明かりのそばで。
+> 父に、簡単なことをひとつ聞くために電話した。答えはすぐ返ってきて、そのあと近所の壊れた門の話が八分続いた。電話を切るころ、しし座が上がっていた。歌の最後の音だけが、頭の中で形を変えていた。手のひらが、少し冷えていた。
 
 #### `base_005_015`
 
@@ -3034,7 +3034,7 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Translation `ja`**
 
-> 近い道は人が多くて、遠回りを選んだ。遠回りには、静かなパン屋のまどがひとつあった。閉店の札の上に、ケフェウス座が淡く見えた。ホースの水が、地面に細い銀色の線を作っていた、駅の明かりのそばで。
+> 近い道は人が多くて、遠回りを選んだ。遠回りには、静かなパン屋のまどがひとつあった。閉店の札の上に、ケフェウス座が淡く見えた。ホースの水が、地面に細い銀色の線を作っていた。
 
 #### `base_005_023`
 
@@ -3336,11 +3336,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> My neighbor's porch light flickered all evening. I thought about telling them and did not. Draco curved above the quiet houses. I wanted to remember that, beside the station lights. I wanted to remember that, while the street stayed quiet.
+> My neighbor's porch light flickered all evening. I thought about telling them and did not. Draco curved above the quiet houses. I wanted to remember that. The light stopped once, then started again.
 
 **Translation `ja`**
 
-> となりの玄関灯が、夕方からずっとちらついていた。教えようかと思って、結局そのままにした。静かな家並みの上で、りゅう座が曲がっていた。それを覚えていたいと思った、駅の明かりのそばで。それを覚えていたいと思った、通りが静かなまま。
+> となりの玄関灯が、夕方からずっとちらついていた。教えようかと思って、結局そのままにした。静かな家並みの上で、りゅう座が曲がっていた。それを覚えていたいと思った。灯りは一度止まって、またちらついた。
 
 #### `base_006_015`
 
@@ -3756,7 +3756,7 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The rain started after the laundry was almost dry. I took everything in and pretended that was the original plan. Vega appeared later, when the roof stopped dripping.
+> The rain started just as the laundry was almost dry. I rushed everything inside and pretended that had been the plan. Later, when the roof stopped dripping, Vega appeared between the clouds.
 
 **Translation `ja`**
 
@@ -3965,11 +3965,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 砂浜で、流木に座って靴の中の砂を出した。全部は出なくて、あきらめた。海の上に、みずがめ座が低かった、駅の明かりのそばで。
+> 砂浜で、流木に座って靴の中の砂を出した。全部は出なくて、あきらめた。海の上に、みずがめ座が低かった。
 
 **Translation `en`**
 
-> On the beach, I sat on driftwood and emptied sand from my shoes. It did not all come out, so I gave up. Aquarius was low over the sea, beside the station lights.
+> On the beach, I sat on driftwood and emptied sand from my shoes. It did not all come out, so I gave up. Aquarius was low over the sea.
 
 #### `base_007_016`
 
@@ -4176,11 +4176,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> ひびの入ったスマホケースがラーメン屋ののれんよりまじめそうに見えた。犬が一度だけ鳴いて、その件は終わった、ラーメン屋ののれんで、ひびの入ったスマホケースといっしょに。雲がラーメン屋ののれんを離れると、ケンタウルス座が戻ってきた、その先にはひびの入ったスマホケース。
+> 紙コップを持って着くころ、トラムの停留所にはほとんど人がいなかった。トラムの停留所の上にケンタウルス座が見えて、そこで時間を見るのをやめるには十分だった。電車が来る前、トラムの停留所を出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A cracked phone case looked more serious than the noodle shop curtain. A dog barked once, then left the matter there near the noodle shop curtain, with a cracked phone case. Centaurus returned when the clouds left the noodle shop curtain alone, just past a cracked phone case.
+> The tram stop was nearly empty by the time I got there with a paper cup. Centaurus was visible above the tram stop, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the tram stop, before the train arrived.
 
 #### `base_008_003`
 
@@ -4195,11 +4195,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A bag of plums became the main event at the parking lot. Someone's laughter crossed the street before the people did near the parking lot, with a bag of plums. Leo made the dark around the parking lot feel arranged, while I held a bag of plums.
+> At the balcony, I checked twice and found a damp towel both times, before I checked my phone. I looked up from a damp towel and found Leo above the same place. It did not fix anything, but a damp towel made the walk home feel shorter.
 
 **Translation `ja`**
 
-> すももの袋が駐車場で主役みたいになった。人より先に、笑い声が道を渡った、駐車場で、すももの袋といっしょに。しし座のせいで、駐車場のまわりの暗さが少し並んで見えた、手にはすももの袋。
+> ベランダで二回確かめた。スマホを見る前、二回とも少しぬれたタオルがあった。少しぬれたタオルから顔を上げると、その場所の上にしし座があった。何も解決していないけど、少しぬれたタオルのせいで帰り道は少し短く感じた。
 
 #### `base_008_004`
 
@@ -4214,11 +4214,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A ferry rope smelled faintly of the hostel desk. I remembered the wrong song and hummed it anyway near the hostel desk, with a ferry rope. Over the hostel desk, Taurus looked less far than usual, near a ferry rope.
+> I stayed a little longer at the campus gate than I meant to, before I found my keys. When the last classroom light went out, Taurus became easier to see. The whole thing with a notebook with no title lasted maybe a minute, before I found my keys, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> フェリーのロープが宿の机の匂いを少し持っていた。違う曲を思い出して、そのまま鼻歌にした、宿の机で、フェリーのロープといっしょに。宿の机の上では、おうし座がいつもより近く見えた、近くにはフェリーのロープ。
+> 学校の門に、思ったより少し長くいた。鍵を見つける前、題名のないノートを持ったままだった。最後の教室の灯りが消えたころ、おうし座が少し見やすくなった。題名のないノートのあるその時間は、鍵を見つける前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_008_005`
 
@@ -4233,11 +4233,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A clinic number slip kept its balance on the quiet courtyard. I lost count of airplanes before seeing the meteor near the quiet courtyard, with a clinic number slip. Aries stayed visible past the wires near the quiet courtyard, just past a clinic number slip. The room looked slightly rearranged when I returned, beside the quiet courtyard.
+> Nothing important happened at the library steps. I just kept holding a library card, before the next door opened. At the library steps, the return slot clacked behind me, before the next door opened, so I looked up and found Aries. For a while, a library card was the most practical thing at the library steps, before the next door opened. I put my phone away and let Aries above the library steps be enough.
 
 **Translation `ja`**
 
-> 病院の番号札が静かな中庭の上でなんとか立っていた。流れ星を見る前に、飛行機の数を忘れた、静かな中庭で、病院の番号札といっしょに。静かな中庭の近くの電線の向こうに、おひつじ座はまだ見えていた、その先には病院の番号札。戻った部屋は、少しだけ並び方が変わって見えた、そばには静かな中庭。
+> 図書館の階段では、たいしたことは起きなかった。次のドアが開く前、ただ図書館カードを持ったままでいた。図書館の階段では、次のドアが開く前に後ろで返却口が鳴ったので、顔を上げるとおひつじ座があった。しばらくは、次のドアが開く前の図書館の階段で、図書館カードがいちばん現実的なものだった。スマホはしまって、図書館の階段の上のおひつじ座で十分ということにした。
 
 #### `base_008_006`
 
@@ -4252,11 +4252,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 最後のパンが会社の流しの下へ転がった。上の階で何かが落ちて、静けさが終わった、会社の流しで、最後のパンといっしょに。会社の流しのそばの看板より、はくちょう座のほうがはっきりしていた、手には最後のパン。
+> 閉まったパン屋で用事がほとんど終わったころ、最後のパンが目に入った。閉まったパン屋の上にはくちょう座が見えて、そこで時間を見るのをやめるには十分だった。まだパンの匂いが道まで残っていたころ、後ろを誰かが通って、閉まったパン屋のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> The last bread roll rolled under the office sink. Somebody upstairs dropped something and ended the silence near the office sink, with the last bread roll. Cygnus was clearer than the sign beside the office sink, while I held the last bread roll.
+> I was almost done at the closed bakery when I noticed the last bread roll. Cygnus was visible above the closed bakery, enough to stop checking the time there. Someone passed behind me while the warm smell still reached the street, and the ordinary night at the closed bakery started again.
 
 #### `base_008_007`
 
@@ -4271,11 +4271,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> フェリーの切符が講義室の近くで落ちた。みんなが違う空を見ている時に、ひとつ流れた、講義室で、フェリーの切符といっしょに。講義室の上の細いすきまに、ペガスス座がちょうど入った、近くにはフェリーの切符。次のふつうのことは、部屋の中で待っていた、目に入ったのはフェリーの切符。
+> 自販機で立ち止まった。手には小銭が残っていた。小銭から顔を上げると、その場所の上にペガスス座があった。しばらくは、中へ戻る前の自販機で、小銭がいちばん現実的なものだった。中へ戻る前、自販機を出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A ferry ticket fell out near the lecture hall. One meteor appeared while everyone checked a different patch of sky near the lecture hall, with a ferry ticket. A thin gap above the lecture hall was just enough for Pegasus, near a ferry ticket. The next ordinary thing waited indoors, after noticing a ferry ticket.
+> I stopped at the vending machine with a loose coin still in my hand. I looked up from a loose coin and found Pegasus above the same place. For a while, a loose coin was the most practical thing at the vending machine, before I went back in. I remembered one small thing I still had to do after leaving the vending machine, before I went back in.
 
 #### `base_008_008`
 
@@ -4290,11 +4290,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A white envelope survived the walk past the dorm kitchen. I decided not to improve the moment by explaining it near the dorm kitchen, with a white envelope. Virgo gave the corner by the dorm kitchen a little depth, just past a white envelope.
+> The cinema lobby was nearly empty by the time I got there with a theater flyer. Through the nearest window at the cinema lobby, I could make out Virgo. It did not fix anything, but a theater flyer made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 白い封筒が寮の台所を通る道をなんとか生きのびた。説明してよくするのは、やめておいた、寮の台所で、白い封筒といっしょに。おとめ座のおかげで、寮の台所の角に少し奥行きが出た、その先には白い封筒。
+> 映画館のちらしを持って着くころ、映画館のロビーにはほとんど人がいなかった。映画館のロビーの近くの窓から、おとめ座が見えた。何も解決していないけど、映画館のちらしのせいで帰り道は少し短く感じた。
 
 #### `base_008_009`
 
@@ -4309,11 +4309,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A key ring took up too much room on the old bridge. The radio caught a town I have never visited near the old bridge, with a key ring. Near the old bridge, Cassiopeia looked like part of the errand, while I held a key ring.
+> The old bridge was nearly empty by the time I got there with a red scarf. When the river carried the traffic noise away, Cassiopeia became easier to see. The whole thing with a red scarf lasted maybe a minute, while the window stayed dark, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 鍵の輪が古い橋の上で場所を取りすぎていた。ラジオが、行ったことのない町を拾った、古い橋で、鍵の輪といっしょに。古い橋の近くでは、カシオペヤ座まで用事の一部みたいだった、手には鍵の輪。
+> 赤いマフラーを持って着くころ、古い橋にはほとんど人がいなかった。川が車の音を少し遠くしたころ、カシオペヤ座が少し見やすくなった。赤いマフラーのあるその時間は、窓が暗いままのあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_008_010`
 
@@ -4328,11 +4328,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A bowl of cereal turned ordinary beside the ferry deck. My pocket held one more useless proof of the day near the ferry deck, with a bowl of cereal. Leo made the dark around the ferry deck feel arranged, near a bowl of cereal.
+> At the ferry deck, I checked twice and found a ferry ticket both times, while the hallway cooled. At the ferry deck, the wake stayed white behind the boat, while the hallway cooled, so I looked up and found Leo. I put my phone away and let Leo above the ferry deck be enough.
 
 **Translation `ja`**
 
-> シリアルの茶わんがフェリーの甲板の横でふつうに戻った。ポケットには、今日の役に立たない証拠が一つ増えた、フェリーの甲板で、シリアルの茶わんといっしょに。しし座のせいで、フェリーの甲板のまわりの暗さが少し並んで見えた、近くにはシリアルの茶わん。
+> フェリーの甲板で二回確かめた。廊下が冷えるあいだ、二回ともフェリーの切符があった。フェリーの甲板では、廊下が冷えるあいだに船の後ろに白い航跡が残ったので、顔を上げるとしし座があった。スマホはしまって、フェリーの甲板の上のしし座で十分ということにした。
 
 #### `base_008_011`
 
@@ -4347,11 +4347,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 折った地図が港のフェンスの上で静かにしていた。ドアが勝手に開いた以外、こわいことは何もない、港のフェンスで、折った地図といっしょに。港のフェンスの明かりが一度またたいてから、おうし座を見つけた、その先には折った地図。意味を持たせすぎる前に、中へ入った、目に入ったのは折った地図。
+> 会社の給湯室に、思ったより少し長くいた。コップが冷めるあいだ、欠けたマグを持ったままだった。会社の給湯室の近くの窓から、おうし座が見えた。しばらくは、コップが冷めるあいだの会社の給湯室で、欠けたマグがいちばん現実的なものだった。冷蔵庫が低く鳴っていたころ、後ろを誰かが通って、会社の給湯室のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A folded map sat quietly on the harbor fence. Nothing spooky happened, except the door opening by itself near the harbor fence, with a folded map. I found Taurus after the light on the harbor fence blinked once, just past a folded map. I went in before making it too meaningful, after noticing a folded map.
+> I stayed a little longer at the office kitchenette than I meant to, while the cup cooled. Through the nearest window at the office kitchenette, I could make out Taurus. For a while, a chipped mug was the most practical thing at the office kitchenette, while the cup cooled. Someone passed behind me while the refrigerator hummed, and the ordinary night at the office kitchenette started again.
 
 #### `base_008_012`
 
@@ -4366,11 +4366,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 弁当箱のふたがエレベーターの鏡のそばで忘れられていた。何も解決していないけど、場所だけは変えた、エレベーターの鏡で、弁当箱のふたといっしょに。エレベーターの鏡の上が開いて、おひつじ座が静かにそこへ入った、手には弁当箱のふた。
+> 講義室では、たいしたことは起きなかった。靴が乾いたあと、ただ短いえんぴつを持ったままでいた。講義室の近くの窓から、おひつじ座が見えた。また動き出すころには、靴が乾いたあと、手の中の短いえんぴつが少し冷えていた。
 
 **Translation `en`**
 
-> A lunch box lid stayed forgotten by the elevator mirror. I did not solve anything, but I changed location near the elevator mirror, with a lunch box lid. The space above the elevator mirror opened, and Aries took it quietly, while I held a lunch box lid.
+> Nothing important happened at the lecture hall. I just kept holding a pencil stub, after the shoes dried. Through the nearest window at the lecture hall, I could make out Aries. By the time I moved again, a pencil stub had cooled in my hand, after the shoes dried.
 
 #### `base_008_013`
 
@@ -4385,11 +4385,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A scratched water bottle waited in the shadow of the flower shop shutter. I stepped around a puddle and felt briefly skilled near the flower shop shutter, with a scratched water bottle. Cygnus was clearer than the sign beside the flower shop shutter, near a scratched water bottle. My phone stayed in my pocket, which improved the ending, beside the flower shop shutter.
+> I was almost done at the parking lot when I noticed a key ring. When a car light blinked once, Cygnus became easier to see. For a while, a key ring was the most practical thing at the parking lot, while the line moved slowly. It did not fix anything, but a key ring made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 傷のある水筒が花屋のシャッターの影で待っていた。水たまりをよけて、一瞬だけ上手に生きた気がした、花屋のシャッターで、傷のある水筒といっしょに。花屋のシャッターのそばの看板より、はくちょう座のほうがはっきりしていた、近くには傷のある水筒。スマホを出さなかったので、終わり方は少しましだった、そばには花屋のシャッター。
+> 駐車場で用事がほとんど終わったころ、鍵の輪が目に入った。車のライトが一度だけ光ったころ、はくちょう座が少し見やすくなった。しばらくは、列がゆっくり進むあいだの駐車場で、鍵の輪がいちばん現実的なものだった。何も解決していないけど、鍵の輪のせいで帰り道は少し短く感じた。
 
 #### `base_008_014`
 
@@ -4404,11 +4404,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A delivery sticker made the bench near the supermarket light. For a second the whole errand felt planned near the supermarket light, with a delivery sticker. Pegasus waited past the edge of the supermarket light, just past a delivery sticker.
+> I stopped at the kitchen table with a bowl from the sink still in my hand. Through the nearest window at the kitchen table, I could make out Pegasus. The whole thing with a bowl from the sink lasted maybe a minute, while the street stayed quiet, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 配達のシールがスーパーの明かりの近くのベンチを少し変えた。一瞬だけ、用事が全部予定通りに見えた、スーパーの明かりで、配達のシールといっしょに。スーパーの明かりの端の向こうで、ペガスス座が待っていた、その先には配達のシール。
+> 台所の机で立ち止まった。手には流しの茶わんが残っていた。台所の机の近くの窓から、ペガスス座が見えた。流しの茶わんのあるその時間は、道が静かなあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_008_015`
 
@@ -4423,11 +4423,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cold bicycle lock waited for permission near the night market. The page in my bag bent around the corner of a book near the night market, with a cold bicycle lock. I checked the time, then looked back at Virgo over the night market, while I held a cold bicycle lock.
+> The ticket gate was nearly empty by the time I got there with a bus pass. At the ticket gate, the gate beeped for someone else, after the screen went dark, so I looked up and found Virgo. I put my phone away and let Virgo above the ticket gate be enough.
 
 **Translation `ja`**
 
-> 冷たい自転車の鍵が夜の市場の近くで許可を待っているみたいだった。かばんの紙が、本の角にそって曲がった、夜の市場で、冷たい自転車の鍵といっしょに。時間を見てから、夜の市場の上のおとめ座をもう一度見た、手には冷たい自転車の鍵。
+> バスの定期を持って着くころ、改札にはほとんど人がいなかった。改札では、画面が暗くなったあとに別の人の改札が鳴ったので、顔を上げるとおとめ座があった。スマホはしまって、改札の上のおとめ座で十分ということにした。
 
 #### `base_008_016`
 
@@ -4442,11 +4442,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 題名のないノートが閉まったパン屋の中で小さな角になっていた。床が冷たくて、くつしたの薄さが分かった、閉まったパン屋で、題名のないノートといっしょに。閉まったパン屋の近くでは、カシオペヤ座まで用事の一部みたいだった、近くには題名のないノート。
+> バス停で二回確かめた。手が冷えるあいだ、二回とも冷たいお茶があった。バス停の上にカシオペヤ座が見えて、そこで時間を見るのをやめるには十分だった。次のバスまではまだ少しあったころ、後ろを誰かが通って、バス停のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A notebook with no title made a small corner in the closed bakery. The floor was cold enough to make my socks honest near the closed bakery, with a notebook with no title. Near the closed bakery, Cassiopeia looked like part of the errand, near a notebook with no title.
+> At the bus shelter, I checked twice and found a cold tea bottle both times, while my hands cooled. Cassiopeia was visible above the bus shelter, enough to stop checking the time there. Someone passed behind me while the next bus was still several minutes away, and the ordinary night at the bus shelter started again.
 
 #### `base_008_017`
 
@@ -4461,11 +4461,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cheap pair of gloves squeezed into the vending machine. The old clock nearby sounded too confident near the vending machine, with a cheap pair of gloves. When I looked up from the vending machine, Hercules was already there, just past a cheap pair of gloves. The next ordinary thing waited indoors, beside the vending machine.
+> At the bicycle racks, I checked twice and found a cold bicycle lock both times, after the chair creaked. I looked up from a cold bicycle lock and found Hercules above the same place. For a while, a cold bicycle lock was the most practical thing at the bicycle racks, after the chair creaked. By the time I moved again, a cold bicycle lock had cooled in my hand, after the chair creaked.
 
 **Translation `ja`**
 
-> 安い手袋が自販機の中へ押し込まれていた。近くの古い時計が、妙に自信のある音を立てた、自販機で、安い手袋といっしょに。自販機から顔を上げると、ヘルクレス座はもうそこにいた、その先には安い手袋。次のふつうのことは、部屋の中で待っていた、そばには自販機。
+> 自転車置き場で二回確かめた。椅子が鳴ったあと、二回とも冷たい自転車の鍵があった。冷たい自転車の鍵から顔を上げると、その場所の上にヘルクレス座があった。しばらくは、椅子が鳴ったあとの自転車置き場で、冷たい自転車の鍵がいちばん現実的なものだった。また動き出すころには、椅子が鳴ったあと、手の中の冷たい自転車の鍵が少し冷えていた。
 
 #### `base_008_018`
 
@@ -4480,11 +4480,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 充電コードが映画館のロビーの横で一度だけ鳴った。ちょうどいい時に、小さな風が通った、映画館のロビーで、充電コードといっしょに。映画館のロビーの上で、いて座が屋根の間に入っていた、手には充電コード。
+> コインランドリーに、思ったより少し長くいた。小さく止まったあと、片方だけ違うくつしたを持ったままだった。コインランドリーの近くの窓から、いて座が見えた。なんか普通に、コインランドリーのその場面はちょっとかわいかった。片方だけ違うくつしたのことを考えすぎる前に帰った。
 
 **Translation `en`**
 
-> A phone charger clicked once beside the cinema lobby. A little wind moved through at exactly the right time near the cinema lobby, with a phone charger. Sagittarius fitted between two roofs above the cinema lobby, while I held a phone charger.
+> I stayed a little longer at the laundromat than I meant to, after one small pause. Through the nearest window at the laundromat, I could make out Sagittarius. Honestly, the laundromat scene was kind of cute. I went home before I could overthink one mismatched sock.
 
 #### `base_008_019`
 
@@ -4499,11 +4499,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A theater flyer reminded me of the clinic window. The whole thing was tiny and somehow complete near the clinic window, with a theater flyer. The space above the clinic window opened, and Aries took it quietly, near a theater flyer. The night did not become better; it became more specific, after noticing a theater flyer.
+> Nothing important happened at the river railing. I just kept holding a small stone, after the cart rolled past. At the river railing, a bicycle bell crossed the path behind me, after the cart rolled past, so I looked up and found Aries. For a while, a small stone was the most practical thing at the river railing, after the cart rolled past. The whole thing with a small stone lasted maybe a minute, after the cart rolled past, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 映画館のちらしが病院のまどを思い出させた。全部小さいのに、なぜか足りていた、病院のまどで、映画館のちらしといっしょに。病院のまどの上が開いて、おひつじ座が静かにそこへ入った、近くには映画館のちらし。夜がよくなったというより、少し具体的になった、目に入ったのは映画館のちらし。
+> 川の手すりでは、たいしたことは起きなかった。カートが通ったあと、ただ小さな石を持ったままでいた。川の手すりでは、カートが通ったあとに後ろの道を自転車のベルが通ったので、顔を上げるとおひつじ座があった。しばらくは、カートが通ったあとの川の手すりで、小さな石がいちばん現実的なものだった。小さな石のあるその時間は、カートが通ったあとのたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_008_020`
 
@@ -4518,11 +4518,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A warm rice ball waited beside the library steps. I counted to seven for no practical reason near the library steps, with a warm rice ball. Past the library steps, Cygnus held its shape without hurry, just past a warm rice ball.
+> I was almost done at the small shrine when I noticed a small packet of seeds. Cygnus was visible above the small shrine, enough to stop checking the time there. I put my phone away and let Cygnus above the small shrine be enough.
 
 **Translation `ja`**
 
-> あたたかいおにぎりが図書館の階段の横で待っていた。理由もなく七まで数えた、図書館の階段で、あたたかいおにぎりといっしょに。図書館の階段の向こうで、はくちょう座は急がず形を保っていた、その先にはあたたかいおにぎり。
+> 小さな神社で用事がほとんど終わったころ、小さな種の袋が目に入った。小さな神社の上にはくちょう座が見えて、そこで時間を見るのをやめるには十分だった。スマホはしまって、小さな神社の上のはくちょう座で十分ということにした。
 
 #### `base_008_021`
 
@@ -4537,11 +4537,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小さく鳴るラジオがコインランドリーのドアよりまじめそうに見えた。手がふさがると、考えごとも少し遅くなった、コインランドリーのドアで、小さく鳴るラジオといっしょに。コインランドリーのドアの上では、ペガスス座がいつもより近く見えた、手には小さく鳴るラジオ。
+> スーパーの入口で立ち止まった。手にはしわのあるレシートが残っていた。しわのあるレシートから顔を上げると、その場所の上にペガスス座があった。後ろでカートが鳴ったころ、後ろを誰かが通って、スーパーの入口のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A quiet radio looked more serious than the laundromat door. My hands were busy, so my thoughts slowed down near the laundromat door, with a quiet radio. Over the laundromat door, Pegasus looked less far than usual, while I held a quiet radio.
+> I stopped at the supermarket entrance with a wrinkled receipt still in my hand. I looked up from a wrinkled receipt and found Pegasus above the same place. Someone passed behind me while the carts rattled behind me, and the ordinary night at the supermarket entrance started again.
 
 #### `base_008_022`
 
@@ -4556,11 +4556,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A rain-dark jacket became the main event at the river railing. The night had no opinion, and that helped near the river railing, with a rain-dark jacket. I checked the time, then looked back at Virgo over the river railing, near a rain-dark jacket.
+> The night market was nearly empty by the time I got there with a warm paper bag. I looked up from a warm paper bag and found Virgo above the same place. By the time I moved again, a warm paper bag had cooled in my hand, after the clock blinked.
 
 **Translation `ja`**
 
-> 雨で黒くなった上着が川の手すりで主役みたいになった。夜には意見がなくて、それが少し助かった、川の手すりで、雨で黒くなった上着といっしょに。時間を見てから、川の手すりの上のおとめ座をもう一度見た、近くには雨で黒くなった上着。
+> あたたかい紙袋を持って着くころ、夜の市場にはほとんど人がいなかった。あたたかい紙袋から顔を上げると、その場所の上におとめ座があった。また動き出すころには、時計が光ったあと、手の中のあたたかい紙袋が少し冷えていた。
 
 #### `base_008_023`
 
@@ -4575,11 +4575,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> はがきの切手が小さな神社の上で場所を取りすぎていた。近道はいろいろ知りすぎているので、遠回りした、小さな神社で、はがきの切手といっしょに。小さな神社の上のカシオペヤ座を、立ち止まる理由にした、その先にははがきの切手。スマホを出さなかったので、終わり方は少しましだった、目に入ったのははがきの切手。
+> 港のフェンスで二回確かめた。返事をする前、二回ともフェリーの切符があった。ロープが柱に小さく当たっていたころ、カシオペヤ座が少し見やすくなった。しばらくは、返事をする前の港のフェンスで、フェリーの切符がいちばん現実的なものだった。話にしたくなる前に、港のフェンスを離れた。
 
 **Translation `en`**
 
-> A postcard stamp took up too much room on the tiny shrine. I took the long way because the short way knew too much near the tiny shrine, with a postcard stamp. I used Cassiopeia above the tiny shrine as a reason to pause, just past a postcard stamp. My phone stayed in my pocket, which improved the ending, after noticing a postcard stamp.
+> At the harbor fence, I checked twice and found a ferry ticket both times, before I answered. When a rope knocked softly against a post, Cassiopeia became easier to see. For a while, a ferry ticket was the most practical thing at the harbor fence, before I answered. I left the harbor fence before the moment could turn into a story.
 
 #### `base_008_024`
 
@@ -4594,11 +4594,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A red sock turned ordinary beside the campus gate. Nobody noticed it, which made the scene easier to keep near the campus gate, with a red sock. A thin gap above the campus gate was just enough for Hercules, while I held a red sock. The night did not become better; it became more specific, because of a red sock. The receipt proved less than I wanted it to prove after the campus gate.
+> I stayed a little longer at the elevator lobby than I meant to, before I changed my mind. Through the nearest window at the elevator lobby, I could make out Hercules. For a while, a delivery sticker was the most practical thing at the elevator lobby, before I changed my mind. I could still hear how the floor number changed slowly. I remembered one small thing I still had to do after leaving the elevator lobby, before I changed my mind.
 
 **Translation `ja`**
 
-> 赤いくつしたが学校の門の横でふつうに戻った。だれも気づかないので、覚えておきやすかった、学校の門で、赤いくつしたといっしょに。学校の門の上の細いすきまに、ヘルクレス座がちょうど入った、手には赤いくつした。夜がよくなったというより、少し具体的になった、理由は赤いくつした。レシートは、思ったほど何も証明してくれなかった、学校の門のあとで。
+> エレベーターホールに、思ったより少し長くいた。気が変わる前、配達のシールを持ったままだった。エレベーターホールの近くの窓から、ヘルクレス座が見えた。しばらくは、気が変わる前のエレベーターホールで、配達のシールがいちばん現実的なものだった。階数表示がゆっくり変わったことだけは、まだ耳に残っていた。気が変わる前、エレベーターホールを出てから、まだやることをひとつ思い出した。
 
 #### `base_008_025`
 
@@ -4613,11 +4613,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cold tea bottle sat quietly on the bicycle racks. A dog barked once, then left the matter there near the bicycle racks, with a cold tea bottle. Sagittarius fitted between two roofs above the bicycle racks, near a cold tea bottle. The room looked slightly rearranged when I returned, beside the bicycle racks.
+> I stayed a little longer at the dorm kitchen than I meant to, before the light changed. Through the nearest window at the dorm kitchen, I could make out Sagittarius. For a while, a packet of instant noodles was the most practical thing at the dorm kitchen, before the light changed. I put my phone away and let Sagittarius above the dorm kitchen be enough.
 
 **Translation `ja`**
 
-> 冷たいお茶が自転車置き場の上で静かにしていた。犬が一度だけ鳴いて、その件は終わった、自転車置き場で、冷たいお茶といっしょに。自転車置き場の上で、いて座が屋根の間に入っていた、近くには冷たいお茶。戻った部屋は、少しだけ並び方が変わって見えた、そばには自転車置き場。
+> 寮の台所に、思ったより少し長くいた。信号が変わる前、カップめんを持ったままだった。寮の台所の近くの窓から、いて座が見えた。しばらくは、信号が変わる前の寮の台所で、カップめんがいちばん現実的なものだった。スマホはしまって、寮の台所の上のいて座で十分ということにした。
 
 #### `base_008_026`
 
@@ -4632,11 +4632,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小さな植木鉢が駅の壁の近くで手をあたためた。人より先に、笑い声が道を渡った、駅の壁で、小さな植木鉢といっしょに。雲が駅の壁を離れると、みずがめ座が戻ってきた、その先には小さな植木鉢。
+> 宿の机では、たいしたことは起きなかった。電車が来る前、ただ部屋の鍵を持ったままでいた。宿の机の近くの窓から、みずがめ座が見えた。廊下はもう静かだったころ、後ろを誰かが通って、宿の机のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A tiny flower pot warmed my hand near the station wall. Someone's laughter crossed the street before the people did near the station wall, with a tiny flower pot. Aquarius returned when the clouds left the station wall alone, just past a tiny flower pot.
+> Nothing important happened at the hostel desk. I just kept holding a room key, before the train arrived. Through the nearest window at the hostel desk, I could make out Aquarius. Someone passed behind me while the hallway had gone quiet, and the ordinary night at the hostel desk started again.
 
 #### `base_008_027`
 
@@ -4651,11 +4651,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cup of soup made me stop before the tram stop. I remembered the wrong song and hummed it anyway near the tram stop, with a cup of soup. Canis Major made the dark around the tram stop feel arranged, while I held a cup of soup.
+> I was almost done at the quiet courtyard when I noticed a tiny flower pot. When a window closed somewhere above, Canis Major became easier to see. By the time I moved again, a tiny flower pot had cooled in my hand, before I checked my phone.
 
 **Translation `ja`**
 
-> スープのカップが電車の停留所の前で私を止めた。違う曲を思い出して、そのまま鼻歌にした、電車の停留所で、スープのカップといっしょに。おおいぬ座のせいで、電車の停留所のまわりの暗さが少し並んで見えた、手にはスープのカップ。
+> 静かな中庭で用事がほとんど終わったころ、小さな植木鉢が目に入った。上のどこかで窓が閉まったころ、おおいぬ座が少し見やすくなった。また動き出すころには、スマホを見る前、手の中の小さな植木鉢が少し冷えていた。
 
 #### `base_008_028`
 
@@ -4670,11 +4670,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小さな石がベランダの手すりの下で急に大事そうに見えた。流れ星を見る前に、飛行機の数を忘れた、ベランダの手すりで、小さな石といっしょに。ベランダの手すりの上では、ペガスス座がいつもより近く見えた、近くには小さな石。
+> アパートの階段で立ち止まった。手には買い物袋が残っていた。アパートの階段では、鍵を見つける前に上の階でドアが閉まったので、顔を上げるとペガスス座があった。話にしたくなる前に、アパートの階段を離れた。
 
 **Translation `en`**
 
-> A small stone looked newly important under the balcony rail. I lost count of airplanes before seeing the meteor near the balcony rail, with a small stone. Over the balcony rail, Pegasus looked less far than usual, near a small stone.
+> I stopped at the apartment stairs with a grocery bag still in my hand. At the apartment stairs, someone upstairs closed a door, before I found my keys, so I looked up and found Pegasus. I left the apartment stairs before the moment could turn into a story.
 
 #### `base_008_029`
 
@@ -4689,11 +4689,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cracked ruler made a quiet sound against the bus shelter. It was only funny after I stopped being annoyed near the bus shelter, with a cracked ruler. Virgo stayed visible past the wires near the bus shelter, just past a cracked ruler. The night did not become better; it became more specific, beside the bus shelter.
+> The rooftop doorway was nearly empty by the time I got there with a phone charger. At the rooftop doorway, the door clicked in the wind, before the next door opened, so I looked up and found Virgo. For a while, a phone charger was the most practical thing at the rooftop doorway, before the next door opened. I remembered one small thing I still had to do after leaving the rooftop doorway, before the next door opened.
 
 **Translation `ja`**
 
-> ひびの入った定規がバス停の屋根に当たって小さな音を出した。腹が立つのをやめたら、少しだけ面白かった、バス停の屋根で、ひびの入った定規といっしょに。バス停の屋根の近くの電線の向こうに、おとめ座はまだ見えていた、その先にはひびの入った定規。夜がよくなったというより、少し具体的になった、そばにはバス停の屋根。
+> 充電コードを持って着くころ、屋上の入口にはほとんど人がいなかった。屋上の入口では、次のドアが開く前に風でドアが小さく鳴ったので、顔を上げるとおとめ座があった。しばらくは、次のドアが開く前の屋上の入口で、充電コードがいちばん現実的なものだった。次のドアが開く前、屋上の入口を出てから、まだやることをひとつ思い出した。
 
 #### `base_008_030`
 
@@ -4708,11 +4708,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A chipped mug kept knocking against the rooftop door. The promised meteor shower mostly taught me patience near the rooftop door, with a chipped mug.
+> At the station platform, I checked twice and found a bent train ticket both times, while the sink dripped. Cassiopeia was visible above the station platform, enough to stop checking the time there.
 
 **Translation `ja`**
 
-> 欠けたマグが屋上のドアに何度も当たっていた。流星群は、ほとんど待つ練習だった、屋上のドアで、欠けたマグといっしょに。
+> 駅のホームで二回確かめた。流しが鳴るあいだ、二回とも曲がった切符があった。駅のホームの上にカシオペヤ座が見えて、そこで時間を見るのをやめるには十分だった。
 
 #### `base_008_031`
 
@@ -4727,11 +4727,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 短いえんぴつが古い石段のそばで忘れられていた。説明してよくするのは、やめておいた、古い石段で、短いえんぴつといっしょに。古い石段の上の細いすきまに、ヘルクレス座がちょうど入った、近くには短いえんぴつ。意味を持たせすぎる前に、中へ入った、目に入ったのは短いえんぴつ。
+> トラムの停留所に、思ったより少し長くいた。中へ戻る前、紙コップを持ったままだった。紙コップから顔を上げると、その場所の上にヘルクレス座があった。しばらくは、中へ戻る前のトラムの停留所で、紙コップがいちばん現実的なものだった。トラムのあとで線路が光っていたころ、後ろを誰かが通って、トラムの停留所のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A pencil stub stayed forgotten by the old stone steps. I decided not to improve the moment by explaining it near the old stone steps, with a pencil stub. A thin gap above the old stone steps was just enough for Hercules, near a pencil stub. I went in before making it too meaningful, after noticing a pencil stub.
+> I stayed a little longer at the tram stop than I meant to, before I went back in. I looked up from a paper cup and found Hercules above the same place. For a while, a paper cup was the most practical thing at the tram stop, before I went back in. Someone passed behind me while the rails shone after the tram passed, and the ordinary night at the tram stop started again.
 
 #### `base_008_032`
 
@@ -4746,11 +4746,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A takeout box waited in the shadow of the kitchen table. The radio caught a town I have never visited near the kitchen table, with a takeout box. Sagittarius gave the corner by the kitchen table a little depth, just past a takeout box.
+> Nothing important happened at the balcony. I just kept holding a damp towel, while the sign hummed. When water dripped from the railing, Sagittarius became easier to see. By the time I moved again, a damp towel had cooled in my hand, while the sign hummed.
 
 **Translation `ja`**
 
-> 持ち帰りの箱が台所の机の影で待っていた。ラジオが、行ったことのない町を拾った、台所の机で、持ち帰りの箱といっしょに。いて座のおかげで、台所の机の角に少し奥行きが出た、その先には持ち帰りの箱。
+> ベランダでは、たいしたことは起きなかった。看板が鳴るあいだ、ただ少しぬれたタオルを持ったままでいた。手すりから水が落ちたころ、いて座が少し見やすくなった。また動き出すころには、看板が鳴るあいだ、手の中の少しぬれたタオルが少し冷えていた。
 
 ### Pack `base_009`
 
@@ -4767,11 +4767,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A window latch made the bench near the ticket gate. My pocket held one more useless proof of the day near the ticket gate, with a window latch. Near the ticket gate, Aquarius looked like part of the errand, while I held a window latch.
+> Nothing important happened at the clinic entrance. I just kept holding a clinic number slip, while the window stayed dark. At the clinic entrance, the automatic door finally stopped opening, while the window stayed dark, so I looked up and found Aquarius. I left the clinic entrance before the moment could turn into a story.
 
 **Translation `ja`**
 
-> まどの留め金が改札の近くのベンチを少し変えた。ポケットには、今日の役に立たない証拠が一つ増えた、改札で、まどの留め金といっしょに。改札の近くでは、みずがめ座まで用事の一部みたいだった、手にはまどの留め金。
+> 病院の入口では、たいしたことは起きなかった。窓が暗いままのあいだ、ただ病院の番号札を持ったままでいた。病院の入口では、窓が暗いままのあいだに自動ドアがやっと静かになったので、顔を上げるとみずがめ座があった。話にしたくなる前に、病院の入口を離れた。
 
 #### `base_009_002`
 
@@ -4786,11 +4786,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> のどあめの袋がアパートの階段の横で待っていた。ドアが勝手に開いた以外、こわいことは何もない、アパートの階段で、のどあめの袋といっしょに。おおいぬ座のせいで、アパートの階段のまわりの暗さが少し並んで見えた、近くにはのどあめの袋。
+> 図書館の階段で用事がほとんど終わったころ、図書館カードが目に入った。図書館の階段の上におおいぬ座が見えて、そこで時間を見るのをやめるには十分だった。廊下が冷えるあいだ、図書館の階段を出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A packet of cough drops waited beside the apartment stairs. Nothing spooky happened, except the door opening by itself near the apartment stairs, with a packet of cough drops. Canis Major made the dark around the apartment stairs feel arranged, near a packet of cough drops.
+> I was almost done at the library steps when I noticed a library card. Canis Major was visible above the library steps, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the library steps, while the hallway cooled.
 
 #### `base_009_003`
 
@@ -4805,11 +4805,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A red scarf looked more serious than the noodle shop curtain. I did not solve anything, but I changed location near the noodle shop curtain, with a red scarf. I found Orion after the light on the noodle shop curtain blinked once, just past a red scarf. The room looked slightly rearranged when I returned, after noticing a red scarf.
+> I stopped at the closed bakery with the last bread roll still in my hand. I looked up from the last bread roll and found Orion above the same place. For a while, the last bread roll was the most practical thing at the closed bakery, while the cup cooled. It did not fix anything, but the last bread roll made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 赤いマフラーがラーメン屋ののれんよりまじめそうに見えた。何も解決していないけど、場所だけは変えた、ラーメン屋ののれんで、赤いマフラーといっしょに。ラーメン屋ののれんの明かりが一度またたいてから、オリオン座を見つけた、その先には赤いマフラー。戻った部屋は、少しだけ並び方が変わって見えた、目に入ったのは赤いマフラー。
+> 閉まったパン屋で立ち止まった。手には最後のパンが残っていた。最後のパンから顔を上げると、その場所の上にオリオン座があった。しばらくは、コップが冷めるあいだの閉まったパン屋で、最後のパンがいちばん現実的なものだった。何も解決していないけど、最後のパンのせいで帰り道は少し短く感じた。
 
 #### `base_009_004`
 
@@ -4824,11 +4824,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 古いはがきが駐車場で主役みたいになった。言い訳ができる前に、信号が変わった、駐車場で、古いはがきといっしょに。駐車場の上が開いて、北極星が静かにそこへ入った、手には古いはがき。
+> 小銭を持って着くころ、自販機にはほとんど人がいなかった。小銭から顔を上げると、その場所の上に北極星があった。小銭のあるその時間は、靴が乾いたあとのたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> An old postcard became the main event at the parking lot. The light changed before my excuse was ready near the parking lot, with an old postcard. The space above the parking lot opened, and Polaris took it quietly, while I held an old postcard.
+> The vending machine was nearly empty by the time I got there with a loose coin. I looked up from a loose coin and found Polaris above the same place. The whole thing with a loose coin lasted maybe a minute, after the shoes dried, and I kept it in the memory too.
 
 #### `base_009_005`
 
@@ -4843,11 +4843,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A jar of basil smelled faintly of the hostel desk. The smell of soap arrived before the person did near the hostel desk, with a jar of basil. Cassiopeia was clearer than the sign beside the hostel desk, near a jar of basil. The next ordinary thing waited indoors, beside the hostel desk.
+> At the flower shop shutter, I checked twice and found a bag of plums both times, while the line moved slowly. When the wet pavement smelled green, Cassiopeia became easier to see. For a while, a bag of plums was the most practical thing at the flower shop shutter, while the line moved slowly. By the time I moved again, a bag of plums had cooled in my hand, while the line moved slowly.
 
 **Translation `ja`**
 
-> バジルのびんが宿の机の匂いを少し持っていた。人より先に、せっけんの匂いが来た、宿の机で、バジルのびんといっしょに。宿の机のそばの看板より、カシオペヤ座のほうがはっきりしていた、近くにはバジルのびん。次のふつうのことは、部屋の中で待っていた、そばには宿の机。
+> 花屋のシャッターで二回確かめた。列がゆっくり進むあいだ、二回ともすももの袋があった。ぬれた道が少し青い匂いだったころ、カシオペヤ座が少し見やすくなった。しばらくは、列がゆっくり進むあいだの花屋のシャッターで、すももの袋がいちばん現実的なものだった。また動き出すころには、列がゆっくり進むあいだ、手の中のすももの袋が少し冷えていた。
 
 #### `base_009_006`
 
@@ -4862,11 +4862,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A bus pass kept its balance on the quiet courtyard. The page in my bag bent around the corner of a book near the quiet courtyard, with a bus pass. Hercules waited past the edge of the quiet courtyard, just past a bus pass.
+> I stayed a little longer at the old bridge than I meant to, while the street stayed quiet. At the old bridge, the river carried the traffic noise away, while the street stayed quiet, so I looked up and found Hercules. I left the old bridge before the moment could turn into a story.
 
 **Translation `ja`**
 
-> バスの定期が静かな中庭の上でなんとか立っていた。かばんの紙が、本の角にそって曲がった、静かな中庭で、バスの定期といっしょに。静かな中庭の端の向こうで、ヘルクレス座が待っていた、その先にはバスの定期。
+> 古い橋に、思ったより少し長くいた。道が静かなあいだ、赤いマフラーを持ったままだった。古い橋では、道が静かなあいだに川が車の音を少し遠くしたので、顔を上げるとヘルクレス座があった。話にしたくなる前に、古い橋を離れた。
 
 #### `base_009_007`
 
@@ -4881,11 +4881,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 紙コップが会社の流しの下へ転がった。床が冷たくて、くつしたの薄さが分かった、会社の流しで、紙コップといっしょに。時間を見てから、会社の流しの上のいて座をもう一度見た、手には紙コップ。
+> フェリーの甲板では、たいしたことは起きなかった。画面が暗くなったあと、ただフェリーの切符を持ったままでいた。フェリーの甲板の上にいて座が見えて、そこで時間を見るのをやめるには十分だった。画面が暗くなったあと、フェリーの甲板を出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A paper cup rolled under the office sink. The floor was cold enough to make my socks honest near the office sink, with a paper cup. I checked the time, then looked back at Sagittarius over the office sink, while I held a paper cup.
+> Nothing important happened at the ferry deck. I just kept holding a ferry ticket, after the screen went dark. Sagittarius was visible above the ferry deck, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the ferry deck, after the screen went dark.
 
 #### `base_009_008`
 
@@ -4900,11 +4900,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A half-empty snack bag fell out near the lecture hall. The old clock nearby sounded too confident near the lecture hall, with a half-empty snack bag. Near the lecture hall, Aquarius looked like part of the errand, near a half-empty snack bag.
+> I was almost done at the office kitchenette when I noticed a chipped mug. Through the nearest window at the office kitchenette, I could make out Aquarius. It did not fix anything, but a chipped mug made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 半分だけ残ったお菓子が講義室の近くで落ちた。近くの古い時計が、妙に自信のある音を立てた、講義室で、半分だけ残ったお菓子といっしょに。講義室の近くでは、みずがめ座まで用事の一部みたいだった、近くには半分だけ残ったお菓子。
+> 会社の給湯室で用事がほとんど終わったころ、欠けたマグが目に入った。会社の給湯室の近くの窓から、みずがめ座が見えた。何も解決していないけど、欠けたマグのせいで帰り道は少し短く感じた。
 
 #### `base_009_009`
 
@@ -4919,11 +4919,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> ギターのピックが寮の台所を通る道をなんとか生きのびた。ちょうどいい時に、小さな風が通った、寮の台所で、ギターのピックといっしょに。寮の台所から顔を上げると、おおいぬ座はもうそこにいた、その先にはギターのピック。意味を持たせすぎる前に、中へ入った、そばには寮の台所。
+> 麺屋で用事がほとんど終わったころ、プラスチックのスプーンが目に入った。麺屋の近くの窓から、おおいぬ座が見えた。しばらくは、椅子が鳴ったあとの麺屋で、プラスチックのスプーンがいちばん現実的なものだった。プラスチックのスプーンのあるその時間は、椅子が鳴ったあとのたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A guitar pick survived the walk past the dorm kitchen. A little wind moved through at exactly the right time near the dorm kitchen, with a guitar pick. When I looked up from the dorm kitchen, Canis Major was already there, just past a guitar pick. I went in before making it too meaningful, beside the dorm kitchen.
+> I was almost done at the noodle shop when I noticed a plastic spoon. Through the nearest window at the noodle shop, I could make out Canis Major. For a while, a plastic spoon was the most practical thing at the noodle shop, after the chair creaked. The whole thing with a plastic spoon lasted maybe a minute, after the chair creaked, and I kept it in the memory too.
 
 #### `base_009_010`
 
@@ -4957,11 +4957,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A museum postcard turned ordinary beside the ferry deck. The phone stayed quiet like it had been warned near the ferry deck, with a museum postcard. The space above the ferry deck opened, and Polaris took it quietly, near a museum postcard. My phone stayed in my pocket, which improved the ending, after noticing a museum postcard.
+> The kitchen table was nearly empty by the time I got there with a bowl from the sink. Through the nearest window at the kitchen table, I could make out Polaris. For a while, a bowl from the sink was the most practical thing at the kitchen table, after the cart rolled past. I left the kitchen table before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 美術館のはがきがフェリーの甲板の横でふつうに戻った。スマホは注意されたみたいに静かだった、フェリーの甲板で、美術館のはがきといっしょに。フェリーの甲板の上が開いて、北極星が静かにそこへ入った、近くには美術館のはがき。スマホを出さなかったので、終わり方は少しましだった、目に入ったのは美術館のはがき。
+> 流しの茶わんを持って着くころ、台所の机にはほとんど人がいなかった。台所の机の近くの窓から、北極星が見えた。しばらくは、カートが通ったあとの台所の机で、流しの茶わんがいちばん現実的なものだった。話にしたくなる前に、台所の机を離れた。
 
 #### `base_009_012`
 
@@ -4976,11 +4976,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 借りたペンが港のフェンスの上で静かにしていた。ほしい答えは来なかったけど、バスは来た、港のフェンスで、借りたペンといっしょに。港のフェンスの向こうで、うしかい座は急がず形を保っていた、その先には借りたペン。
+> 改札で二回確かめた。最終バスのあと、二回ともバスの定期があった。改札の上にうしかい座が見えて、そこで時間を見るのをやめるには十分だった。最終バスのあと、改札を出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A borrowed pen sat quietly on the harbor fence. The answer I wanted did not arrive, but the bus did near the harbor fence, with a borrowed pen. Past the harbor fence, Bootes held its shape without hurry, just past a borrowed pen.
+> At the ticket gate, I checked twice and found a bus pass both times, after the last bus passed. Bootes was visible above the ticket gate, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the ticket gate, after the last bus passed.
 
 #### `base_009_013`
 
@@ -4995,11 +4995,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A loose shoelace stayed forgotten by the elevator mirror. The night had no opinion, and that helped near the elevator mirror, with a loose shoelace. Over the elevator mirror, Gemini looked less far than usual, while I held a loose shoelace.
+> I stayed a little longer at the campus gate than I meant to, before the receipt folded. I looked up from a notebook with no title and found Gemini above the same place. It did not fix anything, but a notebook with no title made the walk home feel shorter.
 
 **Translation `ja`**
 
-> ほどけたくつひもがエレベーターの鏡のそばで忘れられていた。夜には意見がなくて、それが少し助かった、エレベーターの鏡で、ほどけたくつひもといっしょに。エレベーターの鏡の上では、ふたご座がいつもより近く見えた、手にはほどけたくつひも。
+> 学校の門に、思ったより少し長くいた。レシートを折る前、題名のないノートを持ったままだった。題名のないノートから顔を上げると、その場所の上にふたご座があった。何も解決していないけど、題名のないノートのせいで帰り道は少し短く感じた。
 
 #### `base_009_014`
 
@@ -5014,11 +5014,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 地下鉄の乗り換え券が花屋のシャッターの影で待っていた。近道はいろいろ知りすぎているので、遠回りした、花屋のシャッターで、地下鉄の乗り換え券といっしょに。時間を見てから、花屋のシャッターの上のいて座をもう一度見た、近くには地下鉄の乗り換え券。
+> 自転車置き場では、たいしたことは起きなかった。時計が光ったあと、ただ冷たい自転車の鍵を持ったままでいた。ひとつの車輪だけまだ回っていたころ、いて座が少し見やすくなった。冷たい自転車の鍵のあるその時間は、時計が光ったあとのたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A subway transfer slip waited in the shadow of the flower shop shutter. I took the long way because the short way knew too much near the flower shop shutter, with a subway transfer slip. I checked the time, then looked back at Sagittarius over the flower shop shutter, near a subway transfer slip.
+> Nothing important happened at the bicycle racks. I just kept holding a cold bicycle lock, after the clock blinked. When one wheel kept spinning, Sagittarius became easier to see. The whole thing with a cold bicycle lock lasted maybe a minute, after the clock blinked, and I kept it in the memory too.
 
 #### `base_009_015`
 
@@ -5033,11 +5033,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A red pencil mark made the bench near the supermarket light. Nobody noticed it, which made the scene easier to keep near the supermarket light, with a red pencil mark. I used Aquarius above the supermarket light as a reason to pause, just past a red pencil mark. The next ordinary thing waited indoors, after noticing a red pencil mark. A stranger smiled at the wrong timing and saved the mood after the supermarket light.
+> I was almost done at the laundromat when I noticed one mismatched sock. Through the nearest window at the laundromat, I could make out Aquarius. For a while, one mismatched sock was the most practical thing at the laundromat, before I answered. I could still hear how the dryer stopped. I put my phone away and let Aquarius above the laundromat be enough.
 
 **Translation `ja`**
 
-> 赤い鉛筆の印がスーパーの明かりの近くのベンチを少し変えた。だれも気づかないので、覚えておきやすかった、スーパーの明かりで、赤い鉛筆の印といっしょに。スーパーの明かりの上のみずがめ座を、立ち止まる理由にした、その先には赤い鉛筆の印。次のふつうのことは、部屋の中で待っていた、目に入ったのは赤い鉛筆の印。知らない人が変なタイミングで笑って、空気が助かった、スーパーの明かりのあとで。
+> コインランドリーで用事がほとんど終わったころ、片方だけ違うくつしたが目に入った。コインランドリーの近くの窓から、みずがめ座が見えた。しばらくは、返事をする前のコインランドリーで、片方だけ違うくつしたがいちばん現実的なものだった。乾燥機が止まったことだけは、まだ耳に残っていた。スマホはしまって、コインランドリーの上のみずがめ座で十分ということにした。
 
 #### `base_009_016`
 
@@ -5052,11 +5052,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A travel-size toothbrush waited for permission near the night market. A dog barked once, then left the matter there near the night market, with a travel-size toothbrush. A thin gap above the night market was just enough for Canis Major, while I held a travel-size toothbrush.
+> I stopped at the river railing with a small stone still in my hand. Canis Major was visible above the river railing, enough to stop checking the time there. Someone passed behind me while a bicycle bell crossed the path behind me, and the ordinary night at the river railing started again.
 
 **Translation `ja`**
 
-> 旅行用の歯ブラシが夜の市場の近くで許可を待っているみたいだった。犬が一度だけ鳴いて、その件は終わった、夜の市場で、旅行用の歯ブラシといっしょに。夜の市場の上の細いすきまに、おおいぬ座がちょうど入った、手には旅行用の歯ブラシ。
+> 川の手すりで立ち止まった。手には小さな石が残っていた。川の手すりの上におおいぬ座が見えて、そこで時間を見るのをやめるには十分だった。後ろの道を自転車のベルが通ったころ、後ろを誰かが通って、川の手すりのふつうの夜がまた始まった。
 
 #### `base_009_017`
 
@@ -5071,11 +5071,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A small packet of seeds made a small corner in the closed bakery. Someone's laughter crossed the street before the people did near the closed bakery, with a small packet of seeds. Orion fitted between two roofs above the closed bakery, near a small packet of seeds. The night did not become better; it became more specific, beside the closed bakery.
+> I stopped at the cinema lobby with a theater flyer still in my hand. Through the nearest window at the cinema lobby, I could make out Orion. For a while, a theater flyer was the most practical thing at the cinema lobby, before the light changed. I remembered one small thing I still had to do after leaving the cinema lobby, before the light changed.
 
 **Translation `ja`**
 
-> 小さな種の袋が閉まったパン屋の中で小さな角になっていた。人より先に、笑い声が道を渡った、閉まったパン屋で、小さな種の袋といっしょに。閉まったパン屋の上で、オリオン座が屋根の間に入っていた、近くには小さな種の袋。夜がよくなったというより、少し具体的になった、そばには閉まったパン屋。
+> 映画館のロビーで立ち止まった。手には映画館のちらしが残っていた。映画館のロビーの近くの窓から、オリオン座が見えた。しばらくは、信号が変わる前の映画館のロビーで、映画館のちらしがいちばん現実的なものだった。信号が変わる前、映画館のロビーを出てから、まだやることをひとつ思い出した。
 
 #### `base_009_018`
 
@@ -5090,11 +5090,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 部屋の鍵が自販機の中へ押し込まれていた。レシートは、思ったほど何も証明してくれなかった、自販機で、部屋の鍵といっしょに。雲が自販機を離れると、北極星が戻ってきた、その先には部屋の鍵。
+> しわのあるレシートを持って着くころ、スーパーの入口にはほとんど人がいなかった。しわのあるレシートから顔を上げると、その場所の上に北極星があった。何も解決していないけど、しわのあるレシートのせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A room key squeezed into the vending machine. The receipt proved less than I wanted it to prove near the vending machine, with a room key. Polaris returned when the clouds left the vending machine alone, just past a room key.
+> The supermarket entrance was nearly empty by the time I got there with a wrinkled receipt. I looked up from a wrinkled receipt and found Polaris above the same place. It did not fix anything, but a wrinkled receipt made the walk home feel shorter.
 
 #### `base_009_019`
 
@@ -5109,11 +5109,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 読みかけの漫画が映画館のロビーの横で一度だけ鳴った。光った線より、その後の静けさのほうが広かった、映画館のロビーで、読みかけの漫画といっしょに。うしかい座のせいで、映画館のロビーのまわりの暗さが少し並んで見えた、手には読みかけの漫画。
+> 夜の市場で二回確かめた。スマホを見る前、二回ともあたたかい紙袋があった。屋台の灯りがひとつずつ消えたころ、うしかい座が少し見やすくなった。あたたかい紙袋のあるその時間は、スマホを見る前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A half-read comic clicked once beside the cinema lobby. The silence after the streak felt wider than the streak itself near the cinema lobby, with a half-read comic. Bootes made the dark around the cinema lobby feel arranged, while I held a half-read comic.
+> At the night market, I checked twice and found a warm paper bag both times, before I checked my phone. When the stall lights went out one by one, Bootes became easier to see. The whole thing with a warm paper bag lasted maybe a minute, before I checked my phone, and I kept it in the memory too.
 
 #### `base_009_020`
 
@@ -5128,11 +5128,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A clean fork reminded me of the clinic window. It was only funny after I stopped being annoyed near the clinic window, with a clean fork. Over the clinic window, Gemini looked less far than usual, near a clean fork.
+> I stayed a little longer at the harbor fence than I meant to, before I found my keys. At the harbor fence, a rope knocked softly against a post, before I found my keys, so I looked up and found Gemini. I put my phone away and let Gemini above the harbor fence be enough.
 
 **Translation `ja`**
 
-> きれいなフォークが病院のまどを思い出させた。腹が立つのをやめたら、少しだけ面白かった、病院のまどで、きれいなフォークといっしょに。病院のまどの上では、ふたご座がいつもより近く見えた、近くにはきれいなフォーク。
+> 港のフェンスに、思ったより少し長くいた。鍵を見つける前、フェリーの切符を持ったままだった。港のフェンスでは、鍵を見つける前にロープが柱に小さく当たっていたので、顔を上げるとふたご座があった。スマホはしまって、港のフェンスの上のふたご座で十分ということにした。
 
 #### `base_009_021`
 
@@ -5147,11 +5147,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A half-melted ice cream waited beside the library steps. The promised meteor shower mostly taught me patience near the library steps, with a half-melted ice cream. Scorpius stayed visible past the wires near the library steps, just past a half-melted ice cream. My phone stayed in my pocket, which improved the ending, beside the library steps.
+> Nothing important happened at the lecture hall. I just kept holding a pencil stub, before the next door opened. Through the nearest window at the lecture hall, I could make out Scorpius. For a while, a pencil stub was the most practical thing at the lecture hall, before the next door opened. Someone passed behind me while someone erased the last line from the board, and the ordinary night at the lecture hall started again.
 
 **Translation `ja`**
 
-> 少し溶けたアイスが図書館の階段の横で待っていた。流星群は、ほとんど待つ練習だった、図書館の階段で、少し溶けたアイスといっしょに。図書館の階段の近くの電線の向こうに、さそり座はまだ見えていた、その先には少し溶けたアイス。スマホを出さなかったので、終わり方は少しましだった、そばには図書館の階段。
+> 講義室では、たいしたことは起きなかった。次のドアが開く前、ただ短いえんぴつを持ったままでいた。講義室の近くの窓から、さそり座が見えた。しばらくは、次のドアが開く前の講義室で、短いえんぴつがいちばん現実的なものだった。誰かが黒板の最後の一行を消したころ、後ろを誰かが通って、講義室のふつうの夜がまた始まった。
 
 #### `base_009_022`
 
@@ -5166,11 +5166,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A pharmacy bag looked more serious than the laundromat door. I decided not to improve the moment by explaining it near the laundromat door, with a pharmacy bag. Aquila was clearer than the sign beside the laundromat door, while I held a pharmacy bag.
+> I was almost done at the dorm kitchen when I noticed a packet of instant noodles. Through the nearest window at the dorm kitchen, I could make out Aquila. By the time I moved again, a packet of instant noodles had cooled in my hand, while the sink dripped.
 
 **Translation `ja`**
 
-> 薬局の袋がコインランドリーのドアよりまじめそうに見えた。説明してよくするのは、やめておいた、コインランドリーのドアで、薬局の袋といっしょに。コインランドリーのドアのそばの看板より、わし座のほうがはっきりしていた、手には薬局の袋。
+> 寮の台所で用事がほとんど終わったころ、カップめんが目に入った。寮の台所の近くの窓から、わし座が見えた。また動き出すころには、流しが鳴るあいだ、手の中のカップめんが少し冷えていた。
 
 #### `base_009_023`
 
@@ -5185,11 +5185,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 宿のタオルが川の手すりで主役みたいになった。ラジオが、行ったことのない町を拾った、川の手すりで、宿のタオルといっしょに。川の手すりの上の細いすきまに、おおいぬ座がちょうど入った、近くには宿のタオル。戻った部屋は、少しだけ並び方が変わって見えた、目に入ったのは宿のタオル。
+> 宿の机で立ち止まった。手には部屋の鍵が残っていた。宿の机の近くの窓から、おおいぬ座が見えた。しばらくは、中へ戻る前の宿の机で、部屋の鍵がいちばん現実的なものだった。何も解決していないけど、部屋の鍵のせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A towel from the hostel became the main event at the river railing. The radio caught a town I have never visited near the river railing, with a towel from the hostel. A thin gap above the river railing was just enough for Canis Major, near a towel from the hostel. The room looked slightly rearranged when I returned, after noticing a towel from the hostel.
+> I stopped at the hostel desk with a room key still in my hand. Through the nearest window at the hostel desk, I could make out Canis Major. For a while, a room key was the most practical thing at the hostel desk, before I went back in. It did not fix anything, but a room key made the walk home feel shorter.
 
 #### `base_009_024`
 
@@ -5204,11 +5204,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 紙のランタンが小さな神社の上で場所を取りすぎていた。ポケットには、今日の役に立たない証拠が一つ増えた、小さな神社で、紙のランタンといっしょに。オリオン座のおかげで、小さな神社の角に少し奥行きが出た、その先には紙のランタン。
+> 小さな植木鉢を持って着くころ、静かな中庭にはほとんど人がいなかった。静かな中庭では、看板が鳴るあいだに上のどこかで窓が閉まったので、顔を上げるとオリオン座があった。小さな植木鉢のあるその時間は、看板が鳴るあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A paper lantern took up too much room on the tiny shrine. My pocket held one more useless proof of the day near the tiny shrine, with a paper lantern. Orion gave the corner by the tiny shrine a little depth, just past a paper lantern.
+> The quiet courtyard was nearly empty by the time I got there with a tiny flower pot. At the quiet courtyard, a window closed somewhere above, while the sign hummed, so I looked up and found Orion. The whole thing with a tiny flower pot lasted maybe a minute, while the sign hummed, and I kept it in the memory too.
 
 #### `base_009_025`
 
@@ -5223,11 +5223,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A torn grocery list turned ordinary beside the campus gate. I thought, this is a little ridiculous, and kept smiling near the campus gate, with a torn grocery list. Near the campus gate, Polaris looked like part of the errand, while I held a torn grocery list.
+> The bus shelter was nearly empty by the time I got there with a cold tea bottle. At the bus shelter, the next bus was still several minutes away, while the window stayed dark, so I looked up and found Polaris. I put my phone away and let Polaris above the bus shelter be enough.
 
 **Translation `ja`**
 
-> 破れた買い物メモが学校の門の横でふつうに戻った。これは少しだけ草だと思って、そのまま笑っていた、学校の門で、破れた買い物メモといっしょに。学校の門の近くでは、北極星まで用事の一部みたいだった、手には破れた買い物メモ。
+> 冷たいお茶を持って着くころ、バス停にはほとんど人がいなかった。バス停では、窓が暗いままのあいだに次のバスまではまだ少しあったので、顔を上げると北極星があった。スマホはしまって、バス停の上の北極星で十分ということにした。
 
 #### `base_009_026`
 
@@ -5242,11 +5242,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A blue umbrella sat quietly on the bicycle racks. The quiet after the scooter passed felt almost clean near the bicycle racks, with a blue umbrella. Bootes made the dark around the bicycle racks feel arranged, near a blue umbrella.
+> At the rooftop doorway, I checked twice and found a phone charger both times, while the hallway cooled. Bootes was visible above the rooftop doorway, enough to stop checking the time there. Someone passed behind me while the door clicked in the wind, and the ordinary night at the rooftop doorway started again.
 
 **Translation `ja`**
 
-> 青い傘が自転車置き場の上で静かにしていた。スクーターが過ぎた後の静けさは、少しきれいだった、自転車置き場で、青い傘といっしょに。うしかい座のせいで、自転車置き場のまわりの暗さが少し並んで見えた、近くには青い傘。
+> 屋上の入口で二回確かめた。廊下が冷えるあいだ、二回とも充電コードがあった。屋上の入口の上にうしかい座が見えて、そこで時間を見るのをやめるには十分だった。風でドアが小さく鳴ったころ、後ろを誰かが通って、屋上の入口のふつうの夜がまた始まった。
 
 #### `base_009_027`
 
@@ -5261,11 +5261,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A pear from work warmed my hand near the station wall. The light changed before my excuse was ready near the station wall, with a pear from work.
+> I stayed a little longer at the station platform than I meant to, while the cup cooled. I looked up from a bent train ticket and found Gemini above the same place.
 
 **Translation `ja`**
 
-> 職場でもらった梨が駅の壁の近くで手をあたためた。言い訳ができる前に、信号が変わった、駅の壁で、職場でもらった梨といっしょに。
+> 駅のホームに、思ったより少し長くいた。コップが冷めるあいだ、曲がった切符を持ったままだった。曲がった切符から顔を上げると、その場所の上にふたご座があった。
 
 #### `base_009_028`
 
@@ -5280,11 +5280,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> はさみっぱなしのしおりが電車の停留所の前で私を止めた。人より先に、せっけんの匂いが来た、電車の停留所で、はさみっぱなしのしおりといっしょに。電車の停留所の上が開いて、さそり座が静かにそこへ入った、手にははさみっぱなしのしおり。
+> トラムの停留所では、たいしたことは起きなかった。靴が乾いたあと、ただ紙コップを持ったままでいた。トラムのあとで線路が光っていたころ、さそり座が少し見やすくなった。話にしたくなる前に、トラムの停留所を離れた。
 
 **Translation `en`**
 
-> A loose bookmark made me stop before the tram stop. The smell of soap arrived before the person did near the tram stop, with a loose bookmark. The space above the tram stop opened, and Scorpius took it quietly, while I held a loose bookmark.
+> Nothing important happened at the tram stop. I just kept holding a paper cup, after the shoes dried. When the rails shone after the tram passed, Scorpius became easier to see. I left the tram stop before the moment could turn into a story.
 
 #### `base_009_029`
 
@@ -5299,11 +5299,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 割引券がベランダの手すりの下で急に大事そうに見えた。かばんの紙が、本の角にそって曲がった、ベランダの手すりで、割引券といっしょに。ベランダの手すりのそばの看板より、わし座のほうがはっきりしていた、近くには割引券。意味を持たせすぎる前に、中へ入った、そばにはベランダの手すり。
+> 小さな神社で用事がほとんど終わったころ、小さな種の袋が目に入った。小さな神社では、列がゆっくり進むあいだに砂利の音が思ったより大きかったので、顔を上げるとわし座があった。しばらくは、列がゆっくり進むあいだの小さな神社で、小さな種の袋がいちばん現実的なものだった。小さな種の袋のあるその時間は、列がゆっくり進むあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A grocery coupon looked newly important under the balcony rail. The page in my bag bent around the corner of a book near the balcony rail, with a grocery coupon. Aquila was clearer than the sign beside the balcony rail, near a grocery coupon. I went in before making it too meaningful, beside the balcony rail.
+> I was almost done at the small shrine when I noticed a small packet of seeds. At the small shrine, the gravel sounded louder than expected, while the line moved slowly, so I looked up and found Aquila. For a while, a small packet of seeds was the most practical thing at the small shrine, while the line moved slowly. The whole thing with a small packet of seeds lasted maybe a minute, while the line moved slowly, and I kept it in the memory too.
 
 #### `base_009_030`
 
@@ -5318,11 +5318,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A warm paper bag made a quiet sound against the bus shelter. The floor was cold enough to make my socks honest near the bus shelter, with a warm paper bag. Cepheus waited past the edge of the bus shelter, just past a warm paper bag.
+> I stopped at the clinic entrance with a clinic number slip still in my hand. Cepheus was visible above the clinic entrance, enough to stop checking the time there. I put my phone away and let Cepheus above the clinic entrance be enough.
 
 **Translation `ja`**
 
-> あたたかい紙袋がバス停の屋根に当たって小さな音を出した。床が冷たくて、くつしたの薄さが分かった、バス停の屋根で、あたたかい紙袋といっしょに。バス停の屋根の端の向こうで、ケフェウス座が待っていた、その先にはあたたかい紙袋。
+> 病院の入口で立ち止まった。手には病院の番号札が残っていた。病院の入口の上にケフェウス座が見えて、そこで時間を見るのをやめるには十分だった。スマホはしまって、病院の入口の上のケフェウス座で十分ということにした。
 
 #### `base_009_031`
 
@@ -5337,11 +5337,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> One mismatched sock kept knocking against the rooftop door. The old clock nearby sounded too confident near the rooftop door, with one mismatched sock. I checked the time, then looked back at Lyra over the rooftop door, while I held one mismatched sock.
+> The library steps was nearly empty by the time I got there with a library card. I looked up from a library card and found Lyra above the same place. Someone passed behind me while the return slot clacked behind me, and the ordinary night at the library steps started again.
 
 **Translation `ja`**
 
-> 片方だけ違うくつしたが屋上のドアに何度も当たっていた。近くの古い時計が、妙に自信のある音を立てた、屋上のドアで、片方だけ違うくつしたといっしょに。時間を見てから、屋上のドアの上のこと座をもう一度見た、手には片方だけ違うくつした。
+> 図書館カードを持って着くころ、図書館の階段にはほとんど人がいなかった。図書館カードから顔を上げると、その場所の上にこと座があった。後ろで返却口が鳴ったころ、後ろを誰かが通って、図書館の階段のふつうの夜がまた始まった。
 
 #### `base_009_032`
 
@@ -5356,11 +5356,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A library card stayed forgotten by the old stone steps. I almost sent a message and then spared everyone near the old stone steps, with a library card. Near the old stone steps, Polaris looked like part of the errand, near a library card.
+> At the closed bakery, I checked twice and found the last bread roll both times, while my hands cooled. I looked up from the last bread roll and found Polaris above the same place. By the time I moved again, the last bread roll had cooled in my hand, while my hands cooled.
 
 **Translation `ja`**
 
-> 図書館カードが古い石段のそばで忘れられていた。連絡しそうになって、みんなを助けた、古い石段で、図書館カードといっしょに。古い石段の近くでは、北極星まで用事の一部みたいだった、近くには図書館カード。
+> 閉まったパン屋で二回確かめた。手が冷えるあいだ、二回とも最後のパンがあった。最後のパンから顔を上げると、その場所の上に北極星があった。また動き出すころには、手が冷えるあいだ、手の中の最後のパンが少し冷えていた。
 
 ### Pack `base_010`
 
@@ -5377,11 +5377,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A small flashlight waited in the shadow of the kitchen table. I would not call it a miracle, but I did look twice near the kitchen table, with a small flashlight. When I looked up from the kitchen table, Bootes was already there, just past a small flashlight. The room looked slightly rearranged when I returned, beside the kitchen table.
+> At the elevator lobby, I checked twice and found a delivery sticker both times, after the chair creaked. Through the nearest window at the elevator lobby, I could make out Bootes. For a while, a delivery sticker was the most practical thing at the elevator lobby, after the chair creaked. I left the elevator lobby before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 小さなライトが台所の机の影で待っていた。奇跡とは言わないけど、二度見はした、台所の机で、小さなライトといっしょに。台所の机から顔を上げると、うしかい座はもうそこにいた、その先には小さなライト。戻った部屋は、少しだけ並び方が変わって見えた、そばには台所の机。
+> エレベーターホールで二回確かめた。椅子が鳴ったあと、二回とも配達のシールがあった。エレベーターホールの近くの窓から、うしかい座が見えた。しばらくは、椅子が鳴ったあとのエレベーターホールで、配達のシールがいちばん現実的なものだった。話にしたくなる前に、エレベーターホールを離れた。
 
 #### `base_010_002`
 
@@ -5396,11 +5396,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 流しの茶わんが改札の近くのベンチを少し変えた。スマホは注意されたみたいに静かだった、改札で、流しの茶わんといっしょに。改札の上で、ふたご座が屋根の間に入っていた、手には流しの茶わん。
+> 花屋のシャッターに、思ったより少し長くいた。小さく止まったあと、すももの袋を持ったままだった。花屋のシャッターでは、小さく止まったあとにぬれた道が少し青い匂いだったので、顔を上げるとふたご座があった。小さく止まったあと、花屋のシャッターを出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A bowl from the sink made the bench near the ticket gate. The phone stayed quiet like it had been warned near the ticket gate, with a bowl from the sink. Gemini fitted between two roofs above the ticket gate, while I held a bowl from the sink.
+> I stayed a little longer at the flower shop shutter than I meant to, after one small pause. At the flower shop shutter, the wet pavement smelled green, after one small pause, so I looked up and found Gemini. I remembered one small thing I still had to do after leaving the flower shop shutter, after one small pause.
 
 #### `base_010_003`
 
@@ -5415,11 +5415,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A small bottle of ink waited beside the apartment stairs. The answer I wanted did not arrive, but the bus did near the apartment stairs, with a small bottle of ink. The space above the apartment stairs opened, and Scorpius took it quietly, near a small bottle of ink. The next ordinary thing waited indoors, after noticing a small bottle of ink.
+> Nothing important happened at the old bridge. I just kept holding a red scarf, after the cart rolled past. Scorpius was visible above the old bridge, enough to stop checking the time there. For a while, a red scarf was the most practical thing at the old bridge, after the cart rolled past. I put my phone away and let Scorpius above the old bridge be enough.
 
 **Translation `ja`**
 
-> 小さなインクびんがアパートの階段の横で待っていた。ほしい答えは来なかったけど、バスは来た、アパートの階段で、小さなインクびんといっしょに。アパートの階段の上が開いて、さそり座が静かにそこへ入った、近くには小さなインクびん。次のふつうのことは、部屋の中で待っていた、目に入ったのは小さなインクびん。
+> 古い橋では、たいしたことは起きなかった。カートが通ったあと、ただ赤いマフラーを持ったままでいた。古い橋の上にさそり座が見えて、そこで時間を見るのをやめるには十分だった。しばらくは、カートが通ったあとの古い橋で、赤いマフラーがいちばん現実的なものだった。スマホはしまって、古い橋の上のさそり座で十分ということにした。
 
 #### `base_010_004`
 
@@ -5434,11 +5434,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A bent train ticket looked more serious than the noodle shop curtain. The night had no opinion, and that helped near the noodle shop curtain, with a bent train ticket. Past the noodle shop curtain, Aquila held its shape without hurry, just past a bent train ticket.
+> I was almost done at the ferry deck when I noticed a ferry ticket. I looked up from a ferry ticket and found Aquila above the same place. Someone passed behind me while the wake stayed white behind the boat, and the ordinary night at the ferry deck started again.
 
 **Translation `ja`**
 
-> 曲がった切符がラーメン屋ののれんよりまじめそうに見えた。夜には意見がなくて、それが少し助かった、ラーメン屋ののれんで、曲がった切符といっしょに。ラーメン屋ののれんの向こうで、わし座は急がず形を保っていた、その先には曲がった切符。
+> フェリーの甲板で用事がほとんど終わったころ、フェリーの切符が目に入った。フェリーの切符から顔を上げると、その場所の上にわし座があった。船の後ろに白い航跡が残ったころ、後ろを誰かが通って、フェリーの甲板のふつうの夜がまた始まった。
 
 #### `base_010_005`
 
@@ -5453,11 +5453,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A supermarket basket became the main event at the parking lot. I took the long way because the short way knew too much near the parking lot, with a supermarket basket. Over the parking lot, Cepheus looked less far than usual, while I held a supermarket basket.
+> I stopped at the apartment stairs with a grocery bag still in my hand. When someone upstairs closed a door, Cepheus became easier to see. By the time I moved again, a grocery bag had cooled in my hand, before the receipt folded.
 
 **Translation `ja`**
 
-> スーパーのかごが駐車場で主役みたいになった。近道はいろいろ知りすぎているので、遠回りした、駐車場で、スーパーのかごといっしょに。駐車場の上では、ケフェウス座がいつもより近く見えた、手にはスーパーのかご。
+> アパートの階段で立ち止まった。手には買い物袋が残っていた。上の階でドアが閉まったころ、ケフェウス座が少し見やすくなった。また動き出すころには、レシートを折る前、手の中の買い物袋が少し冷えていた。
 
 #### `base_010_006`
 
@@ -5472,11 +5472,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A loose coin smelled faintly of the hostel desk. Nobody noticed it, which made the scene easier to keep near the hostel desk, with a loose coin. I checked the time, then looked back at Lyra over the hostel desk, near a loose coin. The room looked slightly rearranged when I returned, with a loose coin. I lost count of airplanes before seeing the meteor after the hostel desk.
+> The noodle shop was nearly empty by the time I got there with a plastic spoon. Through the nearest window at the noodle shop, I could make out Lyra. For a while, a plastic spoon was the most practical thing at the noodle shop, after the clock blinked. I could still hear how steam clouded the window. I left the noodle shop before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 小銭が宿の机の匂いを少し持っていた。だれも気づかないので、覚えておきやすかった、宿の机で、小銭といっしょに。時間を見てから、宿の机の上のこと座をもう一度見た、近くには小銭。戻った部屋は、少しだけ並び方が変わって見えた、そこには小銭。流れ星を見る前に、飛行機の数を忘れた、宿の机のあとで。
+> プラスチックのスプーンを持って着くころ、麺屋にはほとんど人がいなかった。麺屋の近くの窓から、こと座が見えた。しばらくは、時計が光ったあとの麺屋で、プラスチックのスプーンがいちばん現実的なものだった。湯気で窓がくもったことだけは、まだ耳に残っていた。話にしたくなる前に、麺屋を離れた。
 
 #### `base_010_007`
 
@@ -5491,11 +5491,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> カップめんが静かな中庭の上でなんとか立っていた。お茶は冷めて、少しまじめな飲みものになっていた、静かな中庭で、カップめんといっしょに。静かな中庭の上のおおぐま座を、立ち止まる理由にした、その先にはカップめん。意味を持たせすぎる前に、中へ入った、目に入ったのはカップめん。
+> 駐車場で二回確かめた。返事をする前、二回とも鍵の輪があった。駐車場では、返事をする前に車のライトが一度だけ光ったので、顔を上げるとおおぐま座があった。しばらくは、返事をする前の駐車場で、鍵の輪がいちばん現実的なものだった。なんか普通に、駐車場のその場面はちょっとかわいかった。鍵の輪のことを考えすぎる前に帰った。
 
 **Translation `en`**
 
-> A packet of instant noodles kept its balance on the quiet courtyard. The tea had cooled into something more responsible near the quiet courtyard, with a packet of instant noodles. I used Ursa Major above the quiet courtyard as a reason to pause, just past a packet of instant noodles. I went in before making it too meaningful, after noticing a packet of instant noodles.
+> At the parking lot, I checked twice and found a key ring both times, before I answered. At the parking lot, a car light blinked once, before I answered, so I looked up and found Ursa Major. For a while, a key ring was the most practical thing at the parking lot, before I answered. Honestly, the parking lot scene was kind of cute. I went home before I could overthink a key ring.
 
 #### `base_010_008`
 
@@ -5510,11 +5510,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A train-window reflection rolled under the office sink. I saved the last bite for no one in particular near the office sink, with a train-window reflection. A thin gap above the office sink was just enough for Auriga, while I held a train-window reflection.
+> I stayed a little longer at the kitchen table than I meant to, before I changed my mind. Through the nearest window at the kitchen table, I could make out Auriga. It did not fix anything, but a bowl from the sink made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 電車のまどに映る顔が会社の流しの下へ転がった。最後のひと口を、だれでもない人のために残した、会社の流しで、電車のまどに映る顔といっしょに。会社の流しの上の細いすきまに、ぎょしゃ座がちょうど入った、手には電車のまどに映る顔。
+> 台所の机に、思ったより少し長くいた。気が変わる前、流しの茶わんを持ったままだった。台所の机の近くの窓から、ぎょしゃ座が見えた。何も解決していないけど、流しの茶わんのせいで帰り道は少し短く感じた。
 
 #### `base_010_009`
 
@@ -5529,11 +5529,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A loose button fell out near the lecture hall. The receipt proved less than I wanted it to prove near the lecture hall, with a loose button. Gemini fitted between two roofs above the lecture hall, near a loose button. My phone stayed in my pocket, which improved the ending, beside the lecture hall.
+> I stayed a little longer at the balcony than I meant to, before the light changed. I looked up from a damp towel and found Gemini above the same place. For a while, a damp towel was the most practical thing at the balcony, before the light changed. Someone passed behind me while water dripped from the railing, and the ordinary night at the balcony started again.
 
 **Translation `ja`**
 
-> 取れかけのボタンが講義室の近くで落ちた。レシートは、思ったほど何も証明してくれなかった、講義室で、取れかけのボタンといっしょに。講義室の上で、ふたご座が屋根の間に入っていた、近くには取れかけのボタン。スマホを出さなかったので、終わり方は少しましだった、そばには講義室。
+> ベランダに、思ったより少し長くいた。信号が変わる前、少しぬれたタオルを持ったままだった。少しぬれたタオルから顔を上げると、その場所の上にふたご座があった。しばらくは、信号が変わる前のベランダで、少しぬれたタオルがいちばん現実的なものだった。手すりから水が落ちたころ、後ろを誰かが通って、ベランダのふつうの夜がまた始まった。
 
 #### `base_010_010`
 
@@ -5548,11 +5548,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A packet of screws survived the walk past the dorm kitchen. The silence after the streak felt wider than the streak itself near the dorm kitchen, with a packet of screws. Scorpius returned when the clouds left the dorm kitchen alone, just past a packet of screws.
+> Nothing important happened at the campus gate. I just kept holding a notebook with no title, before the train arrived. When the last classroom light went out, Scorpius became easier to see. By the time I moved again, a notebook with no title had cooled in my hand, before the train arrived.
 
 **Translation `ja`**
 
-> ネジの袋が寮の台所を通る道をなんとか生きのびた。光った線より、その後の静けさのほうが広かった、寮の台所で、ネジの袋といっしょに。雲が寮の台所を離れると、さそり座が戻ってきた、その先にはネジの袋。
+> 学校の門では、たいしたことは起きなかった。電車が来る前、ただ題名のないノートを持ったままでいた。最後の教室の灯りが消えたころ、さそり座が少し見やすくなった。また動き出すころには、電車が来る前、手の中の題名のないノートが少し冷えていた。
 
 #### `base_010_011`
 
@@ -5567,11 +5567,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A ticket stub took up too much room on the old bridge. It was only funny after I stopped being annoyed near the old bridge, with a ticket stub. Aquila made the dark around the old bridge feel arranged, while I held a ticket stub.
+> I was almost done at the bicycle racks when I noticed a cold bicycle lock. At the bicycle racks, one wheel kept spinning, before I checked my phone, so I looked up and found Aquila. I left the bicycle racks before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 半券が古い橋の上で場所を取りすぎていた。腹が立つのをやめたら、少しだけ面白かった、古い橋で、半券といっしょに。わし座のせいで、古い橋のまわりの暗さが少し並んで見えた、手には半券。
+> 自転車置き場で用事がほとんど終わったころ、冷たい自転車の鍵が目に入った。自転車置き場では、スマホを見る前にひとつの車輪だけまだ回っていたので、顔を上げるとわし座があった。話にしたくなる前に、自転車置き場を離れた。
 
 #### `base_010_012`
 
@@ -5586,11 +5586,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> たたんだセーターがフェリーの甲板の横でふつうに戻った。流星群は、ほとんど待つ練習だった、フェリーの甲板で、たたんだセーターといっしょに。フェリーの甲板の上では、ケフェウス座がいつもより近く見えた、近くにはたたんだセーター。
+> コインランドリーで立ち止まった。手には片方だけ違うくつしたが残っていた。コインランドリーの近くの窓から、ケフェウス座が見えた。鍵を見つける前、コインランドリーを出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A folded sweater turned ordinary beside the ferry deck. The promised meteor shower mostly taught me patience near the ferry deck, with a folded sweater. Over the ferry deck, Cepheus looked less far than usual, near a folded sweater.
+> I stopped at the laundromat with one mismatched sock still in my hand. Through the nearest window at the laundromat, I could make out Cepheus. I remembered one small thing I still had to do after leaving the laundromat, before I found my keys.
 
 #### `base_010_013`
 
@@ -5605,11 +5605,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 手書きのラベルが港のフェンスの上で静かにしていた。説明してよくするのは、やめておいた、港のフェンスで、手書きのラベルといっしょに。港のフェンスの近くの電線の向こうに、こと座はまだ見えていた、その先には手書きのラベル。次のふつうのことは、部屋の中で待っていた、そばには港のフェンス。
+> 小銭を持って着くころ、自販機にはほとんど人がいなかった。小銭から顔を上げると、その場所の上にこと座があった。しばらくは、次のドアが開く前の自販機で、小銭がいちばん現実的なものだった。何も解決していないけど、小銭のせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A handwritten label sat quietly on the harbor fence. I decided not to improve the moment by explaining it near the harbor fence, with a handwritten label. Lyra stayed visible past the wires near the harbor fence, just past a handwritten label. The next ordinary thing waited indoors, beside the harbor fence.
+> The vending machine was nearly empty by the time I got there with a loose coin. I looked up from a loose coin and found Lyra above the same place. For a while, a loose coin was the most practical thing at the vending machine, before the next door opened. It did not fix anything, but a loose coin made the walk home feel shorter.
 
 #### `base_010_014`
 
@@ -5624,11 +5624,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A damp towel stayed forgotten by the elevator mirror. One meteor appeared while everyone checked a different patch of sky near the elevator mirror, with a damp towel. Ursa Major was clearer than the sign beside the elevator mirror, while I held a damp towel.
+> At the cinema lobby, I checked twice and found a theater flyer both times, while the sink dripped. Through the nearest window at the cinema lobby, I could make out Ursa Major. The whole thing with a theater flyer lasted maybe a minute, while the sink dripped, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 少しぬれたタオルがエレベーターの鏡のそばで忘れられていた。みんなが違う空を見ている時に、ひとつ流れた、エレベーターの鏡で、少しぬれたタオルといっしょに。エレベーターの鏡のそばの看板より、おおぐま座のほうがはっきりしていた、手には少しぬれたタオル。
+> 映画館のロビーで二回確かめた。流しが鳴るあいだ、二回とも映画館のちらしがあった。映画館のロビーの近くの窓から、おおぐま座が見えた。映画館のちらしのあるその時間は、流しが鳴るあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_010_015`
 
@@ -5643,11 +5643,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A plastic spoon waited in the shadow of the flower shop shutter. The smallest success was still a success near the flower shop shutter, with a plastic spoon. A thin gap above the flower shop shutter was just enough for Auriga, near a plastic spoon. The night did not become better; it became more specific, after noticing a plastic spoon.
+> I stayed a little longer at the supermarket entrance than I meant to, before I went back in. When the carts rattled behind me, Auriga became easier to see. For a while, a wrinkled receipt was the most practical thing at the supermarket entrance, before I went back in. By the time I moved again, a wrinkled receipt had cooled in my hand, before I went back in.
 
 **Translation `ja`**
 
-> プラスチックのスプーンが花屋のシャッターの影で待っていた。いちばん小さい成功も、成功ではあった、花屋のシャッターで、プラスチックのスプーンといっしょに。花屋のシャッターの上の細いすきまに、ぎょしゃ座がちょうど入った、近くにはプラスチックのスプーン。夜がよくなったというより、少し具体的になった、目に入ったのはプラスチックのスプーン。
+> スーパーの入口に、思ったより少し長くいた。中へ戻る前、しわのあるレシートを持ったままだった。後ろでカートが鳴ったころ、ぎょしゃ座が少し見やすくなった。しばらくは、中へ戻る前のスーパーの入口で、しわのあるレシートがいちばん現実的なものだった。また動き出すころには、中へ戻る前、手の中のしわのあるレシートが少し冷えていた。
 
 #### `base_010_016`
 
@@ -5662,11 +5662,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A melon bread wrapper made the bench near the supermarket light. I thought, this is a little ridiculous, and kept smiling near the supermarket light, with a melon bread wrapper. Draco gave the corner by the supermarket light a little depth, just past a melon bread wrapper.
+> Nothing important happened at the night market. I just kept holding a warm paper bag, while the sign hummed. At the night market, the stall lights went out one by one, while the sign hummed, so I looked up and found Draco. I left the night market before the moment could turn into a story.
 
 **Translation `ja`**
 
-> メロンパンの袋がスーパーの明かりの近くのベンチを少し変えた。これは少しだけ草だと思って、そのまま笑っていた、スーパーの明かりで、メロンパンの袋といっしょに。りゅう座のおかげで、スーパーの明かりの角に少し奥行きが出た、その先にはメロンパンの袋。
+> 夜の市場では、たいしたことは起きなかった。看板が鳴るあいだ、ただあたたかい紙袋を持ったままでいた。夜の市場では、看板が鳴るあいだに屋台の灯りがひとつずつ消えたので、顔を上げるとりゅう座があった。話にしたくなる前に、夜の市場を離れた。
 
 #### `base_010_017`
 
@@ -5681,11 +5681,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> チェスのビショップが夜の市場の近くで許可を待っているみたいだった。スクーターが過ぎた後の静けさは、少しきれいだった、夜の市場で、チェスのビショップといっしょに。夜の市場の近くでは、ペルセウス座まで用事の一部みたいだった、手にはチェスのビショップ。
+> 会社の給湯室では、たいしたことは起きなかった。窓が暗いままのあいだ、ただ欠けたマグを持ったままでいた。会社の給湯室の近くの窓から、ペルセウス座が見えた。窓が暗いままのあいだ、会社の給湯室を出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A chess bishop waited for permission near the night market. The quiet after the scooter passed felt almost clean near the night market, with a chess bishop. Near the night market, Perseus looked like part of the errand, while I held a chess bishop.
+> Nothing important happened at the office kitchenette. I just kept holding a chipped mug, while the window stayed dark. Through the nearest window at the office kitchenette, I could make out Perseus. I remembered one small thing I still had to do after leaving the office kitchenette, while the window stayed dark.
 
 #### `base_010_018`
 
@@ -5700,11 +5700,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> しわのあるレシートが閉まったパン屋の中で小さな角になっていた。言い訳ができる前に、信号が変わった、閉まったパン屋で、しわのあるレシートといっしょに。わし座のせいで、閉まったパン屋のまわりの暗さが少し並んで見えた、近くにはしわのあるレシート。
+> 講義室で用事がほとんど終わったころ、短いえんぴつが目に入った。講義室の近くの窓から、わし座が見えた。何も解決していないけど、短いえんぴつのせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A wrinkled receipt made a small corner in the closed bakery. The light changed before my excuse was ready near the closed bakery, with a wrinkled receipt. Aquila made the dark around the closed bakery feel arranged, near a wrinkled receipt.
+> I was almost done at the lecture hall when I noticed a pencil stub. Through the nearest window at the lecture hall, I could make out Aquila. It did not fix anything, but a pencil stub made the walk home feel shorter.
 
 #### `base_010_019`
 
@@ -5738,11 +5738,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A bag of plums clicked once beside the cinema lobby. The page in my bag bent around the corner of a book near the cinema lobby, with a bag of plums. The space above the cinema lobby opened, and Lyra took it quietly, while I held a bag of plums.
+> The hostel desk was nearly empty by the time I got there with a room key. Through the nearest window at the hostel desk, I could make out Lyra. I put my phone away and let Lyra above the hostel desk be enough.
 
 **Translation `ja`**
 
-> すももの袋が映画館のロビーの横で一度だけ鳴った。かばんの紙が、本の角にそって曲がった、映画館のロビーで、すももの袋といっしょに。映画館のロビーの上が開いて、こと座が静かにそこへ入った、手にはすももの袋。
+> 部屋の鍵を持って着くころ、宿の机にはほとんど人がいなかった。宿の机の近くの窓から、こと座が見えた。スマホはしまって、宿の机の上のこと座で十分ということにした。
 
 #### `base_010_021`
 
@@ -5757,11 +5757,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A ferry rope reminded me of the clinic window. For a second the whole errand felt planned near the clinic window, with a ferry rope. Ursa Major was clearer than the sign beside the clinic window, near a ferry rope. The room looked slightly rearranged when I returned, beside the clinic window.
+> At the ticket gate, I checked twice and found a bus pass both times, while the line moved slowly. At the ticket gate, the gate beeped for someone else, while the line moved slowly, so I looked up and found Ursa Major. For a while, a bus pass was the most practical thing at the ticket gate, while the line moved slowly. I left the ticket gate before the moment could turn into a story.
 
 **Translation `ja`**
 
-> フェリーのロープが病院のまどを思い出させた。一瞬だけ、用事が全部予定通りに見えた、病院のまどで、フェリーのロープといっしょに。病院のまどのそばの看板より、おおぐま座のほうがはっきりしていた、近くにはフェリーのロープ。戻った部屋は、少しだけ並び方が変わって見えた、そばには病院のまど。
+> 改札で二回確かめた。列がゆっくり進むあいだ、二回ともバスの定期があった。改札では、列がゆっくり進むあいだに別の人の改札が鳴ったので、顔を上げるとおおぐま座があった。しばらくは、列がゆっくり進むあいだの改札で、バスの定期がいちばん現実的なものだった。話にしたくなる前に、改札を離れた。
 
 #### `base_010_022`
 
@@ -5776,11 +5776,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 病院の番号札が図書館の階段の横で待っていた。知らない人が変なタイミングで笑って、空気が助かった、図書館の階段で、病院の番号札といっしょに。図書館の階段の端の向こうで、ぎょしゃ座が待っていた、その先には病院の番号札。
+> バス停に、思ったより少し長くいた。道が静かなあいだ、冷たいお茶を持ったままだった。バス停の上にぎょしゃ座が見えて、そこで時間を見るのをやめるには十分だった。道が静かなあいだ、バス停を出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A clinic number slip waited beside the library steps. A stranger smiled at the wrong timing and saved the mood near the library steps, with a clinic number slip. Auriga waited past the edge of the library steps, just past a clinic number slip.
+> I stayed a little longer at the bus shelter than I meant to, while the street stayed quiet. Auriga was visible above the bus shelter, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the bus shelter, while the street stayed quiet.
 
 #### `base_010_023`
 
@@ -5795,11 +5795,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 最後のパンがコインランドリーのドアよりまじめそうに見えた。連絡しそうになって、みんなを助けた、コインランドリーのドアで、最後のパンといっしょに。時間を見てから、コインランドリーのドアの上のりゅう座をもう一度見た、手には最後のパン。
+> 屋上の入口では、たいしたことは起きなかった。画面が暗くなったあと、ただ充電コードを持ったままでいた。充電コードから顔を上げると、その場所の上にりゅう座があった。何も解決していないけど、充電コードのせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> The last bread roll looked more serious than the laundromat door. I almost sent a message and then spared everyone near the laundromat door, with the last bread roll. I checked the time, then looked back at Draco over the laundromat door, while I held the last bread roll.
+> Nothing important happened at the rooftop doorway. I just kept holding a phone charger, after the screen went dark. I looked up from a phone charger and found Draco above the same place. It did not fix anything, but a phone charger made the walk home feel shorter.
 
 #### `base_010_024`
 
@@ -5814,11 +5814,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A ferry ticket became the main event at the river railing. I would not call it a miracle, but I did look twice near the river railing, with a ferry ticket.
+> I was almost done at the station platform when I noticed a bent train ticket. When the announcement faded, Perseus became easier to see.
 
 **Translation `ja`**
 
-> フェリーの切符が川の手すりで主役みたいになった。奇跡とは言わないけど、二度見はした、川の手すりで、フェリーの切符といっしょに。
+> 駅のホームで用事がほとんど終わったころ、曲がった切符が目に入った。アナウンスが遠ざかったころ、ペルセウス座が少し見やすくなった。
 
 #### `base_010_025`
 
@@ -5833,11 +5833,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A white envelope took up too much room on the tiny shrine. The phone stayed quiet like it had been warned near the tiny shrine, with a white envelope. When I looked up from the tiny shrine, Andromeda was already there, just past a white envelope. The night did not become better; it became more specific, beside the tiny shrine.
+> I was almost done at the river railing when I noticed a small stone. At the river railing, a bicycle bell crossed the path behind me, after the chair creaked, so I looked up and found Andromeda. For a while, a small stone was the most practical thing at the river railing, after the chair creaked. I put my phone away and let Andromeda above the river railing be enough.
 
 **Translation `ja`**
 
-> 白い封筒が小さな神社の上で場所を取りすぎていた。スマホは注意されたみたいに静かだった、小さな神社で、白い封筒といっしょに。小さな神社から顔を上げると、アンドロメダ座はもうそこにいた、その先には白い封筒。夜がよくなったというより、少し具体的になった、そばには小さな神社。
+> 川の手すりで用事がほとんど終わったころ、小さな石が目に入った。川の手すりでは、椅子が鳴ったあとに後ろの道を自転車のベルが通ったので、顔を上げるとアンドロメダ座があった。しばらくは、椅子が鳴ったあとの川の手すりで、小さな石がいちばん現実的なものだった。スマホはしまって、川の手すりの上のアンドロメダ座で十分ということにした。
 
 #### `base_010_026`
 
@@ -5852,11 +5852,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A key ring turned ordinary beside the campus gate. The answer I wanted did not arrive, but the bus did near the campus gate, with a key ring. Centaurus fitted between two roofs above the campus gate, while I held a key ring.
+> I stopped at the small shrine with a small packet of seeds still in my hand. Centaurus was visible above the small shrine, enough to stop checking the time there. Someone passed behind me while the gravel sounded louder than expected, and the ordinary night at the small shrine started again.
 
 **Translation `ja`**
 
-> 鍵の輪が学校の門の横でふつうに戻った。ほしい答えは来なかったけど、バスは来た、学校の門で、鍵の輪といっしょに。学校の門の上で、ケンタウルス座が屋根の間に入っていた、手には鍵の輪。
+> 小さな神社で立ち止まった。手には小さな種の袋が残っていた。小さな神社の上にケンタウルス座が見えて、そこで時間を見るのをやめるには十分だった。砂利の音が思ったより大きかったころ、後ろを誰かが通って、小さな神社のふつうの夜がまた始まった。
 
 #### `base_010_027`
 
@@ -5871,11 +5871,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> シリアルの茶わんが自転車置き場の上で静かにしていた。夜には意見がなくて、それが少し助かった、自転車置き場で、シリアルの茶わんといっしょに。自転車置き場の上が開いて、こと座が静かにそこへ入った、近くにはシリアルの茶わん。意味を持たせすぎる前に、中へ入った、目に入ったのはシリアルの茶わん。
+> 病院の番号札を持って着くころ、病院の入口にはほとんど人がいなかった。病院の番号札から顔を上げると、その場所の上にこと座があった。しばらくは、カートが通ったあとの病院の入口で、病院の番号札がいちばん現実的なものだった。カートが通ったあと、病院の入口を出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A bowl of cereal sat quietly on the bicycle racks. The night had no opinion, and that helped near the bicycle racks, with a bowl of cereal. The space above the bicycle racks opened, and Lyra took it quietly, near a bowl of cereal. I went in before making it too meaningful, after noticing a bowl of cereal.
+> The clinic entrance was nearly empty by the time I got there with a clinic number slip. I looked up from a clinic number slip and found Lyra above the same place. For a while, a clinic number slip was the most practical thing at the clinic entrance, after the cart rolled past. I remembered one small thing I still had to do after leaving the clinic entrance, after the cart rolled past.
 
 #### `base_010_028`
 
@@ -5890,11 +5890,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A folded map warmed my hand near the station wall. My hands were busy, so my thoughts slowed down near the station wall, with a folded map. Past the station wall, Ursa Major held its shape without hurry, just past a folded map.
+> At the library steps, I checked twice and found a library card both times, after the last bus passed. I looked up from a library card and found Ursa Major above the same place. It did not fix anything, but a library card made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 折った地図が駅の壁の近くで手をあたためた。手がふさがると、考えごとも少し遅くなった、駅の壁で、折った地図といっしょに。駅の壁の向こうで、おおぐま座は急がず形を保っていた、その先には折った地図。
+> 図書館の階段で二回確かめた。最終バスのあと、二回とも図書館カードがあった。図書館カードから顔を上げると、その場所の上におおぐま座があった。何も解決していないけど、図書館カードのせいで帰り道は少し短く感じた。
 
 #### `base_010_029`
 
@@ -5909,11 +5909,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 弁当箱のふたが電車の停留所の前で私を止めた。一度笑って、それを咳のふりにした、電車の停留所で、弁当箱のふたといっしょに。電車の停留所の上では、ぎょしゃ座がいつもより近く見えた、手には弁当箱のふた。スマホを出さなかったので、終わり方は少しましだった、そばには電車の停留所。ちょうどいい時に、小さな風が通った、電車の停留所のあとで。
+> 港のフェンスに、思ったより少し長くいた。レシートを折る前、フェリーの切符を持ったままだった。ロープが柱に小さく当たっていたころ、ぎょしゃ座が少し見やすくなった。しばらくは、レシートを折る前の港のフェンスで、フェリーの切符がいちばん現実的なものだった。ロープが柱に小さく当たっていたことだけは、まだ耳に残っていた。フェリーの切符のあるその時間は、レシートを折る前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A lunch box lid made me stop before the tram stop. I laughed once and pretended it was a cough near the tram stop, with a lunch box lid. Over the tram stop, Auriga looked less far than usual, while I held a lunch box lid. My phone stayed in my pocket, which improved the ending, beside the tram stop. A little wind moved through at exactly the right time after the tram stop.
+> I stayed a little longer at the harbor fence than I meant to, before the receipt folded. When a rope knocked softly against a post, Auriga became easier to see. For a while, a ferry ticket was the most practical thing at the harbor fence, before the receipt folded. I could still hear how a rope knocked softly against a post. The whole thing with a ferry ticket lasted maybe a minute, before the receipt folded, and I kept it in the memory too.
 
 #### `base_010_030`
 
@@ -5928,11 +5928,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A scratched water bottle looked newly important under the balcony rail. The tea had cooled into something more responsible near the balcony rail, with a scratched water bottle. I checked the time, then looked back at Draco over the balcony rail, near a scratched water bottle.
+> Nothing important happened at the elevator lobby. I just kept holding a delivery sticker, after the clock blinked. Through the nearest window at the elevator lobby, I could make out Draco. I put my phone away and let Draco above the elevator lobby be enough.
 
 **Translation `ja`**
 
-> 傷のある水筒がベランダの手すりの下で急に大事そうに見えた。お茶は冷めて、少しまじめな飲みものになっていた、ベランダの手すりで、傷のある水筒といっしょに。時間を見てから、ベランダの手すりの上のりゅう座をもう一度見た、近くには傷のある水筒。
+> エレベーターホールでは、たいしたことは起きなかった。時計が光ったあと、ただ配達のシールを持ったままでいた。エレベーターホールの近くの窓から、りゅう座が見えた。スマホはしまって、エレベーターホールの上のりゅう座で十分ということにした。
 
 #### `base_010_031`
 
@@ -5947,11 +5947,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A delivery sticker made a quiet sound against the bus shelter. I saved the last bite for no one in particular near the bus shelter, with a delivery sticker. I used Perseus above the bus shelter as a reason to pause, just past a delivery sticker. The room looked slightly rearranged when I returned, after noticing a delivery sticker.
+> I was almost done at the flower shop shutter when I noticed a bag of plums. Perseus was visible above the flower shop shutter, enough to stop checking the time there. For a while, a bag of plums was the most practical thing at the flower shop shutter, before I answered. Someone passed behind me while the wet pavement smelled green, and the ordinary night at the flower shop shutter started again.
 
 **Translation `ja`**
 
-> 配達のシールがバス停の屋根に当たって小さな音を出した。最後のひと口を、だれでもない人のために残した、バス停の屋根で、配達のシールといっしょに。バス停の屋根の上のペルセウス座を、立ち止まる理由にした、その先には配達のシール。戻った部屋は、少しだけ並び方が変わって見えた、目に入ったのは配達のシール。
+> 花屋のシャッターで用事がほとんど終わったころ、すももの袋が目に入った。花屋のシャッターの上にペルセウス座が見えて、そこで時間を見るのをやめるには十分だった。しばらくは、返事をする前の花屋のシャッターで、すももの袋がいちばん現実的なものだった。ぬれた道が少し青い匂いだったころ、後ろを誰かが通って、花屋のシャッターのふつうの夜がまた始まった。
 
 #### `base_010_032`
 
@@ -5966,11 +5966,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 冷たい自転車の鍵が屋上のドアに何度も当たっていた。レシートは、思ったほど何も証明してくれなかった、屋上のドアで、冷たい自転車の鍵といっしょに。屋上のドアの上の細いすきまに、アンドロメダ座がちょうど入った、手には冷たい自転車の鍵。
+> 古い橋で立ち止まった。手には赤いマフラーが残っていた。赤いマフラーから顔を上げると、その場所の上にアンドロメダ座があった。また動き出すころには、気が変わる前、手の中の赤いマフラーが少し冷えていた。
 
 **Translation `en`**
 
-> A cold bicycle lock kept knocking against the rooftop door. The receipt proved less than I wanted it to prove near the rooftop door, with a cold bicycle lock. A thin gap above the rooftop door was just enough for Andromeda, while I held a cold bicycle lock.
+> I stopped at the old bridge with a red scarf still in my hand. I looked up from a red scarf and found Andromeda above the same place. By the time I moved again, a red scarf had cooled in my hand, before I changed my mind.
 
 ### Pack `base_011`
 
@@ -5987,11 +5987,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A notebook with no title stayed forgotten by the old stone steps. The silence after the streak felt wider than the streak itself near the old stone steps, with a notebook with no title. Centaurus fitted between two roofs above the old stone steps, near a notebook with no title. The next ordinary thing waited indoors, beside the old stone steps.
+> I stopped at the quiet courtyard with a tiny flower pot still in my hand. When a window closed somewhere above, Centaurus became easier to see. For a while, a tiny flower pot was the most practical thing at the quiet courtyard, before the light changed. I took one terrible photo at the quiet courtyard, laughed at it, and called that a win.
 
 **Translation `ja`**
 
-> 題名のないノートが古い石段のそばで忘れられていた。光った線より、その後の静けさのほうが広かった、古い石段で、題名のないノートといっしょに。古い石段の上で、ケンタウルス座が屋根の間に入っていた、近くには題名のないノート。次のふつうのことは、部屋の中で待っていた、そばには古い石段。
+> 静かな中庭で立ち止まった。手には小さな植木鉢が残っていた。上のどこかで窓が閉まったころ、ケンタウルス座が少し見やすくなった。しばらくは、信号が変わる前の静かな中庭で、小さな植木鉢がいちばん現実的なものだった。静かな中庭で写真を撮ったら、びっくりするくらい下手だった。ちょっと笑って、今日は勝ちってことにした。
 
 #### `base_011_002`
 
@@ -6006,11 +6006,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 安い手袋が台所の机の影で待っていた。腹が立つのをやめたら、少しだけ面白かった、台所の机で、安い手袋といっしょに。雲が台所の机を離れると、しし座が戻ってきた、その先には安い手袋。
+> 買い物袋を持って着くころ、アパートの階段にはほとんど人がいなかった。アパートの階段では、電車が来る前に上の階でドアが閉まったので、顔を上げるとしし座があった。買い物袋のあるその時間は、電車が来る前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A cheap pair of gloves waited in the shadow of the kitchen table. It was only funny after I stopped being annoyed near the kitchen table, with a cheap pair of gloves. Leo returned when the clouds left the kitchen table alone, just past a cheap pair of gloves.
+> The apartment stairs was nearly empty by the time I got there with a grocery bag. At the apartment stairs, someone upstairs closed a door, before the train arrived, so I looked up and found Leo. The whole thing with a grocery bag lasted maybe a minute, before the train arrived, and I kept it in the memory too.
 
 #### `base_011_003`
 
@@ -6025,11 +6025,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A phone charger made the bench near the ticket gate. I lost count of airplanes before seeing the meteor near the ticket gate, with a phone charger. Taurus made the dark around the ticket gate feel arranged, while I held a phone charger.
+> At the noodle shop, I checked twice and found a plastic spoon both times, before I checked my phone. Through the nearest window at the noodle shop, I could make out Taurus. I put my phone away and let Taurus above the noodle shop be enough.
 
 **Translation `ja`**
 
-> 充電コードが改札の近くのベンチを少し変えた。流れ星を見る前に、飛行機の数を忘れた、改札で、充電コードといっしょに。おうし座のせいで、改札のまわりの暗さが少し並んで見えた、手には充電コード。
+> 麺屋で二回確かめた。スマホを見る前、二回ともプラスチックのスプーンがあった。麺屋の近くの窓から、おうし座が見えた。スマホはしまって、麺屋の上のおうし座で十分ということにした。
 
 #### `base_011_004`
 
@@ -6044,11 +6044,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A theater flyer waited beside the apartment stairs. Somebody upstairs dropped something and ended the silence near the apartment stairs, with a theater flyer. Over the apartment stairs, Auriga looked less far than usual, near a theater flyer.
+> I stayed a little longer at the parking lot than I meant to, before I found my keys. Auriga was visible above the parking lot, enough to stop checking the time there. Someone passed behind me while a car light blinked once, and the ordinary night at the parking lot started again.
 
 **Translation `ja`**
 
-> 映画館のちらしがアパートの階段の横で待っていた。上の階で何かが落ちて、静けさが終わった、アパートの階段で、映画館のちらしといっしょに。アパートの階段の上では、ぎょしゃ座がいつもより近く見えた、近くには映画館のちらし。
+> 駐車場に、思ったより少し長くいた。鍵を見つける前、鍵の輪を持ったままだった。駐車場の上にぎょしゃ座が見えて、そこで時間を見るのをやめるには十分だった。車のライトが一度だけ光ったころ、後ろを誰かが通って、駐車場のふつうの夜がまた始まった。
 
 #### `base_011_005`
 
@@ -6063,11 +6063,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> あたたかいおにぎりがラーメン屋ののれんよりまじめそうに見えた。みんなが違う空を見ている時に、ひとつ流れた、ラーメン屋ののれんで、あたたかいおにぎりといっしょに。ラーメン屋ののれんの近くの電線の向こうに、りゅう座はまだ見えていた、その先にはあたたかいおにぎり。意味を持たせすぎる前に、中へ入った、そばにはラーメン屋ののれん。
+> トラムの停留所では、たいしたことは起きなかった。次のドアが開く前、ただ紙コップを持ったままでいた。紙コップから顔を上げると、その場所の上にりゅう座があった。しばらくは、次のドアが開く前のトラムの停留所で、紙コップがいちばん現実的なものだった。また動き出すころには、次のドアが開く前、手の中の紙コップが少し冷えていた。
 
 **Translation `en`**
 
-> A warm rice ball looked more serious than the noodle shop curtain. One meteor appeared while everyone checked a different patch of sky near the noodle shop curtain, with a warm rice ball. Draco stayed visible past the wires near the noodle shop curtain, just past a warm rice ball. I went in before making it too meaningful, beside the noodle shop curtain.
+> Nothing important happened at the tram stop. I just kept holding a paper cup, before the next door opened. I looked up from a paper cup and found Draco above the same place. For a while, a paper cup was the most practical thing at the tram stop, before the next door opened. By the time I moved again, a paper cup had cooled in my hand, before the next door opened.
 
 #### `base_011_006`
 
@@ -6082,11 +6082,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A quiet radio became the main event at the parking lot. The smallest success was still a success near the parking lot, with a quiet radio. Perseus was clearer than the sign beside the parking lot, while I held a quiet radio.
+> I was almost done at the balcony when I noticed a damp towel. When water dripped from the railing, Perseus became easier to see. I left the balcony before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 小さく鳴るラジオが駐車場で主役みたいになった。いちばん小さい成功も、成功ではあった、駐車場で、小さく鳴るラジオといっしょに。駐車場のそばの看板より、ペルセウス座のほうがはっきりしていた、手には小さく鳴るラジオ。
+> ベランダで用事がほとんど終わったころ、少しぬれたタオルが目に入った。手すりから水が落ちたころ、ペルセウス座が少し見やすくなった。話にしたくなる前に、ベランダを離れた。
 
 #### `base_011_007`
 
@@ -6101,11 +6101,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 雨で黒くなった上着が宿の机の匂いを少し持っていた。これは少しだけ草だと思って、そのまま笑っていた、宿の机で、雨で黒くなった上着といっしょに。宿の机の上の細いすきまに、アンドロメダ座がちょうど入った、近くには雨で黒くなった上着。スマホを出さなかったので、終わり方は少しましだった、目に入ったのは雨で黒くなった上着。
+> 学校の門で立ち止まった。手には題名のないノートが残っていた。学校の門では、中へ戻る前に最後の教室の灯りが消えたので、顔を上げるとアンドロメダ座があった。しばらくは、中へ戻る前の学校の門で、題名のないノートがいちばん現実的なものだった。題名のないノートのあるその時間は、中へ戻る前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A rain-dark jacket smelled faintly of the hostel desk. I thought, this is a little ridiculous, and kept smiling near the hostel desk, with a rain-dark jacket. A thin gap above the hostel desk was just enough for Andromeda, near a rain-dark jacket. My phone stayed in my pocket, which improved the ending, after noticing a rain-dark jacket.
+> I stopped at the campus gate with a notebook with no title still in my hand. At the campus gate, the last classroom light went out, before I went back in, so I looked up and found Andromeda. For a while, a notebook with no title was the most practical thing at the campus gate, before I went back in. The whole thing with a notebook with no title lasted maybe a minute, before I went back in, and I kept it in the memory too.
 
 #### `base_011_008`
 
@@ -6120,11 +6120,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A postcard stamp kept its balance on the quiet courtyard. The quiet after the scooter passed felt almost clean near the quiet courtyard, with a postcard stamp. Centaurus gave the corner by the quiet courtyard a little depth, just past a postcard stamp.
+> The bicycle racks was nearly empty by the time I got there with a cold bicycle lock. Centaurus was visible above the bicycle racks, enough to stop checking the time there. I put my phone away and let Centaurus above the bicycle racks be enough.
 
 **Translation `ja`**
 
-> はがきの切手が静かな中庭の上でなんとか立っていた。スクーターが過ぎた後の静けさは、少しきれいだった、静かな中庭で、はがきの切手といっしょに。ケンタウルス座のおかげで、静かな中庭の角に少し奥行きが出た、その先にははがきの切手。
+> 冷たい自転車の鍵を持って着くころ、自転車置き場にはほとんど人がいなかった。自転車置き場の上にケンタウルス座が見えて、そこで時間を見るのをやめるには十分だった。スマホはしまって、自転車置き場の上のケンタウルス座で十分ということにした。
 
 #### `base_011_009`
 
@@ -6139,11 +6139,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A red sock rolled under the office sink. The light changed before my excuse was ready near the office sink, with a red sock. Near the office sink, Leo looked like part of the errand, while I held a red sock.
+> The closed bakery was nearly empty by the time I got there with the last bread roll. I looked up from the last bread roll and found Leo above the same place. Someone passed behind me while the warm smell still reached the street, and the ordinary night at the closed bakery started again.
 
 **Translation `ja`**
 
-> 赤いくつしたが会社の流しの下へ転がった。言い訳ができる前に、信号が変わった、会社の流しで、赤いくつしたといっしょに。会社の流しの近くでは、しし座まで用事の一部みたいだった、手には赤いくつした。
+> 最後のパンを持って着くころ、閉まったパン屋にはほとんど人がいなかった。最後のパンから顔を上げると、その場所の上にしし座があった。まだパンの匂いが道まで残っていたころ、後ろを誰かが通って、閉まったパン屋のふつうの夜がまた始まった。
 
 #### `base_011_010`
 
@@ -6158,11 +6158,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 冷たいお茶が講義室の近くで落ちた。何も解決していないけど、場所だけは変えた、講義室で、冷たいお茶といっしょに。おうし座のせいで、講義室のまわりの暗さが少し並んで見えた、近くには冷たいお茶。
+> 自販機で二回確かめた。廊下が冷えるあいだ、二回とも小銭があった。小銭から顔を上げると、その場所の上におうし座があった。また動き出すころには、廊下が冷えるあいだ、手の中の小銭が少し冷えていた。
 
 **Translation `en`**
 
-> A cold tea bottle fell out near the lecture hall. I did not solve anything, but I changed location near the lecture hall, with a cold tea bottle. Taurus made the dark around the lecture hall feel arranged, near a cold tea bottle.
+> At the vending machine, I checked twice and found a loose coin both times, while the hallway cooled. I looked up from a loose coin and found Taurus above the same place. By the time I moved again, a loose coin had cooled in my hand, while the hallway cooled.
 
 #### `base_011_011`
 
@@ -6177,11 +6177,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A tiny flower pot survived the walk past the dorm kitchen. I stepped around a puddle and felt briefly skilled near the dorm kitchen, with a tiny flower pot. I found Aries after the light on the dorm kitchen blinked once, just past a tiny flower pot. The next ordinary thing waited indoors, after noticing a tiny flower pot.
+> I stayed a little longer at the cinema lobby than I meant to, while the cup cooled. Through the nearest window at the cinema lobby, I could make out Aries. For a while, a theater flyer was the most practical thing at the cinema lobby, while the cup cooled. I left the cinema lobby before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 小さな植木鉢が寮の台所を通る道をなんとか生きのびた。水たまりをよけて、一瞬だけ上手に生きた気がした、寮の台所で、小さな植木鉢といっしょに。寮の台所の明かりが一度またたいてから、おひつじ座を見つけた、その先には小さな植木鉢。次のふつうのことは、部屋の中で待っていた、目に入ったのは小さな植木鉢。
+> 映画館のロビーに、思ったより少し長くいた。コップが冷めるあいだ、映画館のちらしを持ったままだった。映画館のロビーの近くの窓から、おひつじ座が見えた。しばらくは、コップが冷めるあいだの映画館のロビーで、映画館のちらしがいちばん現実的なものだった。話にしたくなる前に、映画館のロビーを離れた。
 
 #### `base_011_012`
 
@@ -6196,11 +6196,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cup of soup took up too much room on the old bridge. For a second the whole errand felt planned near the old bridge, with a cup of soup. The space above the old bridge opened, and Cygnus took it quietly, while I held a cup of soup.
+> Nothing important happened at the supermarket entrance. I just kept holding a wrinkled receipt, after the shoes dried. At the supermarket entrance, the carts rattled behind me, after the shoes dried, so I looked up and found Cygnus. I remembered one small thing I still had to do after leaving the supermarket entrance, after the shoes dried.
 
 **Translation `ja`**
 
-> スープのカップが古い橋の上で場所を取りすぎていた。一瞬だけ、用事が全部予定通りに見えた、古い橋で、スープのカップといっしょに。古い橋の上が開いて、はくちょう座が静かにそこへ入った、手にはスープのカップ。
+> スーパーの入口では、たいしたことは起きなかった。靴が乾いたあと、ただしわのあるレシートを持ったままでいた。スーパーの入口では、靴が乾いたあとに後ろでカートが鳴ったので、顔を上げるとはくちょう座があった。靴が乾いたあと、スーパーの入口を出てから、まだやることをひとつ思い出した。
 
 #### `base_011_013`
 
@@ -6215,11 +6215,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小さな石がフェリーの甲板の横でふつうに戻った。知らない人が変なタイミングで笑って、空気が助かった、フェリーの甲板で、小さな石といっしょに。フェリーの甲板のそばの看板より、ペルセウス座のほうがはっきりしていた、近くには小さな石。夜がよくなったというより、少し具体的になった、そばにはフェリーの甲板。
+> フェリーの甲板で用事がほとんど終わったころ、フェリーの切符が目に入った。フェリーの甲板の上にペルセウス座が見えて、そこで時間を見るのをやめるには十分だった。しばらくは、列がゆっくり進むあいだのフェリーの甲板で、フェリーの切符がいちばん現実的なものだった。スマホはしまって、フェリーの甲板の上のペルセウス座で十分ということにした。
 
 **Translation `en`**
 
-> A small stone turned ordinary beside the ferry deck. A stranger smiled at the wrong timing and saved the mood near the ferry deck, with a small stone. Perseus was clearer than the sign beside the ferry deck, near a small stone. The night did not become better; it became more specific, beside the ferry deck.
+> I was almost done at the ferry deck when I noticed a ferry ticket. Perseus was visible above the ferry deck, enough to stop checking the time there. For a while, a ferry ticket was the most practical thing at the ferry deck, while the line moved slowly. I put my phone away and let Perseus above the ferry deck be enough.
 
 #### `base_011_014`
 
@@ -6234,11 +6234,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cracked ruler sat quietly on the harbor fence. I almost sent a message and then spared everyone near the harbor fence, with a cracked ruler. Andromeda waited past the edge of the harbor fence, just past a cracked ruler.
+> I stopped at the office kitchenette with a chipped mug still in my hand. Through the nearest window at the office kitchenette, I could make out Andromeda. Someone passed behind me while the refrigerator hummed, and the ordinary night at the office kitchenette started again.
 
 **Translation `ja`**
 
-> ひびの入った定規が港のフェンスの上で静かにしていた。連絡しそうになって、みんなを助けた、港のフェンスで、ひびの入った定規といっしょに。港のフェンスの端の向こうで、アンドロメダ座が待っていた、その先にはひびの入った定規。
+> 会社の給湯室で立ち止まった。手には欠けたマグが残っていた。会社の給湯室の近くの窓から、アンドロメダ座が見えた。冷蔵庫が低く鳴っていたころ、後ろを誰かが通って、会社の給湯室のふつうの夜がまた始まった。
 
 #### `base_011_015`
 
@@ -6253,11 +6253,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 欠けたマグがエレベーターの鏡のそばで忘れられていた。奇跡とは言わないけど、二度見はした、エレベーターの鏡で、欠けたマグといっしょに。時間を見てから、エレベーターの鏡の上のケンタウルス座をもう一度見た、手には欠けたマグ。
+> 短いえんぴつを持って着くころ、講義室にはほとんど人がいなかった。講義室の近くの窓から、ケンタウルス座が見えた。また動き出すころには、画面が暗くなったあと、手の中の短いえんぴつが少し冷えていた。
 
 **Translation `en`**
 
-> A chipped mug stayed forgotten by the elevator mirror. I would not call it a miracle, but I did look twice near the elevator mirror, with a chipped mug. I checked the time, then looked back at Centaurus over the elevator mirror, while I held a chipped mug.
+> The lecture hall was nearly empty by the time I got there with a pencil stub. Through the nearest window at the lecture hall, I could make out Centaurus. By the time I moved again, a pencil stub had cooled in my hand, after the screen went dark.
 
 #### `base_011_016`
 
@@ -6272,11 +6272,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A pencil stub waited in the shadow of the flower shop shutter. The phone stayed quiet like it had been warned near the flower shop shutter, with a pencil stub. Near the flower shop shutter, Leo looked like part of the errand, near a pencil stub.
+> At the dorm kitchen, I checked twice and found a packet of instant noodles both times, while my hands cooled. Through the nearest window at the dorm kitchen, I could make out Leo. I left the dorm kitchen before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 短いえんぴつが花屋のシャッターの影で待っていた。スマホは注意されたみたいに静かだった、花屋のシャッターで、短いえんぴつといっしょに。花屋のシャッターの近くでは、しし座まで用事の一部みたいだった、近くには短いえんぴつ。
+> 寮の台所で二回確かめた。手が冷えるあいだ、二回ともカップめんがあった。寮の台所の近くの窓から、しし座が見えた。話にしたくなる前に、寮の台所を離れた。
 
 #### `base_011_017`
 
@@ -6291,11 +6291,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A takeout box made the bench near the supermarket light. The whole thing was tiny and somehow complete near the supermarket light, with a takeout box. When I looked up from the supermarket light, Taurus was already there, just past a takeout box. My phone stayed in my pocket, which improved the ending, beside the supermarket light.
+> At the kitchen table, I checked twice and found a bowl from the sink both times, after the chair creaked. Through the nearest window at the kitchen table, I could make out Taurus. For a while, a bowl from the sink was the most practical thing at the kitchen table, after the chair creaked. I remembered one small thing I still had to do after leaving the kitchen table, after the chair creaked.
 
 **Translation `ja`**
 
-> 持ち帰りの箱がスーパーの明かりの近くのベンチを少し変えた。全部小さいのに、なぜか足りていた、スーパーの明かりで、持ち帰りの箱といっしょに。スーパーの明かりから顔を上げると、おうし座はもうそこにいた、その先には持ち帰りの箱。スマホを出さなかったので、終わり方は少しましだった、そばにはスーパーの明かり。
+> 台所の机で二回確かめた。椅子が鳴ったあと、二回とも流しの茶わんがあった。台所の机の近くの窓から、おうし座が見えた。しばらくは、椅子が鳴ったあとの台所の机で、流しの茶わんがいちばん現実的なものだった。椅子が鳴ったあと、台所の机を出てから、まだやることをひとつ思い出した。
 
 #### `base_011_018`
 
@@ -6310,11 +6310,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> まどの留め金が夜の市場の近くで許可を待っているみたいだった。理由もなく七まで数えた、夜の市場で、まどの留め金といっしょに。夜の市場の上で、おひつじ座が屋根の間に入っていた、手にはまどの留め金。
+> 改札に、思ったより少し長くいた。小さく止まったあと、バスの定期を持ったままだった。改札の上におひつじ座が見えて、そこで時間を見るのをやめるには十分だった。何も解決していないけど、バスの定期のせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A window latch waited for permission near the night market. I counted to seven for no practical reason near the night market, with a window latch. Aries fitted between two roofs above the night market, while I held a window latch.
+> I stayed a little longer at the ticket gate than I meant to, after one small pause. Aries was visible above the ticket gate, enough to stop checking the time there. It did not fix anything, but a bus pass made the walk home feel shorter.
 
 #### `base_011_019`
 
@@ -6329,11 +6329,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A packet of cough drops made a small corner in the closed bakery. My hands were busy, so my thoughts slowed down near the closed bakery, with a packet of cough drops. The space above the closed bakery opened, and Cygnus took it quietly, near a packet of cough drops. The room looked slightly rearranged when I returned, after noticing a packet of cough drops.
+> Nothing important happened at the bus shelter. I just kept holding a cold tea bottle, after the cart rolled past. I looked up from a cold tea bottle and found Cygnus above the same place. For a while, a cold tea bottle was the most practical thing at the bus shelter, after the cart rolled past. Someone passed behind me while the next bus was still several minutes away, and the ordinary night at the bus shelter started again.
 
 **Translation `ja`**
 
-> のどあめの袋が閉まったパン屋の中で小さな角になっていた。手がふさがると、考えごとも少し遅くなった、閉まったパン屋で、のどあめの袋といっしょに。閉まったパン屋の上が開いて、はくちょう座が静かにそこへ入った、近くにはのどあめの袋。戻った部屋は、少しだけ並び方が変わって見えた、目に入ったのはのどあめの袋。
+> バス停では、たいしたことは起きなかった。カートが通ったあと、ただ冷たいお茶を持ったままでいた。冷たいお茶から顔を上げると、その場所の上にはくちょう座があった。しばらくは、カートが通ったあとのバス停で、冷たいお茶がいちばん現実的なものだった。次のバスまではまだ少しあったころ、後ろを誰かが通って、バス停のふつうの夜がまた始まった。
 
 #### `base_011_020`
 
@@ -6348,11 +6348,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 赤いマフラーが自販機の中へ押し込まれていた。一度笑って、それを咳のふりにした、自販機で、赤いマフラーといっしょに。自販機の向こうで、ペガスス座は急がず形を保っていた、その先には赤いマフラー。意味を持たせすぎる前に、中へ入った、理由は赤いマフラー。説明してよくするのは、やめておいた、自販機のあとで。
+> 屋上の入口で用事がほとんど終わったころ、充電コードが目に入った。風でドアが小さく鳴ったころ、ペガスス座が少し見やすくなった。しばらくは、最終バスのあとの屋上の入口で、充電コードがいちばん現実的なものだった。風でドアが小さく鳴ったことだけは、まだ耳に残っていた。また動き出すころには、最終バスのあと、手の中の充電コードが少し冷えていた。
 
 **Translation `en`**
 
-> A red scarf squeezed into the vending machine. I laughed once and pretended it was a cough near the vending machine, with a red scarf. Past the vending machine, Pegasus held its shape without hurry, just past a red scarf. I went in before making it too meaningful, because of a red scarf. I decided not to improve the moment by explaining it after the vending machine.
+> I was almost done at the rooftop doorway when I noticed a phone charger. When the door clicked in the wind, Pegasus became easier to see. For a while, a phone charger was the most practical thing at the rooftop doorway, after the last bus passed. I could still hear how the door clicked in the wind. By the time I moved again, a phone charger had cooled in my hand, after the last bus passed.
 
 #### `base_011_021`
 
@@ -6367,11 +6367,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> An old postcard clicked once beside the cinema lobby. The tea had cooled into something more responsible near the cinema lobby, with an old postcard.
+> I stopped at the laundromat with one mismatched sock still in my hand. Through the nearest window at the laundromat, I could make out Virgo.
 
 **Translation `ja`**
 
-> 古いはがきが映画館のロビーの横で一度だけ鳴った。お茶は冷めて、少しまじめな飲みものになっていた、映画館のロビーで、古いはがきといっしょに。
+> コインランドリーで立ち止まった。手には片方だけ違うくつしたが残っていた。コインランドリーの近くの窓から、おとめ座が見えた。
 
 #### `base_011_022`
 
@@ -6386,11 +6386,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A jar of basil reminded me of the clinic window. I saved the last bite for no one in particular near the clinic window, with a jar of basil. I checked the time, then looked back at Centaurus over the clinic window, near a jar of basil.
+> The river railing was nearly empty by the time I got there with a small stone. Centaurus was visible above the river railing, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the river railing, after the clock blinked.
 
 **Translation `ja`**
 
-> バジルのびんが病院のまどを思い出させた。最後のひと口を、だれでもない人のために残した、病院のまどで、バジルのびんといっしょに。時間を見てから、病院のまどの上のケンタウルス座をもう一度見た、近くにはバジルのびん。
+> 小さな石を持って着くころ、川の手すりにはほとんど人がいなかった。川の手すりの上にケンタウルス座が見えて、そこで時間を見るのをやめるには十分だった。時計が光ったあと、川の手すりを出てから、まだやることをひとつ思い出した。
 
 #### `base_011_023`
 
@@ -6405,11 +6405,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> バスの定期が図書館の階段の横で待っていた。レシートは、思ったほど何も証明してくれなかった、図書館の階段で、バスの定期といっしょに。図書館の階段の上のしし座を、立ち止まる理由にした、その先にはバスの定期。夜がよくなったというより、少し具体的になった、目に入ったのはバスの定期。
+> 小さな神社で二回確かめた。返事をする前、二回とも小さな種の袋があった。小さな種の袋から顔を上げると、その場所の上にしし座があった。しばらくは、返事をする前の小さな神社で、小さな種の袋がいちばん現実的なものだった。何も解決していないけど、小さな種の袋のせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A bus pass waited beside the library steps. The receipt proved less than I wanted it to prove near the library steps, with a bus pass. I used Leo above the library steps as a reason to pause, just past a bus pass. The night did not become better; it became more specific, after noticing a bus pass.
+> At the small shrine, I checked twice and found a small packet of seeds both times, before I answered. I looked up from a small packet of seeds and found Leo above the same place. For a while, a small packet of seeds was the most practical thing at the small shrine, before I answered. It did not fix anything, but a small packet of seeds made the walk home feel shorter.
 
 #### `base_011_024`
 
@@ -6424,11 +6424,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A paper cup looked more serious than the laundromat door. Someone's laughter crossed the street before the people did near the laundromat door, with a paper cup. A thin gap above the laundromat door was just enough for Taurus, while I held a paper cup.
+> I stayed a little longer at the clinic entrance than I meant to, before I changed my mind. I looked up from a clinic number slip and found Taurus above the same place. The whole thing with a clinic number slip lasted maybe a minute, before I changed my mind, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 紙コップがコインランドリーのドアよりまじめそうに見えた。人より先に、笑い声が道を渡った、コインランドリーのドアで、紙コップといっしょに。コインランドリーのドアの上の細いすきまに、おうし座がちょうど入った、手には紙コップ。
+> 病院の入口に、思ったより少し長くいた。気が変わる前、病院の番号札を持ったままだった。病院の番号札から顔を上げると、その場所の上におうし座があった。病院の番号札のあるその時間は、気が変わる前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_011_025`
 
@@ -6443,11 +6443,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 半分だけ残ったお菓子が川の手すりで主役みたいになった。違う曲を思い出して、そのまま鼻歌にした、川の手すりで、半分だけ残ったお菓子といっしょに。川の手すりの上で、おひつじ座が屋根の間に入っていた、近くには半分だけ残ったお菓子。意味を持たせすぎる前に、中へ入った、そばには川の手すり。
+> 夜の市場に、思ったより少し長くいた。信号が変わる前、あたたかい紙袋を持ったままだった。屋台の灯りがひとつずつ消えたころ、おひつじ座が少し見やすくなった。しばらくは、信号が変わる前の夜の市場で、あたたかい紙袋がいちばん現実的なものだった。また動き出すころには、信号が変わる前、手の中のあたたかい紙袋が少し冷えていた。
 
 **Translation `en`**
 
-> A half-empty snack bag became the main event at the river railing. I remembered the wrong song and hummed it anyway near the river railing, with a half-empty snack bag. Aries fitted between two roofs above the river railing, near a half-empty snack bag. I went in before making it too meaningful, beside the river railing.
+> I stayed a little longer at the night market than I meant to, before the light changed. When the stall lights went out one by one, Aries became easier to see. For a while, a warm paper bag was the most practical thing at the night market, before the light changed. By the time I moved again, a warm paper bag had cooled in my hand, before the light changed.
 
 #### `base_011_026`
 
@@ -6462,11 +6462,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A guitar pick took up too much room on the tiny shrine. I lost count of airplanes before seeing the meteor near the tiny shrine, with a guitar pick. Cygnus returned when the clouds left the tiny shrine alone, just past a guitar pick.
+> Nothing important happened at the harbor fence. I just kept holding a ferry ticket, before the train arrived. At the harbor fence, a rope knocked softly against a post, before the train arrived, so I looked up and found Cygnus. I left the harbor fence before the moment could turn into a story.
 
 **Translation `ja`**
 
-> ギターのピックが小さな神社の上で場所を取りすぎていた。流れ星を見る前に、飛行機の数を忘れた、小さな神社で、ギターのピックといっしょに。雲が小さな神社を離れると、はくちょう座が戻ってきた、その先にはギターのピック。
+> 港のフェンスでは、たいしたことは起きなかった。電車が来る前、ただフェリーの切符を持ったままでいた。港のフェンスでは、電車が来る前にロープが柱に小さく当たっていたので、顔を上げるとはくちょう座があった。話にしたくなる前に、港のフェンスを離れた。
 
 #### `base_011_027`
 
@@ -6481,11 +6481,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A tiny screwdriver turned ordinary beside the campus gate. Somebody upstairs dropped something and ended the silence near the campus gate, with a tiny screwdriver. Pegasus made the dark around the campus gate feel arranged, while I held a tiny screwdriver.
+> I was almost done at the elevator lobby when I noticed a delivery sticker. Through the nearest window at the elevator lobby, I could make out Pegasus. I remembered one small thing I still had to do after leaving the elevator lobby, before I checked my phone.
 
 **Translation `ja`**
 
-> 小さなドライバーが学校の門の横でふつうに戻った。上の階で何かが落ちて、静けさが終わった、学校の門で、小さなドライバーといっしょに。ペガスス座のせいで、学校の門のまわりの暗さが少し並んで見えた、手には小さなドライバー。
+> エレベーターホールで用事がほとんど終わったころ、配達のシールが目に入った。エレベーターホールの近くの窓から、ペガスス座が見えた。スマホを見る前、エレベーターホールを出てから、まだやることをひとつ思い出した。
 
 #### `base_011_028`
 
@@ -6519,11 +6519,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 借りたペンが駅の壁の近くで手をあたためた。いちばん小さい成功も、成功ではあった、駅の壁で、借りたペンといっしょに。駅の壁の近くの電線の向こうに、カシオペヤ座はまだ見えていた、その先には借りたペン。戻った部屋は、少しだけ並び方が変わって見えた、そばには駅の壁。
+> 部屋の鍵を持って着くころ、宿の机にはほとんど人がいなかった。宿の机の近くの窓から、カシオペヤ座が見えた。しばらくは、次のドアが開く前の宿の机で、部屋の鍵がいちばん現実的なものだった。部屋の鍵のあるその時間は、次のドアが開く前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A borrowed pen warmed my hand near the station wall. The smallest success was still a success near the station wall, with a borrowed pen. Cassiopeia stayed visible past the wires near the station wall, just past a borrowed pen. The room looked slightly rearranged when I returned, beside the station wall.
+> The hostel desk was nearly empty by the time I got there with a room key. Through the nearest window at the hostel desk, I could make out Cassiopeia. For a while, a room key was the most practical thing at the hostel desk, before the next door opened. The whole thing with a room key lasted maybe a minute, before the next door opened, and I kept it in the memory too.
 
 #### `base_011_030`
 
@@ -6538,11 +6538,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> ほどけたくつひもが電車の停留所の前で私を止めた。これは少しだけ草だと思って、そのまま笑っていた、電車の停留所で、ほどけたくつひもといっしょに。電車の停留所のそばの看板より、ヘルクレス座のほうがはっきりしていた、手にはほどけたくつひも。
+> 静かな中庭で二回確かめた。流しが鳴るあいだ、二回とも小さな植木鉢があった。静かな中庭では、流しが鳴るあいだに上のどこかで窓が閉まったので、顔を上げるとヘルクレス座があった。スマホはしまって、静かな中庭の上のヘルクレス座で十分ということにした。
 
 **Translation `en`**
 
-> A loose shoelace made me stop before the tram stop. I thought, this is a little ridiculous, and kept smiling near the tram stop, with a loose shoelace. Hercules was clearer than the sign beside the tram stop, while I held a loose shoelace.
+> At the quiet courtyard, I checked twice and found a tiny flower pot both times, while the sink dripped. At the quiet courtyard, a window closed somewhere above, while the sink dripped, so I looked up and found Hercules. I put my phone away and let Hercules above the quiet courtyard be enough.
 
 #### `base_011_031`
 
@@ -6557,11 +6557,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A subway transfer slip looked newly important under the balcony rail. My pocket held one more useless proof of the day near the balcony rail, with a subway transfer slip. A thin gap above the balcony rail was just enough for Taurus, near a subway transfer slip. The next ordinary thing waited indoors, after noticing a subway transfer slip.
+> I stayed a little longer at the apartment stairs than I meant to, before I went back in. At the apartment stairs, someone upstairs closed a door, before I went back in, so I looked up and found Taurus. For a while, a grocery bag was the most practical thing at the apartment stairs, before I went back in. I left the apartment stairs before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 地下鉄の乗り換え券がベランダの手すりの下で急に大事そうに見えた。ポケットには、今日の役に立たない証拠が一つ増えた、ベランダの手すりで、地下鉄の乗り換え券といっしょに。ベランダの手すりの上の細いすきまに、おうし座がちょうど入った、近くには地下鉄の乗り換え券。次のふつうのことは、部屋の中で待っていた、目に入ったのは地下鉄の乗り換え券。
+> アパートの階段に、思ったより少し長くいた。中へ戻る前、買い物袋を持ったままだった。アパートの階段では、中へ戻る前に上の階でドアが閉まったので、顔を上げるとおうし座があった。しばらくは、中へ戻る前のアパートの階段で、買い物袋がいちばん現実的なものだった。話にしたくなる前に、アパートの階段を離れた。
 
 #### `base_011_032`
 
@@ -6576,11 +6576,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A red pencil mark made a quiet sound against the bus shelter. Nothing spooky happened, except the door opening by itself near the bus shelter, with a red pencil mark. Aries gave the corner by the bus shelter a little depth, just past a red pencil mark.
+> Nothing important happened at the noodle shop. I just kept holding a plastic spoon, while the sign hummed. Through the nearest window at the noodle shop, I could make out Aries. I remembered one small thing I still had to do after leaving the noodle shop, while the sign hummed.
 
 **Translation `ja`**
 
-> 赤い鉛筆の印がバス停の屋根に当たって小さな音を出した。ドアが勝手に開いた以外、こわいことは何もない、バス停の屋根で、赤い鉛筆の印といっしょに。おひつじ座のおかげで、バス停の屋根の角に少し奥行きが出た、その先には赤い鉛筆の印。
+> 麺屋では、たいしたことは起きなかった。看板が鳴るあいだ、ただプラスチックのスプーンを持ったままでいた。麺屋の近くの窓から、おひつじ座が見えた。看板が鳴るあいだ、麺屋を出てから、まだやることをひとつ思い出した。
 
 ### Pack `base_012`
 
@@ -6597,11 +6597,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A travel-size toothbrush kept knocking against the rooftop door. I did not solve anything, but I changed location near the rooftop door, with a travel-size toothbrush. Near the rooftop door, Cygnus looked like part of the errand, while I held a travel-size toothbrush.
+> Nothing important happened at the station platform. I just kept holding a bent train ticket, while the window stayed dark. I looked up from a bent train ticket and found Cygnus above the same place. It did not fix anything, but a bent train ticket made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 旅行用の歯ブラシが屋上のドアに何度も当たっていた。何も解決していないけど、場所だけは変えた、屋上のドアで、旅行用の歯ブラシといっしょに。屋上のドアの近くでは、はくちょう座まで用事の一部みたいだった、手には旅行用の歯ブラシ。
+> 駅のホームでは、たいしたことは起きなかった。窓が暗いままのあいだ、ただ曲がった切符を持ったままでいた。曲がった切符から顔を上げると、その場所の上にはくちょう座があった。何も解決していないけど、曲がった切符のせいで帰り道は少し短く感じた。
 
 #### `base_012_002`
 
@@ -6616,11 +6616,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小さな種の袋が古い石段のそばで忘れられていた。水たまりをよけて、一瞬だけ上手に生きた気がした、古い石段で、小さな種の袋といっしょに。ペガスス座のせいで、古い石段のまわりの暗さが少し並んで見えた、近くには小さな種の袋。
+> トラムの停留所で用事がほとんど終わったころ、紙コップが目に入った。トラムのあとで線路が光っていたころ、ペガスス座が少し見やすくなった。紙コップのあるその時間は、廊下が冷えるあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A small packet of seeds stayed forgotten by the old stone steps. I stepped around a puddle and felt briefly skilled near the old stone steps, with a small packet of seeds. Pegasus made the dark around the old stone steps feel arranged, near a small packet of seeds.
+> I was almost done at the tram stop when I noticed a paper cup. When the rails shone after the tram passed, Pegasus became easier to see. The whole thing with a paper cup lasted maybe a minute, while the hallway cooled, and I kept it in the memory too.
 
 #### `base_012_003`
 
@@ -6635,11 +6635,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 部屋の鍵が台所の机の影で待っていた。一瞬だけ、用事が全部予定通りに見えた、台所の机で、部屋の鍵といっしょに。台所の机の明かりが一度またたいてから、おとめ座を見つけた、その先には部屋の鍵。意味を持たせすぎる前に、中へ入った、目に入ったのは部屋の鍵。
+> ベランダで立ち止まった。手には少しぬれたタオルが残っていた。ベランダでは、コップが冷めるあいだに手すりから水が落ちたので、顔を上げるとおとめ座があった。しばらくは、コップが冷めるあいだのベランダで、少しぬれたタオルがいちばん現実的なものだった。スマホはしまって、ベランダの上のおとめ座で十分ということにした。
 
 **Translation `en`**
 
-> A room key waited in the shadow of the kitchen table. For a second the whole errand felt planned near the kitchen table, with a room key. I found Virgo after the light on the kitchen table blinked once, just past a room key. I went in before making it too meaningful, after noticing a room key.
+> I stopped at the balcony with a damp towel still in my hand. At the balcony, water dripped from the railing, while the cup cooled, so I looked up and found Virgo. For a while, a damp towel was the most practical thing at the balcony, while the cup cooled. I put my phone away and let Virgo above the balcony be enough.
 
 #### `base_012_004`
 
@@ -6654,11 +6654,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A half-read comic made the bench near the ticket gate. A stranger smiled at the wrong timing and saved the mood near the ticket gate, with a half-read comic. The space above the ticket gate opened, and Cassiopeia took it quietly, while I held a half-read comic.
+> The campus gate was nearly empty by the time I got there with a notebook with no title. Cassiopeia was visible above the campus gate, enough to stop checking the time there. Someone passed behind me while the last classroom light went out, and the ordinary night at the campus gate started again.
 
 **Translation `ja`**
 
-> 読みかけの漫画が改札の近くのベンチを少し変えた。知らない人が変なタイミングで笑って、空気が助かった、改札で、読みかけの漫画といっしょに。改札の上が開いて、カシオペヤ座が静かにそこへ入った、手には読みかけの漫画。
+> 題名のないノートを持って着くころ、学校の門にはほとんど人がいなかった。学校の門の上にカシオペヤ座が見えて、そこで時間を見るのをやめるには十分だった。最後の教室の灯りが消えたころ、後ろを誰かが通って、学校の門のふつうの夜がまた始まった。
 
 #### `base_012_005`
 
@@ -6673,11 +6673,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A clean fork waited beside the apartment stairs. I almost sent a message and then spared everyone near the apartment stairs, with a clean fork. Hercules was clearer than the sign beside the apartment stairs, near a clean fork. My phone stayed in my pocket, which improved the ending, beside the apartment stairs.
+> At the library steps, I checked twice and found a library card both times, while the line moved slowly. I looked up from a library card and found Hercules above the same place. For a while, a library card was the most practical thing at the library steps, while the line moved slowly. I remembered one small thing I still had to do after leaving the library steps, while the line moved slowly.
 
 **Translation `ja`**
 
-> きれいなフォークがアパートの階段の横で待っていた。連絡しそうになって、みんなを助けた、アパートの階段で、きれいなフォークといっしょに。アパートの階段のそばの看板より、ヘルクレス座のほうがはっきりしていた、近くにはきれいなフォーク。スマホを出さなかったので、終わり方は少しましだった、そばにはアパートの階段。
+> 図書館の階段で二回確かめた。列がゆっくり進むあいだ、二回とも図書館カードがあった。図書館カードから顔を上げると、その場所の上にヘルクレス座があった。しばらくは、列がゆっくり進むあいだの図書館の階段で、図書館カードがいちばん現実的なものだった。列がゆっくり進むあいだ、図書館の階段を出てから、まだやることをひとつ思い出した。
 
 #### `base_012_006`
 
@@ -6692,11 +6692,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A half-melted ice cream looked more serious than the noodle shop curtain. The old clock nearby sounded too confident near the noodle shop curtain, with a half-melted ice cream. Sagittarius waited past the edge of the noodle shop curtain, just past a half-melted ice cream.
+> I stayed a little longer at the closed bakery than I meant to, while the street stayed quiet. I looked up from the last bread roll and found Sagittarius above the same place. It did not fix anything, but the last bread roll made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 少し溶けたアイスがラーメン屋ののれんよりまじめそうに見えた。近くの古い時計が、妙に自信のある音を立てた、ラーメン屋ののれんで、少し溶けたアイスといっしょに。ラーメン屋ののれんの端の向こうで、いて座が待っていた、その先には少し溶けたアイス。
+> 閉まったパン屋に、思ったより少し長くいた。道が静かなあいだ、最後のパンを持ったままだった。最後のパンから顔を上げると、その場所の上にいて座があった。何も解決していないけど、最後のパンのせいで帰り道は少し短く感じた。
 
 #### `base_012_007`
 
@@ -6711,11 +6711,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 薬局の袋が駐車場で主役みたいになった。ちょうどいい時に、小さな風が通った、駐車場で、薬局の袋といっしょに。時間を見てから、駐車場の上のみずがめ座をもう一度見た、手には薬局の袋。
+> 自販機では、たいしたことは起きなかった。画面が暗くなったあと、ただ小銭を持ったままでいた。飲み物が落ちたあとも機械は鳴っていたころ、みずがめ座が少し見やすくなった。小銭のあるその時間は、画面が暗くなったあとのたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A pharmacy bag became the main event at the parking lot. A little wind moved through at exactly the right time near the parking lot, with a pharmacy bag. I checked the time, then looked back at Aquarius over the parking lot, while I held a pharmacy bag.
+> Nothing important happened at the vending machine. I just kept holding a loose coin, after the screen went dark. When the machine kept humming after the drink dropped, Aquarius became easier to see. The whole thing with a loose coin lasted maybe a minute, after the screen went dark, and I kept it in the memory too.
 
 #### `base_012_008`
 
@@ -6730,11 +6730,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 宿のタオルが宿の机の匂いを少し持っていた。全部小さいのに、なぜか足りていた、宿の机で、宿のタオルといっしょに。宿の机の近くでは、はくちょう座まで用事の一部みたいだった、近くには宿のタオル。
+> 映画館のロビーで用事がほとんど終わったころ、映画館のちらしが目に入った。映画館のロビーの近くの窓から、はくちょう座が見えた。スマホはしまって、映画館のロビーの上のはくちょう座で十分ということにした。
 
 **Translation `en`**
 
-> A towel from the hostel smelled faintly of the hostel desk. The whole thing was tiny and somehow complete near the hostel desk, with a towel from the hostel. Near the hostel desk, Cygnus looked like part of the errand, near a towel from the hostel.
+> I was almost done at the cinema lobby when I noticed a theater flyer. Through the nearest window at the cinema lobby, I could make out Cygnus. I put my phone away and let Cygnus above the cinema lobby be enough.
 
 #### `base_012_009`
 
@@ -6749,11 +6749,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A paper lantern kept its balance on the quiet courtyard. I counted to seven for no practical reason near the quiet courtyard, with a paper lantern. When I looked up from the quiet courtyard, Pegasus was already there, just past a paper lantern. The next ordinary thing waited indoors, beside the quiet courtyard.
+> I was almost done at the old bridge when I noticed a red scarf. Pegasus was visible above the old bridge, enough to stop checking the time there. For a while, a red scarf was the most practical thing at the old bridge, after the chair creaked. Someone passed behind me while the river carried the traffic noise away, and the ordinary night at the old bridge started again.
 
 **Translation `ja`**
 
-> 紙のランタンが静かな中庭の上でなんとか立っていた。理由もなく七まで数えた、静かな中庭で、紙のランタンといっしょに。静かな中庭から顔を上げると、ペガスス座はもうそこにいた、その先には紙のランタン。次のふつうのことは、部屋の中で待っていた、そばには静かな中庭。
+> 古い橋で用事がほとんど終わったころ、赤いマフラーが目に入った。古い橋の上にペガスス座が見えて、そこで時間を見るのをやめるには十分だった。しばらくは、椅子が鳴ったあとの古い橋で、赤いマフラーがいちばん現実的なものだった。川が車の音を少し遠くしたころ、後ろを誰かが通って、古い橋のふつうの夜がまた始まった。
 
 #### `base_012_010`
 
@@ -6768,11 +6768,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A torn grocery list rolled under the office sink. My hands were busy, so my thoughts slowed down near the office sink, with a torn grocery list. Virgo fitted between two roofs above the office sink, while I held a torn grocery list.
+> I stopped at the ferry deck with a ferry ticket still in my hand. I looked up from a ferry ticket and found Virgo above the same place. By the time I moved again, a ferry ticket had cooled in my hand, after one small pause.
 
 **Translation `ja`**
 
-> 破れた買い物メモが会社の流しの下へ転がった。手がふさがると、考えごとも少し遅くなった、会社の流しで、破れた買い物メモといっしょに。会社の流しの上で、おとめ座が屋根の間に入っていた、手には破れた買い物メモ。
+> フェリーの甲板で立ち止まった。手にはフェリーの切符が残っていた。フェリーの切符から顔を上げると、その場所の上におとめ座があった。また動き出すころには、小さく止まったあと、手の中のフェリーの切符が少し冷えていた。
 
 #### `base_012_011`
 
@@ -6787,11 +6787,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A blue umbrella fell out near the lecture hall. I laughed once and pretended it was a cough near the lecture hall, with a blue umbrella. The space above the lecture hall opened, and Cassiopeia took it quietly, near a blue umbrella. The night did not become better; it became more specific, after noticing a blue umbrella. The answer I wanted did not arrive, but the bus did after the lecture hall.
+> The office kitchenette was nearly empty by the time I got there with a chipped mug. Through the nearest window at the office kitchenette, I could make out Cassiopeia. For a while, a chipped mug was the most practical thing at the office kitchenette, after the cart rolled past. I could still hear how the refrigerator hummed. It did not fix anything, but a chipped mug made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 青い傘が講義室の近くで落ちた。一度笑って、それを咳のふりにした、講義室で、青い傘といっしょに。講義室の上が開いて、カシオペヤ座が静かにそこへ入った、近くには青い傘。夜がよくなったというより、少し具体的になった、目に入ったのは青い傘。ほしい答えは来なかったけど、バスは来た、講義室のあとで。
+> 欠けたマグを持って着くころ、会社の給湯室にはほとんど人がいなかった。会社の給湯室の近くの窓から、カシオペヤ座が見えた。しばらくは、カートが通ったあとの会社の給湯室で、欠けたマグがいちばん現実的なものだった。冷蔵庫が低く鳴っていたことだけは、まだ耳に残っていた。何も解決していないけど、欠けたマグのせいで帰り道は少し短く感じた。
 
 #### `base_012_012`
 
@@ -6806,11 +6806,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A pear from work survived the walk past the dorm kitchen. The tea had cooled into something more responsible near the dorm kitchen, with a pear from work. Past the dorm kitchen, Hercules held its shape without hurry, just past a pear from work.
+> At the lecture hall, I checked twice and found a pencil stub both times, after the last bus passed. Through the nearest window at the lecture hall, I could make out Hercules. The whole thing with a pencil stub lasted maybe a minute, after the last bus passed, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 職場でもらった梨が寮の台所を通る道をなんとか生きのびた。お茶は冷めて、少しまじめな飲みものになっていた、寮の台所で、職場でもらった梨といっしょに。寮の台所の向こうで、ヘルクレス座は急がず形を保っていた、その先には職場でもらった梨。
+> 講義室で二回確かめた。最終バスのあと、二回とも短いえんぴつがあった。講義室の近くの窓から、ヘルクレス座が見えた。短いえんぴつのあるその時間は、最終バスのあとのたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_012_013`
 
@@ -6825,11 +6825,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> はさみっぱなしのしおりが古い橋の上で場所を取りすぎていた。だれも気づかないので、覚えておきやすかった、古い橋で、はさみっぱなしのしおりといっしょに。古い橋の上では、いて座がいつもより近く見えた、手にははさみっぱなしのしおり。
+> 駐車場に、思ったより少し長くいた。レシートを折る前、鍵の輪を持ったままだった。駐車場では、レシートを折る前に車のライトが一度だけ光ったので、顔を上げるといて座があった。スマホはしまって、駐車場の上のいて座で十分ということにした。
 
 **Translation `en`**
 
-> A loose bookmark took up too much room on the old bridge. Nobody noticed it, which made the scene easier to keep near the old bridge, with a loose bookmark. Over the old bridge, Sagittarius looked less far than usual, while I held a loose bookmark.
+> I stayed a little longer at the parking lot than I meant to, before the receipt folded. At the parking lot, a car light blinked once, before the receipt folded, so I looked up and found Sagittarius. I put my phone away and let Sagittarius above the parking lot be enough.
 
 #### `base_012_014`
 
@@ -6844,11 +6844,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A grocery coupon turned ordinary beside the ferry deck. A dog barked once, then left the matter there near the ferry deck, with a grocery coupon. I checked the time, then looked back at Aquarius over the ferry deck, near a grocery coupon.
+> Nothing important happened at the kitchen table. I just kept holding a bowl from the sink, after the clock blinked. Through the nearest window at the kitchen table, I could make out Aquarius. Someone passed behind me while the kettle clicked off, and the ordinary night at the kitchen table started again.
 
 **Translation `ja`**
 
-> 割引券がフェリーの甲板の横でふつうに戻った。犬が一度だけ鳴いて、その件は終わった、フェリーの甲板で、割引券といっしょに。時間を見てから、フェリーの甲板の上のみずがめ座をもう一度見た、近くには割引券。
+> 台所の机では、たいしたことは起きなかった。時計が光ったあと、ただ流しの茶わんを持ったままでいた。台所の机の近くの窓から、みずがめ座が見えた。ケトルが切れたころ、後ろを誰かが通って、台所の机のふつうの夜がまた始まった。
 
 #### `base_012_015`
 
@@ -6863,11 +6863,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A warm paper bag sat quietly on the harbor fence. Someone's laughter crossed the street before the people did near the harbor fence, with a warm paper bag. I used Canis Major above the harbor fence as a reason to pause, just past a warm paper bag. My phone stayed in my pocket, which improved the ending, after noticing a warm paper bag.
+> I was almost done at the ticket gate when I noticed a bus pass. I looked up from a bus pass and found Canis Major above the same place. For a while, a bus pass was the most practical thing at the ticket gate, before I answered. By the time I moved again, a bus pass had cooled in my hand, before I answered.
 
 **Translation `ja`**
 
-> あたたかい紙袋が港のフェンスの上で静かにしていた。人より先に、笑い声が道を渡った、港のフェンスで、あたたかい紙袋といっしょに。港のフェンスの上のおおいぬ座を、立ち止まる理由にした、その先にはあたたかい紙袋。スマホを出さなかったので、終わり方は少しましだった、目に入ったのはあたたかい紙袋。
+> 改札で用事がほとんど終わったころ、バスの定期が目に入った。バスの定期から顔を上げると、その場所の上におおいぬ座があった。しばらくは、返事をする前の改札で、バスの定期がいちばん現実的なものだった。また動き出すころには、返事をする前、手の中のバスの定期が少し冷えていた。
 
 #### `base_012_016`
 
@@ -6882,11 +6882,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> One mismatched sock stayed forgotten by the elevator mirror. I remembered the wrong song and hummed it anyway near the elevator mirror, with one mismatched sock. A thin gap above the elevator mirror was just enough for Orion, while I held one mismatched sock.
+> I stopped at the bus shelter with a cold tea bottle still in my hand. When the next bus was still several minutes away, Orion became easier to see. I left the bus shelter before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 片方だけ違うくつしたがエレベーターの鏡のそばで忘れられていた。違う曲を思い出して、そのまま鼻歌にした、エレベーターの鏡で、片方だけ違うくつしたといっしょに。エレベーターの鏡の上の細いすきまに、オリオン座がちょうど入った、手には片方だけ違うくつした。
+> バス停で立ち止まった。手には冷たいお茶が残っていた。次のバスまではまだ少しあったころ、オリオン座が少し見やすくなった。話にしたくなる前に、バス停を離れた。
 
 #### `base_012_017`
 
@@ -6901,11 +6901,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A library card waited in the shadow of the flower shop shutter. I lost count of airplanes before seeing the meteor near the flower shop shutter, with a library card. Virgo fitted between two roofs above the flower shop shutter, near a library card. The room looked slightly rearranged when I returned, beside the flower shop shutter.
+> I stopped at the bicycle racks with a cold bicycle lock still in my hand. At the bicycle racks, one wheel kept spinning, before the light changed, so I looked up and found Virgo. For a while, a cold bicycle lock was the most practical thing at the bicycle racks, before the light changed. The whole thing with a cold bicycle lock lasted maybe a minute, before the light changed, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 図書館カードが花屋のシャッターの影で待っていた。流れ星を見る前に、飛行機の数を忘れた、花屋のシャッターで、図書館カードといっしょに。花屋のシャッターの上で、おとめ座が屋根の間に入っていた、近くには図書館カード。戻った部屋は、少しだけ並び方が変わって見えた、そばには花屋のシャッター。
+> 自転車置き場で立ち止まった。手には冷たい自転車の鍵が残っていた。自転車置き場では、信号が変わる前にひとつの車輪だけまだ回っていたので、顔を上げるとおとめ座があった。しばらくは、信号が変わる前の自転車置き場で、冷たい自転車の鍵がいちばん現実的なものだった。冷たい自転車の鍵のあるその時間は、信号が変わる前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_012_018`
 
@@ -6920,11 +6920,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小さなライトがスーパーの明かりの近くのベンチを少し変えた。上の階で何かが落ちて、静けさが終わった、スーパーの明かりで、小さなライトといっしょに。
+> 片方だけ違うくつしたを持って着くころ、コインランドリーにはほとんど人がいなかった。コインランドリーの近くの窓から、カシオペヤ座が見えた。
 
 **Translation `en`**
 
-> A small flashlight made the bench near the supermarket light. Somebody upstairs dropped something and ended the silence near the supermarket light, with a small flashlight.
+> The laundromat was nearly empty by the time I got there with one mismatched sock. Through the nearest window at the laundromat, I could make out Cassiopeia.
 
 #### `base_012_019`
 
@@ -6939,11 +6939,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A bowl from the sink waited for permission near the night market. One meteor appeared while everyone checked a different patch of sky near the night market, with a bowl from the sink. Hercules made the dark around the night market feel arranged, while I held a bowl from the sink.
+> At the river railing, I checked twice and found a small stone both times, before I checked my phone. I looked up from a small stone and found Hercules above the same place. Someone passed behind me while a bicycle bell crossed the path behind me, and the ordinary night at the river railing started again.
 
 **Translation `ja`**
 
-> 流しの茶わんが夜の市場の近くで許可を待っているみたいだった。みんなが違う空を見ている時に、ひとつ流れた、夜の市場で、流しの茶わんといっしょに。ヘルクレス座のせいで、夜の市場のまわりの暗さが少し並んで見えた、手には流しの茶わん。
+> 川の手すりで二回確かめた。スマホを見る前、二回とも小さな石があった。小さな石から顔を上げると、その場所の上にヘルクレス座があった。後ろの道を自転車のベルが通ったころ、後ろを誰かが通って、川の手すりのふつうの夜がまた始まった。
 
 #### `base_012_020`
 
@@ -6958,11 +6958,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A small bottle of ink made a small corner in the closed bakery. I decided not to improve the moment by explaining it near the closed bakery, with a small bottle of ink. Over the closed bakery, Sagittarius looked less far than usual, near a small bottle of ink.
+> I stayed a little longer at the small shrine than I meant to, before I found my keys. I looked up from a small packet of seeds and found Sagittarius above the same place. By the time I moved again, a small packet of seeds had cooled in my hand, before I found my keys.
 
 **Translation `ja`**
 
-> 小さなインクびんが閉まったパン屋の中で小さな角になっていた。説明してよくするのは、やめておいた、閉まったパン屋で、小さなインクびんといっしょに。閉まったパン屋の上では、いて座がいつもより近く見えた、近くには小さなインクびん。
+> 小さな神社に、思ったより少し長くいた。鍵を見つける前、小さな種の袋を持ったままだった。小さな種の袋から顔を上げると、その場所の上にいて座があった。また動き出すころには、鍵を見つける前、手の中の小さな種の袋が少し冷えていた。
 
 #### `base_012_021`
 
@@ -6977,11 +6977,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A bent train ticket squeezed into the vending machine. The radio caught a town I have never visited near the vending machine, with a bent train ticket. Aquarius stayed visible past the wires near the vending machine, just past a bent train ticket. The night did not become better; it became more specific, beside the vending machine.
+> Nothing important happened at the supermarket entrance. I just kept holding a wrinkled receipt, before the next door opened. When the carts rattled behind me, Aquarius became easier to see. For a while, a wrinkled receipt was the most practical thing at the supermarket entrance, before the next door opened. I left the supermarket entrance before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 曲がった切符が自販機の中へ押し込まれていた。ラジオが、行ったことのない町を拾った、自販機で、曲がった切符といっしょに。自販機の近くの電線の向こうに、みずがめ座はまだ見えていた、その先には曲がった切符。夜がよくなったというより、少し具体的になった、そばには自販機。
+> スーパーの入口では、たいしたことは起きなかった。次のドアが開く前、ただしわのあるレシートを持ったままでいた。後ろでカートが鳴ったころ、みずがめ座が少し見やすくなった。しばらくは、次のドアが開く前のスーパーの入口で、しわのあるレシートがいちばん現実的なものだった。話にしたくなる前に、スーパーの入口を離れた。
 
 #### `base_012_022`
 
@@ -6996,11 +6996,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A supermarket basket clicked once beside the cinema lobby. My pocket held one more useless proof of the day near the cinema lobby, with a supermarket basket. Canis Major was clearer than the sign beside the cinema lobby, while I held a supermarket basket.
+> I was almost done at the night market when I noticed a warm paper bag. At the night market, the stall lights went out one by one, while the sink dripped, so I looked up and found Canis Major. I remembered one small thing I still had to do after leaving the night market, while the sink dripped.
 
 **Translation `ja`**
 
-> スーパーのかごが映画館のロビーの横で一度だけ鳴った。ポケットには、今日の役に立たない証拠が一つ増えた、映画館のロビーで、スーパーのかごといっしょに。映画館のロビーのそばの看板より、おおいぬ座のほうがはっきりしていた、手にはスーパーのかご。
+> 夜の市場で用事がほとんど終わったころ、あたたかい紙袋が目に入った。夜の市場では、流しが鳴るあいだに屋台の灯りがひとつずつ消えたので、顔を上げるとおおいぬ座があった。流しが鳴るあいだ、夜の市場を出てから、まだやることをひとつ思い出した。
 
 #### `base_012_023`
 
@@ -7015,11 +7015,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小銭が病院のまどを思い出させた。ドアが勝手に開いた以外、こわいことは何もない、病院のまどで、小銭といっしょに。病院のまどの上の細いすきまに、オリオン座がちょうど入った、近くには小銭。意味を持たせすぎる前に、中へ入った、目に入ったのは小銭。
+> 港のフェンスで立ち止まった。手にはフェリーの切符が残っていた。港のフェンスの上にオリオン座が見えて、そこで時間を見るのをやめるには十分だった。しばらくは、中へ戻る前の港のフェンスで、フェリーの切符がいちばん現実的なものだった。スマホはしまって、港のフェンスの上のオリオン座で十分ということにした。
 
 **Translation `en`**
 
-> A loose coin reminded me of the clinic window. Nothing spooky happened, except the door opening by itself near the clinic window, with a loose coin. A thin gap above the clinic window was just enough for Orion, near a loose coin. I went in before making it too meaningful, after noticing a loose coin.
+> I stopped at the harbor fence with a ferry ticket still in my hand. Orion was visible above the harbor fence, enough to stop checking the time there. For a while, a ferry ticket was the most practical thing at the harbor fence, before I went back in. I put my phone away and let Orion above the harbor fence be enough.
 
 #### `base_012_024`
 
@@ -7034,11 +7034,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> カップめんが図書館の階段の横で待っていた。何も解決していないけど、場所だけは変えた、図書館の階段で、カップめんといっしょに。北極星のおかげで、図書館の階段の角に少し奥行きが出た、その先にはカップめん。
+> 配達のシールを持って着くころ、エレベーターホールにはほとんど人がいなかった。エレベーターホールの近くの窓から、北極星が見えた。階数表示がゆっくり変わったころ、後ろを誰かが通って、エレベーターホールのふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A packet of instant noodles waited beside the library steps. I did not solve anything, but I changed location near the library steps, with a packet of instant noodles. Polaris gave the corner by the library steps a little depth, just past a packet of instant noodles.
+> The elevator lobby was nearly empty by the time I got there with a delivery sticker. Through the nearest window at the elevator lobby, I could make out Polaris. Someone passed behind me while the floor number changed slowly, and the ordinary night at the elevator lobby started again.
 
 #### `base_012_025`
 
@@ -7053,11 +7053,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A train-window reflection looked more serious than the laundromat door. I stepped around a puddle and felt briefly skilled near the laundromat door, with a train-window reflection. Near the laundromat door, Bootes looked like part of the errand, while I held a train-window reflection.
+> The dorm kitchen was nearly empty by the time I got there with a packet of instant noodles. Through the nearest window at the dorm kitchen, I could make out Bootes. By the time I moved again, a packet of instant noodles had cooled in my hand, while the window stayed dark.
 
 **Translation `ja`**
 
-> 電車のまどに映る顔がコインランドリーのドアよりまじめそうに見えた。水たまりをよけて、一瞬だけ上手に生きた気がした、コインランドリーのドアで、電車のまどに映る顔といっしょに。コインランドリーのドアの近くでは、うしかい座まで用事の一部みたいだった、手には電車のまどに映る顔。
+> カップめんを持って着くころ、寮の台所にはほとんど人がいなかった。寮の台所の近くの窓から、うしかい座が見えた。また動き出すころには、窓が暗いままのあいだ、手の中のカップめんが少し冷えていた。
 
 #### `base_012_026`
 
@@ -7072,11 +7072,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A loose button became the main event at the river railing. For a second the whole errand felt planned near the river railing, with a loose button. Hercules made the dark around the river railing feel arranged, near a loose button.
+> At the hostel desk, I checked twice and found a room key both times, while the hallway cooled. Through the nearest window at the hostel desk, I could make out Hercules. I left the hostel desk before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 取れかけのボタンが川の手すりで主役みたいになった。一瞬だけ、用事が全部予定通りに見えた、川の手すりで、取れかけのボタンといっしょに。ヘルクレス座のせいで、川の手すりのまわりの暗さが少し並んで見えた、近くには取れかけのボタン。
+> 宿の机で二回確かめた。廊下が冷えるあいだ、二回とも部屋の鍵があった。宿の机の近くの窓から、ヘルクレス座が見えた。話にしたくなる前に、宿の机を離れた。
 
 #### `base_012_027`
 
@@ -7091,11 +7091,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A packet of screws took up too much room on the tiny shrine. The page in my bag bent around the corner of a book near the tiny shrine, with a packet of screws. I found Sagittarius after the light on the tiny shrine blinked once, just past a packet of screws. The room looked slightly rearranged when I returned, after noticing a packet of screws.
+> I stayed a little longer at the quiet courtyard than I meant to, while the cup cooled. At the quiet courtyard, a window closed somewhere above, while the cup cooled, so I looked up and found Sagittarius. For a while, a tiny flower pot was the most practical thing at the quiet courtyard, while the cup cooled. I remembered one small thing I still had to do after leaving the quiet courtyard, while the cup cooled.
 
 **Translation `ja`**
 
-> ネジの袋が小さな神社の上で場所を取りすぎていた。かばんの紙が、本の角にそって曲がった、小さな神社で、ネジの袋といっしょに。小さな神社の明かりが一度またたいてから、いて座を見つけた、その先にはネジの袋。戻った部屋は、少しだけ並び方が変わって見えた、目に入ったのはネジの袋。
+> 静かな中庭に、思ったより少し長くいた。コップが冷めるあいだ、小さな植木鉢を持ったままだった。静かな中庭では、コップが冷めるあいだに上のどこかで窓が閉まったので、顔を上げるといて座があった。しばらくは、コップが冷めるあいだの静かな中庭で、小さな植木鉢がいちばん現実的なものだった。コップが冷めるあいだ、静かな中庭を出てから、まだやることをひとつ思い出した。
 
 #### `base_012_028`
 
@@ -7110,11 +7110,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 半券が学校の門の横でふつうに戻った。床が冷たくて、くつしたの薄さが分かった、学校の門で、半券といっしょに。学校の門の上が開いて、みずがめ座が静かにそこへ入った、手には半券。
+> アパートの階段では、たいしたことは起きなかった。靴が乾いたあと、ただ買い物袋を持ったままでいた。アパートの階段の上にみずがめ座が見えて、そこで時間を見るのをやめるには十分だった。何も解決していないけど、買い物袋のせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A ticket stub turned ordinary beside the campus gate. The floor was cold enough to make my socks honest near the campus gate, with a ticket stub. The space above the campus gate opened, and Aquarius took it quietly, while I held a ticket stub.
+> Nothing important happened at the apartment stairs. I just kept holding a grocery bag, after the shoes dried. Aquarius was visible above the apartment stairs, enough to stop checking the time there. It did not fix anything, but a grocery bag made the walk home feel shorter.
 
 #### `base_012_029`
 
@@ -7129,11 +7129,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> たたんだセーターが自転車置き場の上で静かにしていた。近くの古い時計が、妙に自信のある音を立てた、自転車置き場で、たたんだセーターといっしょに。自転車置き場のそばの看板より、おおいぬ座のほうがはっきりしていた、近くにはたたんだセーター。次のふつうのことは、部屋の中で待っていた、そばには自転車置き場。
+> 屋上の入口で用事がほとんど終わったころ、充電コードが目に入った。充電コードから顔を上げると、その場所の上におおいぬ座があった。しばらくは、列がゆっくり進むあいだの屋上の入口で、充電コードがいちばん現実的なものだった。風でドアが小さく鳴ったころ、後ろを誰かが通って、屋上の入口のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A folded sweater sat quietly on the bicycle racks. The old clock nearby sounded too confident near the bicycle racks, with a folded sweater. Canis Major was clearer than the sign beside the bicycle racks, near a folded sweater. The next ordinary thing waited indoors, beside the bicycle racks.
+> I was almost done at the rooftop doorway when I noticed a phone charger. I looked up from a phone charger and found Canis Major above the same place. For a while, a phone charger was the most practical thing at the rooftop doorway, while the line moved slowly. Someone passed behind me while the door clicked in the wind, and the ordinary night at the rooftop doorway started again.
 
 #### `base_012_030`
 
@@ -7148,11 +7148,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A handwritten label warmed my hand near the station wall. A little wind moved through at exactly the right time near the station wall, with a handwritten label. Orion waited past the edge of the station wall, just past a handwritten label.
+> I stopped at the station platform with a bent train ticket still in my hand. When the announcement faded, Orion became easier to see. By the time I moved again, a bent train ticket had cooled in my hand, while the street stayed quiet.
 
 **Translation `ja`**
 
-> 手書きのラベルが駅の壁の近くで手をあたためた。ちょうどいい時に、小さな風が通った、駅の壁で、手書きのラベルといっしょに。駅の壁の端の向こうで、オリオン座が待っていた、その先には手書きのラベル。
+> 駅のホームで立ち止まった。手には曲がった切符が残っていた。アナウンスが遠ざかったころ、オリオン座が少し見やすくなった。また動き出すころには、道が静かなあいだ、手の中の曲がった切符が少し冷えていた。
 
 #### `base_012_031`
 
@@ -7167,11 +7167,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A damp towel made me stop before the tram stop. The whole thing was tiny and somehow complete near the tram stop, with a damp towel. I checked the time, then looked back at Polaris over the tram stop, while I held a damp towel.
+> The tram stop was nearly empty by the time I got there with a paper cup. At the tram stop, the rails shone after the tram passed, after the screen went dark, so I looked up and found Polaris. I left the tram stop before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 少しぬれたタオルが電車の停留所の前で私を止めた。全部小さいのに、なぜか足りていた、電車の停留所で、少しぬれたタオルといっしょに。時間を見てから、電車の停留所の上の北極星をもう一度見た、手には少しぬれたタオル。
+> 紙コップを持って着くころ、トラムの停留所にはほとんど人がいなかった。トラムの停留所では、画面が暗くなったあとにトラムのあとで線路が光っていたので、顔を上げると北極星があった。話にしたくなる前に、トラムの停留所を離れた。
 
 #### `base_012_032`
 
@@ -7186,11 +7186,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A plastic spoon looked newly important under the balcony rail. I counted to seven for no practical reason near the balcony rail, with a plastic spoon. Near the balcony rail, Bootes looked like part of the errand, near a plastic spoon.
+> At the balcony, I checked twice and found a damp towel both times, while my hands cooled. Bootes was visible above the balcony, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the balcony, while my hands cooled.
 
 **Translation `ja`**
 
-> プラスチックのスプーンがベランダの手すりの下で急に大事そうに見えた。理由もなく七まで数えた、ベランダの手すりで、プラスチックのスプーンといっしょに。ベランダの手すりの近くでは、うしかい座まで用事の一部みたいだった、近くにはプラスチックのスプーン。
+> ベランダで二回確かめた。手が冷えるあいだ、二回とも少しぬれたタオルがあった。ベランダの上にうしかい座が見えて、そこで時間を見るのをやめるには十分だった。手が冷えるあいだ、ベランダを出てから、まだやることをひとつ思い出した。
 
 ### Pack `base_013`
 
@@ -7207,11 +7207,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> メロンパンの袋がバス停の屋根に当たって小さな音を出した。手がふさがると、考えごとも少し遅くなった、バス停の屋根で、メロンパンの袋といっしょに。バス停の屋根から顔を上げると、ふたご座はもうそこにいた、その先にはメロンパンの袋。意味を持たせすぎる前に、中へ入った、そばにはバス停の屋根。
+> 病院の入口で二回確かめた。椅子が鳴ったあと、二回とも病院の番号札があった。病院の番号札から顔を上げると、その場所の上にふたご座があった。しばらくは、椅子が鳴ったあとの病院の入口で、病院の番号札がいちばん現実的なものだった。何も解決していないけど、病院の番号札のせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A melon bread wrapper made a quiet sound against the bus shelter. My hands were busy, so my thoughts slowed down near the bus shelter, with a melon bread wrapper. When I looked up from the bus shelter, Gemini was already there, just past a melon bread wrapper. I went in before making it too meaningful, beside the bus shelter.
+> At the clinic entrance, I checked twice and found a clinic number slip both times, after the chair creaked. I looked up from a clinic number slip and found Gemini above the same place. For a while, a clinic number slip was the most practical thing at the clinic entrance, after the chair creaked. It did not fix anything, but a clinic number slip made the walk home feel shorter.
 
 #### `base_013_002`
 
@@ -7226,11 +7226,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> チェスのビショップが屋上のドアに何度も当たっていた。夜には意見がなくて、それが少し助かった、屋上のドアで、チェスのビショップといっしょに。屋上のドアの上で、さそり座が屋根の間に入っていた、手にはチェスのビショップ。次のふつうのことは、部屋の中で待っていた、そこにはチェスのビショップ。これは少しだけ草だと思って、そのまま笑っていた、屋上のドアのあとで。
+> 図書館の階段に、思ったより少し長くいた。小さく止まったあと、図書館カードを持ったままだった。図書館カードから顔を上げると、その場所の上にさそり座があった。しばらくは、小さく止まったあとの図書館の階段で、図書館カードがいちばん現実的なものだった。後ろで返却口が鳴ったことだけは、まだ耳に残っていた。図書館カードのあるその時間は、小さく止まったあとのたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A chess bishop kept knocking against the rooftop door. The night had no opinion, and that helped near the rooftop door, with a chess bishop. Scorpius fitted between two roofs above the rooftop door, while I held a chess bishop. The next ordinary thing waited indoors, with a chess bishop. I thought, this is a little ridiculous, and kept smiling after the rooftop door.
+> I stayed a little longer at the library steps than I meant to, after one small pause. I looked up from a library card and found Scorpius above the same place. For a while, a library card was the most practical thing at the library steps, after one small pause. I could still hear how the return slot clacked behind me. The whole thing with a library card lasted maybe a minute, after one small pause, and I kept it in the memory too.
 
 #### `base_013_003`
 
@@ -7245,11 +7245,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A wrinkled receipt stayed forgotten by the old stone steps. I took the long way because the short way knew too much near the old stone steps, with a wrinkled receipt. The space above the old stone steps opened, and Aquarius took it quietly, near a wrinkled receipt. My phone stayed in my pocket, which improved the ending, after noticing a wrinkled receipt.
+> Nothing important happened at the closed bakery. I just kept holding the last bread roll, after the cart rolled past. When the warm smell still reached the street, Aquarius became easier to see. For a while, the last bread roll was the most practical thing at the closed bakery, after the cart rolled past. By the time I moved again, the last bread roll had cooled in my hand, after the cart rolled past.
 
 **Translation `ja`**
 
-> しわのあるレシートが古い石段のそばで忘れられていた。近道はいろいろ知りすぎているので、遠回りした、古い石段で、しわのあるレシートといっしょに。古い石段の上が開いて、みずがめ座が静かにそこへ入った、近くにはしわのあるレシート。スマホを出さなかったので、終わり方は少しましだった、目に入ったのはしわのあるレシート。
+> 閉まったパン屋では、たいしたことは起きなかった。カートが通ったあと、ただ最後のパンを持ったままでいた。まだパンの匂いが道まで残っていたころ、みずがめ座が少し見やすくなった。しばらくは、カートが通ったあとの閉まったパン屋で、最後のパンがいちばん現実的なものだった。また動き出すころには、カートが通ったあと、手の中の最後のパンが少し冷えていた。
 
 #### `base_013_004`
 
@@ -7264,11 +7264,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cracked phone case waited in the shadow of the kitchen table. Nobody noticed it, which made the scene easier to keep near the kitchen table, with a cracked phone case. Past the kitchen table, Canis Major held its shape without hurry, just past a cracked phone case.
+> I was almost done at the vending machine when I noticed a loose coin. At the vending machine, the machine kept humming after the drink dropped, after the last bus passed, so I looked up and found Canis Major. I took one terrible photo at the vending machine, laughed at it, and called that a win.
 
 **Translation `ja`**
 
-> ひびの入ったスマホケースが台所の机の影で待っていた。だれも気づかないので、覚えておきやすかった、台所の机で、ひびの入ったスマホケースといっしょに。台所の机の向こうで、おおいぬ座は急がず形を保っていた、その先にはひびの入ったスマホケース。
+> 自販機で用事がほとんど終わったころ、小銭が目に入った。自販機では、最終バスのあとに飲み物が落ちたあとも機械は鳴っていたので、顔を上げるとおおいぬ座があった。自販機で写真を撮ったら、びっくりするくらい下手だった。ちょっと笑って、今日は勝ちってことにした。
 
 #### `base_013_005`
 
@@ -7302,11 +7302,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> フェリーのロープがアパートの階段の横で待っていた。人より先に、笑い声が道を渡った、アパートの階段で、フェリーのロープといっしょに。時間を見てから、アパートの階段の上の北極星をもう一度見た、近くにはフェリーのロープ。
+> 赤いマフラーを持って着くころ、古い橋にはほとんど人がいなかった。赤いマフラーから顔を上げると、その場所の上に北極星があった。何も解決していないけど、赤いマフラーのせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A ferry rope waited beside the apartment stairs. Someone's laughter crossed the street before the people did near the apartment stairs, with a ferry rope. I checked the time, then looked back at Polaris over the apartment stairs, near a ferry rope.
+> The old bridge was nearly empty by the time I got there with a red scarf. I looked up from a red scarf and found Polaris above the same place. It did not fix anything, but a red scarf made the walk home feel shorter.
 
 #### `base_013_007`
 
@@ -7321,11 +7321,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A clinic number slip looked more serious than the noodle shop curtain. I remembered the wrong song and hummed it anyway near the noodle shop curtain, with a clinic number slip. I used Bootes above the noodle shop curtain as a reason to pause, just past a clinic number slip. The next ordinary thing waited indoors, after noticing a clinic number slip.
+> At the ferry deck, I checked twice and found a ferry ticket both times, before I answered. When the wake stayed white behind the boat, Bootes became easier to see. For a while, a ferry ticket was the most practical thing at the ferry deck, before I answered. The whole thing with a ferry ticket lasted maybe a minute, before I answered, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 病院の番号札がラーメン屋ののれんよりまじめそうに見えた。違う曲を思い出して、そのまま鼻歌にした、ラーメン屋ののれんで、病院の番号札といっしょに。ラーメン屋ののれんの上のうしかい座を、立ち止まる理由にした、その先には病院の番号札。次のふつうのことは、部屋の中で待っていた、目に入ったのは病院の番号札。
+> フェリーの甲板で二回確かめた。返事をする前、二回ともフェリーの切符があった。船の後ろに白い航跡が残ったころ、うしかい座が少し見やすくなった。しばらくは、返事をする前のフェリーの甲板で、フェリーの切符がいちばん現実的なものだった。フェリーの切符のあるその時間は、返事をする前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_013_008`
 
@@ -7340,11 +7340,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 最後のパンが駐車場で主役みたいになった。流れ星を見る前に、飛行機の数を忘れた、駐車場で、最後のパンといっしょに。駐車場の上の細いすきまに、ふたご座がちょうど入った、手には最後のパン。
+> 会社の給湯室に、思ったより少し長くいた。気が変わる前、欠けたマグを持ったままだった。会社の給湯室の近くの窓から、ふたご座が見えた。スマホはしまって、会社の給湯室の上のふたご座で十分ということにした。
 
 **Translation `en`**
 
-> The last bread roll became the main event at the parking lot. I lost count of airplanes before seeing the meteor near the parking lot, with the last bread roll. A thin gap above the parking lot was just enough for Gemini, while I held the last bread roll.
+> I stayed a little longer at the office kitchenette than I meant to, before I changed my mind. Through the nearest window at the office kitchenette, I could make out Gemini. I put my phone away and let Gemini above the office kitchenette be enough.
 
 #### `base_013_009`
 
@@ -7359,11 +7359,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A ferry ticket smelled faintly of the hostel desk. It was only funny after I stopped being annoyed near the hostel desk, with a ferry ticket. Scorpius fitted between two roofs above the hostel desk, near a ferry ticket. The night did not become better; it became more specific, beside the hostel desk.
+> I stayed a little longer at the noodle shop than I meant to, before the light changed. Through the nearest window at the noodle shop, I could make out Scorpius. For a while, a plastic spoon was the most practical thing at the noodle shop, before the light changed. I left the noodle shop before the moment could turn into a story.
 
 **Translation `ja`**
 
-> フェリーの切符が宿の机の匂いを少し持っていた。腹が立つのをやめたら、少しだけ面白かった、宿の机で、フェリーの切符といっしょに。宿の机の上で、さそり座が屋根の間に入っていた、近くにはフェリーの切符。夜がよくなったというより、少し具体的になった、そばには宿の机。
+> 麺屋に、思ったより少し長くいた。信号が変わる前、プラスチックのスプーンを持ったままだった。麺屋の近くの窓から、さそり座が見えた。しばらくは、信号が変わる前の麺屋で、プラスチックのスプーンがいちばん現実的なものだった。話にしたくなる前に、麺屋を離れた。
 
 #### `base_013_010`
 
@@ -7378,11 +7378,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A white envelope kept its balance on the quiet courtyard. The promised meteor shower mostly taught me patience near the quiet courtyard, with a white envelope. Aquila returned when the clouds left the quiet courtyard alone, just past a white envelope.
+> Nothing important happened at the parking lot. I just kept holding a key ring, before the train arrived. Aquila was visible above the parking lot, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the parking lot, before the train arrived.
 
 **Translation `ja`**
 
-> 白い封筒が静かな中庭の上でなんとか立っていた。流星群は、ほとんど待つ練習だった、静かな中庭で、白い封筒といっしょに。雲が静かな中庭を離れると、わし座が戻ってきた、その先には白い封筒。
+> 駐車場では、たいしたことは起きなかった。電車が来る前、ただ鍵の輪を持ったままでいた。駐車場の上にわし座が見えて、そこで時間を見るのをやめるには十分だった。電車が来る前、駐車場を出てから、まだやることをひとつ思い出した。
 
 #### `base_013_011`
 
@@ -7397,11 +7397,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 鍵の輪が会社の流しの下へ転がった。説明してよくするのは、やめておいた、会社の流しで、鍵の輪といっしょに。ケフェウス座のせいで、会社の流しのまわりの暗さが少し並んで見えた、手には鍵の輪。
+> 台所の机で用事がほとんど終わったころ、流しの茶わんが目に入った。台所の机の近くの窓から、ケフェウス座が見えた。何も解決していないけど、流しの茶わんのせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A key ring rolled under the office sink. I decided not to improve the moment by explaining it near the office sink, with a key ring. Cepheus made the dark around the office sink feel arranged, while I held a key ring.
+> I was almost done at the kitchen table when I noticed a bowl from the sink. Through the nearest window at the kitchen table, I could make out Cepheus. It did not fix anything, but a bowl from the sink made the walk home feel shorter.
 
 #### `base_013_012`
 
@@ -7416,11 +7416,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A bowl of cereal fell out near the lecture hall. The radio caught a town I have never visited near the lecture hall, with a bowl of cereal. Over the lecture hall, Orion looked less far than usual, near a bowl of cereal.
+> I stopped at the ticket gate with a bus pass still in my hand. When the gate beeped for someone else, Orion became easier to see. The whole thing with a bus pass lasted maybe a minute, before I found my keys, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> シリアルの茶わんが講義室の近くで落ちた。ラジオが、行ったことのない町を拾った、講義室で、シリアルの茶わんといっしょに。講義室の上では、オリオン座がいつもより近く見えた、近くにはシリアルの茶わん。
+> 改札で立ち止まった。手にはバスの定期が残っていた。別の人の改札が鳴ったころ、オリオン座が少し見やすくなった。バスの定期のあるその時間は、鍵を見つける前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_013_013`
 
@@ -7435,11 +7435,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 折った地図が寮の台所を通る道をなんとか生きのびた。ポケットには、今日の役に立たない証拠が一つ増えた、寮の台所で、折った地図といっしょに。寮の台所の近くの電線の向こうに、北極星はまだ見えていた、その先には折った地図。スマホを出さなかったので、終わり方は少しましだった、そばには寮の台所。
+> 題名のないノートを持って着くころ、学校の門にはほとんど人がいなかった。学校の門では、次のドアが開く前に最後の教室の灯りが消えたので、顔を上げると北極星があった。しばらくは、次のドアが開く前の学校の門で、題名のないノートがいちばん現実的なものだった。スマホはしまって、学校の門の上の北極星で十分ということにした。
 
 **Translation `en`**
 
-> A folded map survived the walk past the dorm kitchen. My pocket held one more useless proof of the day near the dorm kitchen, with a folded map. Polaris stayed visible past the wires near the dorm kitchen, just past a folded map. My phone stayed in my pocket, which improved the ending, beside the dorm kitchen.
+> The campus gate was nearly empty by the time I got there with a notebook with no title. At the campus gate, the last classroom light went out, before the next door opened, so I looked up and found Polaris. For a while, a notebook with no title was the most practical thing at the campus gate, before the next door opened. I put my phone away and let Polaris above the campus gate be enough.
 
 #### `base_013_014`
 
@@ -7454,11 +7454,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A lunch box lid took up too much room on the old bridge. Nothing spooky happened, except the door opening by itself near the old bridge, with a lunch box lid. Bootes was clearer than the sign beside the old bridge, while I held a lunch box lid.
+> At the bicycle racks, I checked twice and found a cold bicycle lock both times, while the sink dripped. Bootes was visible above the bicycle racks, enough to stop checking the time there. Someone passed behind me while one wheel kept spinning, and the ordinary night at the bicycle racks started again.
 
 **Translation `ja`**
 
-> 弁当箱のふたが古い橋の上で場所を取りすぎていた。ドアが勝手に開いた以外、こわいことは何もない、古い橋で、弁当箱のふたといっしょに。古い橋のそばの看板より、うしかい座のほうがはっきりしていた、手には弁当箱のふた。
+> 自転車置き場で二回確かめた。流しが鳴るあいだ、二回とも冷たい自転車の鍵があった。自転車置き場の上にうしかい座が見えて、そこで時間を見るのをやめるには十分だった。ひとつの車輪だけまだ回っていたころ、後ろを誰かが通って、自転車置き場のふつうの夜がまた始まった。
 
 #### `base_013_015`
 
@@ -7473,11 +7473,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A scratched water bottle turned ordinary beside the ferry deck. I did not solve anything, but I changed location near the ferry deck, with a scratched water bottle.
+> I stayed a little longer at the laundromat than I meant to, before I went back in. Through the nearest window at the laundromat, I could make out Gemini.
 
 **Translation `ja`**
 
-> 傷のある水筒がフェリーの甲板の横でふつうに戻った。何も解決していないけど、場所だけは変えた、フェリーの甲板で、傷のある水筒といっしょに。
+> コインランドリーに、思ったより少し長くいた。中へ戻る前、片方だけ違うくつしたを持ったままだった。コインランドリーの近くの窓から、ふたご座が見えた。
 
 #### `base_013_016`
 
@@ -7492,11 +7492,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 配達のシールが港のフェンスの上で静かにしていた。言い訳ができる前に、信号が変わった、港のフェンスで、配達のシールといっしょに。さそり座のおかげで、港のフェンスの角に少し奥行きが出た、その先には配達のシール。
+> 川の手すりでは、たいしたことは起きなかった。看板が鳴るあいだ、ただ小さな石を持ったままでいた。小さな石から顔を上げると、その場所の上にさそり座があった。何も解決していないけど、小さな石のせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A delivery sticker sat quietly on the harbor fence. The light changed before my excuse was ready near the harbor fence, with a delivery sticker. Scorpius gave the corner by the harbor fence a little depth, just past a delivery sticker.
+> Nothing important happened at the river railing. I just kept holding a small stone, while the sign hummed. I looked up from a small stone and found Scorpius above the same place. It did not fix anything, but a small stone made the walk home feel shorter.
 
 #### `base_013_017`
 
@@ -7511,11 +7511,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cold bicycle lock stayed forgotten by the elevator mirror. The smell of soap arrived before the person did near the elevator mirror, with a cold bicycle lock. Near the elevator mirror, Aquila looked like part of the errand, while I held a cold bicycle lock.
+> Nothing important happened at the cinema lobby. I just kept holding a theater flyer, while the window stayed dark. Through the nearest window at the cinema lobby, I could make out Aquila. Honestly, the cinema lobby scene was kind of cute. I went home before I could overthink a theater flyer.
 
 **Translation `ja`**
 
-> 冷たい自転車の鍵がエレベーターの鏡のそばで忘れられていた。人より先に、せっけんの匂いが来た、エレベーターの鏡で、冷たい自転車の鍵といっしょに。エレベーターの鏡の近くでは、わし座まで用事の一部みたいだった、手には冷たい自転車の鍵。
+> 映画館のロビーでは、たいしたことは起きなかった。窓が暗いままのあいだ、ただ映画館のちらしを持ったままでいた。映画館のロビーの近くの窓から、わし座が見えた。なんか普通に、映画館のロビーのその場面はちょっとかわいかった。映画館のちらしのことを考えすぎる前に帰った。
 
 #### `base_013_018`
 
@@ -7530,11 +7530,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 題名のないノートが花屋のシャッターの影で待っていた。かばんの紙が、本の角にそって曲がった、花屋のシャッターで、題名のないノートといっしょに。ケフェウス座のせいで、花屋のシャッターのまわりの暗さが少し並んで見えた、近くには題名のないノート。
+> スーパーの入口で用事がほとんど終わったころ、しわのあるレシートが目に入った。スーパーの入口では、廊下が冷えるあいだに後ろでカートが鳴ったので、顔を上げるとケフェウス座があった。スマホはしまって、スーパーの入口の上のケフェウス座で十分ということにした。
 
 **Translation `en`**
 
-> A notebook with no title waited in the shadow of the flower shop shutter. The page in my bag bent around the corner of a book near the flower shop shutter, with a notebook with no title. Cepheus made the dark around the flower shop shutter feel arranged, near a notebook with no title.
+> I was almost done at the supermarket entrance when I noticed a wrinkled receipt. At the supermarket entrance, the carts rattled behind me, while the hallway cooled, so I looked up and found Cepheus. I put my phone away and let Cepheus above the supermarket entrance be enough.
 
 #### `base_013_019`
 
@@ -7549,11 +7549,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cheap pair of gloves made the bench near the supermarket light. The floor was cold enough to make my socks honest near the supermarket light, with a cheap pair of gloves. I found Lyra after the light on the supermarket light blinked once, just past a cheap pair of gloves. The night did not become better; it became more specific, after noticing a cheap pair of gloves.
+> I stopped at the night market with a warm paper bag still in my hand. Lyra was visible above the night market, enough to stop checking the time there. For a while, a warm paper bag was the most practical thing at the night market, while the cup cooled. Someone passed behind me while the stall lights went out one by one, and the ordinary night at the night market started again.
 
 **Translation `ja`**
 
-> 安い手袋がスーパーの明かりの近くのベンチを少し変えた。床が冷たくて、くつしたの薄さが分かった、スーパーの明かりで、安い手袋といっしょに。スーパーの明かりの明かりが一度またたいてから、こと座を見つけた、その先には安い手袋。夜がよくなったというより、少し具体的になった、目に入ったのは安い手袋。
+> 夜の市場で立ち止まった。手にはあたたかい紙袋が残っていた。夜の市場の上にこと座が見えて、そこで時間を見るのをやめるには十分だった。しばらくは、コップが冷めるあいだの夜の市場で、あたたかい紙袋がいちばん現実的なものだった。屋台の灯りがひとつずつ消えたころ、後ろを誰かが通って、夜の市場のふつうの夜がまた始まった。
 
 #### `base_013_020`
 
@@ -7568,11 +7568,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A phone charger waited for permission near the night market. The old clock nearby sounded too confident near the night market, with a phone charger. The space above the night market opened, and Ursa Major took it quietly, while I held a phone charger.
+> The harbor fence was nearly empty by the time I got there with a ferry ticket. I looked up from a ferry ticket and found Ursa Major above the same place. By the time I moved again, a ferry ticket had cooled in my hand, after the shoes dried.
 
 **Translation `ja`**
 
-> 充電コードが夜の市場の近くで許可を待っているみたいだった。近くの古い時計が、妙に自信のある音を立てた、夜の市場で、充電コードといっしょに。夜の市場の上が開いて、おおぐま座が静かにそこへ入った、手には充電コード。
+> フェリーの切符を持って着くころ、港のフェンスにはほとんど人がいなかった。フェリーの切符から顔を上げると、その場所の上におおぐま座があった。また動き出すころには、靴が乾いたあと、手の中のフェリーの切符が少し冷えていた。
 
 #### `base_013_021`
 
@@ -7587,11 +7587,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 映画館のちらしが閉まったパン屋の中で小さな角になっていた。ちょうどいい時に、小さな風が通った、閉まったパン屋で、映画館のちらしといっしょに。閉まったパン屋のそばの看板より、うしかい座のほうがはっきりしていた、近くには映画館のちらし。意味を持たせすぎる前に、中へ入った、そばには閉まったパン屋。
+> 講義室で二回確かめた。列がゆっくり進むあいだ、二回とも短いえんぴつがあった。講義室の近くの窓から、うしかい座が見えた。しばらくは、列がゆっくり進むあいだの講義室で、短いえんぴつがいちばん現実的なものだった。何も解決していないけど、短いえんぴつのせいで帰り道は少し短く感じた。
 
 **Translation `en`**
 
-> A theater flyer made a small corner in the closed bakery. A little wind moved through at exactly the right time near the closed bakery, with a theater flyer. Bootes was clearer than the sign beside the closed bakery, near a theater flyer. I went in before making it too meaningful, beside the closed bakery.
+> At the lecture hall, I checked twice and found a pencil stub both times, while the line moved slowly. Through the nearest window at the lecture hall, I could make out Bootes. For a while, a pencil stub was the most practical thing at the lecture hall, while the line moved slowly. It did not fix anything, but a pencil stub made the walk home feel shorter.
 
 #### `base_013_022`
 
@@ -7606,11 +7606,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A warm rice ball squeezed into the vending machine. The whole thing was tiny and somehow complete near the vending machine, with a warm rice ball. Gemini waited past the edge of the vending machine, just past a warm rice ball.
+> I stayed a little longer at the dorm kitchen than I meant to, while the street stayed quiet. Through the nearest window at the dorm kitchen, I could make out Gemini. The whole thing with a packet of instant noodles lasted maybe a minute, while the street stayed quiet, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> あたたかいおにぎりが自販機の中へ押し込まれていた。全部小さいのに、なぜか足りていた、自販機で、あたたかいおにぎりといっしょに。自販機の端の向こうで、ふたご座が待っていた、その先にはあたたかいおにぎり。
+> 寮の台所に、思ったより少し長くいた。道が静かなあいだ、カップめんを持ったままだった。寮の台所の近くの窓から、ふたご座が見えた。カップめんのあるその時間は、道が静かなあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_013_023`
 
@@ -7625,11 +7625,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A quiet radio clicked once beside the cinema lobby. The phone stayed quiet like it had been warned near the cinema lobby, with a quiet radio. I checked the time, then looked back at Scorpius over the cinema lobby, while I held a quiet radio.
+> Nothing important happened at the hostel desk. I just kept holding a room key, after the screen went dark. Through the nearest window at the hostel desk, I could make out Scorpius. I put my phone away and let Scorpius above the hostel desk be enough.
 
 **Translation `ja`**
 
-> 小さく鳴るラジオが映画館のロビーの横で一度だけ鳴った。スマホは注意されたみたいに静かだった、映画館のロビーで、小さく鳴るラジオといっしょに。時間を見てから、映画館のロビーの上のさそり座をもう一度見た、手には小さく鳴るラジオ。
+> 宿の机では、たいしたことは起きなかった。画面が暗くなったあと、ただ部屋の鍵を持ったままでいた。宿の机の近くの窓から、さそり座が見えた。スマホはしまって、宿の机の上のさそり座で十分ということにした。
 
 #### `base_013_024`
 
@@ -7644,11 +7644,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 雨で黒くなった上着が病院のまどを思い出させた。ほしい答えは来なかったけど、バスは来た、病院のまどで、雨で黒くなった上着といっしょに。病院のまどの近くでは、わし座まで用事の一部みたいだった、近くには雨で黒くなった上着。
+> 静かな中庭で用事がほとんど終わったころ、小さな植木鉢が目に入った。静かな中庭の上にわし座が見えて、そこで時間を見るのをやめるには十分だった。上のどこかで窓が閉まったころ、後ろを誰かが通って、静かな中庭のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A rain-dark jacket reminded me of the clinic window. The answer I wanted did not arrive, but the bus did near the clinic window, with a rain-dark jacket. Near the clinic window, Aquila looked like part of the errand, near a rain-dark jacket.
+> I was almost done at the quiet courtyard when I noticed a tiny flower pot. Aquila was visible above the quiet courtyard, enough to stop checking the time there. Someone passed behind me while a window closed somewhere above, and the ordinary night at the quiet courtyard started again.
 
 #### `base_013_025`
 
@@ -7663,11 +7663,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A postcard stamp waited beside the library steps. The night had no opinion, and that helped near the library steps, with a postcard stamp. When I looked up from the library steps, Cepheus was already there, just past a postcard stamp. The room looked slightly rearranged when I returned, beside the library steps. I laughed once and pretended it was a cough after the library steps.
+> I was almost done at the bus shelter when I noticed a cold tea bottle. I looked up from a cold tea bottle and found Cepheus above the same place. For a while, a cold tea bottle was the most practical thing at the bus shelter, after the chair creaked. I could still hear how the next bus was still several minutes away. By the time I moved again, a cold tea bottle had cooled in my hand, after the chair creaked.
 
 **Translation `ja`**
 
-> はがきの切手が図書館の階段の横で待っていた。夜には意見がなくて、それが少し助かった、図書館の階段で、はがきの切手といっしょに。図書館の階段から顔を上げると、ケフェウス座はもうそこにいた、その先にははがきの切手。戻った部屋は、少しだけ並び方が変わって見えた、そばには図書館の階段。一度笑って、それを咳のふりにした、図書館の階段のあとで。
+> バス停で用事がほとんど終わったころ、冷たいお茶が目に入った。冷たいお茶から顔を上げると、その場所の上にケフェウス座があった。しばらくは、椅子が鳴ったあとのバス停で、冷たいお茶がいちばん現実的なものだった。次のバスまではまだ少しあったことだけは、まだ耳に残っていた。また動き出すころには、椅子が鳴ったあと、手の中の冷たいお茶が少し冷えていた。
 
 #### `base_013_026`
 
@@ -7682,11 +7682,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 赤いくつしたがコインランドリーのドアよりまじめそうに見えた。近道はいろいろ知りすぎているので、遠回りした、コインランドリーのドアで、赤いくつしたといっしょに。コインランドリーのドアの上で、こと座が屋根の間に入っていた、手には赤いくつした。
+> 屋上の入口で立ち止まった。手には充電コードが残っていた。風でドアが小さく鳴ったころ、こと座が少し見やすくなった。話にしたくなる前に、屋上の入口を離れた。
 
 **Translation `en`**
 
-> A red sock looked more serious than the laundromat door. I took the long way because the short way knew too much near the laundromat door, with a red sock. Lyra fitted between two roofs above the laundromat door, while I held a red sock.
+> I stopped at the rooftop doorway with a phone charger still in my hand. When the door clicked in the wind, Lyra became easier to see. I left the rooftop doorway before the moment could turn into a story.
 
 #### `base_013_027`
 
@@ -7701,11 +7701,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cold tea bottle became the main event at the river railing. Nobody noticed it, which made the scene easier to keep near the river railing, with a cold tea bottle. The space above the river railing opened, and Ursa Major took it quietly, near a cold tea bottle. The next ordinary thing waited indoors, after noticing a cold tea bottle.
+> The station platform was nearly empty by the time I got there with a bent train ticket. At the station platform, the announcement faded, after the cart rolled past, so I looked up and found Ursa Major. For a while, a bent train ticket was the most practical thing at the station platform, after the cart rolled past. The whole thing with a bent train ticket lasted maybe a minute, after the cart rolled past, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 冷たいお茶が川の手すりで主役みたいになった。だれも気づかないので、覚えておきやすかった、川の手すりで、冷たいお茶といっしょに。川の手すりの上が開いて、おおぐま座が静かにそこへ入った、近くには冷たいお茶。次のふつうのことは、部屋の中で待っていた、目に入ったのは冷たいお茶。
+> 曲がった切符を持って着くころ、駅のホームにはほとんど人がいなかった。駅のホームでは、カートが通ったあとにアナウンスが遠ざかったので、顔を上げるとおおぐま座があった。しばらくは、カートが通ったあとの駅のホームで、曲がった切符がいちばん現実的なものだった。曲がった切符のあるその時間は、カートが通ったあとのたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_013_028`
 
@@ -7720,11 +7720,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A tiny flower pot took up too much room on the tiny shrine. A dog barked once, then left the matter there near the tiny shrine, with a tiny flower pot. Past the tiny shrine, Auriga held its shape without hurry, just past a tiny flower pot.
+> At the tram stop, I checked twice and found a paper cup both times, after the last bus passed. Auriga was visible above the tram stop, enough to stop checking the time there. I put my phone away and let Auriga above the tram stop be enough.
 
 **Translation `ja`**
 
-> 小さな植木鉢が小さな神社の上で場所を取りすぎていた。犬が一度だけ鳴いて、その件は終わった、小さな神社で、小さな植木鉢といっしょに。小さな神社の向こうで、ぎょしゃ座は急がず形を保っていた、その先には小さな植木鉢。
+> トラムの停留所で二回確かめた。最終バスのあと、二回とも紙コップがあった。トラムの停留所の上にぎょしゃ座が見えて、そこで時間を見るのをやめるには十分だった。スマホはしまって、トラムの停留所の上のぎょしゃ座で十分ということにした。
 
 #### `base_013_029`
 
@@ -7739,11 +7739,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> スープのカップが学校の門の横でふつうに戻った。人より先に、笑い声が道を渡った、学校の門で、スープのカップといっしょに。学校の門の上では、りゅう座がいつもより近く見えた、手にはスープのカップ。
+> 小さな神社に、思ったより少し長くいた。レシートを折る前、小さな種の袋を持ったままだった。小さな種の袋から顔を上げると、その場所の上にりゅう座があった。砂利の音が思ったより大きかったころ、後ろを誰かが通って、小さな神社のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A cup of soup turned ordinary beside the campus gate. Someone's laughter crossed the street before the people did near the campus gate, with a cup of soup. Over the campus gate, Draco looked less far than usual, while I held a cup of soup.
+> I stayed a little longer at the small shrine than I meant to, before the receipt folded. I looked up from a small packet of seeds and found Draco above the same place. Someone passed behind me while the gravel sounded louder than expected, and the ordinary night at the small shrine started again.
 
 #### `base_013_030`
 
@@ -7758,11 +7758,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A small stone sat quietly on the bicycle racks. The receipt proved less than I wanted it to prove near the bicycle racks, with a small stone. I checked the time, then looked back at Scorpius over the bicycle racks, near a small stone.
+> Nothing important happened at the clinic entrance. I just kept holding a clinic number slip, after the clock blinked. I looked up from a clinic number slip and found Scorpius above the same place. By the time I moved again, a clinic number slip had cooled in my hand, after the clock blinked.
 
 **Translation `ja`**
 
-> 小さな石が自転車置き場の上で静かにしていた。レシートは、思ったほど何も証明してくれなかった、自転車置き場で、小さな石といっしょに。時間を見てから、自転車置き場の上のさそり座をもう一度見た、近くには小さな石。
+> 病院の入口では、たいしたことは起きなかった。時計が光ったあと、ただ病院の番号札を持ったままでいた。病院の番号札から顔を上げると、その場所の上にさそり座があった。また動き出すころには、時計が光ったあと、手の中の病院の番号札が少し冷えていた。
 
 #### `base_013_031`
 
@@ -7777,11 +7777,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> ひびの入った定規が駅の壁の近くで手をあたためた。光った線より、その後の静けさのほうが広かった、駅の壁で、ひびの入った定規といっしょに。駅の壁の上のわし座を、立ち止まる理由にした、その先にはひびの入った定規。意味を持たせすぎる前に、中へ入った、目に入ったのはひびの入った定規。
+> 図書館の階段で用事がほとんど終わったころ、図書館カードが目に入った。後ろで返却口が鳴ったころ、わし座が少し見やすくなった。しばらくは、返事をする前の図書館の階段で、図書館カードがいちばん現実的なものだった。話にしたくなる前に、図書館の階段を離れた。
 
 **Translation `en`**
 
-> A cracked ruler warmed my hand near the station wall. The silence after the streak felt wider than the streak itself near the station wall, with a cracked ruler. I used Aquila above the station wall as a reason to pause, just past a cracked ruler. I went in before making it too meaningful, after noticing a cracked ruler.
+> I was almost done at the library steps when I noticed a library card. When the return slot clacked behind me, Aquila became easier to see. For a while, a library card was the most practical thing at the library steps, before I answered. I left the library steps before the moment could turn into a story.
 
 #### `base_013_032`
 
@@ -7796,11 +7796,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A chipped mug made me stop before the tram stop. It was only funny after I stopped being annoyed near the tram stop, with a chipped mug. A thin gap above the tram stop was just enough for Cepheus, while I held a chipped mug.
+> I stopped at the closed bakery with the last bread roll still in my hand. At the closed bakery, the warm smell still reached the street, before I changed my mind, so I looked up and found Cepheus. I remembered one small thing I still had to do after leaving the closed bakery, before I changed my mind.
 
 **Translation `ja`**
 
-> 欠けたマグが電車の停留所の前で私を止めた。腹が立つのをやめたら、少しだけ面白かった、電車の停留所で、欠けたマグといっしょに。電車の停留所の上の細いすきまに、ケフェウス座がちょうど入った、手には欠けたマグ。
+> 閉まったパン屋で立ち止まった。手には最後のパンが残っていた。閉まったパン屋では、気が変わる前にまだパンの匂いが道まで残っていたので、顔を上げるとケフェウス座があった。気が変わる前、閉まったパン屋を出てから、まだやることをひとつ思い出した。
 
 ### Pack `base_014`
 
@@ -7817,11 +7817,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A pencil stub looked newly important under the balcony rail. The promised meteor shower mostly taught me patience near the balcony rail, with a pencil stub. Lyra fitted between two roofs above the balcony rail, near a pencil stub. My phone stayed in my pocket, which improved the ending, beside the balcony rail.
+> I stopped at the elevator lobby with a delivery sticker still in my hand. Through the nearest window at the elevator lobby, I could make out Lyra. For a while, a delivery sticker was the most practical thing at the elevator lobby, before the light changed. I put my phone away and let Lyra above the elevator lobby be enough.
 
 **Translation `ja`**
 
-> 短いえんぴつがベランダの手すりの下で急に大事そうに見えた。流星群は、ほとんど待つ練習だった、ベランダの手すりで、短いえんぴつといっしょに。ベランダの手すりの上で、こと座が屋根の間に入っていた、近くには短いえんぴつ。スマホを出さなかったので、終わり方は少しましだった、そばにはベランダの手すり。
+> エレベーターホールで立ち止まった。手には配達のシールが残っていた。エレベーターホールの近くの窓から、こと座が見えた。しばらくは、信号が変わる前のエレベーターホールで、配達のシールがいちばん現実的なものだった。スマホはしまって、エレベーターホールの上のこと座で十分ということにした。
 
 #### `base_014_002`
 
@@ -7836,11 +7836,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 持ち帰りの箱がバス停の屋根に当たって小さな音を出した。説明してよくするのは、やめておいた、バス停の屋根で、持ち帰りの箱といっしょに。雲がバス停の屋根を離れると、おおぐま座が戻ってきた、その先には持ち帰りの箱。
+> すももの袋を持って着くころ、花屋のシャッターにはほとんど人がいなかった。すももの袋から顔を上げると、その場所の上におおぐま座があった。ぬれた道が少し青い匂いだったころ、後ろを誰かが通って、花屋のシャッターのふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A takeout box made a quiet sound against the bus shelter. I decided not to improve the moment by explaining it near the bus shelter, with a takeout box. Ursa Major returned when the clouds left the bus shelter alone, just past a takeout box.
+> The flower shop shutter was nearly empty by the time I got there with a bag of plums. I looked up from a bag of plums and found Ursa Major above the same place. Someone passed behind me while the wet pavement smelled green, and the ordinary night at the flower shop shutter started again.
 
 #### `base_014_003`
 
@@ -7855,11 +7855,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A window latch kept knocking against the rooftop door. The radio caught a town I have never visited near the rooftop door, with a window latch. Auriga made the dark around the rooftop door feel arranged, while I held a window latch.
+> At the old bridge, I checked twice and found a red scarf both times, before I checked my phone. When the river carried the traffic noise away, Auriga became easier to see. By the time I moved again, a red scarf had cooled in my hand, before I checked my phone.
 
 **Translation `ja`**
 
-> まどの留め金が屋上のドアに何度も当たっていた。ラジオが、行ったことのない町を拾った、屋上のドアで、まどの留め金といっしょに。ぎょしゃ座のせいで、屋上のドアのまわりの暗さが少し並んで見えた、手にはまどの留め金。
+> 古い橋で二回確かめた。スマホを見る前、二回とも赤いマフラーがあった。川が車の音を少し遠くしたころ、ぎょしゃ座が少し見やすくなった。また動き出すころには、スマホを見る前、手の中の赤いマフラーが少し冷えていた。
 
 #### `base_014_004`
 
@@ -7874,11 +7874,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> のどあめの袋が古い石段のそばで忘れられていた。ポケットには、今日の役に立たない証拠が一つ増えた、古い石段で、のどあめの袋といっしょに。古い石段の上では、りゅう座がいつもより近く見えた、近くにはのどあめの袋。
+> フェリーの甲板に、思ったより少し長くいた。鍵を見つける前、フェリーの切符を持ったままだった。フェリーの甲板では、鍵を見つける前に船の後ろに白い航跡が残ったので、顔を上げるとりゅう座があった。話にしたくなる前に、フェリーの甲板を離れた。
 
 **Translation `en`**
 
-> A packet of cough drops stayed forgotten by the old stone steps. My pocket held one more useless proof of the day near the old stone steps, with a packet of cough drops. Over the old stone steps, Draco looked less far than usual, near a packet of cough drops.
+> I stayed a little longer at the ferry deck than I meant to, before I found my keys. At the ferry deck, the wake stayed white behind the boat, before I found my keys, so I looked up and found Draco. I left the ferry deck before the moment could turn into a story.
 
 #### `base_014_005`
 
@@ -7893,11 +7893,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A red scarf waited in the shadow of the kitchen table. I thought, this is a little ridiculous, and kept smiling near the kitchen table, with a red scarf. Perseus stayed visible past the wires near the kitchen table, just past a red scarf. The next ordinary thing waited indoors, beside the kitchen table.
+> Nothing important happened at the apartment stairs. I just kept holding a grocery bag, before the next door opened. At the apartment stairs, someone upstairs closed a door, before the next door opened, so I looked up and found Perseus. For a while, a grocery bag was the most practical thing at the apartment stairs, before the next door opened. I remembered one small thing I still had to do after leaving the apartment stairs, before the next door opened.
 
 **Translation `ja`**
 
-> 赤いマフラーが台所の机の影で待っていた。これは少しだけ草だと思って、そのまま笑っていた、台所の机で、赤いマフラーといっしょに。台所の机の近くの電線の向こうに、ペルセウス座はまだ見えていた、その先には赤いマフラー。次のふつうのことは、部屋の中で待っていた、そばには台所の机。
+> アパートの階段では、たいしたことは起きなかった。次のドアが開く前、ただ買い物袋を持ったままでいた。アパートの階段では、次のドアが開く前に上の階でドアが閉まったので、顔を上げるとペルセウス座があった。しばらくは、次のドアが開く前のアパートの階段で、買い物袋がいちばん現実的なものだった。次のドアが開く前、アパートの階段を出てから、まだやることをひとつ思い出した。
 
 #### `base_014_006`
 
@@ -7912,11 +7912,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> An old postcard made the bench near the ticket gate. The quiet after the scooter passed felt almost clean near the ticket gate, with an old postcard. Andromeda was clearer than the sign beside the ticket gate, while I held an old postcard.
+> I was almost done at the noodle shop when I noticed a plastic spoon. Through the nearest window at the noodle shop, I could make out Andromeda. It did not fix anything, but a plastic spoon made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 古いはがきが改札の近くのベンチを少し変えた。スクーターが過ぎた後の静けさは、少しきれいだった、改札で、古いはがきといっしょに。改札のそばの看板より、アンドロメダ座のほうがはっきりしていた、手には古いはがき。
+> 麺屋で用事がほとんど終わったころ、プラスチックのスプーンが目に入った。麺屋の近くの窓から、アンドロメダ座が見えた。何も解決していないけど、プラスチックのスプーンのせいで帰り道は少し短く感じた。
 
 #### `base_014_007`
 
@@ -7931,11 +7931,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A jar of basil waited beside the apartment stairs. The light changed before my excuse was ready near the apartment stairs, with a jar of basil. A thin gap above the apartment stairs was just enough for Cepheus, near a jar of basil. The night did not become better; it became more specific, after noticing a jar of basil.
+> I stopped at the parking lot with a key ring still in my hand. I looked up from a key ring and found Cepheus above the same place. For a while, a key ring was the most practical thing at the parking lot, before I went back in. Someone passed behind me while a car light blinked once, and the ordinary night at the parking lot started again.
 
 **Translation `ja`**
 
-> バジルのびんがアパートの階段の横で待っていた。言い訳ができる前に、信号が変わった、アパートの階段で、バジルのびんといっしょに。アパートの階段の上の細いすきまに、ケフェウス座がちょうど入った、近くにはバジルのびん。夜がよくなったというより、少し具体的になった、目に入ったのはバジルのびん。
+> 駐車場で立ち止まった。手には鍵の輪が残っていた。鍵の輪から顔を上げると、その場所の上にケフェウス座があった。しばらくは、中へ戻る前の駐車場で、鍵の輪がいちばん現実的なものだった。車のライトが一度だけ光ったころ、後ろを誰かが通って、駐車場のふつうの夜がまた始まった。
 
 #### `base_014_008`
 
@@ -7950,11 +7950,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> バスの定期がラーメン屋ののれんよりまじめそうに見えた。人より先に、せっけんの匂いが来た、ラーメン屋ののれんで、バスの定期といっしょに。こと座のおかげで、ラーメン屋ののれんの角に少し奥行きが出た、その先にはバスの定期。
+> 流しの茶わんを持って着くころ、台所の机にはほとんど人がいなかった。台所の机の近くの窓から、こと座が見えた。また動き出すころには、看板が鳴るあいだ、手の中の流しの茶わんが少し冷えていた。
 
 **Translation `en`**
 
-> A bus pass looked more serious than the noodle shop curtain. The smell of soap arrived before the person did near the noodle shop curtain, with a bus pass. Lyra gave the corner by the noodle shop curtain a little depth, just past a bus pass.
+> The kitchen table was nearly empty by the time I got there with a bowl from the sink. Through the nearest window at the kitchen table, I could make out Lyra. By the time I moved again, a bowl from the sink had cooled in my hand, while the sign hummed.
 
 #### `base_014_009`
 
@@ -7969,11 +7969,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 紙コップが駐車場で主役みたいになった。かばんの紙が、本の角にそって曲がった、駐車場で、紙コップといっしょに。駐車場の近くでは、おおぐま座まで用事の一部みたいだった、手には紙コップ。
+> 少しぬれたタオルを持って着くころ、ベランダにはほとんど人がいなかった。ベランダでは、窓が暗いままのあいだに手すりから水が落ちたので、顔を上げるとおおぐま座があった。話にしたくなる前に、ベランダを離れた。
 
 **Translation `en`**
 
-> A paper cup became the main event at the parking lot. The page in my bag bent around the corner of a book near the parking lot, with a paper cup. Near the parking lot, Ursa Major looked like part of the errand, while I held a paper cup.
+> The balcony was nearly empty by the time I got there with a damp towel. At the balcony, water dripped from the railing, while the window stayed dark, so I looked up and found Ursa Major. I left the balcony before the moment could turn into a story.
 
 #### `base_014_010`
 
@@ -7988,11 +7988,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A half-empty snack bag smelled faintly of the hostel desk. The floor was cold enough to make my socks honest near the hostel desk, with a half-empty snack bag. Auriga made the dark around the hostel desk feel arranged, near a half-empty snack bag.
+> At the campus gate, I checked twice and found a notebook with no title both times, while the hallway cooled. Auriga was visible above the campus gate, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the campus gate, while the hallway cooled.
 
 **Translation `ja`**
 
-> 半分だけ残ったお菓子が宿の机の匂いを少し持っていた。床が冷たくて、くつしたの薄さが分かった、宿の机で、半分だけ残ったお菓子といっしょに。ぎょしゃ座のせいで、宿の机のまわりの暗さが少し並んで見えた、近くには半分だけ残ったお菓子。
+> 学校の門で二回確かめた。廊下が冷えるあいだ、二回とも題名のないノートがあった。学校の門の上にぎょしゃ座が見えて、そこで時間を見るのをやめるには十分だった。廊下が冷えるあいだ、学校の門を出てから、まだやることをひとつ思い出した。
 
 #### `base_014_011`
 
@@ -8007,11 +8007,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A guitar pick kept its balance on the quiet courtyard. The old clock nearby sounded too confident near the quiet courtyard, with a guitar pick. I found Draco after the light on the quiet courtyard blinked once, just past a guitar pick. My phone stayed in my pocket, which improved the ending, after noticing a guitar pick.
+> I stayed a little longer at the bicycle racks than I meant to, while the cup cooled. I looked up from a cold bicycle lock and found Draco above the same place. For a while, a cold bicycle lock was the most practical thing at the bicycle racks, while the cup cooled. It did not fix anything, but a cold bicycle lock made the walk home feel shorter.
 
 **Translation `ja`**
 
-> ギターのピックが静かな中庭の上でなんとか立っていた。近くの古い時計が、妙に自信のある音を立てた、静かな中庭で、ギターのピックといっしょに。静かな中庭の明かりが一度またたいてから、りゅう座を見つけた、その先にはギターのピック。スマホを出さなかったので、終わり方は少しましだった、目に入ったのはギターのピック。
+> 自転車置き場に、思ったより少し長くいた。コップが冷めるあいだ、冷たい自転車の鍵を持ったままだった。冷たい自転車の鍵から顔を上げると、その場所の上にりゅう座があった。しばらくは、コップが冷めるあいだの自転車置き場で、冷たい自転車の鍵がいちばん現実的なものだった。何も解決していないけど、冷たい自転車の鍵のせいで帰り道は少し短く感じた。
 
 #### `base_014_012`
 
@@ -8026,11 +8026,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A tiny screwdriver rolled under the office sink. I almost sent a message and then spared everyone near the office sink, with a tiny screwdriver.
+> Nothing important happened at the laundromat. I just kept holding one mismatched sock, after the shoes dried. Through the nearest window at the laundromat, I could make out Perseus.
 
 **Translation `ja`**
 
-> 小さなドライバーが会社の流しの下へ転がった。連絡しそうになって、みんなを助けた、会社の流しで、小さなドライバーといっしょに。
+> コインランドリーでは、たいしたことは起きなかった。靴が乾いたあと、ただ片方だけ違うくつしたを持ったままでいた。コインランドリーの近くの窓から、ペルセウス座が見えた。
 
 #### `base_014_013`
 
@@ -8045,11 +8045,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 美術館のはがきが講義室の近くで落ちた。奇跡とは言わないけど、二度見はした、講義室で、美術館のはがきといっしょに。講義室のそばの看板より、アンドロメダ座のほうがはっきりしていた、近くには美術館のはがき。戻った部屋は、少しだけ並び方が変わって見えた、そばには講義室。
+> 自販機で用事がほとんど終わったころ、小銭が目に入った。飲み物が落ちたあとも機械は鳴っていたころ、アンドロメダ座が少し見やすくなった。しばらくは、列がゆっくり進むあいだの自販機で、小銭がいちばん現実的なものだった。また動き出すころには、列がゆっくり進むあいだ、手の中の小銭が少し冷えていた。
 
 **Translation `en`**
 
-> A museum postcard fell out near the lecture hall. I would not call it a miracle, but I did look twice near the lecture hall, with a museum postcard. Andromeda was clearer than the sign beside the lecture hall, near a museum postcard. The room looked slightly rearranged when I returned, beside the lecture hall.
+> I was almost done at the vending machine when I noticed a loose coin. When the machine kept humming after the drink dropped, Andromeda became easier to see. For a while, a loose coin was the most practical thing at the vending machine, while the line moved slowly. By the time I moved again, a loose coin had cooled in my hand, while the line moved slowly.
 
 #### `base_014_014`
 
@@ -8083,11 +8083,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A loose shoelace took up too much room on the old bridge. The answer I wanted did not arrive, but the bus did near the old bridge, with a loose shoelace. I checked the time, then looked back at Leo over the old bridge, while I held a loose shoelace.
+> The supermarket entrance was nearly empty by the time I got there with a wrinkled receipt. Leo was visible above the supermarket entrance, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the supermarket entrance, after the screen went dark.
 
 **Translation `ja`**
 
-> ほどけたくつひもが古い橋の上で場所を取りすぎていた。ほしい答えは来なかったけど、バスは来た、古い橋で、ほどけたくつひもといっしょに。時間を見てから、古い橋の上のしし座をもう一度見た、手にはほどけたくつひも。
+> しわのあるレシートを持って着くころ、スーパーの入口にはほとんど人がいなかった。スーパーの入口の上にしし座が見えて、そこで時間を見るのをやめるには十分だった。画面が暗くなったあと、スーパーの入口を出てから、まだやることをひとつ思い出した。
 
 #### `base_014_016`
 
@@ -8102,11 +8102,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A subway transfer slip turned ordinary beside the ferry deck. The night had no opinion, and that helped near the ferry deck, with a subway transfer slip. Near the ferry deck, Ursa Major looked like part of the errand, near a subway transfer slip. My phone stayed in my pocket, which improved the ending, because of a subway transfer slip. I did not solve anything, but I changed location after the ferry deck.
+> At the night market, I checked twice and found a warm paper bag both times, while my hands cooled. I looked up from a warm paper bag and found Ursa Major above the same place. For a while, a warm paper bag was the most practical thing at the night market, while my hands cooled. I could still hear how the stall lights went out one by one. It did not fix anything, but a warm paper bag made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 地下鉄の乗り換え券がフェリーの甲板の横でふつうに戻った。夜には意見がなくて、それが少し助かった、フェリーの甲板で、地下鉄の乗り換え券といっしょに。フェリーの甲板の近くでは、おおぐま座まで用事の一部みたいだった、近くには地下鉄の乗り換え券。スマホを出さなかったので、終わり方は少しましだった、理由は地下鉄の乗り換え券。何も解決していないけど、場所だけは変えた、フェリーの甲板のあとで。
+> 夜の市場で二回確かめた。手が冷えるあいだ、二回ともあたたかい紙袋があった。あたたかい紙袋から顔を上げると、その場所の上におおぐま座があった。しばらくは、手が冷えるあいだの夜の市場で、あたたかい紙袋がいちばん現実的なものだった。屋台の灯りがひとつずつ消えたことだけは、まだ耳に残っていた。何も解決していないけど、あたたかい紙袋のせいで帰り道は少し短く感じた。
 
 #### `base_014_017`
 
@@ -8121,11 +8121,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A red pencil mark sat quietly on the harbor fence. I took the long way because the short way knew too much near the harbor fence, with a red pencil mark. When I looked up from the harbor fence, Auriga was already there, just past a red pencil mark. The night did not become better; it became more specific, beside the harbor fence.
+> At the office kitchenette, I checked twice and found a chipped mug both times, after the chair creaked. Through the nearest window at the office kitchenette, I could make out Auriga. For a while, a chipped mug was the most practical thing at the office kitchenette, after the chair creaked. The whole thing with a chipped mug lasted maybe a minute, after the chair creaked, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 赤い鉛筆の印が港のフェンスの上で静かにしていた。近道はいろいろ知りすぎているので、遠回りした、港のフェンスで、赤い鉛筆の印といっしょに。港のフェンスから顔を上げると、ぎょしゃ座はもうそこにいた、その先には赤い鉛筆の印。夜がよくなったというより、少し具体的になった、そばには港のフェンス。
+> 会社の給湯室で二回確かめた。椅子が鳴ったあと、二回とも欠けたマグがあった。会社の給湯室の近くの窓から、ぎょしゃ座が見えた。しばらくは、椅子が鳴ったあとの会社の給湯室で、欠けたマグがいちばん現実的なものだった。欠けたマグのあるその時間は、椅子が鳴ったあとのたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_014_018`
 
@@ -8140,11 +8140,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 旅行用の歯ブラシがエレベーターの鏡のそばで忘れられていた。だれも気づかないので、覚えておきやすかった、エレベーターの鏡で、旅行用の歯ブラシといっしょに。エレベーターの鏡の上で、りゅう座が屋根の間に入っていた、手には旅行用の歯ブラシ。
+> 講義室に、思ったより少し長くいた。小さく止まったあと、短いえんぴつを持ったままだった。講義室の近くの窓から、りゅう座が見えた。スマホはしまって、講義室の上のりゅう座で十分ということにした。
 
 **Translation `en`**
 
-> A travel-size toothbrush stayed forgotten by the elevator mirror. Nobody noticed it, which made the scene easier to keep near the elevator mirror, with a travel-size toothbrush. Draco fitted between two roofs above the elevator mirror, while I held a travel-size toothbrush.
+> I stayed a little longer at the lecture hall than I meant to, after one small pause. Through the nearest window at the lecture hall, I could make out Draco. I put my phone away and let Draco above the lecture hall be enough.
 
 #### `base_014_019`
 
@@ -8159,11 +8159,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小さな種の袋が花屋のシャッターの影で待っていた。お茶は冷めて、少しまじめな飲みものになっていた、花屋のシャッターで、小さな種の袋といっしょに。花屋のシャッターの上が開いて、ペルセウス座が静かにそこへ入った、近くには小さな種の袋。意味を持たせすぎる前に、中へ入った、目に入ったのは小さな種の袋。
+> 寮の台所では、たいしたことは起きなかった。カートが通ったあと、ただカップめんを持ったままでいた。寮の台所の近くの窓から、ペルセウス座が見えた。しばらくは、カートが通ったあとの寮の台所で、カップめんがいちばん現実的なものだった。話にしたくなる前に、寮の台所を離れた。
 
 **Translation `en`**
 
-> A small packet of seeds waited in the shadow of the flower shop shutter. The tea had cooled into something more responsible near the flower shop shutter, with a small packet of seeds. The space above the flower shop shutter opened, and Perseus took it quietly, near a small packet of seeds. I went in before making it too meaningful, after noticing a small packet of seeds.
+> Nothing important happened at the dorm kitchen. I just kept holding a packet of instant noodles, after the cart rolled past. Through the nearest window at the dorm kitchen, I could make out Perseus. For a while, a packet of instant noodles was the most practical thing at the dorm kitchen, after the cart rolled past. I left the dorm kitchen before the moment could turn into a story.
 
 #### `base_014_020`
 
@@ -8178,11 +8178,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A room key made the bench near the supermarket light. I saved the last bite for no one in particular near the supermarket light, with a room key. Past the supermarket light, Andromeda held its shape without hurry, just past a room key.
+> I was almost done at the hostel desk when I noticed a room key. Through the nearest window at the hostel desk, I could make out Andromeda. I remembered one small thing I still had to do after leaving the hostel desk, after the last bus passed.
 
 **Translation `ja`**
 
-> 部屋の鍵がスーパーの明かりの近くのベンチを少し変えた。最後のひと口を、だれでもない人のために残した、スーパーの明かりで、部屋の鍵といっしょに。スーパーの明かりの向こうで、アンドロメダ座は急がず形を保っていた、その先には部屋の鍵。
+> 宿の机で用事がほとんど終わったころ、部屋の鍵が目に入った。宿の机の近くの窓から、アンドロメダ座が見えた。最終バスのあと、宿の机を出てから、まだやることをひとつ思い出した。
 
 #### `base_014_021`
 
@@ -8197,11 +8197,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A half-read comic waited for permission near the night market. The receipt proved less than I wanted it to prove near the night market, with a half-read comic. Over the night market, Centaurus looked less far than usual, while I held a half-read comic.
+> I stopped at the ticket gate with a bus pass still in my hand. I looked up from a bus pass and found Centaurus above the same place. It did not fix anything, but a bus pass made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 読みかけの漫画が夜の市場の近くで許可を待っているみたいだった。レシートは、思ったほど何も証明してくれなかった、夜の市場で、読みかけの漫画といっしょに。夜の市場の上では、ケンタウルス座がいつもより近く見えた、手には読みかけの漫画。
+> 改札で立ち止まった。手にはバスの定期が残っていた。バスの定期から顔を上げると、その場所の上にケンタウルス座があった。何も解決していないけど、バスの定期のせいで帰り道は少し短く感じた。
 
 #### `base_014_022`
 
@@ -8216,11 +8216,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A clean fork made a small corner in the closed bakery. The silence after the streak felt wider than the streak itself near the closed bakery, with a clean fork. I checked the time, then looked back at Leo over the closed bakery, near a clean fork.
+> The bus shelter was nearly empty by the time I got there with a cold tea bottle. When the next bus was still several minutes away, Leo became easier to see. The whole thing with a cold tea bottle lasted maybe a minute, after the clock blinked, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> きれいなフォークが閉まったパン屋の中で小さな角になっていた。光った線より、その後の静けさのほうが広かった、閉まったパン屋で、きれいなフォークといっしょに。時間を見てから、閉まったパン屋の上のしし座をもう一度見た、近くにはきれいなフォーク。
+> 冷たいお茶を持って着くころ、バス停にはほとんど人がいなかった。次のバスまではまだ少しあったころ、しし座が少し見やすくなった。冷たいお茶のあるその時間は、時計が光ったあとのたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_014_023`
 
@@ -8235,11 +8235,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A half-melted ice cream squeezed into the vending machine. It was only funny after I stopped being annoyed near the vending machine, with a half-melted ice cream. I used Taurus above the vending machine as a reason to pause, just past a half-melted ice cream. The room looked slightly rearranged when I returned, after noticing a half-melted ice cream.
+> At the rooftop doorway, I checked twice and found a phone charger both times, before I answered. At the rooftop doorway, the door clicked in the wind, before I answered, so I looked up and found Taurus. For a while, a phone charger was the most practical thing at the rooftop doorway, before I answered. I put my phone away and let Taurus above the rooftop doorway be enough.
 
 **Translation `ja`**
 
-> 少し溶けたアイスが自販機の中へ押し込まれていた。腹が立つのをやめたら、少しだけ面白かった、自販機で、少し溶けたアイスといっしょに。自販機の上のおうし座を、立ち止まる理由にした、その先には少し溶けたアイス。戻った部屋は、少しだけ並び方が変わって見えた、目に入ったのは少し溶けたアイス。
+> 屋上の入口で二回確かめた。返事をする前、二回とも充電コードがあった。屋上の入口では、返事をする前に風でドアが小さく鳴ったので、顔を上げるとおうし座があった。しばらくは、返事をする前の屋上の入口で、充電コードがいちばん現実的なものだった。スマホはしまって、屋上の入口の上のおうし座で十分ということにした。
 
 #### `base_014_024`
 
@@ -8254,11 +8254,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 薬局の袋が映画館のロビーの横で一度だけ鳴った。流星群は、ほとんど待つ練習だった、映画館のロビーで、薬局の袋といっしょに。映画館のロビーの上の細いすきまに、おひつじ座がちょうど入った、手には薬局の袋。
+> 駅のホームに、思ったより少し長くいた。気が変わる前、曲がった切符を持ったままだった。駅のホームの上におひつじ座が見えて、そこで時間を見るのをやめるには十分だった。アナウンスが遠ざかったころ、後ろを誰かが通って、駅のホームのふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A pharmacy bag clicked once beside the cinema lobby. The promised meteor shower mostly taught me patience near the cinema lobby, with a pharmacy bag. A thin gap above the cinema lobby was just enough for Aries, while I held a pharmacy bag.
+> I stayed a little longer at the station platform than I meant to, before I changed my mind. Aries was visible above the station platform, enough to stop checking the time there. Someone passed behind me while the announcement faded, and the ordinary night at the station platform started again.
 
 #### `base_014_025`
 
@@ -8273,11 +8273,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A towel from the hostel reminded me of the clinic window. I decided not to improve the moment by explaining it near the clinic window, with a towel from the hostel. Draco fitted between two roofs above the clinic window, near a towel from the hostel. The next ordinary thing waited indoors, beside the clinic window.
+> I stayed a little longer at the river railing than I meant to, before the light changed. I looked up from a small stone and found Draco above the same place. For a while, a small stone was the most practical thing at the river railing, before the light changed. I remembered one small thing I still had to do after leaving the river railing, before the light changed.
 
 **Translation `ja`**
 
-> 宿のタオルが病院のまどを思い出させた。説明してよくするのは、やめておいた、病院のまどで、宿のタオルといっしょに。病院のまどの上で、りゅう座が屋根の間に入っていた、近くには宿のタオル。次のふつうのことは、部屋の中で待っていた、そばには病院のまど。
+> 川の手すりに、思ったより少し長くいた。信号が変わる前、小さな石を持ったままだった。小さな石から顔を上げると、その場所の上にりゅう座があった。しばらくは、信号が変わる前の川の手すりで、小さな石がいちばん現実的なものだった。信号が変わる前、川の手すりを出てから、まだやることをひとつ思い出した。
 
 #### `base_014_026`
 
@@ -8292,11 +8292,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A paper lantern waited beside the library steps. One meteor appeared while everyone checked a different patch of sky near the library steps, with a paper lantern. Perseus returned when the clouds left the library steps alone, just past a paper lantern.
+> Nothing important happened at the small shrine. I just kept holding a small packet of seeds, before the train arrived. I looked up from a small packet of seeds and found Perseus above the same place. It did not fix anything, but a small packet of seeds made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 紙のランタンが図書館の階段の横で待っていた。みんなが違う空を見ている時に、ひとつ流れた、図書館の階段で、紙のランタンといっしょに。雲が図書館の階段を離れると、ペルセウス座が戻ってきた、その先には紙のランタン。
+> 小さな神社では、たいしたことは起きなかった。電車が来る前、ただ小さな種の袋を持ったままでいた。小さな種の袋から顔を上げると、その場所の上にペルセウス座があった。何も解決していないけど、小さな種の袋のせいで帰り道は少し短く感じた。
 
 #### `base_014_027`
 
@@ -8311,11 +8311,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A torn grocery list looked more serious than the laundromat door. The smallest success was still a success near the laundromat door, with a torn grocery list. Andromeda made the dark around the laundromat door feel arranged, while I held a torn grocery list.
+> I was almost done at the clinic entrance when I noticed a clinic number slip. When the automatic door finally stopped opening, Andromeda became easier to see. The whole thing with a clinic number slip lasted maybe a minute, before I checked my phone, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 破れた買い物メモがコインランドリーのドアよりまじめそうに見えた。いちばん小さい成功も、成功ではあった、コインランドリーのドアで、破れた買い物メモといっしょに。アンドロメダ座のせいで、コインランドリーのドアのまわりの暗さが少し並んで見えた、手には破れた買い物メモ。
+> 病院の入口で用事がほとんど終わったころ、病院の番号札が目に入った。自動ドアがやっと静かになったころ、アンドロメダ座が少し見やすくなった。病院の番号札のあるその時間は、スマホを見る前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_014_028`
 
@@ -8330,11 +8330,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A blue umbrella became the main event at the river railing. I thought, this is a little ridiculous, and kept smiling near the river railing, with a blue umbrella. Over the river railing, Centaurus looked less far than usual, near a blue umbrella.
+> I stopped at the library steps with a library card still in my hand. At the library steps, the return slot clacked behind me, before I found my keys, so I looked up and found Centaurus. I put my phone away and let Centaurus above the library steps be enough.
 
 **Translation `ja`**
 
-> 青い傘が川の手すりで主役みたいになった。これは少しだけ草だと思って、そのまま笑っていた、川の手すりで、青い傘といっしょに。川の手すりの上では、ケンタウルス座がいつもより近く見えた、近くには青い傘。
+> 図書館の階段で立ち止まった。手には図書館カードが残っていた。図書館の階段では、鍵を見つける前に後ろで返却口が鳴ったので、顔を上げるとケンタウルス座があった。スマホはしまって、図書館の階段の上のケンタウルス座で十分ということにした。
 
 #### `base_014_029`
 
@@ -8349,11 +8349,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 職場でもらった梨が小さな神社の上で場所を取りすぎていた。スクーターが過ぎた後の静けさは、少しきれいだった、小さな神社で、職場でもらった梨といっしょに。小さな神社の近くの電線の向こうに、しし座はまだ見えていた、その先には職場でもらった梨。意味を持たせすぎる前に、中へ入った、そばには小さな神社。
+> フェリーの切符を持って着くころ、港のフェンスにはほとんど人がいなかった。港のフェンスの上にしし座が見えて、そこで時間を見るのをやめるには十分だった。しばらくは、次のドアが開く前の港のフェンスで、フェリーの切符がいちばん現実的なものだった。ロープが柱に小さく当たっていたころ、後ろを誰かが通って、港のフェンスのふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A pear from work took up too much room on the tiny shrine. The quiet after the scooter passed felt almost clean near the tiny shrine, with a pear from work. Leo stayed visible past the wires near the tiny shrine, just past a pear from work. I went in before making it too meaningful, beside the tiny shrine.
+> The harbor fence was nearly empty by the time I got there with a ferry ticket. Leo was visible above the harbor fence, enough to stop checking the time there. For a while, a ferry ticket was the most practical thing at the harbor fence, before the next door opened. Someone passed behind me while a rope knocked softly against a post, and the ordinary night at the harbor fence started again.
 
 #### `base_014_030`
 
@@ -8368,11 +8368,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A loose bookmark turned ordinary beside the campus gate. The light changed before my excuse was ready near the campus gate, with a loose bookmark. Taurus was clearer than the sign beside the campus gate, while I held a loose bookmark.
+> At the elevator lobby, I checked twice and found a delivery sticker both times, while the sink dripped. Through the nearest window at the elevator lobby, I could make out Taurus. By the time I moved again, a delivery sticker had cooled in my hand, while the sink dripped.
 
 **Translation `ja`**
 
-> はさみっぱなしのしおりが学校の門の横でふつうに戻った。言い訳ができる前に、信号が変わった、学校の門で、はさみっぱなしのしおりといっしょに。学校の門のそばの看板より、おうし座のほうがはっきりしていた、手にははさみっぱなしのしおり。
+> エレベーターホールで二回確かめた。流しが鳴るあいだ、二回とも配達のシールがあった。エレベーターホールの近くの窓から、おうし座が見えた。また動き出すころには、流しが鳴るあいだ、手の中の配達のシールが少し冷えていた。
 
 #### `base_014_031`
 
@@ -8387,11 +8387,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A grocery coupon sat quietly on the bicycle racks. The smell of soap arrived before the person did near the bicycle racks, with a grocery coupon. A thin gap above the bicycle racks was just enough for Aries, near a grocery coupon. My phone stayed in my pocket, which improved the ending, after noticing a grocery coupon.
+> I stayed a little longer at the flower shop shutter than I meant to, before I went back in. When the wet pavement smelled green, Aries became easier to see. For a while, a bag of plums was the most practical thing at the flower shop shutter, before I went back in. It did not fix anything, but a bag of plums made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 割引券が自転車置き場の上で静かにしていた。人より先に、せっけんの匂いが来た、自転車置き場で、割引券といっしょに。自転車置き場の上の細いすきまに、おひつじ座がちょうど入った、近くには割引券。スマホを出さなかったので、終わり方は少しましだった、目に入ったのは割引券。
+> 花屋のシャッターに、思ったより少し長くいた。中へ戻る前、すももの袋を持ったままだった。ぬれた道が少し青い匂いだったころ、おひつじ座が少し見やすくなった。しばらくは、中へ戻る前の花屋のシャッターで、すももの袋がいちばん現実的なものだった。何も解決していないけど、すももの袋のせいで帰り道は少し短く感じた。
 
 #### `base_014_032`
 
@@ -8406,11 +8406,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A warm paper bag warmed my hand near the station wall. The page in my bag bent around the corner of a book near the station wall, with a warm paper bag. Cygnus gave the corner by the station wall a little depth, just past a warm paper bag.
+> Nothing important happened at the old bridge. I just kept holding a red scarf, while the sign hummed. At the old bridge, the river carried the traffic noise away, while the sign hummed, so I looked up and found Cygnus. The whole thing with a red scarf lasted maybe a minute, while the sign hummed, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> あたたかい紙袋が駅の壁の近くで手をあたためた。かばんの紙が、本の角にそって曲がった、駅の壁で、あたたかい紙袋といっしょに。はくちょう座のおかげで、駅の壁の角に少し奥行きが出た、その先にはあたたかい紙袋。
+> 古い橋では、たいしたことは起きなかった。看板が鳴るあいだ、ただ赤いマフラーを持ったままでいた。古い橋では、看板が鳴るあいだに川が車の音を少し遠くしたので、顔を上げるとはくちょう座があった。赤いマフラーのあるその時間は、看板が鳴るあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 ### Pack `base_015`
 
@@ -8427,11 +8427,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> One mismatched sock made me stop before the tram stop. For a second the whole errand felt planned near the tram stop, with one mismatched sock. Near the tram stop, Pegasus looked like part of the errand, while I held one mismatched sock.
+> Nothing important happened at the quiet courtyard. I just kept holding a tiny flower pot, while the window stayed dark. At the quiet courtyard, a window closed somewhere above, while the window stayed dark, so I looked up and found Pegasus. I put my phone away and let Pegasus above the quiet courtyard be enough.
 
 **Translation `ja`**
 
-> 片方だけ違うくつしたが電車の停留所の前で私を止めた。一瞬だけ、用事が全部予定通りに見えた、電車の停留所で、片方だけ違うくつしたといっしょに。電車の停留所の近くでは、ペガスス座まで用事の一部みたいだった、手には片方だけ違うくつした。
+> 静かな中庭では、たいしたことは起きなかった。窓が暗いままのあいだ、ただ小さな植木鉢を持ったままでいた。静かな中庭では、窓が暗いままのあいだに上のどこかで窓が閉まったので、顔を上げるとペガスス座があった。スマホはしまって、静かな中庭の上のペガスス座で十分ということにした。
 
 #### `base_015_002`
 
@@ -8446,11 +8446,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 図書館カードがベランダの手すりの下で急に大事そうに見えた。知らない人が変なタイミングで笑って、空気が助かった、ベランダの手すりで、図書館カードといっしょに。アンドロメダ座のせいで、ベランダの手すりのまわりの暗さが少し並んで見えた、近くには図書館カード。
+> アパートの階段で用事がほとんど終わったころ、買い物袋が目に入った。アパートの階段の上にアンドロメダ座が見えて、そこで時間を見るのをやめるには十分だった。上の階でドアが閉まったころ、後ろを誰かが通って、アパートの階段のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A library card looked newly important under the balcony rail. A stranger smiled at the wrong timing and saved the mood near the balcony rail, with a library card. Andromeda made the dark around the balcony rail feel arranged, near a library card.
+> I was almost done at the apartment stairs when I noticed a grocery bag. Andromeda was visible above the apartment stairs, enough to stop checking the time there. Someone passed behind me while someone upstairs closed a door, and the ordinary night at the apartment stairs started again.
 
 #### `base_015_003`
 
@@ -8465,11 +8465,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小さなライトがバス停の屋根に当たって小さな音を出した。連絡しそうになって、みんなを助けた、バス停の屋根で、小さなライトといっしょに。バス停の屋根の明かりが一度またたいてから、ケンタウルス座を見つけた、その先には小さなライト。次のふつうのことは、部屋の中で待っていた、目に入ったのは小さなライト。
+> 麺屋で立ち止まった。手にはプラスチックのスプーンが残っていた。麺屋の近くの窓から、ケンタウルス座が見えた。しばらくは、コップが冷めるあいだの麺屋で、プラスチックのスプーンがいちばん現実的なものだった。また動き出すころには、コップが冷めるあいだ、手の中のプラスチックのスプーンが少し冷えていた。
 
 **Translation `en`**
 
-> A small flashlight made a quiet sound against the bus shelter. I almost sent a message and then spared everyone near the bus shelter, with a small flashlight. I found Centaurus after the light on the bus shelter blinked once, just past a small flashlight. The next ordinary thing waited indoors, after noticing a small flashlight.
+> I stopped at the noodle shop with a plastic spoon still in my hand. Through the nearest window at the noodle shop, I could make out Centaurus. For a while, a plastic spoon was the most practical thing at the noodle shop, while the cup cooled. By the time I moved again, a plastic spoon had cooled in my hand, while the cup cooled.
 
 #### `base_015_004`
 
@@ -8484,11 +8484,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A bowl from the sink kept knocking against the rooftop door. I would not call it a miracle, but I did look twice near the rooftop door, with a bowl from the sink. The space above the rooftop door opened, and Leo took it quietly, while I held a bowl from the sink.
+> The parking lot was nearly empty by the time I got there with a key ring. When a car light blinked once, Leo became easier to see. I left the parking lot before the moment could turn into a story.
 
 **Translation `ja`**
 
-> 流しの茶わんが屋上のドアに何度も当たっていた。奇跡とは言わないけど、二度見はした、屋上のドアで、流しの茶わんといっしょに。屋上のドアの上が開いて、しし座が静かにそこへ入った、手には流しの茶わん。
+> 鍵の輪を持って着くころ、駐車場にはほとんど人がいなかった。車のライトが一度だけ光ったころ、しし座が少し見やすくなった。話にしたくなる前に、駐車場を離れた。
 
 #### `base_015_005`
 
@@ -8503,11 +8503,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A small bottle of ink stayed forgotten by the old stone steps. The phone stayed quiet like it had been warned near the old stone steps, with a small bottle of ink. Taurus was clearer than the sign beside the old stone steps, near a small bottle of ink. The night did not become better; it became more specific, beside the old stone steps.
+> At the tram stop, I checked twice and found a paper cup both times, while the line moved slowly. At the tram stop, the rails shone after the tram passed, while the line moved slowly, so I looked up and found Taurus. For a while, a paper cup was the most practical thing at the tram stop, while the line moved slowly. The whole thing with a paper cup lasted maybe a minute, while the line moved slowly, and I kept it in the memory too.
 
 **Translation `ja`**
 
-> 小さなインクびんが古い石段のそばで忘れられていた。スマホは注意されたみたいに静かだった、古い石段で、小さなインクびんといっしょに。古い石段のそばの看板より、おうし座のほうがはっきりしていた、近くには小さなインクびん。夜がよくなったというより、少し具体的になった、そばには古い石段。
+> トラムの停留所で二回確かめた。列がゆっくり進むあいだ、二回とも紙コップがあった。トラムの停留所では、列がゆっくり進むあいだにトラムのあとで線路が光っていたので、顔を上げるとおうし座があった。しばらくは、列がゆっくり進むあいだのトラムの停留所で、紙コップがいちばん現実的なものだった。紙コップのあるその時間は、列がゆっくり進むあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 #### `base_015_006`
 
@@ -8522,11 +8522,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A bent train ticket waited in the shadow of the kitchen table. The answer I wanted did not arrive, but the bus did near the kitchen table, with a bent train ticket. Aries waited past the edge of the kitchen table, just past a bent train ticket.
+> I stayed a little longer at the balcony than I meant to, while the street stayed quiet. Aries was visible above the balcony, enough to stop checking the time there. Honestly, the balcony scene was kind of cute. I went home before I could overthink a damp towel.
 
 **Translation `ja`**
 
-> 曲がった切符が台所の机の影で待っていた。ほしい答えは来なかったけど、バスは来た、台所の机で、曲がった切符といっしょに。台所の机の端の向こうで、おひつじ座が待っていた、その先には曲がった切符。
+> ベランダに、思ったより少し長くいた。道が静かなあいだ、少しぬれたタオルを持ったままだった。ベランダの上におひつじ座が見えて、そこで時間を見るのをやめるには十分だった。なんか普通に、ベランダのその場面はちょっとかわいかった。少しぬれたタオルのことを考えすぎる前に帰った。
 
 #### `base_015_007`
 
@@ -8541,11 +8541,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> スーパーのかごが改札の近くのベンチを少し変えた。夜には意見がなくて、それが少し助かった、改札で、スーパーのかごといっしょに。時間を見てから、改札の上のはくちょう座をもう一度見た、手にはスーパーのかご。意味を持たせすぎる前に、中へ入った、目に入ったのはスーパーのかご。犬が一度だけ鳴いて、その件は終わった、改札のあとで。
+> 学校の門では、たいしたことは起きなかった。画面が暗くなったあと、ただ題名のないノートを持ったままでいた。題名のないノートから顔を上げると、その場所の上にはくちょう座があった。しばらくは、画面が暗くなったあとの学校の門で、題名のないノートがいちばん現実的なものだった。最後の教室の灯りが消えたことだけは、まだ耳に残っていた。学校の門で写真を撮ったら、びっくりするくらい下手だった。ちょっと笑って、今日は勝ちってことにした。
 
 **Translation `en`**
 
-> A supermarket basket made the bench near the ticket gate. The night had no opinion, and that helped near the ticket gate, with a supermarket basket. I checked the time, then looked back at Cygnus over the ticket gate, while I held a supermarket basket. I went in before making it too meaningful, after noticing a supermarket basket. A dog barked once, then left the matter there after the ticket gate.
+> Nothing important happened at the campus gate. I just kept holding a notebook with no title, after the screen went dark. I looked up from a notebook with no title and found Cygnus above the same place. For a while, a notebook with no title was the most practical thing at the campus gate, after the screen went dark. I could still hear how the last classroom light went out. I took one terrible photo at the campus gate, laughed at it, and called that a win.
 
 #### `base_015_008`
 
@@ -8560,11 +8560,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小銭がアパートの階段の横で待っていた。手がふさがると、考えごとも少し遅くなった、アパートの階段で、小銭といっしょに。アパートの階段の近くでは、ペガスス座まで用事の一部みたいだった、近くには小銭。
+> 自転車置き場で用事がほとんど終わったころ、冷たい自転車の鍵が目に入った。冷たい自転車の鍵から顔を上げると、その場所の上にペガスス座があった。また動き出すころには、手が冷えるあいだ、手の中の冷たい自転車の鍵が少し冷えていた。
 
 **Translation `en`**
 
-> A loose coin waited beside the apartment stairs. My hands were busy, so my thoughts slowed down near the apartment stairs, with a loose coin. Near the apartment stairs, Pegasus looked like part of the errand, near a loose coin.
+> I was almost done at the bicycle racks when I noticed a cold bicycle lock. I looked up from a cold bicycle lock and found Pegasus above the same place. By the time I moved again, a cold bicycle lock had cooled in my hand, while my hands cooled.
 
 #### `base_015_009`
 
@@ -8579,11 +8579,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A packet of instant noodles looked more serious than the noodle shop curtain. I laughed once and pretended it was a cough near the noodle shop curtain, with a packet of instant noodles.
+> I was almost done at the closed bakery when I noticed the last bread roll. When the warm smell still reached the street, Virgo became easier to see.
 
 **Translation `ja`**
 
-> カップめんがラーメン屋ののれんよりまじめそうに見えた。一度笑って、それを咳のふりにした、ラーメン屋ののれんで、カップめんといっしょに。
+> 閉まったパン屋で用事がほとんど終わったころ、最後のパンが目に入った。まだパンの匂いが道まで残っていたころ、おとめ座が少し見やすくなった。
 
 #### `base_015_010`
 
@@ -8598,11 +8598,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A train-window reflection became the main event at the parking lot. The tea had cooled into something more responsible near the parking lot, with a train-window reflection. Cassiopeia fitted between two roofs above the parking lot, while I held a train-window reflection.
+> I stopped at the vending machine with a loose coin still in my hand. At the vending machine, the machine kept humming after the drink dropped, after one small pause, so I looked up and found Cassiopeia. I remembered one small thing I still had to do after leaving the vending machine, after one small pause.
 
 **Translation `ja`**
 
-> 電車のまどに映る顔が駐車場で主役みたいになった。お茶は冷めて、少しまじめな飲みものになっていた、駐車場で、電車のまどに映る顔といっしょに。駐車場の上で、カシオペヤ座が屋根の間に入っていた、手には電車のまどに映る顔。
+> 自販機で立ち止まった。手には小銭が残っていた。自販機では、小さく止まったあとに飲み物が落ちたあとも機械は鳴っていたので、顔を上げるとカシオペヤ座があった。小さく止まったあと、自販機を出てから、まだやることをひとつ思い出した。
 
 #### `base_015_011`
 
@@ -8617,11 +8617,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A loose button smelled faintly of the hostel desk. I saved the last bite for no one in particular near the hostel desk, with a loose button. The space above the hostel desk opened, and Leo took it quietly, near a loose button. The room looked slightly rearranged when I returned, after noticing a loose button.
+> The cinema lobby was nearly empty by the time I got there with a theater flyer. Through the nearest window at the cinema lobby, I could make out Leo. For a while, a theater flyer was the most practical thing at the cinema lobby, after the cart rolled past. I put my phone away and let Leo above the cinema lobby be enough.
 
 **Translation `ja`**
 
-> 取れかけのボタンが宿の机の匂いを少し持っていた。最後のひと口を、だれでもない人のために残した、宿の机で、取れかけのボタンといっしょに。宿の机の上が開いて、しし座が静かにそこへ入った、近くには取れかけのボタン。戻った部屋は、少しだけ並び方が変わって見えた、目に入ったのは取れかけのボタン。
+> 映画館のちらしを持って着くころ、映画館のロビーにはほとんど人がいなかった。映画館のロビーの近くの窓から、しし座が見えた。しばらくは、カートが通ったあとの映画館のロビーで、映画館のちらしがいちばん現実的なものだった。スマホはしまって、映画館のロビーの上のしし座で十分ということにした。
 
 #### `base_015_012`
 
@@ -8636,11 +8636,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> ネジの袋が静かな中庭の上でなんとか立っていた。レシートは、思ったほど何も証明してくれなかった、静かな中庭で、ネジの袋といっしょに。静かな中庭の向こうで、おうし座は急がず形を保っていた、その先にはネジの袋。
+> スーパーの入口で二回確かめた。最終バスのあと、二回ともしわのあるレシートがあった。しわのあるレシートから顔を上げると、その場所の上におうし座があった。後ろでカートが鳴ったころ、後ろを誰かが通って、スーパーの入口のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A packet of screws kept its balance on the quiet courtyard. The receipt proved less than I wanted it to prove near the quiet courtyard, with a packet of screws. Past the quiet courtyard, Taurus held its shape without hurry, just past a packet of screws.
+> At the supermarket entrance, I checked twice and found a wrinkled receipt both times, after the last bus passed. I looked up from a wrinkled receipt and found Taurus above the same place. Someone passed behind me while the carts rattled behind me, and the ordinary night at the supermarket entrance started again.
 
 #### `base_015_013`
 
@@ -8655,11 +8655,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 半券が会社の流しの下へ転がった。光った線より、その後の静けさのほうが広かった、会社の流しで、半券といっしょに。会社の流しの上では、おひつじ座がいつもより近く見えた、手には半券。
+> フェリーの甲板に、思ったより少し長くいた。レシートを折る前、フェリーの切符を持ったままだった。船の後ろに白い航跡が残ったころ、おひつじ座が少し見やすくなった。また動き出すころには、レシートを折る前、手の中のフェリーの切符が少し冷えていた。
 
 **Translation `en`**
 
-> A ticket stub rolled under the office sink. The silence after the streak felt wider than the streak itself near the office sink, with a ticket stub. Over the office sink, Aries looked less far than usual, while I held a ticket stub.
+> I stayed a little longer at the ferry deck than I meant to, before the receipt folded. When the wake stayed white behind the boat, Aries became easier to see. By the time I moved again, a ferry ticket had cooled in my hand, before the receipt folded.
 
 #### `base_015_014`
 
@@ -8674,11 +8674,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A folded sweater fell out near the lecture hall. It was only funny after I stopped being annoyed near the lecture hall, with a folded sweater. I checked the time, then looked back at Cygnus over the lecture hall, near a folded sweater.
+> Nothing important happened at the office kitchenette. I just kept holding a chipped mug, after the clock blinked. Through the nearest window at the office kitchenette, I could make out Cygnus. I left the office kitchenette before the moment could turn into a story.
 
 **Translation `ja`**
 
-> たたんだセーターが講義室の近くで落ちた。腹が立つのをやめたら、少しだけ面白かった、講義室で、たたんだセーターといっしょに。時間を見てから、講義室の上のはくちょう座をもう一度見た、近くにはたたんだセーター。
+> 会社の給湯室では、たいしたことは起きなかった。時計が光ったあと、ただ欠けたマグを持ったままでいた。会社の給湯室の近くの窓から、はくちょう座が見えた。話にしたくなる前に、会社の給湯室を離れた。
 
 #### `base_015_015`
 
@@ -8693,11 +8693,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A handwritten label survived the walk past the dorm kitchen. I lost count of airplanes before seeing the meteor near the dorm kitchen, with a handwritten label. I used Pegasus above the dorm kitchen as a reason to pause, just past a handwritten label. The night did not become better; it became more specific, after noticing a handwritten label.
+> I was almost done at the lecture hall when I noticed a pencil stub. Through the nearest window at the lecture hall, I could make out Pegasus. For a while, a pencil stub was the most practical thing at the lecture hall, before I answered. I remembered one small thing I still had to do after leaving the lecture hall, before I answered.
 
 **Translation `ja`**
 
-> 手書きのラベルが寮の台所を通る道をなんとか生きのびた。流れ星を見る前に、飛行機の数を忘れた、寮の台所で、手書きのラベルといっしょに。寮の台所の上のペガスス座を、立ち止まる理由にした、その先には手書きのラベル。夜がよくなったというより、少し具体的になった、目に入ったのは手書きのラベル。
+> 講義室で用事がほとんど終わったころ、短いえんぴつが目に入った。講義室の近くの窓から、ペガスス座が見えた。しばらくは、返事をする前の講義室で、短いえんぴつがいちばん現実的なものだった。返事をする前、講義室を出てから、まだやることをひとつ思い出した。
 
 #### `base_015_016`
 
@@ -8712,11 +8712,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A damp towel took up too much room on the old bridge. Somebody upstairs dropped something and ended the silence near the old bridge, with a damp towel. A thin gap above the old bridge was just enough for Virgo, while I held a damp towel.
+> I stopped at the dorm kitchen with a packet of instant noodles still in my hand. Through the nearest window at the dorm kitchen, I could make out Virgo. It did not fix anything, but a packet of instant noodles made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 少しぬれたタオルが古い橋の上で場所を取りすぎていた。上の階で何かが落ちて、静けさが終わった、古い橋で、少しぬれたタオルといっしょに。古い橋の上の細いすきまに、おとめ座がちょうど入った、手には少しぬれたタオル。
+> 寮の台所で立ち止まった。手にはカップめんが残っていた。寮の台所の近くの窓から、おとめ座が見えた。何も解決していないけど、カップめんのせいで帰り道は少し短く感じた。
 
 #### `base_015_017`
 
@@ -8731,11 +8731,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> プラスチックのスプーンがフェリーの甲板の横でふつうに戻った。みんなが違う空を見ている時に、ひとつ流れた、フェリーの甲板で、プラスチックのスプーンといっしょに。フェリーの甲板の上で、カシオペヤ座が屋根の間に入っていた、近くにはプラスチックのスプーン。意味を持たせすぎる前に、中へ入った、そばにはフェリーの甲板。
+> 台所の机で立ち止まった。手には流しの茶わんが残っていた。台所の机の近くの窓から、カシオペヤ座が見えた。しばらくは、信号が変わる前の台所の机で、流しの茶わんがいちばん現実的なものだった。ケトルが切れたころ、後ろを誰かが通って、台所の机のふつうの夜がまた始まった。
 
 **Translation `en`**
 
-> A plastic spoon turned ordinary beside the ferry deck. One meteor appeared while everyone checked a different patch of sky near the ferry deck, with a plastic spoon. Cassiopeia fitted between two roofs above the ferry deck, near a plastic spoon. I went in before making it too meaningful, beside the ferry deck.
+> I stopped at the kitchen table with a bowl from the sink still in my hand. Through the nearest window at the kitchen table, I could make out Cassiopeia. For a while, a bowl from the sink was the most practical thing at the kitchen table, before the light changed. Someone passed behind me while the kettle clicked off, and the ordinary night at the kitchen table started again.
 
 #### `base_015_018`
 
@@ -8750,11 +8750,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A melon bread wrapper sat quietly on the harbor fence. The smallest success was still a success near the harbor fence, with a melon bread wrapper. Hercules returned when the clouds left the harbor fence alone, just past a melon bread wrapper.
+> The ticket gate was nearly empty by the time I got there with a bus pass. When the gate beeped for someone else, Hercules became easier to see. By the time I moved again, a bus pass had cooled in my hand, before the train arrived.
 
 **Translation `ja`**
 
-> メロンパンの袋が港のフェンスの上で静かにしていた。いちばん小さい成功も、成功ではあった、港のフェンスで、メロンパンの袋といっしょに。雲が港のフェンスを離れると、ヘルクレス座が戻ってきた、その先にはメロンパンの袋。
+> バスの定期を持って着くころ、改札にはほとんど人がいなかった。別の人の改札が鳴ったころ、ヘルクレス座が少し見やすくなった。また動き出すころには、電車が来る前、手の中のバスの定期が少し冷えていた。
 
 #### `base_015_019`
 
@@ -8769,11 +8769,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> チェスのビショップがエレベーターの鏡のそばで忘れられていた。これは少しだけ草だと思って、そのまま笑っていた、エレベーターの鏡で、チェスのビショップといっしょに。いて座のせいで、エレベーターの鏡のまわりの暗さが少し並んで見えた、手にはチェスのビショップ。
+> バス停で二回確かめた。スマホを見る前、二回とも冷たいお茶があった。バス停では、スマホを見る前に次のバスまではまだ少しあったので、顔を上げるといて座があった。話にしたくなる前に、バス停を離れた。
 
 **Translation `en`**
 
-> A chess bishop stayed forgotten by the elevator mirror. I thought, this is a little ridiculous, and kept smiling near the elevator mirror, with a chess bishop. Sagittarius made the dark around the elevator mirror feel arranged, while I held a chess bishop.
+> At the bus shelter, I checked twice and found a cold tea bottle both times, before I checked my phone. At the bus shelter, the next bus was still several minutes away, before I checked my phone, so I looked up and found Sagittarius. I left the bus shelter before the moment could turn into a story.
 
 #### `base_015_020`
 
@@ -8788,11 +8788,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A wrinkled receipt waited in the shadow of the flower shop shutter. The quiet after the scooter passed felt almost clean near the flower shop shutter, with a wrinkled receipt. Over the flower shop shutter, Aries looked less far than usual, near a wrinkled receipt.
+> I stayed a little longer at the rooftop doorway than I meant to, before I found my keys. Aries was visible above the rooftop doorway, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the rooftop doorway, before I found my keys.
 
 **Translation `ja`**
 
-> しわのあるレシートが花屋のシャッターの影で待っていた。スクーターが過ぎた後の静けさは、少しきれいだった、花屋のシャッターで、しわのあるレシートといっしょに。花屋のシャッターの上では、おひつじ座がいつもより近く見えた、近くにはしわのあるレシート。
+> 屋上の入口に、思ったより少し長くいた。鍵を見つける前、充電コードを持ったままだった。屋上の入口の上におひつじ座が見えて、そこで時間を見るのをやめるには十分だった。鍵を見つける前、屋上の入口を出てから、まだやることをひとつ思い出した。
 
 #### `base_015_021`
 
@@ -8807,11 +8807,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cracked phone case made the bench near the supermarket light. The light changed before my excuse was ready near the supermarket light, with a cracked phone case. Cygnus stayed visible past the wires near the supermarket light, just past a cracked phone case. The room looked slightly rearranged when I returned, beside the supermarket light.
+> Nothing important happened at the laundromat. I just kept holding one mismatched sock, before the next door opened. Through the nearest window at the laundromat, I could make out Cygnus. For a while, one mismatched sock was the most practical thing at the laundromat, before the next door opened. It did not fix anything, but one mismatched sock made the walk home feel shorter.
 
 **Translation `ja`**
 
-> ひびの入ったスマホケースがスーパーの明かりの近くのベンチを少し変えた。言い訳ができる前に、信号が変わった、スーパーの明かりで、ひびの入ったスマホケースといっしょに。スーパーの明かりの近くの電線の向こうに、はくちょう座はまだ見えていた、その先にはひびの入ったスマホケース。戻った部屋は、少しだけ並び方が変わって見えた、そばにはスーパーの明かり。
+> コインランドリーでは、たいしたことは起きなかった。次のドアが開く前、ただ片方だけ違うくつしたを持ったままでいた。コインランドリーの近くの窓から、はくちょう座が見えた。しばらくは、次のドアが開く前のコインランドリーで、片方だけ違うくつしたがいちばん現実的なものだった。何も解決していないけど、片方だけ違うくつしたのせいで帰り道は少し短く感じた。
 
 #### `base_015_022`
 
@@ -8826,11 +8826,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> すももの袋が夜の市場の近くで許可を待っているみたいだった。何も解決していないけど、場所だけは変えた、夜の市場で、すももの袋といっしょに。夜の市場のそばの看板より、ペガスス座のほうがはっきりしていた、手にはすももの袋。
+> 川の手すりで用事がほとんど終わったころ、小さな石が目に入った。小さな石から顔を上げると、その場所の上にペガスス座があった。小さな石のあるその時間は、流しが鳴るあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A bag of plums waited for permission near the night market. I did not solve anything, but I changed location near the night market, with a bag of plums. Pegasus was clearer than the sign beside the night market, while I held a bag of plums.
+> I was almost done at the river railing when I noticed a small stone. I looked up from a small stone and found Pegasus above the same place. The whole thing with a small stone lasted maybe a minute, while the sink dripped, and I kept it in the memory too.
 
 #### `base_015_023`
 
@@ -8864,11 +8864,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 病院の番号札が自販機の中へ押し込まれていた。一瞬だけ、用事が全部予定通りに見えた、自販機で、病院の番号札といっしょに。カシオペヤ座のおかげで、自販機の角に少し奥行きが出た、その先には病院の番号札。
+> 病院の番号札を持って着くころ、病院の入口にはほとんど人がいなかった。病院の入口では、看板が鳴るあいだに自動ドアがやっと静かになったので、顔を上げるとカシオペヤ座があった。話にしたくなる前に、病院の入口を離れた。
 
 **Translation `en`**
 
-> A clinic number slip squeezed into the vending machine. For a second the whole errand felt planned near the vending machine, with a clinic number slip. Cassiopeia gave the corner by the vending machine a little depth, just past a clinic number slip.
+> The clinic entrance was nearly empty by the time I got there with a clinic number slip. At the clinic entrance, the automatic door finally stopped opening, while the sign hummed, so I looked up and found Cassiopeia. I left the clinic entrance before the moment could turn into a story.
 
 #### `base_015_025`
 
@@ -8883,11 +8883,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> The last bread roll clicked once beside the cinema lobby. A stranger smiled at the wrong timing and saved the mood near the cinema lobby, with the last bread roll. Near the cinema lobby, Hercules looked like part of the errand, while I held the last bread roll.
+> The night market was nearly empty by the time I got there with a warm paper bag. Hercules was visible above the night market, enough to stop checking the time there. I remembered one small thing I still had to do after leaving the night market, while the window stayed dark.
 
 **Translation `ja`**
 
-> 最後のパンが映画館のロビーの横で一度だけ鳴った。知らない人が変なタイミングで笑って、空気が助かった、映画館のロビーで、最後のパンといっしょに。映画館のロビーの近くでは、ヘルクレス座まで用事の一部みたいだった、手には最後のパン。
+> あたたかい紙袋を持って着くころ、夜の市場にはほとんど人がいなかった。夜の市場の上にヘルクレス座が見えて、そこで時間を見るのをやめるには十分だった。窓が暗いままのあいだ、夜の市場を出てから、まだやることをひとつ思い出した。
 
 #### `base_015_026`
 
@@ -8902,11 +8902,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A ferry ticket reminded me of the clinic window. I almost sent a message and then spared everyone near the clinic window, with a ferry ticket. Sagittarius made the dark around the clinic window feel arranged, near a ferry ticket.
+> At the harbor fence, I checked twice and found a ferry ticket both times, while the hallway cooled. I looked up from a ferry ticket and found Sagittarius above the same place. It did not fix anything, but a ferry ticket made the walk home feel shorter.
 
 **Translation `ja`**
 
-> フェリーの切符が病院のまどを思い出させた。連絡しそうになって、みんなを助けた、病院のまどで、フェリーの切符といっしょに。いて座のせいで、病院のまどのまわりの暗さが少し並んで見えた、近くにはフェリーの切符。
+> 港のフェンスで二回確かめた。廊下が冷えるあいだ、二回ともフェリーの切符があった。フェリーの切符から顔を上げると、その場所の上にいて座があった。何も解決していないけど、フェリーの切符のせいで帰り道は少し短く感じた。
 
 #### `base_015_027`
 
@@ -8921,11 +8921,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 白い封筒が図書館の階段の横で待っていた。奇跡とは言わないけど、二度見はした、図書館の階段で、白い封筒といっしょに。図書館の階段の明かりが一度またたいてから、みずがめ座を見つけた、その先には白い封筒。意味を持たせすぎる前に、中へ入った、目に入ったのは白い封筒。
+> エレベーターホールに、思ったより少し長くいた。コップが冷めるあいだ、配達のシールを持ったままだった。エレベーターホールの近くの窓から、みずがめ座が見えた。しばらくは、コップが冷めるあいだのエレベーターホールで、配達のシールがいちばん現実的なものだった。配達のシールのあるその時間は、コップが冷めるあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A white envelope waited beside the library steps. I would not call it a miracle, but I did look twice near the library steps, with a white envelope. I found Aquarius after the light on the library steps blinked once, just past a white envelope. I went in before making it too meaningful, after noticing a white envelope.
+> I stayed a little longer at the elevator lobby than I meant to, while the cup cooled. Through the nearest window at the elevator lobby, I could make out Aquarius. For a while, a delivery sticker was the most practical thing at the elevator lobby, while the cup cooled. The whole thing with a delivery sticker lasted maybe a minute, while the cup cooled, and I kept it in the memory too.
 
 #### `base_015_028`
 
@@ -8940,11 +8940,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A key ring looked more serious than the laundromat door. The phone stayed quiet like it had been warned near the laundromat door, with a key ring. The space above the laundromat door opened, and Canis Major took it quietly, while I held a key ring.
+> Nothing important happened at the flower shop shutter. I just kept holding a bag of plums, after the shoes dried. At the flower shop shutter, the wet pavement smelled green, after the shoes dried, so I looked up and found Canis Major. I put my phone away and let Canis Major above the flower shop shutter be enough.
 
 **Translation `ja`**
 
-> 鍵の輪がコインランドリーのドアよりまじめそうに見えた。スマホは注意されたみたいに静かだった、コインランドリーのドアで、鍵の輪といっしょに。コインランドリーのドアの上が開いて、おおいぬ座が静かにそこへ入った、手には鍵の輪。
+> 花屋のシャッターでは、たいしたことは起きなかった。靴が乾いたあと、ただすももの袋を持ったままでいた。花屋のシャッターでは、靴が乾いたあとにぬれた道が少し青い匂いだったので、顔を上げるとおおいぬ座があった。スマホはしまって、花屋のシャッターの上のおおいぬ座で十分ということにした。
 
 #### `base_015_029`
 
@@ -8959,11 +8959,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> シリアルの茶わんが川の手すりで主役みたいになった。全部小さいのに、なぜか足りていた、川の手すりで、シリアルの茶わんといっしょに。川の手すりのそばの看板より、ペガスス座のほうがはっきりしていた、近くにはシリアルの茶わん。スマホを出さなかったので、終わり方は少しましだった、そばには川の手すり。
+> 宿の机で用事がほとんど終わったころ、部屋の鍵が目に入った。宿の机の近くの窓から、ペガスス座が見えた。しばらくは、列がゆっくり進むあいだの宿の机で、部屋の鍵がいちばん現実的なものだった。話にしたくなる前に、宿の机を離れた。
 
 **Translation `en`**
 
-> A bowl of cereal became the main event at the river railing. The whole thing was tiny and somehow complete near the river railing, with a bowl of cereal. Pegasus was clearer than the sign beside the river railing, near a bowl of cereal. My phone stayed in my pocket, which improved the ending, beside the river railing.
+> I was almost done at the hostel desk when I noticed a room key. Through the nearest window at the hostel desk, I could make out Pegasus. For a while, a room key was the most practical thing at the hostel desk, while the line moved slowly. I left the hostel desk before the moment could turn into a story.
 
 #### `base_015_030`
 
@@ -8978,11 +8978,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A folded map took up too much room on the tiny shrine. I counted to seven for no practical reason near the tiny shrine, with a folded map. Virgo waited past the edge of the tiny shrine, just past a folded map. The night did not become better; it became more specific, with a folded map. The page in my bag bent around the corner of a book after the tiny shrine.
+> I stopped at the quiet courtyard with a tiny flower pot still in my hand. Virgo was visible above the quiet courtyard, enough to stop checking the time there. For a while, a tiny flower pot was the most practical thing at the quiet courtyard, while the street stayed quiet. I could still hear how a window closed somewhere above. I remembered one small thing I still had to do after leaving the quiet courtyard, while the street stayed quiet.
 
 **Translation `ja`**
 
-> 折った地図が小さな神社の上で場所を取りすぎていた。理由もなく七まで数えた、小さな神社で、折った地図といっしょに。小さな神社の端の向こうで、おとめ座が待っていた、その先には折った地図。夜がよくなったというより、少し具体的になった、そこには折った地図。かばんの紙が、本の角にそって曲がった、小さな神社のあとで。
+> 静かな中庭で立ち止まった。手には小さな植木鉢が残っていた。静かな中庭の上におとめ座が見えて、そこで時間を見るのをやめるには十分だった。しばらくは、道が静かなあいだの静かな中庭で、小さな植木鉢がいちばん現実的なものだった。上のどこかで窓が閉まったことだけは、まだ耳に残っていた。道が静かなあいだ、静かな中庭を出てから、まだやることをひとつ思い出した。
 
 #### `base_015_031`
 
@@ -8997,11 +8997,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A lunch box lid turned ordinary beside the campus gate. My hands were busy, so my thoughts slowed down near the campus gate, with a lunch box lid. I checked the time, then looked back at Cassiopeia over the campus gate, while I held a lunch box lid.
+> The apartment stairs was nearly empty by the time I got there with a grocery bag. I looked up from a grocery bag and found Cassiopeia above the same place. It did not fix anything, but a grocery bag made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 弁当箱のふたが学校の門の横でふつうに戻った。手がふさがると、考えごとも少し遅くなった、学校の門で、弁当箱のふたといっしょに。時間を見てから、学校の門の上のカシオペヤ座をもう一度見た、手には弁当箱のふた。
+> 買い物袋を持って着くころ、アパートの階段にはほとんど人がいなかった。買い物袋から顔を上げると、その場所の上にカシオペヤ座があった。何も解決していないけど、買い物袋のせいで帰り道は少し短く感じた。
 
 #### `base_015_032`
 
@@ -9016,11 +9016,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 傷のある水筒が自転車置き場の上で静かにしていた。一度笑って、それを咳のふりにした、自転車置き場で、傷のある水筒といっしょに。自転車置き場の近くでは、ヘルクレス座まで用事の一部みたいだった、近くには傷のある水筒。
+> 麺屋で二回確かめた。手が冷えるあいだ、二回ともプラスチックのスプーンがあった。麺屋の近くの窓から、ヘルクレス座が見えた。プラスチックのスプーンのあるその時間は、手が冷えるあいだのたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A scratched water bottle sat quietly on the bicycle racks. I laughed once and pretended it was a cough near the bicycle racks, with a scratched water bottle. Near the bicycle racks, Hercules looked like part of the errand, near a scratched water bottle.
+> At the noodle shop, I checked twice and found a plastic spoon both times, while my hands cooled. Through the nearest window at the noodle shop, I could make out Hercules. The whole thing with a plastic spoon lasted maybe a minute, while my hands cooled, and I kept it in the memory too.
 
 ### Pack `base_016`
 
@@ -9037,11 +9037,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A delivery sticker warmed my hand near the station wall. The tea had cooled into something more responsible near the station wall, with a delivery sticker. When I looked up from the station wall, Sagittarius was already there, just past a delivery sticker. The next ordinary thing waited indoors, beside the station wall.
+> At the station platform, I checked twice and found a bent train ticket both times, after the chair creaked. At the station platform, the announcement faded, after the chair creaked, so I looked up and found Sagittarius. For a while, a bent train ticket was the most practical thing at the station platform, after the chair creaked. I put my phone away and let Sagittarius above the station platform be enough.
 
 **Translation `ja`**
 
-> 配達のシールが駅の壁の近くで手をあたためた。お茶は冷めて、少しまじめな飲みものになっていた、駅の壁で、配達のシールといっしょに。駅の壁から顔を上げると、いて座はもうそこにいた、その先には配達のシール。次のふつうのことは、部屋の中で待っていた、そばには駅の壁。
+> 駅のホームで二回確かめた。椅子が鳴ったあと、二回とも曲がった切符があった。駅のホームでは、椅子が鳴ったあとにアナウンスが遠ざかったので、顔を上げるといて座があった。しばらくは、椅子が鳴ったあとの駅のホームで、曲がった切符がいちばん現実的なものだった。スマホはしまって、駅のホームの上のいて座で十分ということにした。
 
 #### `base_016_002`
 
@@ -9056,11 +9056,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cold bicycle lock made me stop before the tram stop. I saved the last bite for no one in particular near the tram stop, with a cold bicycle lock. Aquarius fitted between two roofs above the tram stop, while I held a cold bicycle lock.
+> I stayed a little longer at the tram stop than I meant to, after one small pause. Aquarius was visible above the tram stop, enough to stop checking the time there. Someone passed behind me while the rails shone after the tram passed, and the ordinary night at the tram stop started again.
 
 **Translation `ja`**
 
-> 冷たい自転車の鍵が電車の停留所の前で私を止めた。最後のひと口を、だれでもない人のために残した、電車の停留所で、冷たい自転車の鍵といっしょに。電車の停留所の上で、みずがめ座が屋根の間に入っていた、手には冷たい自転車の鍵。
+> トラムの停留所に、思ったより少し長くいた。小さく止まったあと、紙コップを持ったままだった。トラムの停留所の上にみずがめ座が見えて、そこで時間を見るのをやめるには十分だった。トラムのあとで線路が光っていたころ、後ろを誰かが通って、トラムの停留所のふつうの夜がまた始まった。
 
 #### `base_016_003`
 
@@ -9075,11 +9075,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 題名のないノートがベランダの手すりの下で急に大事そうに見えた。レシートは、思ったほど何も証明してくれなかった、ベランダの手すりで、題名のないノートといっしょに。ベランダの手すりの上が開いて、おおいぬ座が静かにそこへ入った、近くには題名のないノート。夜がよくなったというより、少し具体的になった、目に入ったのは題名のないノート。
+> ベランダでは、たいしたことは起きなかった。カートが通ったあと、ただ少しぬれたタオルを持ったままでいた。少しぬれたタオルから顔を上げると、その場所の上におおいぬ座があった。しばらくは、カートが通ったあとのベランダで、少しぬれたタオルがいちばん現実的なものだった。カートが通ったあと、ベランダを出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A notebook with no title looked newly important under the balcony rail. The receipt proved less than I wanted it to prove near the balcony rail, with a notebook with no title. The space above the balcony rail opened, and Canis Major took it quietly, near a notebook with no title. The night did not become better; it became more specific, after noticing a notebook with no title.
+> Nothing important happened at the balcony. I just kept holding a damp towel, after the cart rolled past. I looked up from a damp towel and found Canis Major above the same place. For a while, a damp towel was the most practical thing at the balcony, after the cart rolled past. I remembered one small thing I still had to do after leaving the balcony, after the cart rolled past.
 
 #### `base_016_004`
 
@@ -9094,11 +9094,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cheap pair of gloves made a quiet sound against the bus shelter. Someone's laughter crossed the street before the people did near the bus shelter, with a cheap pair of gloves. Past the bus shelter, Orion held its shape without hurry, just past a cheap pair of gloves.
+> I was almost done at the campus gate when I noticed a notebook with no title. I looked up from a notebook with no title and found Orion above the same place. It did not fix anything, but a notebook with no title made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 安い手袋がバス停の屋根に当たって小さな音を出した。人より先に、笑い声が道を渡った、バス停の屋根で、安い手袋といっしょに。バス停の屋根の向こうで、オリオン座は急がず形を保っていた、その先には安い手袋。
+> 学校の門で用事がほとんど終わったころ、題名のないノートが目に入った。題名のないノートから顔を上げると、その場所の上にオリオン座があった。何も解決していないけど、題名のないノートのせいで帰り道は少し短く感じた。
 
 #### `base_016_005`
 
@@ -9113,11 +9113,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 充電コードが屋上のドアに何度も当たっていた。違う曲を思い出して、そのまま鼻歌にした、屋上のドアで、充電コードといっしょに。屋上のドアの上では、北極星がいつもより近く見えた、手には充電コード。
+> 図書館の階段で立ち止まった。手には図書館カードが残っていた。後ろで返却口が鳴ったころ、北極星が少し見やすくなった。図書館カードのあるその時間は、レシートを折る前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A phone charger kept knocking against the rooftop door. I remembered the wrong song and hummed it anyway near the rooftop door, with a phone charger. Over the rooftop door, Polaris looked less far than usual, while I held a phone charger.
+> I stopped at the library steps with a library card still in my hand. When the return slot clacked behind me, Polaris became easier to see. The whole thing with a library card lasted maybe a minute, before the receipt folded, and I kept it in the memory too.
 
 #### `base_016_006`
 
@@ -9132,11 +9132,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A theater flyer stayed forgotten by the old stone steps. I lost count of airplanes before seeing the meteor near the old stone steps, with a theater flyer.
+> The closed bakery was nearly empty by the time I got there with the last bread roll. At the closed bakery, the warm smell still reached the street, after the clock blinked, so I looked up and found Cassiopeia.
 
 **Translation `ja`**
 
-> 映画館のちらしが古い石段のそばで忘れられていた。流れ星を見る前に、飛行機の数を忘れた、古い石段で、映画館のちらしといっしょに。
+> 最後のパンを持って着くころ、閉まったパン屋にはほとんど人がいなかった。閉まったパン屋では、時計が光ったあとにまだパンの匂いが道まで残っていたので、顔を上げるとカシオペヤ座があった。
 
 #### `base_016_007`
 
@@ -9151,11 +9151,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A warm rice ball waited in the shadow of the kitchen table. Somebody upstairs dropped something and ended the silence near the kitchen table, with a warm rice ball. I used Hercules above the kitchen table as a reason to pause, just past a warm rice ball. My phone stayed in my pocket, which improved the ending, after noticing a warm rice ball.
+> At the vending machine, I checked twice and found a loose coin both times, before I answered. Hercules was visible above the vending machine, enough to stop checking the time there. For a while, a loose coin was the most practical thing at the vending machine, before I answered. Someone passed behind me while the machine kept humming after the drink dropped, and the ordinary night at the vending machine started again.
 
 **Translation `ja`**
 
-> あたたかいおにぎりが台所の机の影で待っていた。上の階で何かが落ちて、静けさが終わった、台所の机で、あたたかいおにぎりといっしょに。台所の机の上のヘルクレス座を、立ち止まる理由にした、その先にはあたたかいおにぎり。スマホを出さなかったので、終わり方は少しましだった、目に入ったのはあたたかいおにぎり。
+> 自販機で二回確かめた。返事をする前、二回とも小銭があった。自販機の上にヘルクレス座が見えて、そこで時間を見るのをやめるには十分だった。しばらくは、返事をする前の自販機で、小銭がいちばん現実的なものだった。飲み物が落ちたあとも機械は鳴っていたころ、後ろを誰かが通って、自販機のふつうの夜がまた始まった。
 
 #### `base_016_008`
 
@@ -9170,11 +9170,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小さく鳴るラジオが改札の近くのベンチを少し変えた。みんなが違う空を見ている時に、ひとつ流れた、改札で、小さく鳴るラジオといっしょに。改札の上の細いすきまに、いて座がちょうど入った、手には小さく鳴るラジオ。
+> 映画館のロビーに、思ったより少し長くいた。気が変わる前、映画館のちらしを持ったままだった。映画館のロビーの近くの窓から、いて座が見えた。また動き出すころには、気が変わる前、手の中の映画館のちらしが少し冷えていた。
 
 **Translation `en`**
 
-> A quiet radio made the bench near the ticket gate. One meteor appeared while everyone checked a different patch of sky near the ticket gate, with a quiet radio. A thin gap above the ticket gate was just enough for Sagittarius, while I held a quiet radio.
+> I stayed a little longer at the cinema lobby than I meant to, before I changed my mind. Through the nearest window at the cinema lobby, I could make out Sagittarius. By the time I moved again, a theater flyer had cooled in my hand, before I changed my mind.
 
 #### `base_016_009`
 
@@ -9189,11 +9189,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A rain-dark jacket waited beside the apartment stairs. The smallest success was still a success near the apartment stairs, with a rain-dark jacket. Aquarius fitted between two roofs above the apartment stairs, near a rain-dark jacket. The room looked slightly rearranged when I returned, beside the apartment stairs.
+> I stayed a little longer at the old bridge than I meant to, before the light changed. When the river carried the traffic noise away, Aquarius became easier to see. For a while, a red scarf was the most practical thing at the old bridge, before the light changed. It did not fix anything, but a red scarf made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 雨で黒くなった上着がアパートの階段の横で待っていた。いちばん小さい成功も、成功ではあった、アパートの階段で、雨で黒くなった上着といっしょに。アパートの階段の上で、みずがめ座が屋根の間に入っていた、近くには雨で黒くなった上着。戻った部屋は、少しだけ並び方が変わって見えた、そばにはアパートの階段。
+> 古い橋に、思ったより少し長くいた。信号が変わる前、赤いマフラーを持ったままだった。川が車の音を少し遠くしたころ、みずがめ座が少し見やすくなった。しばらくは、信号が変わる前の古い橋で、赤いマフラーがいちばん現実的なものだった。何も解決していないけど、赤いマフラーのせいで帰り道は少し短く感じた。
 
 #### `base_016_010`
 
@@ -9208,11 +9208,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> はがきの切手がラーメン屋ののれんよりまじめそうに見えた。これは少しだけ草だと思って、そのまま笑っていた、ラーメン屋ののれんで、はがきの切手といっしょに。雲がラーメン屋ののれんを離れると、おおいぬ座が戻ってきた、その先にははがきの切手。
+> フェリーの甲板では、たいしたことは起きなかった。電車が来る前、ただフェリーの切符を持ったままでいた。フェリーの甲板では、電車が来る前に船の後ろに白い航跡が残ったので、顔を上げるとおおいぬ座があった。フェリーの切符のあるその時間は、電車が来る前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A postcard stamp looked more serious than the noodle shop curtain. I thought, this is a little ridiculous, and kept smiling near the noodle shop curtain, with a postcard stamp. Canis Major returned when the clouds left the noodle shop curtain alone, just past a postcard stamp.
+> Nothing important happened at the ferry deck. I just kept holding a ferry ticket, before the train arrived. At the ferry deck, the wake stayed white behind the boat, before the train arrived, so I looked up and found Canis Major. The whole thing with a ferry ticket lasted maybe a minute, before the train arrived, and I kept it in the memory too.
 
 #### `base_016_011`
 
@@ -9227,11 +9227,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A red sock became the main event at the parking lot. My pocket held one more useless proof of the day near the parking lot, with a red sock. Orion made the dark around the parking lot feel arranged, while I held a red sock.
+> I was almost done at the office kitchenette when I noticed a chipped mug. Through the nearest window at the office kitchenette, I could make out Orion. I put my phone away and let Orion above the office kitchenette be enough.
 
 **Translation `ja`**
 
-> 赤いくつしたが駐車場で主役みたいになった。ポケットには、今日の役に立たない証拠が一つ増えた、駐車場で、赤いくつしたといっしょに。オリオン座のせいで、駐車場のまわりの暗さが少し並んで見えた、手には赤いくつした。
+> 会社の給湯室で用事がほとんど終わったころ、欠けたマグが目に入った。会社の給湯室の近くの窓から、オリオン座が見えた。スマホはしまって、会社の給湯室の上のオリオン座で十分ということにした。
 
 #### `base_016_012`
 
@@ -9246,11 +9246,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cold tea bottle smelled faintly of the hostel desk. Nothing spooky happened, except the door opening by itself near the hostel desk, with a cold tea bottle. Over the hostel desk, Polaris looked less far than usual, near a cold tea bottle.
+> I stopped at the lecture hall with a pencil stub still in my hand. Through the nearest window at the lecture hall, I could make out Polaris. Someone passed behind me while someone erased the last line from the board, and the ordinary night at the lecture hall started again.
 
 **Translation `ja`**
 
-> 冷たいお茶が宿の机の匂いを少し持っていた。ドアが勝手に開いた以外、こわいことは何もない、宿の机で、冷たいお茶といっしょに。宿の机の上では、北極星がいつもより近く見えた、近くには冷たいお茶。
+> 講義室で立ち止まった。手には短いえんぴつが残っていた。講義室の近くの窓から、北極星が見えた。誰かが黒板の最後の一行を消したころ、後ろを誰かが通って、講義室のふつうの夜がまた始まった。
 
 #### `base_016_013`
 
@@ -9265,11 +9265,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小さな植木鉢が静かな中庭の上でなんとか立っていた。何も解決していないけど、場所だけは変えた、静かな中庭で、小さな植木鉢といっしょに。静かな中庭の近くの電線の向こうに、うしかい座はまだ見えていた、その先には小さな植木鉢。夜がよくなったというより、少し具体的になった、そばには静かな中庭。
+> 鍵の輪を持って着くころ、駐車場にはほとんど人がいなかった。鍵の輪から顔を上げると、その場所の上にうしかい座があった。しばらくは、次のドアが開く前の駐車場で、鍵の輪がいちばん現実的なものだった。また動き出すころには、次のドアが開く前、手の中の鍵の輪が少し冷えていた。
 
 **Translation `en`**
 
-> A tiny flower pot kept its balance on the quiet courtyard. I did not solve anything, but I changed location near the quiet courtyard, with a tiny flower pot. Bootes stayed visible past the wires near the quiet courtyard, just past a tiny flower pot. The night did not become better; it became more specific, beside the quiet courtyard.
+> The parking lot was nearly empty by the time I got there with a key ring. I looked up from a key ring and found Bootes above the same place. For a while, a key ring was the most practical thing at the parking lot, before the next door opened. By the time I moved again, a key ring had cooled in my hand, before the next door opened.
 
 #### `base_016_014`
 
@@ -9284,11 +9284,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cup of soup rolled under the office sink. I stepped around a puddle and felt briefly skilled near the office sink, with a cup of soup. Gemini was clearer than the sign beside the office sink, while I held a cup of soup.
+> At the kitchen table, I checked twice and found a bowl from the sink both times, while the sink dripped. Through the nearest window at the kitchen table, I could make out Gemini. I left the kitchen table before the moment could turn into a story.
 
 **Translation `ja`**
 
-> スープのカップが会社の流しの下へ転がった。水たまりをよけて、一瞬だけ上手に生きた気がした、会社の流しで、スープのカップといっしょに。会社の流しのそばの看板より、ふたご座のほうがはっきりしていた、手にはスープのカップ。
+> 台所の机で二回確かめた。流しが鳴るあいだ、二回とも流しの茶わんがあった。台所の机の近くの窓から、ふたご座が見えた。話にしたくなる前に、台所の机を離れた。
 
 #### `base_016_015`
 
@@ -9303,11 +9303,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 小さな石が講義室の近くで落ちた。一瞬だけ、用事が全部予定通りに見えた、講義室で、小さな石といっしょに。講義室の上の細いすきまに、いて座がちょうど入った、近くには小さな石。意味を持たせすぎる前に、中へ入った、目に入ったのは小さな石。
+> 改札に、思ったより少し長くいた。中へ戻る前、バスの定期を持ったままだった。改札では、中へ戻る前に別の人の改札が鳴ったので、顔を上げるといて座があった。しばらくは、中へ戻る前の改札で、バスの定期がいちばん現実的なものだった。バスの定期のあるその時間は、中へ戻る前のたぶん一分くらいで、一緒に覚えておくことにした。
 
 **Translation `en`**
 
-> A small stone fell out near the lecture hall. For a second the whole errand felt planned near the lecture hall, with a small stone. A thin gap above the lecture hall was just enough for Sagittarius, near a small stone. I went in before making it too meaningful, after noticing a small stone.
+> I stayed a little longer at the ticket gate than I meant to, before I went back in. At the ticket gate, the gate beeped for someone else, before I went back in, so I looked up and found Sagittarius. For a while, a bus pass was the most practical thing at the ticket gate, before I went back in. The whole thing with a bus pass lasted maybe a minute, before I went back in, and I kept it in the memory too.
 
 #### `base_016_016`
 
@@ -9322,11 +9322,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A cracked ruler survived the walk past the dorm kitchen. A stranger smiled at the wrong timing and saved the mood near the dorm kitchen, with a cracked ruler. Aquarius gave the corner by the dorm kitchen a little depth, just past a cracked ruler.
+> Nothing important happened at the bus shelter. I just kept holding a cold tea bottle, while the sign hummed. Aquarius was visible above the bus shelter, enough to stop checking the time there. I put my phone away and let Aquarius above the bus shelter be enough.
 
 **Translation `ja`**
 
-> ひびの入った定規が寮の台所を通る道をなんとか生きのびた。知らない人が変なタイミングで笑って、空気が助かった、寮の台所で、ひびの入った定規といっしょに。みずがめ座のおかげで、寮の台所の角に少し奥行きが出た、その先にはひびの入った定規。
+> バス停では、たいしたことは起きなかった。看板が鳴るあいだ、ただ冷たいお茶を持ったままでいた。バス停の上にみずがめ座が見えて、そこで時間を見るのをやめるには十分だった。スマホはしまって、バス停の上のみずがめ座で十分ということにした。
 
 #### `base_016_017`
 
@@ -9341,11 +9341,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A chipped mug took up too much room on the old bridge. I almost sent a message and then spared everyone near the old bridge, with a chipped mug. Near the old bridge, Canis Major looked like part of the errand, while I held a chipped mug.
+> Nothing important happened at the bicycle racks. I just kept holding a cold bicycle lock, while the window stayed dark. I looked up from a cold bicycle lock and found Canis Major above the same place. Someone passed behind me while one wheel kept spinning, and the ordinary night at the bicycle racks started again.
 
 **Translation `ja`**
 
-> 欠けたマグが古い橋の上で場所を取りすぎていた。連絡しそうになって、みんなを助けた、古い橋で、欠けたマグといっしょに。古い橋の近くでは、おおいぬ座まで用事の一部みたいだった、手には欠けたマグ。
+> 自転車置き場では、たいしたことは起きなかった。窓が暗いままのあいだ、ただ冷たい自転車の鍵を持ったままでいた。冷たい自転車の鍵から顔を上げると、その場所の上におおいぬ座があった。ひとつの車輪だけまだ回っていたころ、後ろを誰かが通って、自転車置き場のふつうの夜がまた始まった。
 
 #### `base_016_018`
 
@@ -9360,11 +9360,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A pencil stub turned ordinary beside the ferry deck. The old clock nearby sounded too confident near the ferry deck, with a pencil stub. Orion made the dark around the ferry deck feel arranged, near a pencil stub.
+> I was almost done at the laundromat when I noticed one mismatched sock. Through the nearest window at the laundromat, I could make out Orion. By the time I moved again, one mismatched sock had cooled in my hand, while the hallway cooled.
 
 **Translation `ja`**
 
-> 短いえんぴつがフェリーの甲板の横でふつうに戻った。近くの古い時計が、妙に自信のある音を立てた、フェリーの甲板で、短いえんぴつといっしょに。オリオン座のせいで、フェリーの甲板のまわりの暗さが少し並んで見えた、近くには短いえんぴつ。
+> コインランドリーで用事がほとんど終わったころ、片方だけ違うくつしたが目に入った。コインランドリーの近くの窓から、オリオン座が見えた。また動き出すころには、廊下が冷えるあいだ、手の中の片方だけ違うくつしたが少し冷えていた。
 
 #### `base_016_019`
 
@@ -9379,11 +9379,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> 持ち帰りの箱が港のフェンスの上で静かにしていた。ちょうどいい時に、小さな風が通った、港のフェンスで、持ち帰りの箱といっしょに。港のフェンスの明かりが一度またたいてから、北極星を見つけた、その先には持ち帰りの箱。戻った部屋は、少しだけ並び方が変わって見えた、目に入ったのは持ち帰りの箱。
+> 川の手すりで立ち止まった。手には小さな石が残っていた。後ろの道を自転車のベルが通ったころ、北極星が少し見やすくなった。しばらくは、コップが冷めるあいだの川の手すりで、小さな石がいちばん現実的なものだった。話にしたくなる前に、川の手すりを離れた。
 
 **Translation `en`**
 
-> A takeout box sat quietly on the harbor fence. A little wind moved through at exactly the right time near the harbor fence, with a takeout box. I found Polaris after the light on the harbor fence blinked once, just past a takeout box. The room looked slightly rearranged when I returned, after noticing a takeout box.
+> I stopped at the river railing with a small stone still in my hand. When a bicycle bell crossed the path behind me, Polaris became easier to see. For a while, a small stone was the most practical thing at the river railing, while the cup cooled. I left the river railing before the moment could turn into a story.
 
 #### `base_016_020`
 
@@ -9398,11 +9398,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> まどの留め金がエレベーターの鏡のそばで忘れられていた。全部小さいのに、なぜか足りていた、エレベーターの鏡で、まどの留め金といっしょに。エレベーターの鏡の上が開いて、うしかい座が静かにそこへ入った、手にはまどの留め金。
+> 小さな種の袋を持って着くころ、小さな神社にはほとんど人がいなかった。小さな神社では、靴が乾いたあとに砂利の音が思ったより大きかったので、顔を上げるとうしかい座があった。靴が乾いたあと、小さな神社を出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A window latch stayed forgotten by the elevator mirror. The whole thing was tiny and somehow complete near the elevator mirror, with a window latch. The space above the elevator mirror opened, and Bootes took it quietly, while I held a window latch.
+> The small shrine was nearly empty by the time I got there with a small packet of seeds. At the small shrine, the gravel sounded louder than expected, after the shoes dried, so I looked up and found Bootes. I remembered one small thing I still had to do after leaving the small shrine, after the shoes dried.
 
 #### `base_016_021`
 
@@ -9417,11 +9417,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A packet of cough drops waited in the shadow of the flower shop shutter. I counted to seven for no practical reason near the flower shop shutter, with a packet of cough drops. Gemini was clearer than the sign beside the flower shop shutter, near a packet of cough drops. The next ordinary thing waited indoors, beside the flower shop shutter. The silence after the streak felt wider than the streak itself after the flower shop shutter.
+> At the supermarket entrance, I checked twice and found a wrinkled receipt both times, while the line moved slowly. Gemini was visible above the supermarket entrance, enough to stop checking the time there. For a while, a wrinkled receipt was the most practical thing at the supermarket entrance, while the line moved slowly. I could still hear how the carts rattled behind me. I put my phone away and let Gemini above the supermarket entrance be enough.
 
 **Translation `ja`**
 
-> のどあめの袋が花屋のシャッターの影で待っていた。理由もなく七まで数えた、花屋のシャッターで、のどあめの袋といっしょに。花屋のシャッターのそばの看板より、ふたご座のほうがはっきりしていた、近くにはのどあめの袋。次のふつうのことは、部屋の中で待っていた、そばには花屋のシャッター。光った線より、その後の静けさのほうが広かった、花屋のシャッターのあとで。
+> スーパーの入口で二回確かめた。列がゆっくり進むあいだ、二回ともしわのあるレシートがあった。スーパーの入口の上にふたご座が見えて、そこで時間を見るのをやめるには十分だった。しばらくは、列がゆっくり進むあいだのスーパーの入口で、しわのあるレシートがいちばん現実的なものだった。後ろでカートが鳴ったことだけは、まだ耳に残っていた。スマホはしまって、スーパーの入口の上のふたご座で十分ということにした。
 
 #### `base_016_022`
 
@@ -9436,11 +9436,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A red scarf made the bench near the supermarket light. My hands were busy, so my thoughts slowed down near the supermarket light, with a red scarf. Scorpius waited past the edge of the supermarket light, just past a red scarf.
+> I stayed a little longer at the night market than I meant to, while the street stayed quiet. I looked up from a warm paper bag and found Scorpius above the same place. Someone passed behind me while the stall lights went out one by one, and the ordinary night at the night market started again.
 
 **Translation `ja`**
 
-> 赤いマフラーがスーパーの明かりの近くのベンチを少し変えた。手がふさがると、考えごとも少し遅くなった、スーパーの明かりで、赤いマフラーといっしょに。スーパーの明かりの端の向こうで、さそり座が待っていた、その先には赤いマフラー。
+> 夜の市場に、思ったより少し長くいた。道が静かなあいだ、あたたかい紙袋を持ったままだった。あたたかい紙袋から顔を上げると、その場所の上にさそり座があった。屋台の灯りがひとつずつ消えたころ、後ろを誰かが通って、夜の市場のふつうの夜がまた始まった。
 
 #### `base_016_023`
 
@@ -9455,11 +9455,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> An old postcard waited for permission near the night market. I laughed once and pretended it was a cough near the night market, with an old postcard. I checked the time, then looked back at Aquila over the night market, while I held an old postcard.
+> Nothing important happened at the harbor fence. I just kept holding a ferry ticket, after the screen went dark. When a rope knocked softly against a post, Aquila became easier to see. By the time I moved again, a ferry ticket had cooled in my hand, after the screen went dark.
 
 **Translation `ja`**
 
-> 古いはがきが夜の市場の近くで許可を待っているみたいだった。一度笑って、それを咳のふりにした、夜の市場で、古いはがきといっしょに。時間を見てから、夜の市場の上のわし座をもう一度見た、手には古いはがき。
+> 港のフェンスでは、たいしたことは起きなかった。画面が暗くなったあと、ただフェリーの切符を持ったままでいた。ロープが柱に小さく当たっていたころ、わし座が少し見やすくなった。また動き出すころには、画面が暗くなったあと、手の中のフェリーの切符が少し冷えていた。
 
 #### `base_016_024`
 
@@ -9474,11 +9474,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> バジルのびんが閉まったパン屋の中で小さな角になっていた。お茶は冷めて、少しまじめな飲みものになっていた、閉まったパン屋で、バジルのびんといっしょに。閉まったパン屋の近くでは、おおいぬ座まで用事の一部みたいだった、近くにはバジルのびん。
+> エレベーターホールで用事がほとんど終わったころ、配達のシールが目に入った。エレベーターホールの近くの窓から、おおいぬ座が見えた。話にしたくなる前に、エレベーターホールを離れた。
 
 **Translation `en`**
 
-> A jar of basil made a small corner in the closed bakery. The tea had cooled into something more responsible near the closed bakery, with a jar of basil. Near the closed bakery, Canis Major looked like part of the errand, near a jar of basil.
+> I was almost done at the elevator lobby when I noticed a delivery sticker. Through the nearest window at the elevator lobby, I could make out Canis Major. I left the elevator lobby before the moment could turn into a story.
 
 #### `base_016_025`
 
@@ -9493,11 +9493,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> バスの定期が自販機の中へ押し込まれていた。だれも気づかないので、覚えておきやすかった、自販機で、バスの定期といっしょに。自販機から顔を上げると、オリオン座はもうそこにいた、その先にはバスの定期。意味を持たせすぎる前に、中へ入った、そばには自販機。
+> 寮の台所で用事がほとんど終わったころ、カップめんが目に入った。寮の台所の近くの窓から、オリオン座が見えた。しばらくは、椅子が鳴ったあとの寮の台所で、カップめんがいちばん現実的なものだった。椅子が鳴ったあと、寮の台所を出てから、まだやることをひとつ思い出した。
 
 **Translation `en`**
 
-> A bus pass squeezed into the vending machine. Nobody noticed it, which made the scene easier to keep near the vending machine, with a bus pass. When I looked up from the vending machine, Orion was already there, just past a bus pass. I went in before making it too meaningful, beside the vending machine.
+> I was almost done at the dorm kitchen when I noticed a packet of instant noodles. Through the nearest window at the dorm kitchen, I could make out Orion. For a while, a packet of instant noodles was the most practical thing at the dorm kitchen, after the chair creaked. I remembered one small thing I still had to do after leaving the dorm kitchen, after the chair creaked.
 
 #### `base_016_026`
 
@@ -9512,11 +9512,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A paper cup clicked once beside the cinema lobby. A dog barked once, then left the matter there near the cinema lobby, with a paper cup. Polaris fitted between two roofs above the cinema lobby, while I held a paper cup.
+> I stopped at the hostel desk with a room key still in my hand. Through the nearest window at the hostel desk, I could make out Polaris. It did not fix anything, but a room key made the walk home feel shorter.
 
 **Translation `ja`**
 
-> 紙コップが映画館のロビーの横で一度だけ鳴った。犬が一度だけ鳴いて、その件は終わった、映画館のロビーで、紙コップといっしょに。映画館のロビーの上で、北極星が屋根の間に入っていた、手には紙コップ。
+> 宿の机で立ち止まった。手には部屋の鍵が残っていた。宿の机の近くの窓から、北極星が見えた。何も解決していないけど、部屋の鍵のせいで帰り道は少し短く感じた。
 
 #### `base_016_027`
 
@@ -9531,11 +9531,11 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A half-empty snack bag reminded me of the clinic window. Someone's laughter crossed the street before the people did near the clinic window, with a half-empty snack bag. The space above the clinic window opened, and Bootes took it quietly, near a half-empty snack bag. My phone stayed in my pocket, which improved the ending, after noticing a half-empty snack bag.
+> The quiet courtyard was nearly empty by the time I got there with a tiny flower pot. I looked up from a tiny flower pot and found Bootes above the same place. For a while, a tiny flower pot was the most practical thing at the quiet courtyard, after the cart rolled past. Honestly, the quiet courtyard scene was kind of cute. I went home before I could overthink a tiny flower pot.
 
 **Translation `ja`**
 
-> 半分だけ残ったお菓子が病院のまどを思い出させた。人より先に、笑い声が道を渡った、病院のまどで、半分だけ残ったお菓子といっしょに。病院のまどの上が開いて、うしかい座が静かにそこへ入った、近くには半分だけ残ったお菓子。スマホを出さなかったので、終わり方は少しましだった、目に入ったのは半分だけ残ったお菓子。
+> 小さな植木鉢を持って着くころ、静かな中庭にはほとんど人がいなかった。小さな植木鉢から顔を上げると、その場所の上にうしかい座があった。しばらくは、カートが通ったあとの静かな中庭で、小さな植木鉢がいちばん現実的なものだった。なんか普通に、静かな中庭のその場面はちょっとかわいかった。小さな植木鉢のことを考えすぎる前に帰った。
 
 #### `base_016_028`
 
@@ -9550,8 +9550,8 @@ Use it to review tone, coherence, repetition, and translation quality.
 
 **Original**
 
-> A guitar pick waited beside the library steps. I remembered the wrong song and hummed it anyway near the library steps, with a guitar pick. Past the library steps, Gemini held its shape without hurry, just past a guitar pick.
+> At the apartment stairs, I checked twice and found a grocery bag both times, after the last bus passed. When someone upstairs closed a door, Gemini became easier to see. By the time I moved again, a grocery bag had cooled in my hand, after the last bus passed.
 
 **Translation `ja`**
 
-> ギターのピックが図書館の階段の横で待っていた。違う曲を思い出して、そのまま鼻歌にした、図書館の階段で、ギターのピックといっしょに。図書館の階段の向こうで、ふたご座は急がず形を保っていた、その先にはギターのピック。
+> アパートの階段で二回確かめた。最終バスのあと、二回とも買い物袋があった。上の階でドアが閉まったころ、ふたご座が少し見やすくなった。また動き出すころには、最終バスのあと、手の中の買い物袋が少し冷えていた。

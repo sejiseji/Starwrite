@@ -84,23 +84,38 @@ class CaptureLetterFlowTests(unittest.TestCase):
         self.assertGreater(original_sentence_counts.get(4, 0), 0)
         self.assertGreater(original_sentence_counts.get(5, 0), 0)
 
-    def test_preset_letters_do_not_repeat_exact_sentences(self) -> None:
+    def test_preset_letters_do_not_repeat_exact_messages(self) -> None:
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)
-        seen: dict[str, tuple[str, str]] = {}
-        duplicates: list[tuple[str, tuple[str, str], tuple[str, str]]] = []
+        seen: dict[tuple[str, str], str] = {}
+        duplicates: list[tuple[tuple[str, str], str, str]] = []
 
         for letter in letters:
             texts = [(letter.original_language, letter.original_text), *letter.translations.items()]
             for language, text in texts:
+                normalized = " ".join(text.strip().lower().split())
+                key = (language, normalized)
+                if key in seen:
+                    duplicates.append((key, seen[key], letter.id))
+                else:
+                    seen[key] = letter.id
+
+        self.assertEqual(duplicates, [])
+
+    def test_preset_letters_do_not_repeat_sentences_inside_one_letter(self) -> None:
+        letters = load_letters_from_packs(PRESET_LETTER_PACKS)
+        duplicates: list[tuple[str, str, str]] = []
+
+        for letter in letters:
+            texts = [(letter.original_language, letter.original_text), *letter.translations.items()]
+            for language, text in texts:
+                seen: set[str] = set()
                 for sentence in re.split(r"(?<=[.!?。！？])\s*", text):
                     normalized = sentence.strip().lower()
                     if not normalized:
                         continue
-                    location = (letter.id, language)
                     if normalized in seen:
-                        duplicates.append((normalized, seen[normalized], location))
-                    else:
-                        seen[normalized] = location
+                        duplicates.append((letter.id, language, normalized))
+                    seen.add(normalized)
 
         self.assertEqual(duplicates, [])
 

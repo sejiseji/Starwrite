@@ -217,53 +217,182 @@ def _sentence_count(index: int) -> int:
     return 3
 
 
+_PAUSE_EN: tuple[str, ...] = (
+    "before the light changed",
+    "while the street stayed quiet",
+    "before I checked my phone",
+    "after the sound faded",
+    "while my hands cooled",
+    "before the next door opened",
+    "after one small pause",
+    "while the road emptied",
+    "before I went back in",
+    "after the last bus passed",
+    "while the window stayed dark",
+    "before anyone called",
+    "after the clock blinked",
+    "while the cup cooled",
+    "before I changed my mind",
+    "after I looked away",
+    "while the line moved slowly",
+    "before the train arrived",
+    "after the screen went dark",
+    "while the page stayed blank",
+    "before I found my keys",
+    "after the chair creaked",
+    "while the sink dripped",
+    "before I closed the door",
+    "after the cart rolled past",
+    "while the sign hummed",
+    "before the receipt folded",
+    "after the lamp clicked",
+    "while the hallway cooled",
+    "before I answered",
+    "after the shoes dried",
+    "while the ticket bent",
+)
+
+_PAUSE_JA: tuple[str, ...] = (
+    "信号が変わる前",
+    "道が静かなあいだ",
+    "スマホを見る前",
+    "音が消えたあと",
+    "手が冷えるあいだ",
+    "次のドアが開く前",
+    "小さく止まったあと",
+    "道が空いていくあいだ",
+    "中へ戻る前",
+    "最終バスのあと",
+    "窓が暗いままのあいだ",
+    "誰かが呼ぶ前",
+    "時計が光ったあと",
+    "コップが冷めるあいだ",
+    "気が変わる前",
+    "目をそらしたあと",
+    "列がゆっくり進むあいだ",
+    "電車が来る前",
+    "画面が暗くなったあと",
+    "ページが白いままのあいだ",
+    "鍵を見つける前",
+    "椅子が鳴ったあと",
+    "流しが鳴るあいだ",
+    "ドアを閉める前",
+    "カートが通ったあと",
+    "看板が鳴るあいだ",
+    "レシートを折る前",
+    "ランプが切れたあと",
+    "廊下が冷えるあいだ",
+    "返事をする前",
+    "靴が乾いたあと",
+    "切符が曲がるあいだ",
+)
+
+
 def _build_generated_pair(index: int) -> tuple[str, str, str, tuple[str, ...], tuple[int, ...], list[str], list[str], float]:
+    """Build one coherent ordinary-life fragment.
+
+    The old generator independently mixed an object, action, backdrop and ending,
+    which could teleport the narrator between unrelated places.  This version
+    chooses one scene first, then keeps every sentence inside that scene.
+    """
     constellation_id, star_ids, ja_const, en_const = _CONSTELLATIONS[(index * 7 + index // 9) % len(_CONSTELLATIONS)]
-    obj_en, obj_ja = _OBJECTS[(index * 17 + 3) % len(_OBJECTS)]
-    action_en, action_ja = _ACTIONS[(index * 5 + index // 11) % len(_ACTIONS)]
-    backdrop_en, backdrop_ja = _BACKDROPS[(index * 13 + 5) % len(_BACKDROPS)]
-    detail_en, detail_ja = _DETAILS[(index * 19 + index // 7) % len(_DETAILS)]
-    detail_en = detail_en[:-1] + f" near {backdrop_en}, with {obj_en}."
-    detail_ja = detail_ja[:-1] + f"、{backdrop_ja}で、{obj_ja}といっしょに。"
-    sky_en, sky_ja = _SKY_LINES[(index * 11 + index // 3) % len(_SKY_LINES)]
-    final_en, final_ja = _FINALS[(index * 7 + index // 5) % len(_FINALS)]
-    first_en = f"{obj_en.capitalize()} {action_en} {backdrop_en}."
-    first_ja = f"{obj_ja}が{backdrop_ja}{action_ja}。"
-    sky_en = sky_en.format(en_const=en_const, backdrop_en=backdrop_en)
-    sky_ja = sky_ja.format(ja_const=ja_const, backdrop_ja=backdrop_ja)
-    if index % 3 == 0:
-        sky_en = sky_en[:-1] + f", near {obj_en}."
-        sky_ja = sky_ja[:-1] + f"、近くには{obj_ja}。"
-    elif index % 3 == 1:
-        sky_en = sky_en[:-1] + f", just past {obj_en}."
-        sky_ja = sky_ja[:-1] + f"、その先には{obj_ja}。"
-    else:
-        sky_en = sky_en[:-1] + f", while I held {obj_en}."
-        sky_ja = sky_ja[:-1] + f"、手には{obj_ja}。"
+
+    scenes: tuple[tuple[str, str, str, str, str, str], ...] = (
+        ("station platform", "駅のホーム", "a bent train ticket", "曲がった切符", "the announcement faded", "アナウンスが遠ざかった"),
+        ("laundromat", "コインランドリー", "one mismatched sock", "片方だけ違うくつした", "the dryer stopped", "乾燥機が止まった"),
+        ("closed bakery", "閉まったパン屋", "the last bread roll", "最後のパン", "the warm smell still reached the street", "まだパンの匂いが道まで残っていた"),
+        ("harbor fence", "港のフェンス", "a ferry ticket", "フェリーの切符", "a rope knocked softly against a post", "ロープが柱に小さく当たっていた"),
+        ("office kitchenette", "会社の給湯室", "a chipped mug", "欠けたマグ", "the refrigerator hummed", "冷蔵庫が低く鳴っていた"),
+        ("apartment stairs", "アパートの階段", "a grocery bag", "買い物袋", "someone upstairs closed a door", "上の階でドアが閉まった"),
+        ("bus shelter", "バス停", "a cold tea bottle", "冷たいお茶", "the next bus was still several minutes away", "次のバスまではまだ少しあった"),
+        ("campus gate", "学校の門", "a notebook with no title", "題名のないノート", "the last classroom light went out", "最後の教室の灯りが消えた"),
+        ("clinic entrance", "病院の入口", "a clinic number slip", "病院の番号札", "the automatic door finally stopped opening", "自動ドアがやっと静かになった"),
+        ("supermarket entrance", "スーパーの入口", "a wrinkled receipt", "しわのあるレシート", "the carts rattled behind me", "後ろでカートが鳴った"),
+        ("old bridge", "古い橋", "a red scarf", "赤いマフラー", "the river carried the traffic noise away", "川が車の音を少し遠くした"),
+        ("hostel desk", "宿の机", "a room key", "部屋の鍵", "the hallway had gone quiet", "廊下はもう静かだった"),
+        ("kitchen table", "台所の机", "a bowl from the sink", "流しの茶わん", "the kettle clicked off", "ケトルが切れた"),
+        ("tram stop", "トラムの停留所", "a paper cup", "紙コップ", "the rails shone after the tram passed", "トラムのあとで線路が光っていた"),
+        ("river railing", "川の手すり", "a small stone", "小さな石", "a bicycle bell crossed the path behind me", "後ろの道を自転車のベルが通った"),
+        ("vending machine", "自販機", "a loose coin", "小銭", "the machine kept humming after the drink dropped", "飲み物が落ちたあとも機械は鳴っていた"),
+        ("elevator lobby", "エレベーターホール", "a delivery sticker", "配達のシール", "the floor number changed slowly", "階数表示がゆっくり変わった"),
+        ("lecture hall", "講義室", "a pencil stub", "短いえんぴつ", "someone erased the last line from the board", "誰かが黒板の最後の一行を消した"),
+        ("noodle shop", "麺屋", "a plastic spoon", "プラスチックのスプーン", "steam clouded the window", "湯気で窓がくもった"),
+        ("rooftop doorway", "屋上の入口", "a phone charger", "充電コード", "the door clicked in the wind", "風でドアが小さく鳴った"),
+        ("bicycle racks", "自転車置き場", "a cold bicycle lock", "冷たい自転車の鍵", "one wheel kept spinning", "ひとつの車輪だけまだ回っていた"),
+        ("library steps", "図書館の階段", "a library card", "図書館カード", "the return slot clacked behind me", "後ろで返却口が鳴った"),
+        ("night market", "夜の市場", "a warm paper bag", "あたたかい紙袋", "the stall lights went out one by one", "屋台の灯りがひとつずつ消えた"),
+        ("ferry deck", "フェリーの甲板", "a ferry ticket", "フェリーの切符", "the wake stayed white behind the boat", "船の後ろに白い航跡が残った"),
+        ("quiet courtyard", "静かな中庭", "a tiny flower pot", "小さな植木鉢", "a window closed somewhere above", "上のどこかで窓が閉まった"),
+        ("ticket gate", "改札", "a bus pass", "バスの定期", "the gate beeped for someone else", "別の人の改札が鳴った"),
+        ("balcony", "ベランダ", "a damp towel", "少しぬれたタオル", "water dripped from the railing", "手すりから水が落ちた"),
+        ("small shrine", "小さな神社", "a small packet of seeds", "小さな種の袋", "the gravel sounded louder than expected", "砂利の音が思ったより大きかった"),
+        ("cinema lobby", "映画館のロビー", "a theater flyer", "映画館のちらし", "the credits music leaked through the door", "ドアの向こうからエンドロールの音がした"),
+        ("flower shop shutter", "花屋のシャッター", "a bag of plums", "すももの袋", "the wet pavement smelled green", "ぬれた道が少し青い匂いだった"),
+        ("dorm kitchen", "寮の台所", "a packet of instant noodles", "カップめん", "someone had left one clean fork", "誰かがきれいなフォークを一本残していた"),
+        ("parking lot", "駐車場", "a key ring", "鍵の輪", "a car light blinked once", "車のライトが一度だけ光った"),
+    )
+    place_en, place_ja, obj_en, obj_ja, sound_en, sound_ja = scenes[(index * 13 + index // 4) % len(scenes)]
+    pause_en = _PAUSE_EN[(index * 17 + index // 3) % len(_PAUSE_EN)]
+    pause_ja = _PAUSE_JA[(index * 17 + index // 3) % len(_PAUSE_JA)]
+
+    openings = (
+        (f"I stopped at the {place_en} with {obj_en} still in my hand.", f"{place_ja}で立ち止まった。手には{obj_ja}が残っていた。"),
+        (f"I was almost done at the {place_en} when I noticed {obj_en}.", f"{place_ja}で用事がほとんど終わったころ、{obj_ja}が目に入った。"),
+        (f"Nothing important happened at the {place_en}. I just kept holding {obj_en}, {pause_en}.", f"{place_ja}では、たいしたことは起きなかった。{pause_ja}、ただ{obj_ja}を持ったままでいた。"),
+        (f"I stayed a little longer at the {place_en} than I meant to, {pause_en}.", f"{place_ja}に、思ったより少し長くいた。{pause_ja}、{obj_ja}を持ったままだった。"),
+        (f"At the {place_en}, I checked twice and found {obj_en} both times, {pause_en}.", f"{place_ja}で二回確かめた。{pause_ja}、二回とも{obj_ja}があった。"),
+        (f"The {place_en} was nearly empty by the time I got there with {obj_en}.", f"{obj_ja}を持って着くころ、{place_ja}にはほとんど人がいなかった。"),
+    )
+    middle = (
+        (f"At the {place_en}, {sound_en}, {pause_en}, so I looked up and found {en_const}.", f"{place_ja}では、{pause_ja}に{sound_ja}ので、顔を上げると{ja_const}があった。"),
+        (f"When {sound_en}, {en_const} became easier to see.", f"{sound_ja}ころ、{ja_const}が少し見やすくなった。"),
+        (f"I looked up from {obj_en} and found {en_const} above the same place.", f"{obj_ja}から顔を上げると、その場所の上に{ja_const}があった。"),
+        (f"{en_const} was visible above the {place_en}, enough to stop checking the time there.", f"{place_ja}の上に{ja_const}が見えて、そこで時間を見るのをやめるには十分だった。"),
+    )
+    endings = (
+        (f"I left the {place_en} before the moment could turn into a story.", f"話にしたくなる前に、{place_ja}を離れた。"),
+        (f"It did not fix anything, but {obj_en} made the walk home feel shorter.", f"何も解決していないけど、{obj_ja}のせいで帰り道は少し短く感じた。"),
+        (f"I put my phone away and let {en_const} above the {place_en} be enough.", f"スマホはしまって、{place_ja}の上の{ja_const}で十分ということにした。"),
+        (f"By the time I moved again, {obj_en} had cooled in my hand, {pause_en}.", f"また動き出すころには、{pause_ja}、手の中の{obj_ja}が少し冷えていた。"),
+        (f"I remembered one small thing I still had to do after leaving the {place_en}, {pause_en}.", f"{pause_ja}、{place_ja}を出てから、まだやることをひとつ思い出した。"),
+        (f"The whole thing with {obj_en} lasted maybe a minute, {pause_en}, and I kept it in the memory too.", f"{obj_ja}のあるその時間は、{pause_ja}のたぶん一分くらいで、一緒に覚えておくことにした。"),
+        (f"Someone passed behind me while {sound_en}, and the ordinary night at the {place_en} started again.", f"{sound_ja}ころ、後ろを誰かが通って、{place_ja}のふつうの夜がまた始まった。"),
+    )
+
+    first_en, first_ja = openings[(index * 5 + index // 8) % len(openings)]
+    sky_en, sky_ja = middle[(index * 3 + index // 7) % len(middle)]
+    indoor_places = {
+        "laundromat", "office kitchenette", "hostel desk", "kitchen table",
+        "elevator lobby", "lecture hall", "noodle shop", "cinema lobby", "dorm kitchen",
+    }
+    if place_en in indoor_places:
+        sky_en = f"Through the nearest window at the {place_en}, I could make out {en_const}."
+        sky_ja = f"{place_ja}の近くの窓から、{ja_const}が見えた。"
+    final_en, final_ja = endings[(index * 11 + index // 6) % len(endings)]
+
+    # A small number of letters get a younger, casual voice.  Keep it rare so it
+    # feels like a person, not a global style filter.
+    if index % 53 == 17:
+        final_en = f"Honestly, the {place_en} scene was kind of cute. I went home before I could overthink {obj_en}."
+        final_ja = f"なんか普通に、{place_ja}のその場面はちょっとかわいかった。{obj_ja}のことを考えすぎる前に帰った。"
+    elif index % 67 == 29:
+        final_en = f"I took one terrible photo at the {place_en}, laughed at it, and called that a win."
+        final_ja = f"{place_ja}で写真を撮ったら、びっくりするくらい下手だった。ちょっと笑って、今日は勝ちってことにした。"
+
     sentence_count = _sentence_count(index)
-    en_parts = [first_en, detail_en, sky_en]
-    ja_parts = [first_ja, detail_ja, sky_ja]
+    en_parts = [first_en, sky_en, final_en]
+    ja_parts = [first_ja, sky_ja, final_ja]
     if sentence_count >= 4:
-        if index % 4 == 0:
-            final_en = final_en[:-1] + f", beside {backdrop_en}."
-            final_ja = final_ja[:-1] + f"、そばには{backdrop_ja}。"
-        elif index % 4 == 1:
-            final_en = final_en[:-1] + f", with {obj_en}."
-            final_ja = final_ja[:-1] + f"、そこには{obj_ja}。"
-        elif index % 4 == 2:
-            final_en = final_en[:-1] + f", after noticing {obj_en}."
-            final_ja = final_ja[:-1] + f"、目に入ったのは{obj_ja}。"
-        else:
-            final_en = final_en[:-1] + f", because of {obj_en}."
-            final_ja = final_ja[:-1] + f"、理由は{obj_ja}。"
-        en_parts.append(final_en)
-        ja_parts.append(final_ja)
+        extra_en = f"For a while, {obj_en} was the most practical thing at the {place_en}, {pause_en}."
+        extra_ja = f"しばらくは、{pause_ja}の{place_ja}で、{obj_ja}がいちばん現実的なものだった。"
+        en_parts.insert(2, extra_en)
+        ja_parts.insert(2, extra_ja)
     if sentence_count >= 5:
-        more_en, more_ja = _DETAILS[(index * 23 + 9) % len(_DETAILS)]
-        more_en = more_en[:-1] + f" after {backdrop_en}."
-        more_ja = more_ja[:-1] + f"、{backdrop_ja}のあとで。"
-        en_parts.append(more_en)
-        ja_parts.append(more_ja)
+        extra2_en = f"I could still hear how {sound_en}."
+        extra2_ja = f"{sound_ja}ことだけは、まだ耳に残っていた。"
+        en_parts.insert(3, extra2_en)
+        ja_parts.insert(3, extra2_ja)
+
     event_tags: tuple[str, ...] = ()
     weight = 1.0
     if constellation_id in {"PER", "GEM", "ORI", "LYR"} and index % 34 == 0:
