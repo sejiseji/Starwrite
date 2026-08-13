@@ -412,6 +412,7 @@ def panel_toggle_rects(width: int, height: int) -> dict[str, tuple[int, int, int
         "features": (x + 8, y + 64, min(112, w - 16), 24),
         "side": (x + 8, y + 104, min(96, w - 16), 24),
         "language": (x + 8, y + 176, min(96, w - 16), 24),
+        "sound": (x + max(112, w - 72), y + 176, min(64, w - 16), 24),
     }
 
 
@@ -427,6 +428,17 @@ def draw_button(rect: tuple[int, int, int, int], label: str, active: bool) -> No
     fill = 5 if active else 1
     edge = 10 if active else 13
     draw_button_colored(rect, label, fill, edge, 7)
+
+
+def draw_checkbox(rect: tuple[int, int, int, int], label: str, checked: bool) -> None:
+    x, y, _, h = rect
+    box = min(14, h - 8)
+    box_y = y + (h - box) // 2
+    pyxel.rectb(x, box_y, box, box, 10 if checked else 13)
+    if checked:
+        pyxel.line(x + 3, box_y + box // 2, x + 6, box_y + box - 4, 7)
+        pyxel.line(x + 6, box_y + box - 4, x + box - 3, box_y + 3, 7)
+    draw_big_text(x + box + 6, y + max(4, (h - GLYPH_H * SCALE) // 2), label, 7)
 
 
 def draw_main_buttons(has_unread: bool, capture_pending: bool) -> None:
@@ -874,6 +886,7 @@ def draw_menu_panel(
     show_guides: bool,
     show_constellations: bool,
     show_features: bool,
+    sound_enabled: bool,
     slider_side: str,
     event_source_label: str,
     event_count: int,
@@ -895,6 +908,7 @@ def draw_menu_panel(
     draw_big_text(x + 8, y + 162, "LANGUAGE", 7)
     language_label = "JA" if language == "en" else "EN"
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language_label, True)
+    draw_checkbox(panel_toggle_rects(pyxel.width, pyxel.height)["sound"], "SE", sound_enabled)
 
 
 def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language) -> None:

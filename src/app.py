@@ -206,6 +206,7 @@ class StarSkyApp:
         self.show_time_slider = bool(settings.get("show_time_slider", False))
         self.show_month_slider = bool(settings.get("show_month_slider", False))
         self.show_event_slider = bool(settings.get("show_event_slider", False))
+        self.sound_enabled = bool(settings.get("sound_enabled", True))
         self.language = normalize_language(settings.get("language", "en"))
         self.menu_open = False
         self.ui_state = "SKY"
@@ -490,6 +491,11 @@ class StarSkyApp:
                 self.slider_side = "left" if self.slider_side == "right" else "right"
             elif key == "language":
                 self.language = next_language(self.language)
+                self._save_settings()
+            elif key == "sound":
+                self.sound_enabled = not self.sound_enabled
+                if not self.sound_enabled:
+                    self.scheduled_ui_sounds = []
                 self._save_settings()
             self.menu_open = False
             return True
@@ -960,6 +966,8 @@ class StarSkyApp:
                 continue
 
     def _play_ui_sound(self, sound_id: int) -> None:
+        if not self.sound_enabled:
+            return
         if not self.audio_ready:
             self._setup_audio()
         try:
@@ -968,12 +976,17 @@ class StarSkyApp:
             pass
 
     def _play_letter_received_sound(self) -> None:
+        if not self.sound_enabled:
+            return
         self._play_ui_sound(SOUND_LETTER_RECEIVED)
         self.scheduled_ui_sounds.append(
             (pyxel.frame_count + SOUND_LETTER_RECEIVED_REPEAT_DELAY_FRAMES, SOUND_LETTER_RECEIVED)
         )
 
     def _update_scheduled_ui_sounds(self) -> None:
+        if not self.sound_enabled:
+            self.scheduled_ui_sounds = []
+            return
         if not self.scheduled_ui_sounds:
             return
         remaining: list[tuple[int, int]] = []
@@ -1016,6 +1029,7 @@ class StarSkyApp:
                 "show_time_slider": self.show_time_slider,
                 "show_month_slider": self.show_month_slider,
                 "show_event_slider": self.show_event_slider,
+                "sound_enabled": self.sound_enabled,
                 "language": self.language,
             },
         )
@@ -1116,6 +1130,7 @@ class StarSkyApp:
                 self.show_guides,
                 self.show_constellations,
                 self.show_features,
+                self.sound_enabled,
                 self.slider_side,
                 EVENT_SOURCE_LABEL,
                 len(METEOR_SHOWERS),
