@@ -86,6 +86,8 @@ CUT_IN_FRAMES = 150
 LETTER_RECEIVE_DELAY_MIN_SECONDS = 5.0
 LETTER_RECEIVE_DELAY_MAX_SECONDS = 8.0
 PYXEL_TARGET_FPS = 30.0
+STAR_TAP_RADIUS_PX = 14
+STAR_TAP_MOVE_TOLERANCE_PX = 6
 
 
 def _screen_size() -> tuple[int, int]:
@@ -183,6 +185,7 @@ class StarSkyApp:
         self.menu_open = False
         self.ui_state = "SKY"
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
+        self.constellation_star_ids = {star_id for constellation in CONSTELLATIONS for star_id in constellation.main_star_ids}
         self.latest_capture = self._load_capture()
         self.letters = load_letters_from_packs(PRESET_LETTER_PACKS)
         self.letters_by_id: dict[str, PresetLetter] = {letter.id: letter for letter in self.letters}
@@ -197,6 +200,8 @@ class StarSkyApp:
         self.cut_in_start_frame: int | None = None
         self.cut_in_message = ""
         self.last_mouse: tuple[int, int] | None = None
+        self.sky_pointer_down: tuple[int, int] | None = None
+        self.sky_pointer_dragged = False
         self.active_slider: str | None = None
         self.slider_drag_start_y = 0
         self.slider_drag_start_time = self.clock.current_time
@@ -354,16 +359,29 @@ class StarSkyApp:
             self.slider_knob_ratio = 0.5
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT) and self._handle_ui_click(current):
             self.last_mouse = None
+            self.sky_pointer_down = None
             return
+        if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            self.sky_pointer_down = current
+            self.sky_pointer_dragged = False
         if pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
             if self.last_mouse is not None:
                 dx = current[0] - self.last_mouse[0]
                 dy = current[1] - self.last_mouse[1]
+                if dx * dx + dy * dy > STAR_TAP_MOVE_TOLERANCE_PX * STAR_TAP_MOVE_TOLERANCE_PX:
+                    self.sky_pointer_dragged = True
                 self.camera.yaw -= dx * 0.008
                 self.camera.pitch += dy * 0.008
                 self.camera.clamp()
             self.last_mouse = current
         else:
+            if self.sky_pointer_down is not None and not self.sky_pointer_dragged:
+                down_x, down_y = self.sky_pointer_down
+                dx = current[0] - down_x
+                dy = current[1] - down_y
+                if dx * dx + dy * dy <= STAR_TAP_MOVE_TOLERANCE_PX * STAR_TAP_MOVE_TOLERANCE_PX:
+                    self._select_constellation_at_point(current)
+            self.sky_pointer_down = None
             self.last_mouse = None
 
         wheel = getattr(pyxel, "mouse_wheel", 0)
@@ -635,6 +653,31 @@ class StarSkyApp:
 
     def _select_constellation(self, delta: int) -> None:
         self.selected_index = (self.selected_index + delta) % len(CONSTELLATIONS)
+
+    def _select_constellation_at_point(self, point: tuple[int, int]) -> bool:
+        star_id = self._nearest_constellation_star_id(point, STAR_TAP_RADIUS_PX)
+        if star_id is None:
+            return False
+        for index, constellation in enumerate(CONSTELLATIONS):
+            if star_id in constellation.main_star_ids:
+                self.selected_index = index
+                return True
+        return False
+
+    def _nearest_constellation_star_id(self, point: tuple[int, int], radius: int) -> int | None:
+        px, py = point
+        best_id: int | None = None
+        best_distance = radius * radius
+        for star_id, screen_point in self.projected.items():
+            if star_id not in self.constellation_star_ids:
+                continue
+            dx = screen_point.x - px
+            dy = screen_point.y - py
+            distance = dx * dx + dy * dy
+            if distance <= best_distance:
+                best_id = star_id
+                best_distance = distance
+        return best_id
 
     def _frame_selected_constellation(self) -> None:
         self._frame_constellation(self.selected_constellation)
