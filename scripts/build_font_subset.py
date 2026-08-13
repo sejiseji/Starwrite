@@ -32,6 +32,7 @@ COMMON_LETTER_KANJI = (
 
 def _import_app_data():
     sys.path.insert(0, str(SRC))
+    from data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
     from data.preset_letters import PRESET_LETTER_PACKS
     from ui.localization import (
         CONSTELLATION_NAMES_JA,
@@ -40,12 +41,20 @@ def _import_app_data():
         STAR_NAMES_JA,
     )
 
-    return PRESET_LETTER_PACKS, CONSTELLATION_NAMES_JA, METEOR_EVENT_NAMES_JA, SKY_FEATURE_NAMES_JA, STAR_NAMES_JA
+    return (
+        PRESET_LETTER_PACKS,
+        CONSTELLATION_DESCRIPTIONS,
+        CONSTELLATION_NAMES_JA,
+        METEOR_EVENT_NAMES_JA,
+        SKY_FEATURE_NAMES_JA,
+        STAR_NAMES_JA,
+    )
 
 
 def _required_text() -> str:
     (
         letter_packs,
+        constellation_descriptions,
         constellation_names,
         meteor_event_names,
         sky_feature_names,
@@ -71,6 +80,9 @@ def _required_text() -> str:
         for letter in pack:
             parts.append(str(letter["original_text"]))
             parts.extend(str(value) for value in letter.get("translations", {}).values())
+    for descriptions in constellation_descriptions.values():
+        for lines in descriptions.values():
+            parts.extend(lines)
     return "".join(parts)
 
 

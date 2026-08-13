@@ -5,6 +5,7 @@ import pyxel
 from astronomy.catalog import Constellation
 from astronomy.moon import MoonState
 from astronomy.observer import Observer
+from data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
 from data.sky_features import ASTERISMS, SKY_PATHS, Asterism, SkyPath
 from data.font_jp import FONT_CELL_HEIGHT, FONT_CELL_WIDTH, FONT_COLUMNS, FONT_IMAGE_BANKS, GLYPHS
 from sky.capture import ScreenPoint, SkyCapture
@@ -366,7 +367,7 @@ def draw_selected_constellation_summary(
     x = 8
     y = 50
     w = tool_left - x - 8
-    h = 35
+    h = 49
     if w < 140:
         return
     pyxel.rect(x, y, w, h, 0)
@@ -374,15 +375,24 @@ def draw_selected_constellation_summary(
     name = constellation_name(constellation, language)
     title = f"{constellation.id}  {name.upper() if language == 'en' else name}"
     draw_display_text(x + 7, y + 5, _clip_display_text(title, w - 14), 10)
+    for index, line in enumerate(_constellation_summary_lines(constellation, language, anchor_star_label)):
+        draw_display_text(x + 7, y + 19 + index * 13, _clip_display_text(line, w - 14), 13)
+
+
+def _constellation_summary_lines(
+    constellation: Constellation,
+    language: Language,
+    anchor_star_label: str | None,
+) -> tuple[str, str]:
+    descriptions = CONSTELLATION_DESCRIPTIONS.get(constellation.id, {})
+    lines = descriptions.get(language)
+    if lines is not None:
+        return lines
     if anchor_star_label:
-        description = (
-            f"{anchor_star_label}をふくむ星座"
-            if language == "ja"
-            else f"includes {anchor_star_label}"
-        )
+        line = f"{anchor_star_label}をふくむ星座" if language == "ja" else f"includes {anchor_star_label}"
     else:
-        description = "この星座" if language == "ja" else "selected constellation"
-    draw_display_text(x + 7, y + 19, _clip_display_text(description, w - 14), 13)
+        line = "この星座" if language == "ja" else "selected constellation"
+    return (line, "")
 
 
 def draw_constellation_labels(
