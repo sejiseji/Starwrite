@@ -5,7 +5,7 @@ import re
 import unittest
 from datetime import datetime, timedelta, timezone
 
-from data.preset_letters import PRESET_LETTER_PACKS
+from data.preset_letters import LETTER_INDEX, PRESET_LETTER_PACKS
 from sky.capture import SkyCapture, capture_from_dict, capture_to_dict
 from sky.letters import (
     ExchangeLog,
@@ -44,8 +44,15 @@ class CaptureLetterFlowTests(unittest.TestCase):
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)
         ids = [letter.id for letter in letters]
 
-        self.assertGreaterEqual(len(letters), 216)
+        self.assertEqual(len(letters), 500)
         self.assertEqual(len(ids), len(set(ids)))
+
+    def test_preset_letter_index_counts_match_packs(self) -> None:
+        indexed_counts = {pack["id"]: pack["count"] for pack in LETTER_INDEX["packs"]}
+        actual_counts = {pack_id: len(pack) for pack_id, pack in PRESET_LETTER_PACKS.items()}
+
+        self.assertEqual(actual_counts, indexed_counts)
+        self.assertEqual(sum(indexed_counts.values()), 500)
 
     def test_preset_letters_all_have_english_text_available(self) -> None:
         letters = load_letters_from_packs(PRESET_LETTER_PACKS)
@@ -76,6 +83,26 @@ class CaptureLetterFlowTests(unittest.TestCase):
         self.assertGreater(original_sentence_counts.get(3, 0), 0)
         self.assertGreater(original_sentence_counts.get(4, 0), 0)
         self.assertGreater(original_sentence_counts.get(5, 0), 0)
+
+    def test_preset_letters_do_not_repeat_exact_sentences(self) -> None:
+        letters = load_letters_from_packs(PRESET_LETTER_PACKS)
+        seen: dict[str, tuple[str, str]] = {}
+        duplicates: list[tuple[str, tuple[str, str], tuple[str, str]]] = []
+
+        for letter in letters:
+            texts = [(letter.original_language, letter.original_text), *letter.translations.items()]
+            for language, text in texts:
+                for sentence in re.split(r"(?<=[.!?。！？])\s*", text):
+                    normalized = sentence.strip().lower()
+                    if not normalized:
+                        continue
+                    location = (letter.id, language)
+                    if normalized in seen:
+                        duplicates.append((normalized, seen[normalized], location))
+                    else:
+                        seen[normalized] = location
+
+        self.assertEqual(duplicates, [])
 
     def test_capture_serializes_camera_and_selection(self) -> None:
         capture = _capture("PER", 15863, "PER-2026")
