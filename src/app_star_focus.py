@@ -95,7 +95,11 @@ CUT_IN_FRAMES = 150
 LETTER_RECEIVE_DELAY_MIN_SECONDS = 5.0
 LETTER_RECEIVE_DELAY_MAX_SECONDS = 8.0
 PYXEL_TARGET_FPS = 30.0
-STARWRITE_SOUND_RESOURCES = ("starwrite.pyxres", "./starwrite.pyxres", "../starwrite.pyxres")
+STARWRITE_SOUND_RESOURCES = (
+    "starwrite.pyxres",
+    "./starwrite.pyxres",
+    "../starwrite.pyxres",
+)
 UI_SOUND_CHANNEL = 3
 SOUND_LETTER_RECEIVED = 1
 SOUND_LETTER_OPEN = 2
