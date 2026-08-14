@@ -697,7 +697,6 @@ class StarSkyApp:
                 else:
                     self._play_bgm()
                 self._save_settings()
-            self.menu_open = False
             return True
         if self._point_in_rect(point, self._menu_panel_hit_rect()):
             return True
