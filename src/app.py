@@ -5,7 +5,7 @@ import math
 import os
 import random
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -199,44 +199,10 @@ def _save_json(key: str, value: dict) -> None:
 
 
 def _browser_language() -> str:
-    try:
-        from js import navigator  # type: ignore
-
-        languages = []
-        try:
-            languages.extend(str(language) for language in navigator.languages.to_py())
-        except Exception:
-            try:
-                for index in range(int(navigator.languages.length)):
-                    languages.append(str(navigator.languages[index]))
-            except Exception:
-                pass
-        try:
-            languages.append(str(navigator.language))
-        except Exception:
-            pass
-        return "ja" if any(language.lower().startswith("ja") for language in languages) else "en"
-    except Exception:
-        return "en"
+    return "ja"
 
 
 def _current_observation_datetime() -> datetime:
-    try:
-        from js import Date  # type: ignore
-
-        now = Date.new()
-        offset_minutes = -int(now.getTimezoneOffset())
-        tz = timezone(timedelta(minutes=offset_minutes))
-        return datetime(
-            int(now.getFullYear()),
-            int(now.getMonth()) + 1,
-            int(now.getDate()),
-            int(now.getHours()),
-            int(now.getMinutes()),
-            tzinfo=tz,
-        )
-    except Exception:
-        pass
     return datetime.now().astimezone().replace(second=0, microsecond=0)
 
 
