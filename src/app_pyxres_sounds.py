@@ -108,6 +108,7 @@ SOUND_LETTER_RECEIVED = 1
 SOUND_LETTER_OPEN = 2
 SOUND_LETTER_CLOSE = 3
 SOUND_TOOL_ON = 4
+SOUND_SLIDER_TICK = 5
 SOUND_LETTER_RECEIVED_REPEAT_DELAY_FRAMES = CUT_IN_FRAMES // 2
 STARWRITE_SOUND_FALLBACKS = {
     SOUND_RESET: ("f#2e2d2d3e3f3g3a3", "t" * 8, "4" * 8, "n" * 8, 5),
@@ -115,6 +116,7 @@ STARWRITE_SOUND_FALLBACKS = {
     SOUND_LETTER_OPEN: ("f3f3b3b3f#4f#4", "t" * 6, "4" * 6, "n" * 6, 4),
     SOUND_LETTER_CLOSE: ("f3d3a2d2", "t" * 4, "4" * 4, "n" * 4, 4),
     SOUND_TOOL_ON: ("c4e4", "tt", "44", "nn", 3),
+    SOUND_SLIDER_TICK: ("c3", "n", "3", "n", 2),
 }
 STAR_TAP_RADIUS_PX = 14
 STAR_TAP_MOVE_TOLERANCE_PX = 6
@@ -239,6 +241,7 @@ class StarSkyApp:
         self.active_slider: str | None = None
         self.slider_drag_start_y = 0
         self.slider_drag_start_time = self.clock.current_time
+        self.slider_last_tick_value: int | None = None
         self.slider_knob_ratio = 0.5
         self.projected = {}
         self.projected_sky_paths: dict[str, list[tuple[float, float] | None]] = {}
@@ -398,6 +401,7 @@ class StarSkyApp:
                 self.last_mouse = None
                 return
             self.active_slider = None
+            self.slider_last_tick_value = None
             self.slider_knob_ratio = 0.5
         if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT) and self._handle_ui_click(current):
             self.last_mouse = None
@@ -534,7 +538,8 @@ class StarSkyApp:
             return True
         if label == "event" and self._point_in_rect(point, self._expanded_rect(rects["event_track"], 12)):
             track = rects["event_track"]
-            self._advance_event(1 if point[1] <= track[1] + track[3] // 2 else -1)
+            if self._advance_event(1 if point[1] <= track[1] + track[3] // 2 else -1):
+                self._play_ui_sound(SOUND_SLIDER_TICK)
             return True
         if label == "event" and self._point_in_rect(point, self._expanded_rect(rects["event_knob"], 8)):
             return True
@@ -601,17 +606,23 @@ class StarSkyApp:
             self._play_ui_sound(SOUND_LETTER_CLOSE)
 
     def _step_slider(self, label: str, direction: int) -> None:
+        before = self.clock.current_time
         if label == "event":
-            self._advance_event(direction)
+            changed = self._advance_event(direction)
         elif label == "time":
             self.clock.add_minutes(direction * 15)
+            changed = self.clock.current_time != before
         else:
             self.clock.add_days(direction)
+            changed = self.clock.current_time != before
+        if changed:
+            self._play_ui_sound(SOUND_SLIDER_TICK)
 
     def _start_slider_drag(self, label: str, y: int) -> None:
         self.active_slider = label
         self.slider_drag_start_y = y
         self.slider_drag_start_time = self.clock.current_time
+        self.slider_last_tick_value = self._slider_tick_value(label, self.clock.current_time)
         self.clock.pause()
 
     def _update_slider_drag(self, y: int) -> None:
@@ -623,21 +634,35 @@ class StarSkyApp:
         delta_y = self.slider_drag_start_y - y
         if self.active_slider == "time":
             minutes = int(delta_y * 720 / max(1, track[3]))
-            self.clock.current_time = self.slider_drag_start_time + timedelta(minutes=minutes)
+            next_time = self.slider_drag_start_time + timedelta(minutes=minutes)
         else:
             days = int(delta_y * 360 / max(1, track[3]))
-            self.clock.current_time = self.slider_drag_start_time + timedelta(days=days)
+            next_time = self.slider_drag_start_time + timedelta(days=days)
+        self.clock.current_time = next_time
+        tick_value = self._slider_tick_value(self.active_slider, next_time)
+        if tick_value != self.slider_last_tick_value:
+            self.slider_last_tick_value = tick_value
+            self._play_ui_sound(SOUND_SLIDER_TICK)
 
-    def _advance_event(self, direction: int) -> None:
+    def _slider_tick_value(self, label: str, value: datetime) -> int:
+        if label == "time":
+            return int(value.timestamp() // (15 * 60))
+        if label == "event":
+            return int(value.timestamp())
+        return value.date().toordinal()
+
+    def _advance_event(self, direction: int) -> bool:
         event = adjacent_meteor_event(METEOR_SHOWERS, self.clock.current_time, direction)
         if event is None:
-            return
+            return False
         tz = self.clock.current_time.tzinfo
         if tz is None:
-            return
+            return False
+        before = self.clock.current_time
         self.clock.pause()
         self.clock.current_time = meteor_peak_datetime(event, tz)
         self._frame_event(event)
+        return self.clock.current_time != before
 
     def _reset_view(self) -> None:
         self.clock.pause()
