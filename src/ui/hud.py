@@ -346,7 +346,7 @@ def rotate_speed_control_rects(width: int, height: int) -> dict[str, tuple[int, 
     }
 
 
-def rotate_day_speed_control_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
+def rotate_camera_speed_control_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
     letter_x, letter_y, letter_w, _letter_h = main_button_rects(width, height)["letter"]
     panel_w = letter_w
     panel_h = 44
@@ -1012,8 +1012,8 @@ def draw_rotate_speed_control(speed_level: int) -> None:
     _draw_rotation_speed_control(rotate_speed_control_rects(pyxel.width, pyxel.height), "ROT-T", speed_level)
 
 
-def draw_rotate_day_speed_control(speed_level: int) -> None:
-    _draw_rotation_speed_control(rotate_day_speed_control_rects(pyxel.width, pyxel.height), "ROT-D", speed_level)
+def draw_rotate_camera_speed_control(speed_level: int) -> None:
+    _draw_rotation_speed_control(rotate_camera_speed_control_rects(pyxel.width, pyxel.height), "ROT-C", speed_level)
 
 
 def _draw_rotation_speed_control(rects: dict[str, tuple[int, int, int, int]], label: str, speed_level: int) -> None:
@@ -1342,7 +1342,7 @@ def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int
         "time": (x, 34, button_w, button_h),
         "event": (x, 60, button_w, button_h),
         "rotate": (x, 86, button_w, button_h),
-        "rotate_day": (x, 112, button_w, button_h),
+        "rotate_camera": (x, 112, button_w, button_h),
         "reset": (x, 138, button_w, button_h),
     }
 
@@ -1352,14 +1352,14 @@ def draw_tool_buttons(
     show_month_slider: bool,
     show_event_slider: bool,
     rotate_time: bool,
-    rotate_day: bool,
+    rotate_camera: bool,
 ) -> None:
     rects = tool_button_rects(pyxel.width, pyxel.height)
     draw_button(rects["time"], "TIME", show_time_slider)
     draw_button(rects["month"], "DAY", show_month_slider)
     draw_button(rects["event"], "EVENT", show_event_slider)
     draw_button(rects["rotate"], "ROT-T", rotate_time)
-    draw_button(rects["rotate_day"], "ROT-D", rotate_day)
+    draw_button(rects["rotate_camera"], "ROT-C", rotate_camera)
     draw_button(rects["reset"], "RESET", False)
 
 
