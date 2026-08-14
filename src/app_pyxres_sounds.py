@@ -244,6 +244,7 @@ class StarSkyApp:
         self.letters_by_id: dict[str, PresetLetter] = {}
         self.star_descriptions: dict[int, dict[str, tuple[str, str]]] | None = None
         self.sky_feature_descriptions: dict[str, dict[str, tuple[str, str]]] | None = None
+        self._load_info_panel_data()
         letter_store = self._load_letter_store()
         self.exchange_logs: tuple[ExchangeLog, ...] = letter_store["logs"]
         self.seen_letter_ids: set[str] = letter_store["seen_letter_ids"]
@@ -327,6 +328,16 @@ class StarSkyApp:
 
         self.letters = load_letters_from_packs(PRESET_LETTER_PACKS)
         self.letters_by_id = {letter.id: letter for letter in self.letters}
+
+    def _load_info_panel_data(self) -> None:
+        from src.data.moon_descriptions import MOON_DESCRIPTIONS, MOON_PHASE_DESCRIPTIONS
+        from src.data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
+        from src.data.star_descriptions import STAR_DESCRIPTIONS
+
+        self.star_descriptions = STAR_DESCRIPTIONS
+        self.sky_feature_descriptions = SKY_FEATURE_DESCRIPTIONS
+        # Keep the moon description module loaded before the first moon tap.
+        _ = (MOON_DESCRIPTIONS, MOON_PHASE_DESCRIPTIONS)
 
     def _star_description_for(self, star_id: int) -> dict[str, tuple[str, str]]:
         if self.star_descriptions is None:

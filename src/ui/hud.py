@@ -6,7 +6,7 @@ from src.astronomy.catalog import Constellation
 from src.astronomy.moon import MoonState
 from src.astronomy.observer import Observer
 try:
-    raise ImportError
+    from src.data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
 except Exception:
     # GitHub Pages can briefly serve cached 404s for new Python modules.
     # Keep a source-authored fallback here so the sky never falls back to anchor-star copy.

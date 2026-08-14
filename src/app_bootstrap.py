@@ -60,7 +60,21 @@ PREFETCH_CORE = (
     "src/ui/hud.py",
     "src/ui/localization.py",
 )
+PREFETCH_INFO = (
+    "src/data/constellation_descriptions.py",
+    "src/data/moon_descriptions.py",
+    "src/data/sky_feature_descriptions.py",
+    "src/data/star_descriptions.py",
+)
 PREFETCH_JA = ("src/data/font_jp.py",)
+PRELOAD_INFO_MODULES = (
+    "src.data.constellation_descriptions",
+    "src.data.moon_descriptions",
+    "src.data.sky_feature_descriptions",
+    "src.data.star_descriptions",
+)
+PRELOAD_MAIN_MODULES = ("src.app_pyxres_sounds",)
+PRELOAD_JA_MODULES = ("src.data.font_jp",)
 CITIES: dict[str, tuple[tuple[str, float, float], ...]] = {
     "JP": (
         ("Tokyo", 35.6762, 139.6503),
@@ -258,12 +272,21 @@ class BootstrapApp:
         self.city_index = self._city_index_for(saved_city)
         self.country_page = self.country_index // LIST_PAGE_SIZE
         self.city_page = self.city_index // LIST_PAGE_SIZE
-        self.prefetch_files = list(PREFETCH_CORE)
+        self.prefetch_files = list(PREFETCH_CORE + PREFETCH_INFO)
+        self.preload_modules = list(PRELOAD_INFO_MODULES + PRELOAD_MAIN_MODULES)
         if self.language == "ja":
             self.prefetch_files.extend(PREFETCH_JA)
+            self.preload_modules.extend(PRELOAD_JA_MODULES)
         self.prefetch_index = 0
+        self.prefetch_pending_path: str | None = None
+        self.prefetch_retry_frame = 0
+        self.prefetch_error = ""
         self.mirror_files = _unique_paths(self.prefetch_files)
         self.mirror_index = 0
+        self.preload_index = 0
+        self.preload_retry_frame = 0
+        self.preload_error = ""
+        self._fetch_callbacks: list[object] = []
         self.loading_frames = 0
         self.main_app = None
         self.state = "COUNTRY" if setup_requested or not setup_is_complete else "LOADING"
@@ -302,6 +325,8 @@ class BootstrapApp:
             self.loading_frames += 1
             if self.prefetch_index >= len(self.prefetch_files):
                 self._mirror_step()
+            if self.prefetch_index >= len(self.prefetch_files) and self.mirror_index >= len(self.mirror_files):
+                self._preload_import_step()
             if self._loading_ready() and self.loading_frames >= 12:
                 self._start_main_app()
 
@@ -319,14 +344,54 @@ class BootstrapApp:
     def _prefetch_step(self) -> None:
         if self.prefetch_index >= len(self.prefetch_files):
             return
+        if self.prefetch_pending_path is not None:
+            return
+        if pyxel.frame_count < self.prefetch_retry_frame:
+            return
         path = self.prefetch_files[self.prefetch_index]
-        self.prefetch_index += 1
+        self.prefetch_pending_path = path
         try:
             from js import window  # type: ignore
 
-            window.fetch(path).catch(lambda _error: None)
+            def request_failed(_error=None, request_path=path) -> None:
+                self._prefetch_failed(request_path)
+
+            def body_loaded(_text=None, request_path=path) -> None:
+                self._prefetch_loaded(request_path)
+
+            def response_loaded(response=None, request_path=path) -> None:
+                try:
+                    if response is not None and hasattr(response, "ok") and not bool(response.ok):
+                        self._prefetch_failed(request_path)
+                        return
+                    body_callback = lambda text=None, p=request_path: body_loaded(text, p)
+                    body_error_callback = lambda error=None, p=request_path: request_failed(error, p)
+                    self._fetch_callbacks.extend((body_callback, body_error_callback))
+                    response.text().then(body_callback).catch(body_error_callback)
+                except Exception:
+                    self._prefetch_failed(request_path)
+
+            response_callback = lambda response=None, p=path: response_loaded(response, p)
+            error_callback = lambda error=None, p=path: request_failed(error, p)
+            self._fetch_callbacks.extend((response_callback, error_callback))
+            window.fetch(path).then(response_callback).catch(error_callback)
         except Exception:
-            pass
+            self._prefetch_loaded(path)
+
+    def _prefetch_loaded(self, path: str) -> None:
+        if self.prefetch_pending_path != path:
+            return
+        self.prefetch_pending_path = None
+        self.prefetch_error = ""
+        self.prefetch_retry_frame = 0
+        self.prefetch_index += 1
+
+    def _prefetch_failed(self, path: str) -> None:
+        if self.prefetch_pending_path != path:
+            return
+        self.prefetch_pending_path = None
+        self.prefetch_error = "LOAD FAILED"
+        self.prefetch_retry_frame = pyxel.frame_count + 30
 
     def _handle_setup_input(self) -> None:
         if pyxel.frame_count < self.accept_input_frame:
@@ -339,9 +404,7 @@ class BootstrapApp:
         if self._hit(x, y, self._rect("ja")):
             self.language = "ja"
             self._cooldown()
-            if PREFETCH_JA[0] not in self.prefetch_files:
-                self.prefetch_files.extend(PREFETCH_JA)
-                self.mirror_files = _unique_paths(self.prefetch_files)
+            self._ensure_ja_requirements()
         elif self._hit(x, y, self._rect("en")):
             self.language = "en"
             self._cooldown()
@@ -404,9 +467,24 @@ class BootstrapApp:
             self.loading_frames = 0
             self.mirror_files = _unique_paths(self.prefetch_files)
             self.mirror_index = 0
+            self.preload_index = 0
+            self.preload_retry_frame = 0
+            self.preload_error = ""
 
     def _cooldown(self) -> None:
         self.accept_input_frame = pyxel.frame_count + INPUT_COOLDOWN_FRAMES
+
+    def _ensure_ja_requirements(self) -> None:
+        changed = False
+        for path in PREFETCH_JA:
+            if path not in self.prefetch_files:
+                self.prefetch_files.append(path)
+                changed = True
+        for module in PRELOAD_JA_MODULES:
+            if module not in self.preload_modules:
+                self.preload_modules.append(module)
+        if changed:
+            self.mirror_files = _unique_paths(self.prefetch_files)
 
     def _save_selection(self) -> None:
         name, latitude, longitude = self.city
@@ -426,12 +504,21 @@ class BootstrapApp:
     def _start_main_app(self) -> None:
         self.state = "MAIN"
         _prepare_import_layout()
-        from src.app_pyxres_sounds import StarSkyApp
+        try:
+            from src.app_pyxres_sounds import StarSkyApp
 
-        self.main_app = StarSkyApp(start_pyxel=False)
+            self.main_app = StarSkyApp(start_pyxel=False)
+        except Exception as exc:
+            self.state = "LOADING"
+            self.preload_error = f"{type(exc).__name__}"
+            self.preload_retry_frame = pyxel.frame_count + 30
 
     def _loading_ready(self) -> bool:
-        return self.prefetch_index >= len(self.prefetch_files) and self.mirror_index >= len(self.mirror_files)
+        return (
+            self.prefetch_index >= len(self.prefetch_files)
+            and self.mirror_index >= len(self.mirror_files)
+            and self.preload_index >= len(self.preload_modules)
+        )
 
     def _mirror_step(self) -> None:
         if self.mirror_index >= len(self.mirror_files):
@@ -443,6 +530,22 @@ class BootstrapApp:
             os.path.exists(os.path.join(os.getcwd(), path))
         except OSError:
             pass
+
+    def _preload_import_step(self) -> None:
+        if self.preload_index >= len(self.preload_modules):
+            return
+        if pyxel.frame_count < self.preload_retry_frame:
+            return
+        _prepare_import_layout()
+        module = self.preload_modules[self.preload_index]
+        try:
+            __import__(module)
+        except Exception as exc:
+            self.preload_error = f"{type(exc).__name__}"
+            self.preload_retry_frame = pyxel.frame_count + 30
+            return
+        self.preload_error = ""
+        self.preload_index += 1
 
     def _rect(self, key: str) -> tuple[int, int, int, int]:
         bottom = self.height - 66
@@ -534,9 +637,16 @@ class BootstrapApp:
         self._center_text("LOADING SKY" + dots, y, 7, scale=2)
         loaded = min(self.prefetch_index, len(self.prefetch_files))
         mirrored = min(self.mirror_index, len(self.mirror_files))
+        imported = min(self.preload_index, len(self.preload_modules))
         self._center_text(f"FILES {loaded}/{len(self.prefetch_files)}", y + 30, 13)
-        if loaded >= len(self.prefetch_files):
+        if self.prefetch_error:
+            self._center_text("RETRY FILE", y + 46, 8)
+        elif loaded >= len(self.prefetch_files):
             self._center_text(f"READY {mirrored}/{len(self.mirror_files)}", y + 46, 13)
+            if mirrored >= len(self.mirror_files):
+                self._center_text(f"INFO {imported}/{len(self.preload_modules)}", y + 62, 13)
+                if self.preload_error:
+                    self._center_text("RETRY INFO", y + 78, 8)
 
     def _draw_stars(self) -> None:
         for index in range(80):
