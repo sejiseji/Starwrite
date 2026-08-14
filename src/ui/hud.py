@@ -411,8 +411,9 @@ def panel_toggle_rects(width: int, height: int) -> dict[str, tuple[int, int, int
         "constellations": (x + 16 + button_w * 2, y + 34, button_w, 24),
         "features": (x + 8, y + 64, min(112, w - 16), 24),
         "side": (x + 8, y + 104, min(96, w - 16), 24),
-        "language": (x + 8, y + 176, min(96, w - 16), 24),
-        "sound": (x + max(112, w - 72), y + 176, min(64, w - 16), 24),
+        "language": (x + 8, y + 176, 72, 24),
+        "sound": (x + 90, y + 176, 62, 24),
+        "bgm": (x + 162, y + 176, 62, 24),
     }
 
 
@@ -887,6 +888,7 @@ def draw_menu_panel(
     show_constellations: bool,
     show_features: bool,
     sound_enabled: bool,
+    bgm_enabled: bool,
     slider_side: str,
     event_source_label: str,
     event_count: int,
@@ -911,6 +913,9 @@ def draw_menu_panel(
     sound_rect = panel_toggle_rects(pyxel.width, pyxel.height)["sound"]
     draw_big_text(sound_rect[0], y + 162, "SE", 7)
     draw_button(sound_rect, "ON" if sound_enabled else "OFF", sound_enabled)
+    bgm_rect = panel_toggle_rects(pyxel.width, pyxel.height)["bgm"]
+    draw_big_text(bgm_rect[0], y + 162, "BGM", 7)
+    draw_button(bgm_rect, "ON" if bgm_enabled else "OFF", bgm_enabled)
 
 
 def draw_letter_view(log: ExchangeLog, letter: PresetLetter, language: Language) -> None:

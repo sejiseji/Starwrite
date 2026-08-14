@@ -14,6 +14,7 @@ import pyxel
 if not hasattr(pyxel, "pix") and hasattr(pyxel, "pset"):
     pyxel.pix = pyxel.pset
 
+from audio.bgm import install_starwrite_bgm, play_starwrite_bgm, stop_starwrite_bgm
 from astronomy.coordinates import equatorial_to_enu
 from astronomy.catalog import Constellation
 from astronomy.events import MeteorShowerEvent
@@ -210,6 +211,7 @@ class StarSkyApp:
         self.show_month_slider = bool(settings.get("show_month_slider", False))
         self.show_event_slider = bool(settings.get("show_event_slider", False))
         self.sound_enabled = bool(settings.get("sound_enabled", True))
+        self.bgm_enabled = bool(settings.get("bgm_enabled", True))
         self.language = normalize_language(settings.get("language", "en"))
         self.menu_open = False
         self.ui_state = "SKY"
@@ -243,6 +245,8 @@ class StarSkyApp:
         self.capture_ready = False
         self.ready_signaled = False
         self.audio_ready = False
+        self.bgm_installed = False
+        self.bgm_playing = False
         self.scheduled_ui_sounds: list[tuple[int, int]] = []
 
         set_desktop_letter_text_mode(DESKTOP_VIEW)
@@ -281,6 +285,7 @@ class StarSkyApp:
         }
 
     def update(self) -> None:
+        self._update_bgm()
         if self.ui_state == "SKY":
             self.clock.update(1.0 / 30.0)
         self._update_pending_receive()
@@ -499,6 +504,13 @@ class StarSkyApp:
                 self.sound_enabled = not self.sound_enabled
                 if not self.sound_enabled:
                     self.scheduled_ui_sounds = []
+                self._save_settings()
+            elif key == "bgm":
+                self.bgm_enabled = not self.bgm_enabled
+                if not self.bgm_enabled:
+                    self._stop_bgm()
+                else:
+                    self._play_bgm()
                 self._save_settings()
             self.menu_open = False
             return True
@@ -953,12 +965,21 @@ class StarSkyApp:
             try:
                 pyxel.load(resource)
                 self._setup_audio_fallback_sounds()
+                self._install_bgm()
                 self.audio_ready = True
                 return
             except Exception:
                 continue
         self._setup_audio_fallback_sounds()
+        self._install_bgm()
         self.audio_ready = True
+
+    def _install_bgm(self) -> None:
+        try:
+            install_starwrite_bgm()
+            self.bgm_installed = True
+        except Exception:
+            self.bgm_installed = False
 
     def _setup_audio_fallback_sounds(self) -> None:
         for sound_id, definition in STARWRITE_SOUND_FALLBACKS.items():
@@ -977,6 +998,32 @@ class StarSkyApp:
             pyxel.play(UI_SOUND_CHANNEL, sound_id)
         except Exception:
             pass
+
+    def _update_bgm(self) -> None:
+        if not self.bgm_enabled:
+            if self.bgm_playing:
+                self._stop_bgm()
+            return
+        if not self.audio_ready:
+            self._setup_audio()
+        if self.bgm_enabled and self.audio_ready and self.bgm_installed and not self.bgm_playing:
+            self._play_bgm()
+
+    def _play_bgm(self) -> None:
+        if not self.audio_ready or not self.bgm_installed:
+            return
+        try:
+            play_starwrite_bgm(loop=True)
+            self.bgm_playing = True
+        except Exception:
+            self.bgm_playing = False
+
+    def _stop_bgm(self) -> None:
+        try:
+            stop_starwrite_bgm()
+        except Exception:
+            pass
+        self.bgm_playing = False
 
     def _play_letter_received_sound(self) -> None:
         if not self.sound_enabled:
@@ -1033,6 +1080,7 @@ class StarSkyApp:
                 "show_month_slider": self.show_month_slider,
                 "show_event_slider": self.show_event_slider,
                 "sound_enabled": self.sound_enabled,
+                "bgm_enabled": self.bgm_enabled,
                 "language": self.language,
             },
         )
@@ -1134,6 +1182,7 @@ class StarSkyApp:
                 self.show_constellations,
                 self.show_features,
                 self.sound_enabled,
+                self.bgm_enabled,
                 self.slider_side,
                 EVENT_SOURCE_LABEL,
                 len(METEOR_SHOWERS),
