@@ -21,6 +21,7 @@ from astronomy.observer import Observer
 from astronomy.time import julian_date, local_sidereal_time
 from data.constellations import CONSTELLATIONS
 from data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
+from data.moon_descriptions import moon_description, moon_phase_description, moon_phase_title
 from data.preset_letters import PRESET_LETTER_PACKS
 from data.sky_features import ASTERISMS, SKY_PATHS
 from data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
@@ -886,42 +887,11 @@ class StarSkyApp:
         if not self.selected_moon or self.moon.state is None:
             return None
         phase_key = get_phase_name(self.moon.state.illumination, self.moon.state.waxing)
-        phase_label = self._moon_phase_label(phase_key)
-        if self.language == "ja":
-            title = f"月 （{phase_label}）"
-            line1 = "太陽の光を受けて、夜空で形を変えて見える。"
-        else:
-            title = f"MOON ({phase_label.upper()})"
-            line1 = "Earth's companion reflects sunlight and changes shape."
-        return (title, (line1, self._moon_phase_description(phase_key)), 10)
-
-    def _moon_phase_label(self, phase_key: str) -> str:
-        labels = {
-            "new": ("新月", "new moon"),
-            "waxing_crescent": ("三日月", "waxing crescent"),
-            "first_quarter": ("上弦の月", "first quarter"),
-            "waxing_gibbous": ("満ちていく月", "waxing gibbous"),
-            "full": ("満月", "full moon"),
-            "waning_gibbous": ("欠けていく月", "waning gibbous"),
-            "last_quarter": ("下弦の月", "last quarter"),
-            "waning_crescent": ("有明の月", "waning crescent"),
-        }
-        ja, en = labels.get(phase_key, ("月", "moon"))
-        return ja if self.language == "ja" else en
-
-    def _moon_phase_description(self, phase_key: str) -> str:
-        descriptions = {
-            "new": ("太陽に近く、夜空ではほとんど見えない月。", "The Moon is near the Sun and is hard to see at night."),
-            "waxing_crescent": ("夕方の西空に細く光り、これから満ちていく。", "A thin evening Moon grows brighter after sunset."),
-            "first_quarter": ("右半分が明るく、夕方から夜半に見やすい。", "Half lit and easy to see from evening to midnight."),
-            "waxing_gibbous": ("満月へ向かう途中で、夜空を明るくし始める。", "Growing toward full, it begins to brighten the night."),
-            "full": ("太陽の反対側にあり、一晩中明るく見える。", "Opposite the Sun, it can shine through the whole night."),
-            "waning_gibbous": ("満月を過ぎ、夜遅くから明け方に目立つ。", "After full, it stands out late at night and before dawn."),
-            "last_quarter": ("左半分が明るく、深夜から朝にかけて見える。", "Half lit and visible from late night into morning."),
-            "waning_crescent": ("夜明け前の東空に細く残る、欠けていく月。", "A fading thin Moon lingers in the eastern dawn."),
-        }
-        ja, en = descriptions.get(phase_key, ("月の満ち欠けを表示中。", "Showing the Moon's current phase."))
-        return ja if self.language == "ja" else en
+        return (
+            moon_phase_title(phase_key, self.language),
+            (moon_description(self.language), moon_phase_description(phase_key, self.language)),
+            10,
+        )
 
     def _selected_panel_summary(self) -> tuple[str, tuple[str, str], int] | None:
         return self._selected_star_summary() or self._selected_feature_summary() or self._selected_moon_summary()

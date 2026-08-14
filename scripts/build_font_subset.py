@@ -33,6 +33,7 @@ COMMON_LETTER_KANJI = (
 def _import_app_data():
     sys.path.insert(0, str(SRC))
     from data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
+    from data.moon_descriptions import MOON_DESCRIPTIONS, MOON_PHASE_DESCRIPTIONS
     from data.preset_letters import PRESET_LETTER_PACKS
     from data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
     from data.star_descriptions import STAR_DESCRIPTIONS
@@ -52,6 +53,8 @@ def _import_app_data():
         METEOR_EVENT_NAMES_JA,
         SKY_FEATURE_NAMES_JA,
         STAR_NAMES_JA,
+        MOON_DESCRIPTIONS,
+        MOON_PHASE_DESCRIPTIONS,
     )
 
 
@@ -65,6 +68,8 @@ def _required_text() -> str:
         meteor_event_names,
         sky_feature_names,
         star_names,
+        moon_descriptions,
+        moon_phase_descriptions,
     ) = _import_app_data()
     parts = [
         ASCII_PRINTABLE,
@@ -81,7 +86,10 @@ def _required_text() -> str:
         *meteor_event_names.values(),
         *sky_feature_names.values(),
         *star_names.values(),
+        *moon_descriptions.values(),
     ]
+    for descriptions in moon_phase_descriptions.values():
+        parts.extend(str(value) for value in descriptions.values())
     for pack in letter_packs.values():
         for letter in pack:
             parts.append(str(letter["original_text"]))
