@@ -36,7 +36,7 @@ http://localhost:8000/
 The browser entrypoint uses Pyxel Web custom tags:
 
 ```html
-<pyxel-run root="." name="src/app_pyxres_sounds.py"></pyxel-run>
+<pyxel-run root="." name="src/app_bootstrap.py"></pyxel-run>
 ```
 
 ## Controls
@@ -131,9 +131,11 @@ Two publishing options are supported:
 
 The deployed root serves `index.html`, which loads the vendored Pyxel Web
 wrapper from `assets/vendor/pyxel/pyxel.js` and runs
-`src/app_pyxres_sounds.py`. Pyxel's wheel, CSS, startup images, and import hook
-are vendored with the project to reduce startup fetches from the Pyxel CDN.
-Pyodide v314.0.4 runtime files are also vendored under
+`src/app_bootstrap.py`. The bootstrap app shows the first Pyxel screen quickly,
+handles the initial language/city setup, starts source-file prefetching, and
+then hands control to `src/app_pyxres_sounds.py`. Pyxel's wheel, CSS, startup
+images, and import hook are vendored with the project to reduce startup fetches
+from the Pyxel CDN. Pyodide v314.0.4 runtime files are also vendored under
 `assets/vendor/pyodide/v314.0.4/full/`, and `index.html` preloads the main
 runtime files while the Pyxel start screen is visible.
 

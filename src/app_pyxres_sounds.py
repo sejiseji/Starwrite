@@ -197,7 +197,7 @@ def _current_observation_datetime() -> datetime:
 
 
 class StarSkyApp:
-    def __init__(self) -> None:
+    def __init__(self, start_pyxel: bool = True) -> None:
         settings = _load_json(SETTINGS_KEY)
         self.observer = Observer(
             float(settings.get("latitude", 35.7)),
@@ -230,7 +230,11 @@ class StarSkyApp:
         self.rotate_camera_speed_level = max(-3, min(3, self.rotate_camera_speed_level))
         self.sound_enabled = bool(settings.get("sound_enabled", True))
         self.bgm_enabled = bool(settings.get("bgm_enabled", True))
-        self.language = "en"
+        language = settings.get("language", "en")
+        self.language = language if language in ("en", "ja") else "en"
+        self.location_country = settings.get("location_country")
+        self.location_city = settings.get("location_city")
+        self.setup_complete = bool(settings.get("setup_complete", False))
         self.menu_open = False
         self.ui_state = "SKY"
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
@@ -282,9 +286,10 @@ class StarSkyApp:
             self._set_rotate_camera(True)
 
         set_desktop_letter_text_mode(DESKTOP_VIEW)
-        pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, title="Starwrite Sky", fps=30)
-        pyxel.mouse(True)
-        pyxel.run(self.update, self.draw)
+        if start_pyxel:
+            pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, title="Starwrite Sky", fps=30)
+            pyxel.mouse(True)
+            pyxel.run(self.update, self.draw)
 
     @property
     def selected_constellation(self):
@@ -1403,6 +1408,9 @@ class StarSkyApp:
                 "sound_enabled": self.sound_enabled,
                 "bgm_enabled": self.bgm_enabled,
                 "language": self.language,
+                "location_country": self.location_country,
+                "location_city": self.location_city,
+                "setup_complete": self.setup_complete,
             },
         )
 
@@ -1625,4 +1633,9 @@ class StarSkyApp:
             pass
 
 
-StarSkyApp()
+def main() -> None:
+    StarSkyApp()
+
+
+if __name__ == "__main__":
+    main()
