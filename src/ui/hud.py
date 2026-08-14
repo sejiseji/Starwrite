@@ -484,7 +484,7 @@ def draw_back_button() -> None:
 
 def location_selector_rect(width: int, height: int) -> tuple[int, int, int, int]:
     panel_w = min(width - 28, 372)
-    panel_h = 178
+    panel_h = 208
     x = (width - panel_w) // 2
     y = max(44, (height - panel_h) // 2)
     return (x, y, panel_w, panel_h)
@@ -493,10 +493,10 @@ def location_selector_rect(width: int, height: int) -> tuple[int, int, int, int]
 def location_selector_button_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
     x, y, w, h = location_selector_rect(width, height)
     return {
-        "country_prev": (x + 10, y + 48, 30, 24),
-        "country_next": (x + w - 40, y + 48, 30, 24),
-        "city_prev": (x + 10, y + 92, 30, 24),
-        "city_next": (x + w - 40, y + 92, 30, 24),
+        "country_prev": (x + 10, y + 80, 30, 24),
+        "country_next": (x + w - 40, y + 80, 30, 24),
+        "city_prev": (x + 10, y + 124, 30, 24),
+        "city_next": (x + w - 40, y + 124, 30, 24),
         "apply": (x + 10, y + h - 36, w - 20, 26),
     }
 
@@ -513,19 +513,32 @@ def draw_location_selector(
     pyxel.rectb(x, y, w, h, 11)
     draw_back_button()
     draw_display_text(x + 10, y + 10, "LOCATION", 11)
-    guide = "場所は手動で選びます。" if language == "ja" else "Choose a reference city."
+    guide_lines = (
+        (
+            "現在地は取得しません。",
+            "最も近い都市、または見たい都市を選んでください。",
+            "あとからメニューで変更できます。",
+        )
+        if language == "ja"
+        else (
+            "Starwrite does not get your current location.",
+            "Choose the nearest city, or a city you want to see.",
+            "You can change it later from MENU.",
+        )
+    )
     country_prefix = "国" if language == "ja" else "COUNTRY"
     city_prefix = "都市" if language == "ja" else "CITY"
-    draw_display_text(x + 10, y + 27, _clip_display_text(guide, w - 20), 13)
+    for index, line in enumerate(guide_lines):
+        draw_display_text(x + 10, y + 27 + index * 13, _clip_display_text(line, w - 20), 13)
     rects = location_selector_button_rects(pyxel.width, pyxel.height)
     draw_button(rects["country_prev"], "-", False)
     draw_button(rects["country_next"], "+", False)
-    draw_display_text(x + 48, y + 52, _clip_display_text(f"{country_prefix} {country_label}", w - 96), 7)
+    draw_display_text(x + 48, y + 84, _clip_display_text(f"{country_prefix} {country_label}", w - 96), 7)
     draw_button(rects["city_prev"], "-", False)
     draw_button(rects["city_next"], "+", False)
-    draw_display_text(x + 48, y + 96, _clip_display_text(f"{city_prefix} {city_label}", w - 96), 7)
+    draw_display_text(x + 48, y + 128, _clip_display_text(f"{city_prefix} {city_label}", w - 96), 7)
     coords = f"LAT {latitude_deg:+.1f}  LON {longitude_deg:+.1f}"
-    draw_display_text(x + 10, y + 124, coords, 13)
+    draw_display_text(x + 10, y + 156, coords, 13)
     draw_button_colored(rects["apply"], "APPLY", 11, 3, 0)
 
 
