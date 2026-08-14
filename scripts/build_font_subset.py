@@ -42,6 +42,14 @@ SETUP_UI_JA = (
     "ヘルシンキタンペレシドニーメルボルンホバートオークランドサンパウロ"
     "ケープタウンデリートロントバンクーバーソウル台北バンコク"
 )
+MENU_UI_JA = (
+    "表示情報補助星座スライダー左右場所変更イベント情報言語"
+    "空の設定を変更"
+    "言語・国・都市の選択へ戻ります。"
+    "現在の星空表示は中断されます。"
+    "はい"
+    "いいえ"
+)
 COMMON_LETTER_KANJI = (
     "日本語生活仕事学校会社家族友達父母兄弟姉妹子供朝昼夕夜今日明日昨日今年去年"
     "時間分秒年月日春夏秋冬空星月雨雪風雲海山川街駅道電車電話部屋窓台所本音声"
@@ -103,6 +111,7 @@ def _required_text() -> str:
         JAPANESE_PUNCTUATION,
         JAPANESE_OPERATORS,
         SETUP_UI_JA,
+        MENU_UI_JA,
         COMMON_LETTER_KANJI,
         *constellation_names.values(),
         *meteor_event_names.values(),

@@ -438,7 +438,7 @@ def log_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
 
 def menu_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     panel_w = min(width - 16, 244)
-    panel_h = 178
+    panel_h = 222
     button_x, button_y, _, _ = menu_button_rect(width, height)
     x = max(8, min(width - panel_w - 8, button_x + 35 - panel_w // 2))
     return (x, max(8, button_y - panel_h - 6), panel_w, panel_h)
@@ -457,9 +457,23 @@ def panel_toggle_rects(width: int, height: int) -> dict[str, tuple[int, int, int
         "guides": (x + 12 + button_w, y + 34, button_w, 24),
         "constellations": (x + 16 + button_w * 2, y + 34, button_w, 24),
         "side": (x + 8, y + 74, min(96, w - 16), 24),
-        "language": (x + 8, y + 146, 72, 24),
-        "sound": (x + 90, y + 146, 62, 24),
-        "bgm": (x + 162, y + 146, 62, 24),
+        "location": (x + 112, y + 102, min(112, w - 120), 24),
+        "language": (x + 8, y + 190, 72, 24),
+        "sound": (x + 90, y + 190, 62, 24),
+        "bgm": (x + 162, y + 190, 62, 24),
+    }
+
+
+def setup_restart_confirm_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
+    panel_w = min(width - 32, 332)
+    panel_h = 144
+    x = (width - panel_w) // 2
+    y = (height - panel_h) // 2
+    button_w = (panel_w - 30) // 2
+    return {
+        "panel": (x, y, panel_w, panel_h),
+        "no": (x + 10, y + panel_h - 42, button_w, 30),
+        "yes": (x + panel_w - button_w - 10, y + panel_h - 42, button_w, 30),
     }
 
 
@@ -468,7 +482,10 @@ def draw_button_colored(rect: tuple[int, int, int, int], label: str, fill: int, 
     pyxel.rect(x, y, w, h, fill)
     pyxel.rectb(x, y, w, h, edge)
     text_y = y + max(4, (h - GLYPH_H * SCALE) // 2)
-    draw_big_text(x + max(4, (w - text_width(label)) // 2), text_y, label, text_col)
+    label_width = display_text_width(label)
+    if not label.isascii():
+        text_y = y + max(3, (h - FONT_CELL_HEIGHT) // 2)
+    draw_display_text(x + max(4, (w - label_width) // 2), text_y, label, text_col)
 
 
 def draw_button(rect: tuple[int, int, int, int], label: str, active: bool) -> None:
@@ -1063,24 +1080,53 @@ def draw_menu_panel(
     x, y, w, h = menu_panel_rect(pyxel.width, pyxel.height)
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 13)
-    draw_big_text(x + 8, y + 8, "DISPLAY", 7)
+    draw_display_text(x + 8, y + 8, _menu_text(language, "DISPLAY", "表示"), 7)
     draw_button(menu_close_rect(pyxel.width, pyxel.height), "X", False)
-    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["info"], "INFO", show_info)
-    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["guides"], "GUIDE", show_guides)
-    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["constellations"], "CONST", show_constellations)
-    draw_big_text(x + 8, y + 63, "SLIDER", 7)
-    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["side"], slider_side.upper(), True)
-    draw_big_text(x + 8, y + 105, f"EVENT SRC {event_source_label}", 13)
-    draw_big_text(x + 8, y + 118, f"EVENTS {event_count}", 13)
-    draw_big_text(x + 8, y + 132, "LANGUAGE", 7)
+    toggle_rects = panel_toggle_rects(pyxel.width, pyxel.height)
+    draw_button(toggle_rects["info"], _menu_text(language, "INFO", "情報"), show_info)
+    draw_button(toggle_rects["guides"], _menu_text(language, "GUIDE", "補助"), show_guides)
+    draw_button(toggle_rects["constellations"], _menu_text(language, "CONST", "星座"), show_constellations)
+    draw_display_text(x + 8, y + 63, _menu_text(language, "SLIDER", "スライダー"), 7)
+    side_label = slider_side.upper() if language == "en" else "左" if slider_side == "left" else "右"
+    draw_button(toggle_rects["side"], side_label, True)
+    draw_display_text(x + 8, y + 106, _menu_text(language, "LOCATION", "場所"), 7)
+    draw_button(toggle_rects["location"], _menu_text(language, "CHANGE", "変更"), False)
+    draw_display_text(x + 8, y + 136, _menu_text(language, f"EVENT SRC {event_source_label}", f"イベント情報 {event_source_label}"), 13)
+    draw_display_text(x + 8, y + 150, _menu_text(language, f"EVENTS {event_count}", f"イベント {event_count}"), 13)
+    draw_display_text(x + 8, y + 174, _menu_text(language, "LANGUAGE", "言語"), 7)
     language_label = "JA" if language == "en" else "EN"
-    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language_label, True)
-    sound_rect = panel_toggle_rects(pyxel.width, pyxel.height)["sound"]
-    draw_big_text(sound_rect[0], y + 132, "SE", 7)
+    draw_button(toggle_rects["language"], language_label, True)
+    sound_rect = toggle_rects["sound"]
+    draw_display_text(sound_rect[0], y + 174, "SE", 7)
     draw_button(sound_rect, "ON" if sound_enabled else "OFF", sound_enabled)
-    bgm_rect = panel_toggle_rects(pyxel.width, pyxel.height)["bgm"]
-    draw_big_text(bgm_rect[0], y + 132, "BGM", 7)
+    bgm_rect = toggle_rects["bgm"]
+    draw_display_text(bgm_rect[0], y + 174, "BGM", 7)
     draw_button(bgm_rect, "ON" if bgm_enabled else "OFF", bgm_enabled)
+
+
+def draw_setup_restart_confirm(language: Language) -> None:
+    rects = setup_restart_confirm_rects(pyxel.width, pyxel.height)
+    x, y, w, h = rects["panel"]
+    pyxel.rect(x, y, w, h, 0)
+    pyxel.rectb(x, y, w, h, 10)
+    pyxel.rectb(x + 2, y + 2, w - 4, h - 4, 1)
+    title = _menu_text(language, "CHANGE SKY", "空の設定を変更")
+    line1 = _menu_text(language, "RETURN TO LANGUAGE / COUNTRY / CITY.", "言語・国・都市の選択へ戻ります。")
+    line2 = _menu_text(language, "CURRENT SKY VIEW WILL CLOSE.", "現在の星空表示は中断されます。")
+    _draw_centered_display_text(title, y + 14, 10, x, w)
+    _draw_centered_display_text(line1, y + 48, 7, x, w)
+    _draw_centered_display_text(line2, y + 66, 13, x, w)
+    draw_button(rects["no"], _menu_text(language, "NO", "いいえ"), False)
+    draw_button(rects["yes"], _menu_text(language, "YES", "はい"), True)
+
+
+def _menu_text(language: Language, english: str, japanese: str) -> str:
+    return japanese if language == "ja" else english
+
+
+def _draw_centered_display_text(text: str, y: int, color: int, x: int, width: int) -> None:
+    text_width_value = display_text_width(text)
+    draw_display_text(x + max(4, (width - text_width_value) // 2), y, text, color)
 
 
 def draw_letter_view(

@@ -507,9 +507,31 @@ class BootstrapApp:
                 return index
         return 0
 
+    def _return_to_setup(self) -> None:
+        settings = _load_settings()
+        language = settings.get("language")
+        self.language = language if language in ("ja", "en") else _detect_language()
+        default_country = "JP" if self.language == "ja" else "US"
+        saved_country = settings.get("location_country", default_country)
+        self.country_index = COUNTRIES.index(saved_country) if saved_country in COUNTRIES else COUNTRIES.index(default_country)
+        self.city_index = self._city_index_for(settings.get("location_city"))
+        self.country_page = self.country_index // LIST_PAGE_SIZE
+        self.city_page = self.city_index // LIST_PAGE_SIZE
+        self.pending_setup_transition = None
+        self.press_effects.clear()
+        self.loading_star_points = None
+        self.loading_star_key = None
+        self.main_app = None
+        if self.language == "ja":
+            self._ensure_ja_requirements()
+        self.state = "COUNTRY"
+        self.accept_input_frame = pyxel.frame_count + INITIAL_INPUT_LOCK_FRAMES
+
     def update(self) -> None:
         if self.main_app is not None:
             self.main_app.update()
+            if bool(getattr(self.main_app, "request_setup_restart", False)):
+                self._return_to_setup()
             return
         self._prefetch_step()
         self._update_setup_effects()

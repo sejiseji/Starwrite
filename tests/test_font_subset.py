@@ -50,6 +50,14 @@ SETUP_UI_JA = (
     "ヘルシンキタンペレシドニーメルボルンホバートオークランドサンパウロ"
     "ケープタウンデリートロントバンクーバーソウル台北バンコク"
 )
+MENU_UI_JA = (
+    "表示情報補助星座スライダー左右場所変更イベント情報言語"
+    "空の設定を変更"
+    "言語・国・都市の選択へ戻ります。"
+    "現在の星空表示は中断されます。"
+    "はい"
+    "いいえ"
+)
 COMMON_LETTER_KANJI = "日本語生活仕事駅帰雨母電話終電"
 
 
@@ -135,6 +143,7 @@ class FontSubsetTests(unittest.TestCase):
             JAPANESE_PUNCTUATION,
             JAPANESE_OPERATORS,
             SETUP_UI_JA,
+            MENU_UI_JA,
             COMMON_LETTER_KANJI,
         ]
         required = {ord(char) for label in labels for char in label}
@@ -161,6 +170,7 @@ class FontSubsetTests(unittest.TestCase):
             JAPANESE_PUNCTUATION,
             JAPANESE_OPERATORS,
             SETUP_UI_JA,
+            MENU_UI_JA,
             COMMON_LETTER_KANJI,
         ]
         required = {ord(char) for label in labels for char in label}

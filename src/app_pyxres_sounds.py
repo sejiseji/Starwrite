@@ -62,6 +62,7 @@ from src.ui.hud import (
     draw_meteor_event,
     draw_menu_button,
     draw_menu_panel,
+    draw_setup_restart_confirm,
     draw_rotate_camera_speed_control,
     draw_rotate_speed_control,
     draw_selected_constellation_summary,
@@ -72,6 +73,7 @@ from src.ui.hud import (
     focused_star_hit_rect,
     menu_button_rect,
     menu_close_rect,
+    setup_restart_confirm_rects,
     log_item_rects,
     letter_close_rect,
     letter_panel_rect,
@@ -236,6 +238,8 @@ class StarSkyApp:
         self.location_city = settings.get("location_city")
         self.setup_complete = bool(settings.get("setup_complete", False))
         self.menu_open = False
+        self.confirm_setup_restart = False
+        self.request_setup_restart = False
         self.ui_state = "SKY"
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.constellation_star_ids = {star_id for constellation in CONSTELLATIONS for star_id in constellation.main_star_ids}
@@ -550,6 +554,14 @@ class StarSkyApp:
 
     def _handle_mouse(self) -> None:
         current = (pyxel.mouse_x, pyxel.mouse_y)
+        if self.confirm_setup_restart:
+            self._consume_pinch_zoom_delta()
+            if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+                self._handle_setup_restart_confirm_click(current)
+            self.active_slider = None
+            self.last_mouse = None
+            self.sky_pointer_down = None
+            return
         if self.ui_state != "SKY":
             self._consume_pinch_zoom_delta()
             if self._letter_view_is_closing():
@@ -605,6 +617,8 @@ class StarSkyApp:
             self.camera.clamp()
 
     def _handle_ui_click(self, point: tuple[int, int]) -> bool:
+        if self.confirm_setup_restart:
+            return self._handle_setup_restart_confirm_click(point)
         for key, rect in main_button_rects(SCREEN_WIDTH, SCREEN_HEIGHT).items():
             if not self._point_in_rect(point, rect):
                 continue
@@ -664,34 +678,52 @@ class StarSkyApp:
         if self.rotate_camera and self._handle_rotate_camera_speed_click(point):
             return True
         if self._point_in_rect(point, menu_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
-            self.menu_open = not self.menu_open
+            next_state = not self.menu_open
+            self.menu_open = next_state
+            self._play_ui_sound(SOUND_TOOL_ON if next_state else SOUND_LETTER_CLOSE)
             return True
         if not self.menu_open:
             return False
         if self._point_in_rect(point, menu_close_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
             self.menu_open = False
+            self._play_ui_sound(SOUND_LETTER_CLOSE)
             return True
         for key, rect in panel_toggle_rects(SCREEN_WIDTH, SCREEN_HEIGHT).items():
             if not self._point_in_rect(point, rect):
                 continue
             if key == "info":
                 self.show_info = not self.show_info
+                self._play_ui_sound(SOUND_TOOL_ON if self.show_info else SOUND_LETTER_CLOSE)
             elif key == "guides":
                 self.show_guides = not self.show_guides
+                self._play_ui_sound(SOUND_TOOL_ON if self.show_guides else SOUND_LETTER_CLOSE)
             elif key == "constellations":
                 self.show_constellations = not self.show_constellations
+                self._play_ui_sound(SOUND_TOOL_ON if self.show_constellations else SOUND_LETTER_CLOSE)
             elif key == "side":
                 self.slider_side = "left" if self.slider_side == "right" else "right"
+                self._play_ui_sound(SOUND_TOOL_ON)
+            elif key == "location":
+                self.menu_open = False
+                self.confirm_setup_restart = True
+                self._play_ui_sound(SOUND_TOOL_ON)
             elif key == "language":
                 self.language = next_language(self.language)
                 self._save_settings()
+                self._play_ui_sound(SOUND_TOOL_ON)
             elif key == "sound":
-                self.sound_enabled = not self.sound_enabled
+                next_state = not self.sound_enabled
+                if not next_state:
+                    self._play_ui_sound(SOUND_LETTER_CLOSE)
+                self.sound_enabled = next_state
                 if not self.sound_enabled:
                     self.scheduled_ui_sounds = []
+                else:
+                    self._play_ui_sound(SOUND_TOOL_ON)
                 self._save_settings()
             elif key == "bgm":
                 self.bgm_enabled = not self.bgm_enabled
+                self._play_ui_sound(SOUND_TOOL_ON if self.bgm_enabled else SOUND_LETTER_CLOSE)
                 if not self.bgm_enabled:
                     self._stop_bgm()
                 else:
@@ -701,7 +733,31 @@ class StarSkyApp:
         if self._point_in_rect(point, self._menu_panel_hit_rect()):
             return True
         self.menu_open = False
+        self._play_ui_sound(SOUND_LETTER_CLOSE)
         return True
+
+    def _handle_setup_restart_confirm_click(self, point: tuple[int, int]) -> bool:
+        rects = setup_restart_confirm_rects(SCREEN_WIDTH, SCREEN_HEIGHT)
+        if self._point_in_rect(point, rects["yes"]):
+            self._play_ui_sound(SOUND_TOOL_ON)
+            self._request_setup_restart()
+            return True
+        if self._point_in_rect(point, rects["no"]):
+            self.confirm_setup_restart = False
+            self._play_ui_sound(SOUND_LETTER_CLOSE)
+            return True
+        if not self._point_in_rect(point, rects["panel"]):
+            self.confirm_setup_restart = False
+            self._play_ui_sound(SOUND_LETTER_CLOSE)
+            return True
+        return True
+
+    def _request_setup_restart(self) -> None:
+        self.confirm_setup_restart = False
+        self.menu_open = False
+        self._save_settings()
+        self._stop_bgm()
+        self.request_setup_restart = True
 
     def _handle_slider_click(self, point: tuple[int, int]) -> bool:
         if not (self.show_time_slider or self.show_month_slider or self.show_event_slider):
@@ -1622,6 +1678,8 @@ class StarSkyApp:
             )
         draw_menu_button(self.menu_open)
         draw_main_buttons(self.unread_log_id is not None, self.pending_deliver_frame is not None)
+        if self.confirm_setup_restart:
+            draw_setup_restart_confirm(self.language)
         self._draw_active_cut_in()
         self._signal_ready()
 
