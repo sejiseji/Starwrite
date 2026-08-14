@@ -156,7 +156,7 @@ def _is_desktop_view() -> bool:
 SCREEN_WIDTH, SCREEN_HEIGHT = _screen_size()
 DESKTOP_VIEW = _is_desktop_view()
 ROTATE_TIME_SPEEDS = {-3: -3600.0, -2: -1200.0, -1: -300.0, 0: 0.0, 1: 300.0, 2: 1200.0, 3: 3600.0}
-ROTATE_DAY_SPEEDS = {-3: -30.0, -2: -7.0, -1: -1.0, 0: 0.0, 1: 1.0, 2: 7.0, 3: 30.0}
+ROTATE_DAY_SPEEDS = {-3: -3.0, -2: -2.0, -1: -1.0, 0: 0.0, 1: 1.0, 2: 2.0, 3: 3.0}
 ROTATION_LIMIT = timedelta(days=365.25 * 20)
 
 
