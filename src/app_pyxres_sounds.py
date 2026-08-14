@@ -5,7 +5,7 @@ import math
 import os
 import random
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -194,18 +194,48 @@ def _save_json(key: str, value: dict) -> None:
         pass
 
 
-def _current_observation_datetime() -> datetime:
-    return datetime.now().astimezone().replace(second=0, microsecond=0)
+def _timezone_from_offset(offset_minutes: int) -> timezone:
+    return timezone(timedelta(minutes=offset_minutes))
+
+
+def _coerce_utc_offset(value: object) -> int | None:
+    try:
+        minutes = int(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return None
+    return max(-720, min(840, minutes))
+
+
+def _location_utc_offset_minutes(settings: dict) -> int:
+    stored = _coerce_utc_offset(settings.get("utc_offset_minutes"))
+    if stored is not None:
+        return stored
+
+    try:
+        longitude = float(settings.get("longitude", 139.7))
+    except (TypeError, ValueError):
+        longitude = 139.7
+    return max(-720, min(840, int(round(longitude / 15.0) * 60)))
+
+
+def _current_observation_datetime(offset_minutes: int | None = None) -> datetime:
+    now = datetime.now().astimezone()
+    if offset_minutes is not None:
+        now = now.astimezone(_timezone_from_offset(offset_minutes))
+    return now.replace(second=0, microsecond=0)
 
 
 class StarSkyApp:
     def __init__(self, start_pyxel: bool = True) -> None:
         settings = _load_json(SETTINGS_KEY)
+        self.location_country = settings.get("location_country")
+        self.location_city = settings.get("location_city")
+        self.utc_offset_minutes = _location_utc_offset_minutes(settings)
         self.observer = Observer(
             float(settings.get("latitude", 35.7)),
             float(settings.get("longitude", 139.7)),
         )
-        self.clock = SimulationClock(_current_observation_datetime())
+        self.clock = SimulationClock(_current_observation_datetime(self.utc_offset_minutes))
         self.camera = SkyCamera(
             float(settings.get("yaw", 0.0)),
             float(settings.get("pitch", math.radians(45.0))),
@@ -234,8 +264,6 @@ class StarSkyApp:
         self.bgm_enabled = bool(settings.get("bgm_enabled", True))
         language = settings.get("language", "en")
         self.language = language if language in ("en", "ja") else "en"
-        self.location_country = settings.get("location_country")
-        self.location_city = settings.get("location_city")
         self.setup_complete = bool(settings.get("setup_complete", False))
         self.menu_open = False
         self.confirm_setup_restart = False
@@ -1016,22 +1044,26 @@ class StarSkyApp:
     def _advance_event(self, direction: int) -> bool:
         self._set_rotate_time(False)
         self._set_rotate_camera(False)
-        event = adjacent_visible_meteor_event(METEOR_SHOWERS, self.observer, self.clock.current_time, direction)
+        event_tz = _timezone_from_offset(self.utc_offset_minutes)
+        event = adjacent_visible_meteor_event(
+            METEOR_SHOWERS,
+            self.observer,
+            self.clock.current_time,
+            direction,
+            event_tz,
+        )
         if event is None:
-            return False
-        tz = self.clock.current_time.tzinfo
-        if tz is None:
             return False
         before = self.clock.current_time
         self.clock.pause()
-        self.clock.current_time = meteor_peak_datetime(event, tz)
+        self.clock.current_time = meteor_peak_datetime(event, event_tz)
         self._frame_event(event)
         return self.clock.current_time != before
 
     def _reset_view(self) -> None:
         self._set_rotate_time(False)
         self._set_rotate_camera(False)
-        self.clock.current_time = _current_observation_datetime()
+        self.clock.current_time = _current_observation_datetime(self.utc_offset_minutes)
         self.camera.yaw = 0.0
         self.camera.pitch = math.radians(45.0)
         self.camera.fov_deg = 75.0
@@ -1554,6 +1586,7 @@ class StarSkyApp:
                 "language": self.language,
                 "location_country": self.location_country,
                 "location_city": self.location_city,
+                "utc_offset_minutes": self.utc_offset_minutes,
                 "setup_complete": self.setup_complete,
             },
         )

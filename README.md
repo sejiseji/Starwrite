@@ -228,12 +228,16 @@ The prototype uses two star sources:
 The prototype includes a simple meteor-shower event catalog:
 
 - Years: 2006-2046, centered on 2026 and covering 20 years before/after.
+- Event stepping uses the selected city's approximate UTC offset so a remote
+  city such as Sao Paulo is evaluated against its local peak night, not the
+  device's current timezone.
 
 Moon position and phase use a compact low-precision lunar ephemeris in
 `src/astronomy/moon.py`. It is intended for Starwrite's visual sky context and
 local Capture/Letter matching tags, not observatory-grade measurement.
-- Recurring showers: 12 major annual showers.
-- Total generated events: 492.
+- Recurring showers: 29 annual showers, including southern-sky and equatorial
+  showers used by the EVENT control.
+- Total generated events: 1189.
 - Source label shown in the app menu: IMO.
 
 The meteor-shower data is a v0.1 approximation based on the International

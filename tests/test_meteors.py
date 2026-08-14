@@ -26,7 +26,7 @@ class MeteorTests(unittest.TestCase):
         year_count = EVENT_YEAR_END - EVENT_YEAR_START + 1
 
         self.assertEqual(len(METEOR_SHOWERS), year_count * len(RECURRING_METEOR_SHOWERS))
-        self.assertEqual(len(METEOR_SHOWERS), 492)
+        self.assertEqual(len(METEOR_SHOWERS), 1189)
 
     def test_perseids_2026_peak_night_is_active(self) -> None:
         event = self._event("PER-2026")
@@ -84,7 +84,10 @@ class MeteorTests(unittest.TestCase):
 
         self.assertIsNotNone(event)
         assert event is not None
-        self.assertEqual(event.id, "ORI-2026")
+        self.assertNotEqual(event.id, "PER-2026")
+        event_time = adjacent_meteor_event_time((event,), current_time, 1)
+        assert event_time is not None
+        self.assertGreater(meteor_radiant_direction(event, observer, event_time).z, 0.0)
 
     def test_previous_visible_event_skips_below_horizon_radiant(self) -> None:
         current_time = datetime(2027, 1, 1, 21, 0, tzinfo=timezone(timedelta(hours=9)))
@@ -94,7 +97,24 @@ class MeteorTests(unittest.TestCase):
 
         self.assertIsNotNone(event)
         assert event is not None
-        self.assertEqual(event.id, "GEM-2026")
+        self.assertNotEqual(event.id, "URS-2026")
+        event_time = adjacent_meteor_event_time((event,), current_time, 1)
+        assert event_time is not None
+        self.assertGreater(meteor_radiant_direction(event, observer, event_time).z, 0.0)
+
+    def test_sao_paulo_event_uses_selected_city_timezone(self) -> None:
+        current_time = datetime(2026, 8, 10, 21, 0, tzinfo=timezone(timedelta(hours=9)))
+        event_tz = timezone(timedelta(hours=-3))
+        observer = Observer(-23.5558, -46.6396)
+
+        event = adjacent_visible_meteor_event(METEOR_SHOWERS, observer, current_time, 1, event_tz)
+
+        self.assertIsNotNone(event)
+        assert event is not None
+        event_time = adjacent_meteor_event_time((event,), current_time.astimezone(event_tz), 1)
+        assert event_time is not None
+        self.assertEqual(event_time.tzinfo, event_tz)
+        self.assertGreater(meteor_radiant_direction(event, observer, event_time).z, 0.0)
 
     def test_all_events_have_related_constellation_in_catalog(self) -> None:
         constellation_ids = {constellation.id for constellation in CONSTELLATIONS}

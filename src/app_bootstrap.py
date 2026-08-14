@@ -119,6 +119,41 @@ CITIES: dict[str, tuple[tuple[str, float, float], ...]] = {
     "TH": (("Bangkok", 13.7563, 100.5018),),
 }
 COUNTRIES = tuple(CITIES)
+CITY_UTC_OFFSETS: dict[tuple[str, str], int] = {
+    ("JP", "Tokyo"): 540,
+    ("JP", "Fukushima"): 540,
+    ("JP", "Sapporo"): 540,
+    ("JP", "Sendai"): 540,
+    ("JP", "Niigata"): 540,
+    ("JP", "Nagoya"): 540,
+    ("JP", "Osaka"): 540,
+    ("JP", "Hiroshima"): 540,
+    ("JP", "Fukuoka"): 540,
+    ("JP", "Naha"): 540,
+    ("US", "New York"): -300,
+    ("US", "Los Angeles"): -480,
+    ("US", "Chicago"): -360,
+    ("US", "Seattle"): -480,
+    ("US", "Honolulu"): -600,
+    ("GB", "London"): 0,
+    ("FR", "Paris"): 60,
+    ("DE", "Berlin"): 60,
+    ("FI", "Helsinki"): 120,
+    ("FI", "Tampere"): 120,
+    ("AU", "Sydney"): 600,
+    ("AU", "Melbourne"): 600,
+    ("AU", "Hobart"): 600,
+    ("NZ", "Auckland"): 720,
+    ("BR", "Sao Paulo"): -180,
+    ("ZA", "Cape Town"): 120,
+    ("SG", "Singapore"): 480,
+    ("IN", "Delhi"): 330,
+    ("CA", "Toronto"): -300,
+    ("CA", "Vancouver"): -480,
+    ("KR", "Seoul"): 540,
+    ("TW", "Taipei"): 480,
+    ("TH", "Bangkok"): 420,
+}
 COUNTRY_LABELS = {
     "JP": "JAPAN",
     "US": "UNITED STATES",
@@ -485,6 +520,11 @@ class BootstrapApp:
     def city(self) -> tuple[str, float, float]:
         return self.cities[self.city_index % len(self.cities)]
 
+    @property
+    def city_utc_offset_minutes(self) -> int:
+        name, _latitude, longitude = self.city
+        return CITY_UTC_OFFSETS.get((self.country, name), int(round(longitude / 15.0) * 60))
+
     def _localized(self, english: str, japanese: str) -> str:
         if self.language == "ja" and self._japanese_glyphs() is not None:
             return japanese
@@ -759,6 +799,7 @@ class BootstrapApp:
                 "language": self.language,
                 "location_country": self.country,
                 "location_city": name,
+                "utc_offset_minutes": self.city_utc_offset_minutes,
                 "setup_complete": True,
             }
         )
