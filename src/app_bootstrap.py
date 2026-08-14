@@ -27,6 +27,14 @@ IMPORT_DIRS = (
     "src/sky",
     "src/ui",
 )
+PACKAGE_FILES = (
+    "src/__init__.py",
+    "src/astronomy/__init__.py",
+    "src/audio/__init__.py",
+    "src/data/__init__.py",
+    "src/sky/__init__.py",
+    "src/ui/__init__.py",
+)
 PREFETCH_CORE = (
     "src/app_pyxres_sounds.py",
     "src/audio/bgm.py",
@@ -224,6 +232,17 @@ def _prepare_import_layout() -> None:
             sys.path.insert(0, path)
 
 
+def _unique_paths(paths: tuple[str, ...] | list[str]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for path in (*PACKAGE_FILES, *paths):
+        if path in seen:
+            continue
+        seen.add(path)
+        result.append(path)
+    return result
+
+
 class BootstrapApp:
     def __init__(self) -> None:
         self.width, self.height = _screen_size()
@@ -243,6 +262,8 @@ class BootstrapApp:
         if self.language == "ja":
             self.prefetch_files.extend(PREFETCH_JA)
         self.prefetch_index = 0
+        self.mirror_files = _unique_paths(self.prefetch_files)
+        self.mirror_index = 0
         self.loading_frames = 0
         self.main_app = None
         self.state = "COUNTRY" if setup_requested or not setup_is_complete else "LOADING"
@@ -279,7 +300,9 @@ class BootstrapApp:
             self._handle_setup_input()
         elif self.state == "LOADING":
             self.loading_frames += 1
-            if self.prefetch_index >= len(self.prefetch_files) and self.loading_frames >= 12:
+            if self.prefetch_index >= len(self.prefetch_files):
+                self._mirror_step()
+            if self._loading_ready() and self.loading_frames >= 12:
                 self._start_main_app()
 
     def draw(self) -> None:
@@ -318,6 +341,7 @@ class BootstrapApp:
             self._cooldown()
             if PREFETCH_JA[0] not in self.prefetch_files:
                 self.prefetch_files.extend(PREFETCH_JA)
+                self.mirror_files = _unique_paths(self.prefetch_files)
         elif self._hit(x, y, self._rect("en")):
             self.language = "en"
             self._cooldown()
@@ -378,6 +402,8 @@ class BootstrapApp:
             self._save_selection()
             self.state = "LOADING"
             self.loading_frames = 0
+            self.mirror_files = _unique_paths(self.prefetch_files)
+            self.mirror_index = 0
 
     def _cooldown(self) -> None:
         self.accept_input_frame = pyxel.frame_count + INPUT_COOLDOWN_FRAMES
@@ -400,10 +426,23 @@ class BootstrapApp:
     def _start_main_app(self) -> None:
         self.state = "MAIN"
         _prepare_import_layout()
-        os.path.exists(os.path.join(os.getcwd(), "src", "app_pyxres_sounds.py"))
         from app_pyxres_sounds import StarSkyApp
 
         self.main_app = StarSkyApp(start_pyxel=False)
+
+    def _loading_ready(self) -> bool:
+        return self.prefetch_index >= len(self.prefetch_files) and self.mirror_index >= len(self.mirror_files)
+
+    def _mirror_step(self) -> None:
+        if self.mirror_index >= len(self.mirror_files):
+            return
+        _prepare_import_layout()
+        path = self.mirror_files[self.mirror_index]
+        self.mirror_index += 1
+        try:
+            os.path.exists(os.path.join(os.getcwd(), path))
+        except OSError:
+            pass
 
     def _rect(self, key: str) -> tuple[int, int, int, int]:
         bottom = self.height - 66
@@ -494,7 +533,10 @@ class BootstrapApp:
         dots = "." * ((pyxel.frame_count // 12) % 4)
         self._center_text("LOADING SKY" + dots, y, 7, scale=2)
         loaded = min(self.prefetch_index, len(self.prefetch_files))
+        mirrored = min(self.mirror_index, len(self.mirror_files))
         self._center_text(f"FILES {loaded}/{len(self.prefetch_files)}", y + 30, 13)
+        if loaded >= len(self.prefetch_files):
+            self._center_text(f"READY {mirrored}/{len(self.mirror_files)}", y + 46, 13)
 
     def _draw_stars(self) -> None:
         for index in range(80):
