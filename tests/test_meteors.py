@@ -6,7 +6,13 @@ from datetime import datetime, timedelta, timezone
 from astronomy.observer import Observer
 from data.constellations import CONSTELLATIONS
 from data.meteor_showers import EVENT_YEAR_END, EVENT_YEAR_START, METEOR_SHOWERS, RECURRING_METEOR_SHOWERS
-from sky.meteors import adjacent_meteor_event, adjacent_meteor_event_time, meteor_activity, meteor_radiant_direction
+from sky.meteors import (
+    adjacent_meteor_event,
+    adjacent_meteor_event_time,
+    adjacent_visible_meteor_event,
+    meteor_activity,
+    meteor_radiant_direction,
+)
 
 
 class MeteorTests(unittest.TestCase):
@@ -59,6 +65,36 @@ class MeteorTests(unittest.TestCase):
         assert event is not None
         self.assertEqual(event.id, "PER-2026")
         self.assertEqual(event.related_constellation_id, "PER")
+
+    def test_adjacent_visible_event_keeps_visible_event(self) -> None:
+        current_time = datetime(2026, 8, 10, 21, 0, tzinfo=timezone(timedelta(hours=9)))
+        observer = Observer(35.7, 139.7)
+
+        event = adjacent_visible_meteor_event(METEOR_SHOWERS, observer, current_time, 1)
+
+        self.assertIsNotNone(event)
+        assert event is not None
+        self.assertEqual(event.id, "PER-2026")
+
+    def test_adjacent_visible_event_skips_below_horizon_radiant(self) -> None:
+        current_time = datetime(2026, 8, 10, 21, 0, tzinfo=timezone(timedelta(hours=9)))
+        observer = Observer(-33.8688, 151.2093)
+
+        event = adjacent_visible_meteor_event(METEOR_SHOWERS, observer, current_time, 1)
+
+        self.assertIsNotNone(event)
+        assert event is not None
+        self.assertEqual(event.id, "ORI-2026")
+
+    def test_previous_visible_event_skips_below_horizon_radiant(self) -> None:
+        current_time = datetime(2027, 1, 1, 21, 0, tzinfo=timezone(timedelta(hours=9)))
+        observer = Observer(-33.8688, 151.2093)
+
+        event = adjacent_visible_meteor_event(METEOR_SHOWERS, observer, current_time, -1)
+
+        self.assertIsNotNone(event)
+        assert event is not None
+        self.assertEqual(event.id, "GEM-2026")
 
     def test_all_events_have_related_constellation_in_catalog(self) -> None:
         constellation_ids = {constellation.id for constellation in CONSTELLATIONS}

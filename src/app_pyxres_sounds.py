@@ -39,7 +39,7 @@ from src.sky.letters import (
 )
 from src.sky.meteors import (
     active_meteor_event,
-    adjacent_meteor_event,
+    adjacent_visible_meteor_event,
     meteor_peak_datetime,
     meteor_radiant_direction,
 )
@@ -1016,7 +1016,7 @@ class StarSkyApp:
     def _advance_event(self, direction: int) -> bool:
         self._set_rotate_time(False)
         self._set_rotate_camera(False)
-        event = adjacent_meteor_event(METEOR_SHOWERS, self.clock.current_time, direction)
+        event = adjacent_visible_meteor_event(METEOR_SHOWERS, self.observer, self.clock.current_time, direction)
         if event is None:
             return False
         tz = self.clock.current_time.tzinfo
