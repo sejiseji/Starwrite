@@ -75,13 +75,7 @@ def _moon_description_texts() -> list[str]:
 
 
 def _location_texts() -> list[str]:
-    texts = [
-        "現在地は取得しません。",
-        "最も近い都市、または見たい都市を選んでください。",
-        "あとからメニューで変更できます。",
-        "国",
-        "都市",
-    ]
+    texts = ["場所は手動で選びます。", "国", "都市"]
     for country in LOCATION_COUNTRIES:
         texts.append(location_label(country, "ja"))
         for city in country["cities"]:

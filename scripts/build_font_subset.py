@@ -92,7 +92,7 @@ def _required_text() -> str:
         *sky_feature_names.values(),
         *star_names.values(),
         *moon_descriptions.values(),
-        "現在地は取得しません。最も近い都市、または見たい都市を選んでください。あとからメニューで変更できます。国都市",
+        "場所は手動で選びます。国都市",
     ]
     for country in location_countries:
         parts.append(location_label_func(country, "ja"))
