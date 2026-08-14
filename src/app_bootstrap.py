@@ -696,8 +696,8 @@ class BootstrapApp:
     def _rect(self, key: str) -> tuple[int, int, int, int]:
         bottom = self.height - 66
         rects = {
-            "ja": (12, 78, (self.width - 36) // 2, 44),
-            "en": (24 + (self.width - 36) // 2, 78, (self.width - 36) // 2, 44),
+            "ja": (12, 82, (self.width - 36) // 2, 44),
+            "en": (24 + (self.width - 36) // 2, 82, (self.width - 36) // 2, 44),
             "back": (12, bottom, 112, 48),
             "page_prev": (12, bottom, 136, 48),
             "page_next": (self.width - 148, bottom, 136, 48),
@@ -706,7 +706,7 @@ class BootstrapApp:
         return rects[key]
 
     def _list_rects(self) -> tuple[tuple[int, tuple[int, int, int, int]], ...]:
-        top = 190 if self.state == "CITY" else 154
+        top = 196 if self.state == "CITY" else 164
         height = 54
         gap = 8
         return tuple((index, (12, top + index * (height + gap), self.width - 24, height)) for index in range(LIST_PAGE_SIZE))
@@ -723,6 +723,7 @@ class BootstrapApp:
     def _draw_setup(self) -> None:
         self._center_text("STARWRITE", 18, 7, scale=2)
         self._center_text("NO LOCATION ACCESS", 44, 13)
+        self._center_text("SELECT UI LANGUAGE", 58, 7, scale=2)
         self._button(self._rect("ja"), "JA", self.language == "ja", 10, scale=2)
         self._button(self._rect("en"), "EN", self.language == "en", 10, scale=2)
         if self.state == "COUNTRY":
@@ -737,7 +738,7 @@ class BootstrapApp:
             self._center_text(f"PREP {loaded}/{len(self.prefetch_files)}", self.height - 16, 5)
 
     def _draw_country_list(self) -> None:
-        self._center_text("SELECT COUNTRY", 132, 7, scale=2)
+        self._center_text("SELECT COUNTRY", 140, 7, scale=2)
         start = self.country_page * LIST_PAGE_SIZE
         for row, rect in self._list_rects():
             country_index = start + row
@@ -749,8 +750,8 @@ class BootstrapApp:
         self._pager(self.country_page, self._page_count(len(COUNTRIES)))
 
     def _draw_city_list(self) -> None:
-        self._center_text(COUNTRY_LABELS.get(self.country, self.country), 128, 10, scale=2)
-        self._center_text("SELECT CITY", 154, 7)
+        self._center_text(COUNTRY_LABELS.get(self.country, self.country), 136, 10, scale=2)
+        self._center_text("SELECT CITY", 164, 7, scale=2)
         start = self.city_page * LIST_PAGE_SIZE
         for row, rect in self._list_rects():
             city_index = start + row
