@@ -132,6 +132,10 @@ COUNTRY_LABELS = {
 LIST_PAGE_SIZE = 6
 INPUT_COOLDOWN_FRAMES = 12
 INITIAL_INPUT_LOCK_FRAMES = 24
+SETUP_PRESS_FRAMES = 10
+SETUP_TRANSITION_DELAY_FRAMES = 9
+SETUP_PARTICLE_FRAMES = 24
+SETUP_PARTICLE_COUNT = 18
 BOOT_FONT = {
     "A": ("01110", "10001", "10001", "11111", "10001", "10001", "10001"),
     "B": ("11110", "10001", "10001", "11110", "10001", "10001", "11110"),
@@ -287,6 +291,8 @@ class BootstrapApp:
         self.preload_retry_frame = 0
         self.preload_error = ""
         self._fetch_callbacks: list[object] = []
+        self.press_effects: list[tuple[tuple[int, int, int, int], int]] = []
+        self.pending_setup_transition: tuple[int, str] | None = None
         self.loading_frames = 0
         self.main_app = None
         self.state = "COUNTRY" if setup_requested or not setup_is_complete else "LOADING"
@@ -319,7 +325,10 @@ class BootstrapApp:
             self.main_app.update()
             return
         self._prefetch_step()
+        self._update_setup_effects()
         if self.state in ("COUNTRY", "CITY", "CONFIRM"):
+            if self._handle_pending_setup_transition():
+                return
             self._handle_setup_input()
         elif self.state == "LOADING":
             self.loading_frames += 1
@@ -403,10 +412,12 @@ class BootstrapApp:
         x, y = pyxel.mouse_x, pyxel.mouse_y
         if self._hit(x, y, self._rect("ja")):
             self.language = "ja"
+            self._add_setup_press_effect(self._rect("ja"))
             self._cooldown()
             self._ensure_ja_requirements()
         elif self._hit(x, y, self._rect("en")):
             self.language = "en"
+            self._add_setup_press_effect(self._rect("en"))
             self._cooldown()
         elif self.state == "COUNTRY":
             self._handle_country_input(x, y)
@@ -431,7 +442,8 @@ class BootstrapApp:
                 self.country_index = country_index
                 self.city_index = 0
                 self.city_page = 0
-                self.state = "CITY"
+                self._add_setup_press_effect(rect)
+                self._schedule_setup_transition("CITY")
                 self._cooldown()
                 return
 
@@ -453,7 +465,8 @@ class BootstrapApp:
             city_index = self.city_page * LIST_PAGE_SIZE + index
             if city_index < len(self.cities) and self._hit(x, y, rect):
                 self.city_index = city_index
-                self.state = "CONFIRM"
+                self._add_setup_press_effect(rect)
+                self._schedule_setup_transition("CONFIRM")
                 self._cooldown()
                 return
 
@@ -473,6 +486,38 @@ class BootstrapApp:
 
     def _cooldown(self) -> None:
         self.accept_input_frame = pyxel.frame_count + INPUT_COOLDOWN_FRAMES
+
+    def _schedule_setup_transition(self, target_state: str) -> None:
+        self.pending_setup_transition = (pyxel.frame_count + SETUP_TRANSITION_DELAY_FRAMES, target_state)
+
+    def _handle_pending_setup_transition(self) -> bool:
+        if self.pending_setup_transition is None:
+            return False
+        transition_frame, target_state = self.pending_setup_transition
+        if pyxel.frame_count < transition_frame:
+            return True
+        self.pending_setup_transition = None
+        self.state = target_state
+        self._cooldown()
+        return True
+
+    def _add_setup_press_effect(self, rect: tuple[int, int, int, int]) -> None:
+        self.press_effects.append((rect, pyxel.frame_count))
+        if len(self.press_effects) > 8:
+            self.press_effects = self.press_effects[-8:]
+
+    def _update_setup_effects(self) -> None:
+        self.press_effects = [
+            (rect, start_frame)
+            for rect, start_frame in self.press_effects
+            if pyxel.frame_count - start_frame <= SETUP_PARTICLE_FRAMES
+        ]
+
+    def _button_press_offset(self, rect: tuple[int, int, int, int]) -> int:
+        for effect_rect, start_frame in self.press_effects:
+            if effect_rect == rect and 0 <= pyxel.frame_count - start_frame <= SETUP_PRESS_FRAMES:
+                return 2
+        return 0
 
     def _ensure_ja_requirements(self) -> None:
         changed = False
@@ -585,6 +630,7 @@ class BootstrapApp:
             self._draw_city_list()
         else:
             self._draw_confirm()
+        self._draw_setup_press_particles()
         loaded = min(self.prefetch_index, len(self.prefetch_files))
         if loaded < len(self.prefetch_files):
             self._center_text(f"PREP {loaded}/{len(self.prefetch_files)}", self.height - 16, 5)
@@ -657,10 +703,63 @@ class BootstrapApp:
 
     def _button(self, rect: tuple[int, int, int, int], label: str, active: bool, color: int, scale: int = 1) -> None:
         x, y, w, h = rect
-        pyxel.rect(x, y, w, h, 5 if active else 1)
-        pyxel.rectb(x, y, w, h, 10 if active else 13)
+        offset = self._button_press_offset(rect)
+        if offset:
+            pyxel.rect(x, y, w, h, 0)
+            pyxel.rectb(x, y, w, h, 1)
+        draw_x = x + offset
+        draw_y = y + offset
+        draw_w = w - offset
+        draw_h = h - offset
+        pyxel.rect(draw_x, draw_y, draw_w, draw_h, 5 if active else 1)
+        pyxel.rectb(draw_x, draw_y, draw_w, draw_h, 10 if active else 13)
         text = self._fit_text(label, w - 12, scale)
-        self._center_text(text, y + max(3, (h - 7 * scale) // 2), color, x, w, scale)
+        self._center_text(text, draw_y + max(3, (draw_h - 7 * scale) // 2), color, draw_x, draw_w, scale)
+
+    def _draw_setup_press_particles(self) -> None:
+        for rect, start_frame in self.press_effects:
+            age = pyxel.frame_count - start_frame
+            if age < 0 or age > SETUP_PARTICLE_FRAMES:
+                continue
+            x, y, w, h = rect
+            progress = age / SETUP_PARTICLE_FRAMES
+            color = 10 if age < 10 else 9 if age < 18 else 7
+            for index in range(SETUP_PARTICLE_COUNT):
+                side = index % 4
+                fraction = ((index * 37 + start_frame * 11) % 100) / 100.0
+                outward = int(3 + progress * (12 + (index % 5) * 2))
+                drift = ((age * (index % 3 + 1) + index * 5) % 9) - 4
+                if side == 0:
+                    px = int(x + fraction * w) + drift
+                    py = y - outward
+                elif side == 1:
+                    px = x + w + outward
+                    py = int(y + fraction * h) + drift
+                elif side == 2:
+                    px = int(x + fraction * w) - drift
+                    py = y + h + outward
+                else:
+                    px = x - outward
+                    py = int(y + fraction * h) - drift
+                self._draw_setup_particle(px, py, color, index)
+
+    @staticmethod
+    def _draw_setup_particle(x: int, y: int, color: int, index: int) -> None:
+        if x < 1 or y < 1 or x >= pyxel.width - 1 or y >= pyxel.height - 1:
+            return
+        shape = index % 5
+        if shape == 0:
+            pyxel.pset(x, y, color)
+            pyxel.pset(x - 1, y, color)
+            pyxel.pset(x + 1, y, color)
+            pyxel.pset(x, y - 1, color)
+            pyxel.pset(x, y + 1, color)
+        elif shape == 1:
+            pyxel.rectb(x - 1, y - 1, 3, 3, color)
+        elif shape == 2:
+            pyxel.rect(x, y, 2, 2, color)
+        else:
+            pyxel.pset(x, y, color)
 
     @staticmethod
     def _label(text: str, x: int, y: int) -> None:
