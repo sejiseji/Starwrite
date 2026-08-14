@@ -102,6 +102,7 @@ LETTER_RECEIVE_DELAY_MAX_SECONDS = 8.0
 PYXEL_TARGET_FPS = 30.0
 SUMMARY_PANEL_ANIMATION_FRAMES = 24
 LETTER_VIEW_ANIMATION_FRAMES = 18
+LETTER_VIEW_CLOSE_ANIMATION_FRAMES = 18
 STARWRITE_SOUND_RESOURCES = (
     "starwrite.pyxres",
     "./starwrite.pyxres",
@@ -250,6 +251,8 @@ class StarSkyApp:
         self.selected_moon = False
         self.summary_panel_animation_start_frame: int | None = None
         self.letter_view_animation_start_frame: int | None = None
+        self.letter_view_close_start_frame: int | None = None
+        self.letter_view_closing_target_state: str | None = None
         self.cut_in_start_frame: int | None = None
         self.cut_in_message = ""
         self.last_mouse: tuple[int, int] | None = None
@@ -313,6 +316,7 @@ class StarSkyApp:
 
     def update(self) -> None:
         self._update_bgm()
+        self._finish_letter_close_animation()
         if self.ui_state == "SKY":
             self.clock.update(1.0 / 30.0)
             self._update_rotate_camera(1.0 / 30.0)
@@ -354,6 +358,8 @@ class StarSkyApp:
 
     def _handle_keys(self) -> None:
         if self.ui_state != "SKY":
+            if self._letter_view_is_closing():
+                return
             if self._key_pressed("KEY_ESCAPE") or self._key_pressed("KEY_BACKSPACE"):
                 self._go_back()
             return
@@ -428,6 +434,9 @@ class StarSkyApp:
         current = (pyxel.mouse_x, pyxel.mouse_y)
         if self.ui_state != "SKY":
             self._consume_pinch_zoom_delta()
+            if self._letter_view_is_closing():
+                self.last_mouse = None
+                return
             if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
                 self._handle_modal_click(current)
             self.last_mouse = None
@@ -664,8 +673,8 @@ class StarSkyApp:
 
     def _go_back(self) -> None:
         closing_state = self.ui_state
-        if self.ui_state == "LOG_DETAIL":
-            self.ui_state = "LOG"
+        if closing_state in ("LETTER", "LOG_DETAIL"):
+            self._start_letter_close_animation("LOG" if closing_state == "LOG_DETAIL" else "SKY")
             self._play_ui_sound(SOUND_LETTER_CLOSE)
             return
         self.ui_state = "SKY"
@@ -674,16 +683,42 @@ class StarSkyApp:
             self._play_ui_sound(SOUND_LETTER_CLOSE)
 
     def _start_letter_view_animation(self) -> None:
+        self.letter_view_close_start_frame = None
+        self.letter_view_closing_target_state = None
         self.letter_view_animation_start_frame = pyxel.frame_count
 
-    def _letter_view_animation_age(self) -> int | None:
+    def _start_letter_close_animation(self, target_state: str) -> None:
+        if self.letter_view_close_start_frame is not None:
+            return
+        self.letter_view_animation_start_frame = None
+        self.letter_view_close_start_frame = pyxel.frame_count
+        self.letter_view_closing_target_state = target_state
+
+    def _letter_view_is_closing(self) -> bool:
+        return self.letter_view_close_start_frame is not None
+
+    def _finish_letter_close_animation(self) -> None:
+        if self.letter_view_close_start_frame is None:
+            return
+        if pyxel.frame_count - self.letter_view_close_start_frame < LETTER_VIEW_CLOSE_ANIMATION_FRAMES:
+            return
+        target_state = self.letter_view_closing_target_state or "SKY"
+        self.letter_view_close_start_frame = None
+        self.letter_view_closing_target_state = None
+        self.ui_state = target_state
+        if target_state == "SKY":
+            self.selected_log_id = None
+
+    def _letter_view_animation_state(self) -> tuple[int | None, int]:
+        if self.letter_view_close_start_frame is not None:
+            return pyxel.frame_count - self.letter_view_close_start_frame, -1
         if self.letter_view_animation_start_frame is None:
-            return None
+            return None, 1
         age = pyxel.frame_count - self.letter_view_animation_start_frame
         if age >= LETTER_VIEW_ANIMATION_FRAMES:
             self.letter_view_animation_start_frame = None
-            return None
-        return age
+            return None, 1
+        return age, 1
 
     def _step_slider(self, label: str, direction: int) -> None:
         self._set_rotate_time(False)
@@ -1367,7 +1402,8 @@ class StarSkyApp:
                 self._draw_capture_background(log.capture)
                 letter = self.letters_by_id.get(log.received_letter_id)
                 if letter is not None:
-                    draw_letter_view(log, letter, self.language, self._letter_view_animation_age())
+                    animation_age, animation_direction = self._letter_view_animation_state()
+                    draw_letter_view(log, letter, self.language, animation_age, animation_direction)
                 self._draw_active_cut_in()
             else:
                 self.ui_state = "SKY"

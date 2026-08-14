@@ -1070,10 +1070,11 @@ def draw_letter_view(
     letter: PresetLetter,
     language: Language,
     animation_age: int | None = None,
+    animation_direction: int = 1,
 ) -> None:
     panel_rect = letter_view_panel_rect(pyxel.width, pyxel.height, letter, language)
     if animation_age is not None:
-        panel_rect = _animated_letter_panel_rect(panel_rect, animation_age)
+        panel_rect = _animated_letter_panel_rect(panel_rect, animation_age, animation_direction)
     x, y, w, h = panel_rect
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 13)
@@ -1102,26 +1103,32 @@ def draw_letter_view(
     location_lines = _wrap_display_lines(f"FROM {location}", body_width)
     draw_display_text(x + 10, y + h - 24, location_lines[0], 13)
     if animation_age is not None:
-        _draw_letter_fade_mask(panel_rect, animation_age)
+        _draw_letter_fade_mask(panel_rect, animation_age, animation_direction)
 
 
-def _animated_letter_panel_rect(rect: tuple[int, int, int, int], age: int) -> tuple[int, int, int, int]:
+def _animated_letter_panel_rect(
+    rect: tuple[int, int, int, int],
+    age: int,
+    direction: int,
+) -> tuple[int, int, int, int]:
     x, y, w, h = rect
     progress = max(0.0, min(1.0, age / 17.0))
     ease = 1.0 - (1.0 - progress) * (1.0 - progress)
-    float_offset = int((1.0 - ease) * 18.0)
-    return (x, y - float_offset, w, h)
+    if direction < 0:
+        return (x, y + int(ease * 18.0), w, h)
+    return (x, y - int((1.0 - ease) * 18.0), w, h)
 
 
-def _draw_letter_fade_mask(rect: tuple[int, int, int, int], age: int) -> None:
+def _draw_letter_fade_mask(rect: tuple[int, int, int, int], age: int, direction: int) -> None:
     x, y, w, h = rect
     progress = max(0.0, min(1.0, age / 17.0))
-    if progress >= 1.0:
+    visible = 1.0 - progress if direction < 0 else progress
+    if visible >= 1.0:
         return
-    if progress < 0.18:
+    if visible < 0.18:
         pyxel.rect(x + 1, y + 1, w - 2, h - 2, 0)
         return
-    step = 2 if progress < 0.48 else 3 if progress < 0.76 else 5
+    step = 2 if visible < 0.48 else 3 if visible < 0.76 else 5
     phase = age % step
     for yy in range(y + 1, y + h - 1, step):
         for xx in range(x + 1 + ((yy + phase) % step), x + w - 1, step):
