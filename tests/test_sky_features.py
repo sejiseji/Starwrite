@@ -23,7 +23,7 @@ class SkyFeatureTests(unittest.TestCase):
         self.assertEqual(len(ids), len(set(ids)))
 
     def test_feature_edges_use_declared_named_stars(self) -> None:
-        self.assertGreaterEqual(len(ASTERISMS), 12)
+        self.assertGreaterEqual(len(ASTERISMS), 22)
         for feature in ASTERISMS:
             star_ids = set(feature.star_ids)
             self.assertTrue(star_ids <= set(STAR_NAMES), feature.id)
@@ -51,10 +51,14 @@ class SkyFeatureTests(unittest.TestCase):
 
     def test_added_feature_names_are_localized(self) -> None:
         features = {feature.id: feature for feature in ASTERISMS}
+        paths = {path.id: path for path in SKY_PATHS}
 
         self.assertEqual(sky_feature_name(features["GREAT_SQUARE"], "ja"), "秋の四辺形")
         self.assertEqual(sky_feature_name(features["NORTHERN_CROSS"], "ja"), "北十字")
         self.assertEqual(sky_feature_name(features["TEAPOT"], "en"), "Teapot")
+        self.assertEqual(sky_feature_name(features["SCORPIUS_HOOK"], "ja"), "さそりの釣り針")
+        self.assertEqual(sky_feature_name(features["FALSE_CROSS"], "en"), "False Cross")
+        self.assertEqual(sky_feature_name(paths["MAGELLAN_CLOUD_REGION"], "ja"), "マゼラン雲の領域")
 
 
 if __name__ == "__main__":

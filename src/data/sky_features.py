@@ -118,6 +118,48 @@ ASTERISMS: tuple[Asterism, ...] = (
         star_ids=(90496, 89931, 90185, 88635, 93506, 92855),
         edges=((90496, 89931), (89931, 90185), (90185, 88635), (88635, 90496), (89931, 93506), (93506, 92855)),
     ),
+    Asterism(
+        id="SCORPIUS_HOOK",
+        name="Scorpius Hook",
+        star_ids=(80112, 80763, 85696, 85927, 86228),
+        edges=((80112, 80763), (80763, 85696), (85696, 85927), (85927, 86228)),
+    ),
+    Asterism(
+        id="FALSE_CROSS",
+        name="False Cross",
+        star_ids=(41037, 45556, 45941, 42913),
+        edges=((41037, 45941), (45556, 42913)),
+    ),
+    Asterism(
+        id="FOMALHAUT_AUTUMN_STAR",
+        name="Fomalhaut Autumn Star",
+        star_ids=(200212, 200211, 200214, 200213),
+        edges=((200212, 200211), (200211, 200214), (200214, 200213)),
+    ),
+    Asterism(
+        id="NORTHERN_CROWN_ARC",
+        name="Northern Crown Arc",
+        star_ids=(75695, 76267, 76952, 77512),
+        edges=((75695, 76267), (76267, 76952), (76952, 77512)),
+    ),
+    Asterism(
+        id="SOUTHERN_TRIANGLE",
+        name="Southern Triangle",
+        star_ids=(200281, 200282, 200283),
+        edges=((200281, 200282), (200282, 200283), (200283, 200281)),
+    ),
+    Asterism(
+        id="PEACOCK_TAIL",
+        name="Peacock Tail",
+        star_ids=(100751, 102395, 99240, 105858, 86929),
+        edges=((100751, 102395), (100751, 99240), (100751, 105858), (100751, 86929)),
+    ),
+    Asterism(
+        id="ARGO_SHIP",
+        name="Argo Ship Remnant",
+        star_ids=(30438, 41037, 39429, 39953, 44816, 45941),
+        edges=((30438, 41037), (41037, 39429), (39429, 39953), (39953, 44816), (44816, 45941)),
+    ),
 )
 
 
@@ -149,4 +191,28 @@ MILKY_WAY = SkyPath(
 )
 
 
-SKY_PATHS: tuple[SkyPath, ...] = (MILKY_WAY,)
+MAGELLAN_CLOUD_REGION = SkyPath(
+    id="MAGELLAN_CLOUD_REGION",
+    name="Magellanic Cloud Region",
+    points=tuple(
+        (_hours_to_rad(ra_hours), _deg_to_rad(dec_deg))
+        for ra_hours, dec_deg in (
+            (0.7, -73.0),
+            (1.3, -72.0),
+            (2.0, -70.0),
+            (3.2, -69.5),
+            (4.8, -68.7),
+            (5.6, -69.8),
+            (5.9, -72.0),
+            (5.3, -74.2),
+            (4.4, -75.5),
+            (3.3, -74.8),
+            (2.2, -73.6),
+            (1.2, -73.8),
+            (0.7, -73.0),
+        )
+    ),
+)
+
+
+SKY_PATHS: tuple[SkyPath, ...] = (MILKY_WAY, MAGELLAN_CLOUD_REGION)

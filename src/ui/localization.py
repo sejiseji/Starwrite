@@ -511,6 +511,14 @@ SKY_FEATURE_NAMES_JA: dict[str, str] = {
     "SOUTHERN_POINTERS": "南の指極星",
     "TEAPOT": "ティーポット",
     "MILKY_WAY": "天の川",
+    "SCORPIUS_HOOK": "さそりの釣り針",
+    "FALSE_CROSS": "偽十字",
+    "FOMALHAUT_AUTUMN_STAR": "秋のひとつ星",
+    "NORTHERN_CROWN_ARC": "北の冠",
+    "SOUTHERN_TRIANGLE": "南の三角",
+    "PEACOCK_TAIL": "くじゃくの尾",
+    "ARGO_SHIP": "アルゴー船の名残",
+    "MAGELLAN_CLOUD_REGION": "マゼラン雲の領域",
 }
 
 
