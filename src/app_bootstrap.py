@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 import sys
+from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 sys.path.insert(0, os.path.dirname(__file__))
@@ -293,6 +295,8 @@ class BootstrapApp:
         self._fetch_callbacks: list[object] = []
         self.press_effects: list[tuple[tuple[int, int, int, int], int]] = []
         self.pending_setup_transition: tuple[int, str] | None = None
+        self.loading_star_points: tuple[tuple[int, int, int, int], ...] | None = None
+        self.loading_star_key: tuple[float, float, int, float, float, float, int, int] | None = None
         self.loading_frames = 0
         self.main_app = None
         self.state = "COUNTRY" if setup_requested or not setup_is_complete else "LOADING"
@@ -344,7 +348,10 @@ class BootstrapApp:
             self.main_app.draw()
             return
         pyxel.cls(0)
-        self._draw_stars()
+        if self.state == "LOADING":
+            self._draw_loading_sky_background()
+        else:
+            self._draw_stars()
         if self.state in ("COUNTRY", "CITY", "CONFIRM"):
             self._draw_setup()
         else:
@@ -478,6 +485,8 @@ class BootstrapApp:
             self._save_selection()
             self.state = "LOADING"
             self.loading_frames = 0
+            self.loading_star_points = None
+            self.loading_star_key = None
             self.mirror_files = _unique_paths(self.prefetch_files)
             self.mirror_index = 0
             self.preload_index = 0
@@ -678,21 +687,98 @@ class BootstrapApp:
             self._center_text(f"{page + 1}/{pages}", self.height - 34, 13)
 
     def _draw_loading(self) -> None:
-        y = self.height // 2 - 18
+        panel_w = min(self.width - 48, 260)
+        panel_h = 116
+        panel_x = (self.width - panel_w) // 2
+        panel_y = self.height // 2 - panel_h // 2
+        pyxel.rect(panel_x, panel_y, panel_w, panel_h, 0)
+        pyxel.rectb(panel_x, panel_y, panel_w, panel_h, 13)
+        pyxel.rectb(panel_x + 2, panel_y + 2, panel_w - 4, panel_h - 4, 1)
+
         dots = "." * ((pyxel.frame_count // 12) % 4)
-        self._center_text("LOADING SKY" + dots, y, 7, scale=2)
+        self._center_text("LOADING SKY" + dots, panel_y + 18, 7, panel_x, panel_w, scale=2)
         loaded = min(self.prefetch_index, len(self.prefetch_files))
         mirrored = min(self.mirror_index, len(self.mirror_files))
         imported = min(self.preload_index, len(self.preload_modules))
-        self._center_text(f"FILES {loaded}/{len(self.prefetch_files)}", y + 30, 13)
+        self._center_text(f"FILES {loaded}/{len(self.prefetch_files)}", panel_y + 54, 13, panel_x, panel_w)
         if self.prefetch_error:
-            self._center_text("RETRY FILE", y + 46, 8)
+            self._center_text("RETRY FILE", panel_y + 70, 8, panel_x, panel_w)
         elif loaded >= len(self.prefetch_files):
-            self._center_text(f"READY {mirrored}/{len(self.mirror_files)}", y + 46, 13)
+            self._center_text(f"READY {mirrored}/{len(self.mirror_files)}", panel_y + 70, 13, panel_x, panel_w)
             if mirrored >= len(self.mirror_files):
-                self._center_text(f"INFO {imported}/{len(self.preload_modules)}", y + 62, 13)
+                self._center_text(f"INFO {imported}/{len(self.preload_modules)}", panel_y + 86, 13, panel_x, panel_w)
                 if self.preload_error:
-                    self._center_text("RETRY INFO", y + 78, 8)
+                    self._center_text("RETRY INFO", panel_y + 102, 8, panel_x, panel_w)
+
+    def _draw_loading_sky_background(self) -> None:
+        if not self._ensure_loading_star_points():
+            self._draw_stars()
+            return
+        assert self.loading_star_points is not None
+        for x, y, color, radius in self.loading_star_points:
+            if radius >= 2:
+                pyxel.circ(x, y, radius, color)
+            elif radius == 1:
+                pyxel.pset(x - 1, y, color)
+                pyxel.pset(x, y - 1, color)
+                pyxel.pset(x, y, color)
+                pyxel.pset(x + 1, y, color)
+                pyxel.pset(x, y + 1, color)
+            else:
+                pyxel.pset(x, y, color)
+
+    def _ensure_loading_star_points(self) -> bool:
+        settings = _load_settings()
+        observation_time = datetime.now().astimezone().replace(second=0, microsecond=0)
+        latitude = float(settings.get("latitude", self.city[1]))
+        longitude = float(settings.get("longitude", self.city[2]))
+        yaw = float(settings.get("yaw", 0.0))
+        pitch = float(settings.get("pitch", math.radians(45.0)))
+        fov = float(settings.get("fov", 75.0))
+        key = (
+            round(latitude, 4),
+            round(longitude, 4),
+            int(observation_time.timestamp() // 60),
+            round(yaw, 4),
+            round(pitch, 4),
+            round(fov, 2),
+            self.width,
+            self.height,
+        )
+        if self.loading_star_points is not None and self.loading_star_key == key:
+            return True
+        try:
+            _prepare_import_layout()
+            from src.astronomy.observer import Observer
+            from src.data.stars import STARS
+            from src.sky.camera import SkyCamera
+            from src.sky.renderer import BASE_LIMIT_MAG, POLARIS_ID, star_color, star_radius
+            from src.sky.simulation import project_visible_stars
+
+            camera = SkyCamera(yaw, pitch, fov)
+            projected = project_visible_stars(
+                STARS,
+                Observer(latitude, longitude),
+                observation_time,
+                camera,
+                self.width,
+                self.height,
+            )
+            points: list[tuple[int, int, int, int]] = []
+            for star_id, point in sorted(projected.items(), key=lambda item: item[1].magnitude, reverse=True):
+                if point.magnitude > BASE_LIMIT_MAG and star_id != POLARIS_ID:
+                    continue
+                radius = star_radius(point.magnitude)
+                if star_id == POLARIS_ID:
+                    radius = max(radius, 2)
+                points.append((int(point.x), int(point.y), star_color(point.color_index), radius))
+            if not points:
+                return False
+            self.loading_star_points = tuple(points)
+            self.loading_star_key = key
+            return True
+        except Exception:
+            return False
 
     def _draw_stars(self) -> None:
         for index in range(80):
