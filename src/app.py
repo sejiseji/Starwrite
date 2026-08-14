@@ -5,7 +5,7 @@ import math
 import os
 import random
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -20,6 +20,7 @@ from astronomy.moon import get_phase_name, moon_light_level, moon_state_from_dic
 from astronomy.observer import Observer
 from astronomy.time import julian_date, local_sidereal_time
 from data.constellations import CONSTELLATIONS
+from data.locations import LOCATION_COUNTRIES, location_label
 from data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
 from data.moon_descriptions import moon_description, moon_phase_description, moon_phase_title
 from data.preset_letters import PRESET_LETTER_PACKS
@@ -59,6 +60,7 @@ from ui.hud import (
     draw_focused_moon,
     draw_letter_view,
     draw_log_list,
+    draw_location_selector,
     draw_main_buttons,
     draw_meteor_event,
     draw_menu_button,
@@ -77,6 +79,8 @@ from ui.hud import (
     letter_close_rect,
     letter_panel_rect,
     letter_view_panel_rect,
+    location_selector_button_rects,
+    location_selector_rect,
     log_panel_rect,
     main_button_rects,
     panel_toggle_rects,
@@ -96,6 +100,8 @@ SMARTPHONE_FIRST_SCREEN_SIZE = (IPHONE16_MIN_SCREEN_WIDTH, IPHONE16_SCREEN_HEIGH
 SETTINGS_KEY = "starwrite_v02_settings"
 CAPTURE_KEY = "starwrite_v01_latest_capture"
 LETTER_STORE_KEY = "starwrite_v01_letter_store"
+DEFAULT_LATITUDE_DEG = 35.7
+DEFAULT_LONGITUDE_DEG = 139.7
 CUT_IN_FRAMES = 150
 LETTER_RECEIVE_DELAY_MIN_SECONDS = 5.0
 LETTER_RECEIVE_DELAY_MAX_SECONDS = 8.0
@@ -193,16 +199,69 @@ def _save_json(key: str, value: dict) -> None:
         pass
 
 
+def _browser_language() -> str:
+    try:
+        from js import navigator  # type: ignore
+
+        languages = []
+        try:
+            languages.extend(str(language) for language in navigator.languages.to_py())
+        except Exception:
+            try:
+                for index in range(int(navigator.languages.length)):
+                    languages.append(str(navigator.languages[index]))
+            except Exception:
+                pass
+        try:
+            languages.append(str(navigator.language))
+        except Exception:
+            pass
+        return "ja" if any(language.lower().startswith("ja") for language in languages) else "en"
+    except Exception:
+        return "en"
+
+
 def _current_observation_datetime() -> datetime:
+    try:
+        from js import Date  # type: ignore
+
+        now = Date.new()
+        offset_minutes = -int(now.getTimezoneOffset())
+        tz = timezone(timedelta(minutes=offset_minutes))
+        return datetime(
+            int(now.getFullYear()),
+            int(now.getMonth()) + 1,
+            int(now.getDate()),
+            int(now.getHours()),
+            int(now.getMinutes()),
+            tzinfo=tz,
+        )
+    except Exception:
+        pass
     return datetime.now().astimezone().replace(second=0, microsecond=0)
+
+
+def _country_index(country_id: str) -> int:
+    for index, country in enumerate(LOCATION_COUNTRIES):
+        if country["id"] == country_id:
+            return index
+    return 0
+
+
+def _city_index(country_index: int, city_id: str) -> int:
+    cities = LOCATION_COUNTRIES[country_index]["cities"]
+    for index, city in enumerate(cities):
+        if city["id"] == city_id:
+            return index
+    return 0
 
 
 class StarSkyApp:
     def __init__(self) -> None:
         settings = _load_json(SETTINGS_KEY)
         self.observer = Observer(
-            float(settings.get("latitude", 35.7)),
-            float(settings.get("longitude", 139.7)),
+            float(settings.get("latitude", DEFAULT_LATITUDE_DEG)),
+            float(settings.get("longitude", DEFAULT_LONGITUDE_DEG)),
         )
         self.clock = SimulationClock(_current_observation_datetime())
         self.camera = SkyCamera(
@@ -231,7 +290,12 @@ class StarSkyApp:
         self.rotate_camera_speed_level = max(-3, min(3, self.rotate_camera_speed_level))
         self.sound_enabled = bool(settings.get("sound_enabled", True))
         self.bgm_enabled = bool(settings.get("bgm_enabled", True))
-        self.language = normalize_language(settings.get("language", "en"))
+        self.language = normalize_language(settings.get("language", _browser_language()))
+        self.location_country_index = _country_index(str(settings.get("location_country_id", "JP")))
+        self.location_city_index = _city_index(
+            self.location_country_index,
+            str(settings.get("location_city_id", "tokyo")),
+        )
         self.menu_open = False
         self.ui_state = "SKY"
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
@@ -563,6 +627,8 @@ class StarSkyApp:
                 self.show_guides = not self.show_guides
             elif key == "constellations":
                 self.show_constellations = not self.show_constellations
+            elif key == "location":
+                self.ui_state = "LOCATION"
             elif key == "side":
                 self.slider_side = "left" if self.slider_side == "right" else "right"
             elif key == "language":
@@ -636,6 +702,8 @@ class StarSkyApp:
         if self._point_in_rect(point, back_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
             self._go_back()
             return True
+        if self.ui_state == "LOCATION":
+            return self._handle_location_selector_click(point)
         if self.ui_state in ("LETTER", "LOG_DETAIL"):
             letter_panel = self._active_letter_panel_rect()
             if self._point_in_rect(point, self._expanded_rect(letter_close_rect(SCREEN_WIDTH, SCREEN_HEIGHT, letter_panel), 6)):
@@ -658,6 +726,29 @@ class StarSkyApp:
                     self._start_letter_view_animation()
                     self._play_ui_sound(SOUND_LETTER_OPEN)
                 return True
+        return True
+
+    def _handle_location_selector_click(self, point: tuple[int, int]) -> bool:
+        rects = location_selector_button_rects(SCREEN_WIDTH, SCREEN_HEIGHT)
+        if self._point_in_rect(point, rects["country_prev"]):
+            self._change_location_country(-1)
+            return True
+        if self._point_in_rect(point, rects["country_next"]):
+            self._change_location_country(1)
+            return True
+        if self._point_in_rect(point, rects["city_prev"]):
+            self._change_location_city(-1)
+            return True
+        if self._point_in_rect(point, rects["city_next"]):
+            self._change_location_city(1)
+            return True
+        if self._point_in_rect(point, rects["apply"]):
+            self._apply_selected_location()
+            self.ui_state = "SKY"
+            return True
+        if self._point_in_rect(point, location_selector_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+            return True
+        self._go_back()
         return True
 
     def _open_letter(self) -> None:
@@ -947,6 +1038,29 @@ class StarSkyApp:
     def _set_longitude(self, value: float) -> None:
         wrapped = ((value + 180.0) % 360.0) - 180.0
         self.observer = Observer(self.observer.latitude_deg, wrapped)
+
+    def _selected_location(self) -> tuple[dict, dict]:
+        country = LOCATION_COUNTRIES[self.location_country_index]
+        cities = country["cities"]
+        self.location_city_index %= len(cities)
+        return country, cities[self.location_city_index]
+
+    def _change_location_country(self, delta: int) -> None:
+        self.location_country_index = (self.location_country_index + delta) % len(LOCATION_COUNTRIES)
+        self.location_city_index = 0
+        self._play_ui_sound(SOUND_SLIDER_TICK)
+
+    def _change_location_city(self, delta: int) -> None:
+        country = LOCATION_COUNTRIES[self.location_country_index]
+        self.location_city_index = (self.location_city_index + delta) % len(country["cities"])
+        self._play_ui_sound(SOUND_SLIDER_TICK)
+
+    def _apply_selected_location(self) -> None:
+        _country, city = self._selected_location()
+        self._set_latitude(float(city["lat"]))
+        self._set_longitude(float(city["lon"]))
+        self._save_settings()
+        self._play_ui_sound(SOUND_TOOL_ON)
 
     def _select_constellation(self, delta: int) -> None:
         self.selected_index = (self.selected_index + delta) % len(CONSTELLATIONS)
@@ -1375,10 +1489,39 @@ class StarSkyApp:
                 "sound_enabled": self.sound_enabled,
                 "bgm_enabled": self.bgm_enabled,
                 "language": self.language,
+                "location_country_id": LOCATION_COUNTRIES[self.location_country_index]["id"],
+                "location_city_id": self._selected_location()[1]["id"],
             },
         )
 
     def draw(self) -> None:
+        if self.ui_state == "LOCATION":
+            self.renderer.draw(
+                self.projected,
+                CONSTELLATIONS,
+                self.selected_constellation,
+                self.show_constellations,
+                self.show_guides,
+                self.camera,
+                SCREEN_WIDTH,
+                SCREEN_HEIGHT,
+                self.meteor_event,
+                self.moon.state,
+                self.observer.latitude_deg,
+                self.projected_sky_paths,
+            )
+            country, city = self._selected_location()
+            draw_location_selector(
+                location_label(country, self.language),
+                location_label(city, self.language),
+                float(city["lat"]),
+                float(city["lon"]),
+                self.language,
+            )
+            self._draw_active_cut_in()
+            self._signal_ready()
+            return
+
         if self.ui_state == "LOG":
             self.renderer.draw(
                 self.projected,

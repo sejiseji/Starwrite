@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 
 from data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
+from data.locations import LOCATION_COUNTRIES, location_label
 from data.preset_letters import PRESET_LETTER_PACKS
 from data.moon_descriptions import MOON_DESCRIPTIONS, MOON_PHASE_DESCRIPTIONS
 from data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
@@ -73,6 +74,15 @@ def _moon_description_texts() -> list[str]:
     return texts
 
 
+def _location_texts() -> list[str]:
+    texts = ["場所は手動で選びます。", "国", "都市"]
+    for country in LOCATION_COUNTRIES:
+        texts.append(location_label(country, "ja"))
+        for city in country["cities"]:
+            texts.append(location_label(city, "ja"))
+    return texts
+
+
 def _font_encodings() -> set[int]:
     encodings: set[int] = set()
     for line in FONT_PATH.read_text(encoding="utf-8").splitlines():
@@ -92,6 +102,7 @@ class FontSubsetTests(unittest.TestCase):
             *_sky_feature_description_texts(),
             *_star_description_texts(),
             *_moon_description_texts(),
+            *_location_texts(),
             *_preset_letter_texts(),
             ASCII_PRINTABLE,
         ]
@@ -129,6 +140,7 @@ class FontSubsetTests(unittest.TestCase):
             *_sky_feature_description_texts(),
             *_star_description_texts(),
             *_moon_description_texts(),
+            *_location_texts(),
             *_preset_letter_texts(),
             ASCII_PRINTABLE,
             HIRAGANA,
