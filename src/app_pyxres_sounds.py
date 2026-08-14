@@ -649,7 +649,7 @@ class StarSkyApp:
             return int(value.timestamp() // (15 * 60))
         if label == "event":
             return int(value.timestamp())
-        return value.date().toordinal()
+        return value.year * 12 + value.month
 
     def _advance_event(self, direction: int) -> bool:
         event = adjacent_meteor_event(METEOR_SHOWERS, self.clock.current_time, direction)
