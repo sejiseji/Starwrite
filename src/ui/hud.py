@@ -6,7 +6,7 @@ from astronomy.catalog import Constellation
 from astronomy.moon import MoonState
 from astronomy.observer import Observer
 try:
-    from data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
+    raise ImportError
 except Exception:
     # GitHub Pages can briefly serve cached 404s for new Python modules.
     # Keep a source-authored fallback here so the sky never falls back to anchor-star copy.
@@ -125,7 +125,6 @@ except Exception:
      'COL': {'ja': ('洪水の先を探した白い鳩。', '冬の南空に小さく羽ばたく。'),
              'en': ('A dove searches beyond the flood.', 'Small wings beat in winter sky.')}}
 from data.sky_features import ASTERISMS, SKY_PATHS, Asterism, SkyPath
-from data.font_jp import FONT_CELL_HEIGHT, FONT_CELL_WIDTH, FONT_COLUMNS, FONT_IMAGE_BANKS, GLYPHS
 from sky.capture import ScreenPoint, SkyCapture
 from sky.camera import SkyCamera
 from sky.letters import ExchangeLog, PresetLetter, display_letter_text
@@ -151,6 +150,11 @@ _desktop_letter_text_mode = False
 _display_width_cache: dict[str, int] = {}
 _glyph_locations: dict[int, tuple[int, int, int, int]] = {}
 _font_atlas_next_index = 0
+FONT_CELL_WIDTH = 10
+FONT_CELL_HEIGHT = 13
+FONT_COLUMNS = 25
+FONT_IMAGE_BANKS = (0, 1, 2)
+GLYPHS: dict[int, tuple[int, tuple[str, ...]]] | None = None
 
 FONT = {
     " ": ("000", "000", "000", "000", "000"),
@@ -267,8 +271,18 @@ def draw_display_text(x: int, y: int, text: str, col: int) -> None:
     _draw_bitmap_text(x, y, text, col)
 
 
+def _ensure_japanese_font_loaded() -> dict[int, tuple[int, tuple[str, ...]]]:
+    global GLYPHS
+    if GLYPHS is None:
+        from data.font_jp import GLYPHS as loaded_glyphs
+
+        GLYPHS = loaded_glyphs
+    return GLYPHS
+
+
 def _glyph_advance(char: str) -> int:
-    glyph = GLYPHS.get(ord(char)) or GLYPHS.get(ord("?"))
+    glyphs = _ensure_japanese_font_loaded()
+    glyph = glyphs.get(ord(char)) or glyphs.get(ord("?"))
     if glyph is None:
         return FONT_CELL_WIDTH
     return glyph[0]
@@ -284,7 +298,8 @@ def _glyph_location_for(codepoint: int) -> tuple[int, int, int, int] | None:
     if location is not None:
         return location
 
-    glyph = GLYPHS.get(codepoint) or GLYPHS.get(ord("?"))
+    glyphs = _ensure_japanese_font_loaded()
+    glyph = glyphs.get(codepoint) or glyphs.get(ord("?"))
     if glyph is None:
         return None
     if _font_atlas_next_index >= _font_atlas_capacity():

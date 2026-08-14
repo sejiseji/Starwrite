@@ -21,11 +21,7 @@ from astronomy.observer import Observer
 from astronomy.time import julian_date, local_sidereal_time
 from data.constellations import CONSTELLATIONS
 from data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
-from data.moon_descriptions import moon_description, moon_phase_description, moon_phase_title
-from data.preset_letters import PRESET_LETTER_PACKS
 from data.sky_features import ASTERISMS, SKY_PATHS
-from data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
-from data.star_descriptions import STAR_DESCRIPTIONS
 from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
 from sky.capture import ScreenPoint, SkyCapture, can_capture, capture_from_dict, capture_to_dict
@@ -87,7 +83,7 @@ from ui.hud import (
     slider_rects,
     tool_button_rects,
 )
-from ui.localization import constellation_name, next_language, normalize_language, sky_feature_name, star_name
+from ui.localization import constellation_name, next_language, sky_feature_name, star_name
 
 IPHONE16_SCREEN_HEIGHT = 696
 IPHONE16_MIN_SCREEN_WIDTH = 396
@@ -231,14 +227,16 @@ class StarSkyApp:
         self.rotate_camera_speed_level = max(-3, min(3, self.rotate_camera_speed_level))
         self.sound_enabled = bool(settings.get("sound_enabled", True))
         self.bgm_enabled = bool(settings.get("bgm_enabled", True))
-        self.language = normalize_language(settings.get("language", "en"))
+        self.language = "en"
         self.menu_open = False
         self.ui_state = "SKY"
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.constellation_star_ids = {star_id for constellation in CONSTELLATIONS for star_id in constellation.main_star_ids}
         self.latest_capture = self._load_capture()
-        self.letters = load_letters_from_packs(PRESET_LETTER_PACKS)
-        self.letters_by_id: dict[str, PresetLetter] = {letter.id: letter for letter in self.letters}
+        self.letters: tuple[PresetLetter, ...] = ()
+        self.letters_by_id: dict[str, PresetLetter] = {}
+        self.star_descriptions: dict[int, dict[str, tuple[str, str]]] | None = None
+        self.sky_feature_descriptions: dict[str, dict[str, tuple[str, str]]] | None = None
         letter_store = self._load_letter_store()
         self.exchange_logs: tuple[ExchangeLog, ...] = letter_store["logs"]
         self.seen_letter_ids: set[str] = letter_store["seen_letter_ids"]
@@ -282,7 +280,6 @@ class StarSkyApp:
 
         set_desktop_letter_text_mode(DESKTOP_VIEW)
         pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, title="Starwrite Sky", fps=30)
-        self._setup_audio()
         pyxel.mouse(True)
         pyxel.run(self.update, self.draw)
 
@@ -315,8 +312,31 @@ class StarSkyApp:
             "unread_log_id": data.get("unread_log_id"),
         }
 
+    def _ensure_letters_loaded(self) -> None:
+        if self.letters:
+            return
+        from data.preset_letters import PRESET_LETTER_PACKS
+
+        self.letters = load_letters_from_packs(PRESET_LETTER_PACKS)
+        self.letters_by_id = {letter.id: letter for letter in self.letters}
+
+    def _star_description_for(self, star_id: int) -> dict[str, tuple[str, str]]:
+        if self.star_descriptions is None:
+            from data.star_descriptions import STAR_DESCRIPTIONS
+
+            self.star_descriptions = STAR_DESCRIPTIONS
+        return self.star_descriptions.get(star_id, {})
+
+    def _sky_feature_description_for(self, feature_id: str) -> dict[str, tuple[str, str]]:
+        if self.sky_feature_descriptions is None:
+            from data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
+
+            self.sky_feature_descriptions = SKY_FEATURE_DESCRIPTIONS
+        return self.sky_feature_descriptions.get(feature_id, {})
+
     def update(self) -> None:
-        self._update_bgm()
+        if self.ready_signaled:
+            self._update_bgm()
         self._finish_letter_close_animation()
         if self.ui_state == "SKY":
             self.clock.update(1.0 / 30.0)
@@ -661,6 +681,7 @@ class StarSkyApp:
         return True
 
     def _open_letter(self) -> None:
+        self._ensure_letters_loaded()
         target_id = self.unread_log_id
         if target_id is None and self.exchange_logs:
             target_id = self.exchange_logs[-1].id
@@ -909,6 +930,7 @@ class StarSkyApp:
         return menu_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
 
     def _active_letter_panel_rect(self) -> tuple[int, int, int, int]:
+        self._ensure_letters_loaded()
         log = self._selected_log()
         if log is None:
             return letter_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -1043,7 +1065,7 @@ class StarSkyApp:
         if star is None or english_name is None:
             return None
         name = star_name(self.selected_star_id, english_name, self.language)
-        description = STAR_DESCRIPTIONS.get(self.selected_star_id, {})
+        description = self._star_description_for(self.selected_star_id)
         description_lines = description.get(self.language)
         if isinstance(description_lines, tuple) and len(description_lines) == 2:
             return (f"STAR  {name.upper() if self.language == 'en' else name}", description_lines, 8)
@@ -1065,7 +1087,7 @@ class StarSkyApp:
         feature = self._sky_feature_by_id(self.selected_feature_id)
         if feature is None:
             return None
-        descriptions = SKY_FEATURE_DESCRIPTIONS.get(self.selected_feature_id, {})
+        descriptions = self._sky_feature_description_for(self.selected_feature_id)
         lines = descriptions.get(self.language)
         if lines is None:
             return None
@@ -1075,6 +1097,8 @@ class StarSkyApp:
     def _selected_moon_summary(self) -> tuple[str, tuple[str, str], int] | None:
         if not self.selected_moon or self.moon.state is None:
             return None
+        from data.moon_descriptions import moon_description, moon_phase_description, moon_phase_title
+
         phase_key = get_phase_name(self.moon.state.illumination, self.moon.state.waxing)
         return (
             moon_phase_title(phase_key, self.language),
@@ -1172,6 +1196,7 @@ class StarSkyApp:
         return True
 
     def _capture(self) -> None:
+        self._ensure_letters_loaded()
         focused_star = self._focused_star()
         self.latest_capture = SkyCapture(
             schema_version=1,
@@ -1380,6 +1405,7 @@ class StarSkyApp:
 
     def draw(self) -> None:
         if self.ui_state == "LOG":
+            self._ensure_letters_loaded()
             self.renderer.draw(
                 self.projected,
                 CONSTELLATIONS,
@@ -1400,6 +1426,7 @@ class StarSkyApp:
             return
 
         if self.ui_state in ("LETTER", "LOG_DETAIL"):
+            self._ensure_letters_loaded()
             log = self._selected_log()
             if log is not None:
                 self._draw_capture_background(log.capture)
