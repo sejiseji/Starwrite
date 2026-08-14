@@ -334,19 +334,15 @@ def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
 
 
 def rotate_speed_control_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
-    menu_x, menu_y, menu_w, menu_h = menu_button_rect(width, height)
-    panel_w = 118
-    panel_h = 38
-    gap = 8
-    x = menu_x + menu_w + gap
-    if x + panel_w > width - 8:
-        x = menu_x - gap - panel_w
-    x = max(8, min(width - panel_w - 8, x))
-    y = max(8, menu_y + menu_h // 2 - panel_h // 2)
+    capture_x, capture_y, capture_w, _capture_h = main_button_rects(width, height)["capture"]
+    panel_w = capture_w
+    panel_h = 44
+    x = capture_x
+    y = max(8, capture_y - panel_h - 8)
     return {
         "panel": (x, y, panel_w, panel_h),
-        "down": (x + 5, y + 17, 20, 17),
-        "up": (x + panel_w - 25, y + 17, 20, 17),
+        "down": (x + 6, y + 20, 24, 20),
+        "up": (x + panel_w - 30, y + 20, 24, 20),
     }
 
 
@@ -1006,10 +1002,12 @@ def draw_rotate_speed_control(speed_level: int) -> None:
     pyxel.rectb(x, y, w, h, 10)
     label = "ROT-T"
     draw_big_text(x + (w - text_width(label)) // 2, y + 3, label, 10)
-    draw_button(rects["down"], "<", False)
-    value = f"SPD {max(1, min(3, speed_level))}"
-    draw_big_text(x + (w - text_width(value)) // 2, y + 21, value, 7)
-    draw_button(rects["up"], ">", False)
+    draw_button(rects["down"], "-", False)
+    clamped_level = max(-3, min(3, speed_level))
+    sign = "+" if clamped_level > 0 else ""
+    value = f"SPD{sign}{clamped_level}"
+    draw_big_text(x + (w - text_width(value)) // 2, y + 27, value, 7)
+    draw_button(rects["up"], "+", False)
 
 
 def draw_menu_panel(

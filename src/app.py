@@ -153,7 +153,7 @@ def _is_desktop_view() -> bool:
 
 SCREEN_WIDTH, SCREEN_HEIGHT = _screen_size()
 DESKTOP_VIEW = _is_desktop_view()
-ROTATE_TIME_SPEEDS = {1: 300.0, 2: 600.0, 3: 1200.0}
+ROTATE_TIME_SPEEDS = {-3: -3600.0, -2: -1200.0, -1: -300.0, 0: 0.0, 1: 300.0, 2: 1200.0, 3: 3600.0}
 
 
 def _storage():
@@ -218,7 +218,7 @@ class StarSkyApp:
         self.show_event_slider = bool(settings.get("show_event_slider", False))
         self.rotate_time = bool(settings.get("rotate_time", False))
         self.rotate_time_speed_level = int(settings.get("rotate_time_speed_level", 2))
-        self.rotate_time_speed_level = max(1, min(3, self.rotate_time_speed_level))
+        self.rotate_time_speed_level = max(-3, min(3, self.rotate_time_speed_level))
         self.sound_enabled = bool(settings.get("sound_enabled", True))
         self.bgm_enabled = bool(settings.get("bgm_enabled", True))
         self.language = normalize_language(settings.get("language", "en"))
@@ -664,7 +664,7 @@ class StarSkyApp:
             self.clock.pause()
 
     def _change_rotate_speed(self, direction: int) -> None:
-        next_level = max(1, min(3, self.rotate_time_speed_level + direction))
+        next_level = max(-3, min(3, self.rotate_time_speed_level + direction))
         if next_level == self.rotate_time_speed_level:
             self._play_ui_sound(SOUND_LETTER_CLOSE)
             return
