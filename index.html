@@ -35,6 +35,7 @@
         opacity: 1;
         transition: opacity 160ms ease;
         z-index: 2147483646;
+        pointer-events: none;
       }
 
       .startup-gate.is-hidden {
@@ -431,13 +432,6 @@
       function captureStartupEvent(event) {
         if (!event || startupDismissed) {
           return;
-        }
-        if (event.cancelable) {
-          event.preventDefault();
-        }
-        event.stopPropagation();
-        if (typeof event.stopImmediatePropagation === "function") {
-          event.stopImmediatePropagation();
         }
       }
 
