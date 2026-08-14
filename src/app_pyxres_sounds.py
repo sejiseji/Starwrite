@@ -19,7 +19,7 @@ from audio.ui_sfx import StarwriteUISfx
 from astronomy.coordinates import equatorial_to_enu
 from astronomy.catalog import Constellation
 from astronomy.events import MeteorShowerEvent
-from astronomy.moon import moon_light_level, moon_state_from_dict, moon_state_to_dict
+from astronomy.moon import get_phase_name, moon_light_level, moon_state_from_dict, moon_state_to_dict
 from astronomy.observer import Observer
 from astronomy.time import julian_date, local_sidereal_time
 from data.constellations import CONSTELLATIONS
@@ -69,6 +69,7 @@ from ui.hud import (
     draw_slider,
     draw_sky_features,
     draw_tool_buttons,
+    focused_moon_hit_rect,
     focused_star_hit_rect,
     menu_button_rect,
     menu_close_rect,
@@ -234,6 +235,7 @@ class StarSkyApp:
         self.selected_log_id: str | None = None
         self.selected_star_id: int | None = None
         self.selected_feature_id: str | None = None
+        self.selected_moon = False
         self.summary_panel_animation_start_frame: int | None = None
         self.cut_in_start_frame: int | None = None
         self.cut_in_message = ""
@@ -680,6 +682,7 @@ class StarSkyApp:
         self.show_event_slider = False
         self.selected_star_id = None
         self.selected_feature_id = None
+        self.selected_moon = False
 
     def _project_sky_paths(self) -> dict[str, list[tuple[float, float] | None]]:
         return self._project_sky_paths_for(self.camera, self.observer, self.clock.current_time)
@@ -762,6 +765,7 @@ class StarSkyApp:
         self.selected_index = (self.selected_index + delta) % len(CONSTELLATIONS)
         self.selected_star_id = None
         self.selected_feature_id = None
+        self.selected_moon = False
         self._play_selection_sound("constellation")
 
     def _selected_constellation_anchor_label(self) -> str | None:
@@ -780,9 +784,12 @@ class StarSkyApp:
             return True
         if self._select_sky_feature_at_point(point):
             return True
+        if self._select_focused_moon_at_point(point):
+            return True
         if self._select_constellation_label_at_point(point):
             self.selected_star_id = None
             self.selected_feature_id = None
+            self.selected_moon = False
             self._play_selection_sound("constellation")
             return True
         star_id = self._nearest_constellation_star_id(point, STAR_TAP_RADIUS_PX)
@@ -793,6 +800,7 @@ class StarSkyApp:
                 self.selected_index = index
                 self.selected_star_id = None
                 self.selected_feature_id = None
+                self.selected_moon = False
                 self._play_selection_sound("constellation")
                 return True
         return False
@@ -810,6 +818,21 @@ class StarSkyApp:
             return False
         self.selected_star_id = star_id
         self.selected_feature_id = None
+        self.selected_moon = False
+        self._play_selection_sound("star")
+        return True
+
+    def _select_focused_moon_at_point(self, point: tuple[int, int]) -> bool:
+        if self.moon.state is None:
+            return False
+        moon_point = moon_screen_point(self.moon.state, self.camera, SCREEN_WIDTH, SCREEN_HEIGHT)
+        if moon_point is None or not self._point_near_center(moon_point, 46):
+            return False
+        if not self._point_in_rect(point, focused_moon_hit_rect(moon_point, self.moon.state, self.language)):
+            return False
+        self.selected_star_id = None
+        self.selected_feature_id = None
+        self.selected_moon = True
         self._play_selection_sound("star")
         return True
 
@@ -820,6 +843,7 @@ class StarSkyApp:
             if self._point_in_rect(point, rect):
                 self.selected_feature_id = feature_id
                 self.selected_star_id = None
+                self.selected_moon = False
                 self._play_selection_sound("feature")
                 return True
         return False
@@ -860,6 +884,56 @@ class StarSkyApp:
             return None
         title = sky_feature_name(feature, self.language)
         return (title.upper() if self.language == "en" else title, lines, 11)
+
+    def _selected_moon_summary(self) -> tuple[str, tuple[str, str], int] | None:
+        if not self.selected_moon or self.moon.state is None:
+            return None
+        phase_key = get_phase_name(self.moon.state.illumination, self.moon.state.waxing)
+        phase_label = self._moon_phase_label(phase_key)
+        if self.language == "ja":
+            title = f"月 （{phase_label}）"
+            line1 = "太陽の光を受けて、夜空で形を変えて見える。"
+        else:
+            title = f"MOON ({phase_label.upper()})"
+            line1 = "Earth's companion reflects sunlight and changes shape."
+        return (title, (line1, self._moon_phase_description(phase_key)), 10)
+
+    def _moon_phase_label(self, phase_key: str) -> str:
+        labels = {
+            "new": ("新月", "new moon"),
+            "waxing_crescent": ("三日月", "waxing crescent"),
+            "first_quarter": ("上弦の月", "first quarter"),
+            "waxing_gibbous": ("満ちていく月", "waxing gibbous"),
+            "full": ("満月", "full moon"),
+            "waning_gibbous": ("欠けていく月", "waning gibbous"),
+            "last_quarter": ("下弦の月", "last quarter"),
+            "waning_crescent": ("有明の月", "waning crescent"),
+        }
+        ja, en = labels.get(phase_key, ("月", "moon"))
+        return ja if self.language == "ja" else en
+
+    def _moon_phase_description(self, phase_key: str) -> str:
+        descriptions = {
+            "new": ("太陽に近く、夜空ではほとんど見えない月。", "The Moon is near the Sun and is hard to see at night."),
+            "waxing_crescent": ("夕方の西空に細く光り、これから満ちていく。", "A thin evening Moon grows brighter after sunset."),
+            "first_quarter": ("右半分が明るく、夕方から夜半に見やすい。", "Half lit and easy to see from evening to midnight."),
+            "waxing_gibbous": ("満月へ向かう途中で、夜空を明るくし始める。", "Growing toward full, it begins to brighten the night."),
+            "full": ("太陽の反対側にあり、一晩中明るく見える。", "Opposite the Sun, it can shine through the whole night."),
+            "waning_gibbous": ("満月を過ぎ、夜遅くから明け方に目立つ。", "After full, it stands out late at night and before dawn."),
+            "last_quarter": ("左半分が明るく、深夜から朝にかけて見える。", "Half lit and visible from late night into morning."),
+            "waning_crescent": ("夜明け前の東空に細く残る、欠けていく月。", "A fading thin Moon lingers in the eastern dawn."),
+        }
+        ja, en = descriptions.get(phase_key, ("月の満ち欠けを表示中。", "Showing the Moon's current phase."))
+        return ja if self.language == "ja" else en
+
+    def _selected_panel_summary(self) -> tuple[str, tuple[str, str], int] | None:
+        return self._selected_star_summary() or self._selected_feature_summary() or self._selected_moon_summary()
+
+    def _selected_panel_highlight_color(self) -> int:
+        summary = self._selected_panel_summary()
+        if summary is not None:
+            return summary[2]
+        return 10
 
     def _constellation_for_star(self, star_id: int) -> Constellation | None:
         for constellation in CONSTELLATIONS:
@@ -1215,8 +1289,9 @@ class StarSkyApp:
             self.selected_constellation,
             self.language,
             self._selected_constellation_anchor_label(),
-            self._selected_star_summary() or self._selected_feature_summary(),
+            self._selected_panel_summary(),
             self._summary_panel_animation_age(),
+            self._selected_panel_highlight_color(),
         )
         if self.meteor_event is not None:
             draw_event_banner(self.meteor_event, self.language)

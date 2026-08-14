@@ -509,6 +509,7 @@ def draw_selected_constellation_summary(
     anchor_star_label: str | None,
     panel_summary: tuple[str, tuple[str, str], int] | None = None,
     animation_age: int | None = None,
+    highlight_color: int | None = None,
 ) -> None:
     tool_left = tool_button_rects(pyxel.width, pyxel.height)["time"][0]
     x = 8
@@ -520,6 +521,8 @@ def draw_selected_constellation_summary(
     if animation_age is not None and animation_age < 24:
         progress = max(0.0, min(1.0, animation_age / 23.0))
         y -= int((1.0 - progress) * (1.0 - progress) * 7)
+    if highlight_color is not None:
+        pyxel.rectb(x - 1, y - 1, w + 2, h + 2, highlight_color)
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 1)
     if panel_summary is not None:
@@ -558,7 +561,9 @@ def _draw_summary_panel_sparkles(rect: tuple[int, int, int, int], age: int) -> N
         py = int(y + ry * h + dy * drift)
         if not (0 <= px < pyxel.width and 0 <= py < pyxel.height):
             continue
-        if (age + index) % 3 == 0:
+        if (age + index) % 5 == 0:
+            _draw_diagonal_sparkle(px, py, color)
+        elif (age + index) % 3 == 0:
             _sparkle_pset(px, py, 7)
             _sparkle_pset(px - 1, py, color)
             _sparkle_pset(px + 1, py, color)
@@ -571,6 +576,14 @@ def _draw_summary_panel_sparkles(rect: tuple[int, int, int, int], age: int) -> N
 def _sparkle_pset(x: int, y: int, color: int) -> None:
     if 0 <= x < pyxel.width and 0 <= y < pyxel.height:
         pyxel.pset(x, y, color)
+
+
+def _draw_diagonal_sparkle(x: int, y: int, color: int) -> None:
+    _sparkle_pset(x, y, 7)
+    _sparkle_pset(x - 1, y - 1, color)
+    _sparkle_pset(x + 1, y - 1, color)
+    _sparkle_pset(x - 1, y + 1, color)
+    _sparkle_pset(x + 1, y + 1, color)
 
 
 def _constellation_summary_lines(
@@ -859,6 +872,24 @@ def draw_focused_moon(point: tuple[float, float], moon: MoonState, language: Lan
     line_x = label_x - 3 if label_x > x else label_x + width + 3
     pyxel.line(x + 9 if label_x > x else x - 9, y, line_x, label_y + 6, 10)
     draw_display_text(label_x, label_y, label, 10)
+
+
+def focused_moon_hit_rect(point: tuple[float, float], moon: MoonState, language: Language) -> tuple[int, int, int, int]:
+    x = int(point[0])
+    y = int(point[1])
+    phase = int(round(moon.illumination * 100.0))
+    label = f"月 {phase}%" if language == "ja" else f"MOON {phase}%"
+    width = display_text_width(label)
+    label_x = x + 14
+    if label_x + width > pyxel.width - 4:
+        label_x = x - width - 14
+    label_x = max(4, min(pyxel.width - width - 4, label_x))
+    label_y = max(4, min(pyxel.height - 18, y - 7))
+    x1 = min(label_x - 6, x - 12)
+    y1 = min(label_y - 6, y - 12)
+    x2 = max(label_x + width + 6, x + 12)
+    y2 = max(label_y + 20, y + 12)
+    return (x1, y1, x2 - x1, y2 - y1)
 
 
 def draw_meteor_event(event_view: MeteorEventView, language: Language) -> None:
