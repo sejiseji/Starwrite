@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-# Sky-feature summaries imported from starwrite_sky_feature_descriptions_16.json.
+# Sky-feature summaries imported from reviewed Starwrite feature description JSON files.
 # Keep these descriptions source-authored.
 
 SKY_FEATURE_DESCRIPTIONS: dict[str, dict[str, tuple[str, str]]] = {'SUMMER_TRIANGLE': {'ja': ('ベガ・デネブ・アルタイルを結ぶ。', '夏の天の川をまたぐ大きな三角。'),
@@ -48,6 +48,18 @@ SKY_FEATURE_DESCRIPTIONS: dict[str, dict[str, tuple[str, str]]] = {'SUMMER_TRIAN
  'PEACOCK_TAIL': {'ja': ('くじゃく座の星が尾羽の広がりを作る。', '南天で扇のような姿を探せる。'),
                   'en': ('Pavo stars suggest a spread tail.', 'A faint fan opens in the south.')},
  'ARGO_SHIP': {'ja': ('りゅうこつ・とも・ほ座を大船として結ぶ。', '失われたアルゴー船の名残を見る。'),
-               'en': ("Carina, Puppis, Vela recall Argo.", 'The old ship survives in pieces.')},
+               'en': ('Carina, Puppis, Vela recall Argo.', 'The old ship survives in pieces.')},
  'MAGELLAN_CLOUD_REGION': {'ja': ('南天に浮かぶ二つの淡い銀河の領域。', '肉眼でも雲のように見えることがある。'),
-                           'en': ('Two faint galaxies float south.', 'They can appear cloudlike to eyes.')}}
+                           'en': ('Two faint galaxies float south.', 'They can appear cloudlike to eyes.')},
+ 'SICKLE_OF_LEO': {'ja': ('ししの頭から胸を鎌形にたどる。', 'レグルスが柄の下で明るく光る。'),
+                   'en': ("A curved sickle marks Leo's front.", 'Regulus shines at its lower end.')},
+ 'HYADES': {'ja': ('おうしの顔をV字に描く星の群れ。', 'アルデバランが手前で赤く輝く。'),
+            'en': ("A V-shape forms Taurus' face.", 'Aldebaran glows red in front.')},
+ 'PLEIADES': {'ja': ('青白い星が小さく密集する星団。', '冬の空で昴の名でも親しまれる。'),
+              'en': ('Blue-white stars huddle tightly.', 'The Seven Sisters shine in winter.')},
+ 'CIRCLET_OF_PISCES': {'ja': ('うお座西側の星が小さな輪を描く。', '淡い魚の頭を探す手がかりになる。'),
+                       'en': ('A small ring marks western Pisces.', 'It helps trace one faint fish.')},
+ 'WATER_JAR': {'ja': ('四つほどの星が水瓶の口を形づくる。', 'そこから南へ水の流れをたどれる。'),
+               'en': ('A small group forms the water jar.', 'A star stream falls south from it.')},
+ 'KEYSTONE_OF_HERCULES': {'ja': ('四つの星が胴体に四辺形をつくる。', '球状星団M13を探す目印にもなる。'),
+                          'en': ("Four stars frame Hercules' torso.", 'It also guides the way to M13.')}}

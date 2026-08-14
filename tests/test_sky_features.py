@@ -23,7 +23,7 @@ class SkyFeatureTests(unittest.TestCase):
         self.assertEqual(len(ids), len(set(ids)))
 
     def test_feature_edges_use_declared_named_stars(self) -> None:
-        self.assertGreaterEqual(len(ASTERISMS), 22)
+        self.assertGreaterEqual(len(ASTERISMS), 28)
         for feature in ASTERISMS:
             star_ids = set(feature.star_ids)
             self.assertTrue(star_ids <= set(STAR_NAMES), feature.id)
@@ -59,6 +59,8 @@ class SkyFeatureTests(unittest.TestCase):
         self.assertEqual(sky_feature_name(features["SCORPIUS_HOOK"], "ja"), "さそりの釣り針")
         self.assertEqual(sky_feature_name(features["FALSE_CROSS"], "en"), "False Cross")
         self.assertEqual(sky_feature_name(paths["MAGELLAN_CLOUD_REGION"], "ja"), "マゼラン雲の領域")
+        self.assertEqual(sky_feature_name(features["PLEIADES"], "ja"), "プレアデス星団")
+        self.assertEqual(sky_feature_name(features["KEYSTONE_OF_HERCULES"], "en"), "Keystone of Hercules")
 
 
 if __name__ == "__main__":

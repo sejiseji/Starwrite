@@ -401,6 +401,35 @@ NAMED_STARS: tuple[Star, ...] = (
     star_from_hours(200303, 7.6970, -72.6061, 3.93, 0.15),  # Zeta Volantis
     star_from_hours(200304, 7.2805, -67.9572, 3.98, 1.04),  # Delta Volantis
     star_from_hours(200305, 9.0408, -66.3958, 4.00, 0.28),  # Alpha Volantis
+    # Feature support stars.
+    star_from_hours(200401, 10.1222, 16.7627, 3.52, -0.03),  # Eta Leonis
+    star_from_hours(200402, 10.2782, 23.4173, 3.44, 0.31),  # Zeta Leonis
+    star_from_hours(200403, 9.8794, 26.0069, 3.88, 1.22),  # Mu Leonis
+    star_from_hours(200404, 9.7642, 23.7743, 2.98, 0.81),  # Epsilon Leonis
+    star_from_hours(200405, 4.3823, 17.5425, 3.76, 0.98),  # Delta1 Tauri
+    star_from_hours(200406, 4.4769, 19.1804, 3.53, 1.01),  # Epsilon Tauri
+    star_from_hours(200407, 4.4777, 15.9622, 3.84, 0.18),  # Theta Tauri
+    star_from_hours(200408, 3.7638, 24.3677, 3.87, -0.07),  # Maia
+    star_from_hours(200409, 3.7479, 24.1133, 3.70, -0.09),  # Electra
+    star_from_hours(200410, 3.7721, 23.9484, 4.18, -0.06),  # Merope
+    star_from_hours(200411, 3.7532, 24.4673, 4.30, -0.06),  # Taygeta
+    star_from_hours(200412, 3.7467, 24.2895, 5.45, -0.05),  # Celaeno
+    star_from_hours(200413, 3.7651, 24.5546, 5.76, -0.04),  # Sterope
+    star_from_hours(200414, 3.8194, 24.0534, 3.62, -0.06),  # Atlas
+    star_from_hours(200415, 3.8198, 24.1368, 5.05, -0.08),  # Pleione
+    star_from_hours(200416, 23.2861, 3.2823, 3.70, 0.92),  # Gamma Piscium
+    star_from_hours(200417, 23.3390, 5.3813, 5.05, 1.05),  # 7 Piscium
+    star_from_hours(200418, 23.4661, 6.3791, 4.27, 1.07),  # Theta Piscium
+    star_from_hours(200419, 23.6658, 5.6263, 4.13, 0.50),  # Iota Piscium
+    star_from_hours(200420, 23.7008, 1.7800, 4.50, 1.00),  # Lambda Piscium
+    star_from_hours(200421, 23.7732, 3.4868, 5.04, 1.55),  # 19 Piscium
+    star_from_hours(200422, 22.4805, -0.0199, 3.65, 0.01),  # Zeta Aquarii
+    star_from_hours(200423, 22.5893, -0.1175, 4.04, 0.04),  # Eta Aquarii
+    star_from_hours(200424, 22.4213, 1.3774, 4.66, -0.13),  # Pi Aquarii
+    star_from_hours(200425, 17.2508, 36.8092, 3.16, 1.43),  # Pi Herculis
+    star_from_hours(200426, 16.7149, 38.9223, 3.48, 0.94),  # Eta Herculis
+    star_from_hours(200427, 16.6881, 31.6031, 2.81, 0.65),  # Zeta Herculis
+    star_from_hours(200428, 17.0048, 30.9264, 3.91, 0.95),  # Epsilon Herculis
 )
 
 STAR_NAMES: dict[int, str] = {
@@ -781,6 +810,35 @@ STAR_NAMES: dict[int, str] = {
     200303: 'Zeta Volantis',
     200304: 'Delta Volantis',
     200305: 'Alpha Volantis',
+    # Feature support stars.
+    200401: 'Eta Leonis',
+    200402: 'Zeta Leonis',
+    200403: 'Mu Leonis',
+    200404: 'Epsilon Leonis',
+    200405: 'Delta1 Tauri',
+    200406: 'Epsilon Tauri',
+    200407: 'Theta Tauri',
+    200408: 'Maia',
+    200409: 'Electra',
+    200410: 'Merope',
+    200411: 'Taygeta',
+    200412: 'Celaeno',
+    200413: 'Sterope',
+    200414: 'Atlas',
+    200415: 'Pleione',
+    200416: 'Gamma Piscium',
+    200417: '7 Piscium',
+    200418: 'Theta Piscium',
+    200419: 'Iota Piscium',
+    200420: 'Lambda Piscium',
+    200421: '19 Piscium',
+    200422: 'Zeta Aquarii',
+    200423: 'Eta Aquarii',
+    200424: 'Pi Aquarii',
+    200425: 'Pi Herculis',
+    200426: 'Eta Herculis',
+    200427: 'Zeta Herculis',
+    200428: 'Epsilon Herculis',
 }
 
 
