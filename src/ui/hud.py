@@ -346,6 +346,19 @@ def rotate_speed_control_rects(width: int, height: int) -> dict[str, tuple[int, 
     }
 
 
+def rotate_day_speed_control_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
+    letter_x, letter_y, letter_w, _letter_h = main_button_rects(width, height)["letter"]
+    panel_w = letter_w
+    panel_h = 44
+    x = letter_x
+    y = max(8, letter_y - panel_h - 8)
+    return {
+        "panel": (x, y, panel_w, panel_h),
+        "down": (x + 6, y + 20, 24, 20),
+        "up": (x + panel_w - 30, y + 20, 24, 20),
+    }
+
+
 def main_button_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
     gap = 6
     side = 8
@@ -996,11 +1009,17 @@ def draw_menu_button(opened: bool) -> None:
 
 
 def draw_rotate_speed_control(speed_level: int) -> None:
-    rects = rotate_speed_control_rects(pyxel.width, pyxel.height)
+    _draw_rotation_speed_control(rotate_speed_control_rects(pyxel.width, pyxel.height), "ROT-T", speed_level)
+
+
+def draw_rotate_day_speed_control(speed_level: int) -> None:
+    _draw_rotation_speed_control(rotate_day_speed_control_rects(pyxel.width, pyxel.height), "ROT-D", speed_level)
+
+
+def _draw_rotation_speed_control(rects: dict[str, tuple[int, int, int, int]], label: str, speed_level: int) -> None:
     x, y, w, h = rects["panel"]
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 10)
-    label = "ROT-T"
     draw_big_text(x + (w - text_width(label)) // 2, y + 3, label, 10)
     draw_button(rects["down"], "-", False)
     clamped_level = max(-3, min(3, speed_level))
@@ -1323,7 +1342,8 @@ def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int
         "time": (x, 34, button_w, button_h),
         "event": (x, 60, button_w, button_h),
         "rotate": (x, 86, button_w, button_h),
-        "reset": (x, 112, button_w, button_h),
+        "rotate_day": (x, 112, button_w, button_h),
+        "reset": (x, 138, button_w, button_h),
     }
 
 
@@ -1332,12 +1352,14 @@ def draw_tool_buttons(
     show_month_slider: bool,
     show_event_slider: bool,
     rotate_time: bool,
+    rotate_day: bool,
 ) -> None:
     rects = tool_button_rects(pyxel.width, pyxel.height)
     draw_button(rects["time"], "TIME", show_time_slider)
     draw_button(rects["month"], "DAY", show_month_slider)
     draw_button(rects["event"], "EVENT", show_event_slider)
     draw_button(rects["rotate"], "ROT-T", rotate_time)
+    draw_button(rects["rotate_day"], "ROT-D", rotate_day)
     draw_button(rects["reset"], "RESET", False)
 
 

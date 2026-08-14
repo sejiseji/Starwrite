@@ -66,6 +66,7 @@ from ui.hud import (
     draw_meteor_event,
     draw_menu_button,
     draw_menu_panel,
+    draw_rotate_day_speed_control,
     draw_rotate_speed_control,
     draw_selected_constellation_summary,
     draw_slider,
@@ -82,6 +83,7 @@ from ui.hud import (
     log_panel_rect,
     main_button_rects,
     panel_toggle_rects,
+    rotate_day_speed_control_rects,
     rotate_speed_control_rects,
     set_desktop_letter_text_mode,
     sky_feature_label_hit_rects,
@@ -157,6 +159,8 @@ def _is_desktop_view() -> bool:
 SCREEN_WIDTH, SCREEN_HEIGHT = _screen_size()
 DESKTOP_VIEW = _is_desktop_view()
 ROTATE_TIME_SPEEDS = {-3: -3600.0, -2: -1200.0, -1: -300.0, 0: 0.0, 1: 300.0, 2: 1200.0, 3: 3600.0}
+ROTATE_DAY_SPEEDS = {-3: -30.0, -2: -7.0, -1: -1.0, 0: 0.0, 1: 1.0, 2: 7.0, 3: 30.0}
+ROTATION_LIMIT = timedelta(days=365.25 * 20)
 
 
 def _storage():
@@ -222,6 +226,9 @@ class StarSkyApp:
         self.rotate_time = bool(settings.get("rotate_time", False))
         self.rotate_time_speed_level = int(settings.get("rotate_time_speed_level", 2))
         self.rotate_time_speed_level = max(-3, min(3, self.rotate_time_speed_level))
+        self.rotate_day = bool(settings.get("rotate_day", False))
+        self.rotate_day_speed_level = int(settings.get("rotate_day_speed_level", 1))
+        self.rotate_day_speed_level = max(-3, min(3, self.rotate_day_speed_level))
         self.sound_enabled = bool(settings.get("sound_enabled", True))
         self.bgm_enabled = bool(settings.get("bgm_enabled", True))
         self.language = normalize_language(settings.get("language", "en"))
@@ -264,8 +271,11 @@ class StarSkyApp:
         self.bgm_installed = False
         self.bgm_playing = False
         self.scheduled_ui_sounds: list[tuple[int, int]] = []
+        self.rotation_anchor_time: datetime | None = None
         if self.rotate_time:
             self._set_rotate_time(True)
+        if self.rotate_day:
+            self._set_rotate_day(True)
 
         set_desktop_letter_text_mode(DESKTOP_VIEW)
         pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, title="Starwrite Sky", fps=30)
@@ -306,6 +316,8 @@ class StarSkyApp:
         self._update_bgm()
         if self.ui_state == "SKY":
             self.clock.update(1.0 / 30.0)
+            self._update_rotate_day(1.0 / 30.0)
+            self._enforce_rotation_limit()
         self._update_pending_receive()
         self._update_scheduled_ui_sounds()
         self._handle_keys()
@@ -356,6 +368,7 @@ class StarSkyApp:
             self._set_rotate_time(not self.rotate_time)
         if pyxel.btnp(pyxel.KEY_M):
             self._set_rotate_time(False)
+            self._set_rotate_day(False)
             self.mode = "DATE" if self.mode == "TONIGHT" else "TONIGHT"
             self.clock.speed = 86400.0 if self.mode == "DATE" else 600.0
         if pyxel.btnp(pyxel.KEY_TAB):
@@ -492,6 +505,10 @@ class StarSkyApp:
                 next_state = not self.rotate_time
                 self._set_rotate_time(next_state)
                 self._play_ui_sound(SOUND_TOOL_ON if next_state else SOUND_LETTER_CLOSE)
+            elif key == "rotate_day":
+                next_state = not self.rotate_day
+                self._set_rotate_day(next_state)
+                self._play_ui_sound(SOUND_TOOL_ON if next_state else SOUND_LETTER_CLOSE)
             elif key == "reset":
                 self._reset_view()
                 self._play_ui_sound(SOUND_RESET)
@@ -499,6 +516,8 @@ class StarSkyApp:
         if self._handle_slider_click(point):
             return True
         if self.rotate_time and self._handle_rotate_speed_click(point):
+            return True
+        if self.rotate_day and self._handle_rotate_day_speed_click(point):
             return True
         if self._point_in_rect(point, menu_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
             self.menu_open = not self.menu_open
@@ -580,6 +599,16 @@ class StarSkyApp:
             return True
         return self._point_in_rect(point, rects["panel"])
 
+    def _handle_rotate_day_speed_click(self, point: tuple[int, int]) -> bool:
+        rects = rotate_day_speed_control_rects(SCREEN_WIDTH, SCREEN_HEIGHT)
+        if self._point_in_rect(point, rects["down"]):
+            self._change_rotate_day_speed(-1)
+            return True
+        if self._point_in_rect(point, rects["up"]):
+            self._change_rotate_day_speed(1)
+            return True
+        return self._point_in_rect(point, rects["panel"])
+
     def _handle_modal_click(self, point: tuple[int, int]) -> bool:
         if self._point_in_rect(point, back_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
             self._go_back()
@@ -633,6 +662,7 @@ class StarSkyApp:
 
     def _step_slider(self, label: str, direction: int) -> None:
         self._set_rotate_time(False)
+        self._set_rotate_day(False)
         before = self.clock.current_time
         before_tick = self._slider_tick_value(label, before)
         if label == "event":
@@ -651,6 +681,7 @@ class StarSkyApp:
 
     def _start_slider_drag(self, label: str, y: int) -> None:
         self._set_rotate_time(False)
+        self._set_rotate_day(False)
         self.active_slider = label
         self.slider_drag_start_y = y
         self.slider_drag_start_time = self.clock.current_time
@@ -660,11 +691,13 @@ class StarSkyApp:
     def _set_rotate_time(self, enabled: bool) -> None:
         self.rotate_time = enabled
         if enabled:
+            self._ensure_rotation_anchor()
             self.mode = "TONIGHT"
             self.clock.speed = ROTATE_TIME_SPEEDS[self.rotate_time_speed_level]
             self.clock.play()
         else:
             self.clock.pause()
+            self._clear_rotation_anchor_if_idle()
 
     def _change_rotate_speed(self, direction: int) -> None:
         next_level = max(-3, min(3, self.rotate_time_speed_level + direction))
@@ -675,6 +708,51 @@ class StarSkyApp:
         if self.rotate_time:
             self.clock.speed = ROTATE_TIME_SPEEDS[self.rotate_time_speed_level]
         self._play_ui_sound(SOUND_SLIDER_TICK)
+
+    def _set_rotate_day(self, enabled: bool) -> None:
+        self.rotate_day = enabled
+        if enabled:
+            self._ensure_rotation_anchor()
+        else:
+            self._clear_rotation_anchor_if_idle()
+
+    def _change_rotate_day_speed(self, direction: int) -> None:
+        next_level = max(-3, min(3, self.rotate_day_speed_level + direction))
+        if next_level == self.rotate_day_speed_level:
+            self._play_ui_sound(SOUND_LETTER_CLOSE)
+            return
+        self.rotate_day_speed_level = next_level
+        self._play_ui_sound(SOUND_SLIDER_TICK)
+
+    def _update_rotate_day(self, real_dt: float) -> None:
+        if self.rotate_day:
+            days = ROTATE_DAY_SPEEDS[self.rotate_day_speed_level] * real_dt
+            if days:
+                self.clock.add_days(days)
+
+    def _ensure_rotation_anchor(self) -> None:
+        if self.rotation_anchor_time is None:
+            self.rotation_anchor_time = self.clock.current_time
+
+    def _clear_rotation_anchor_if_idle(self) -> None:
+        if not self.rotate_time and not self.rotate_day:
+            self.rotation_anchor_time = None
+
+    def _enforce_rotation_limit(self) -> None:
+        if self.rotation_anchor_time is None or not (self.rotate_time or self.rotate_day):
+            return
+        upper = self.rotation_anchor_time + ROTATION_LIMIT
+        lower = self.rotation_anchor_time - ROTATION_LIMIT
+        if self.clock.current_time > upper:
+            self.clock.current_time = upper
+        elif self.clock.current_time < lower:
+            self.clock.current_time = lower
+        else:
+            return
+        self.rotate_time = False
+        self.rotate_day = False
+        self.clock.pause()
+        self.rotation_anchor_time = None
 
     def _update_slider_drag(self, y: int) -> None:
         if self.active_slider is None:
@@ -704,6 +782,7 @@ class StarSkyApp:
 
     def _advance_event(self, direction: int) -> bool:
         self._set_rotate_time(False)
+        self._set_rotate_day(False)
         event = adjacent_meteor_event(METEOR_SHOWERS, self.clock.current_time, direction)
         if event is None:
             return False
@@ -718,6 +797,7 @@ class StarSkyApp:
 
     def _reset_view(self) -> None:
         self._set_rotate_time(False)
+        self._set_rotate_day(False)
         self.clock.current_time = _current_observation_datetime()
         self.camera.yaw = 0.0
         self.camera.pitch = math.radians(45.0)
@@ -1230,6 +1310,8 @@ class StarSkyApp:
                 "show_event_slider": self.show_event_slider,
                 "rotate_time": self.rotate_time,
                 "rotate_time_speed_level": self.rotate_time_speed_level,
+                "rotate_day": self.rotate_day,
+                "rotate_day_speed_level": self.rotate_day_speed_level,
                 "sound_enabled": self.sound_enabled,
                 "bgm_enabled": self.bgm_enabled,
                 "language": self.language,
@@ -1297,7 +1379,7 @@ class StarSkyApp:
                 self.language,
             )
         else:
-            draw_compact_time(self.clock, self.show_month_slider, self.show_time_slider)
+            draw_compact_time(self.clock, self.show_month_slider or self.rotate_day, self.show_time_slider or self.rotate_time)
         draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected, self.language)
         if self.show_features:
             draw_sky_features(self.projected, self.projected_sky_paths, self.language, moon_light_level(self.moon.state))
@@ -1321,7 +1403,15 @@ class StarSkyApp:
             moon_point = moon_screen_point(self.moon.state, self.camera, SCREEN_WIDTH, SCREEN_HEIGHT)
             if moon_point is not None and self._point_near_center(moon_point, 46):
                 draw_focused_moon(moon_point, self.moon.state, self.language)
-        draw_tool_buttons(self.show_time_slider, self.show_month_slider, self.show_event_slider, self.rotate_time)
+        draw_tool_buttons(
+            self.show_time_slider,
+            self.show_month_slider,
+            self.show_event_slider,
+            self.rotate_time,
+            self.rotate_day,
+        )
+        if self.rotate_day:
+            draw_rotate_day_speed_control(self.rotate_day_speed_level)
         if self.rotate_time:
             draw_rotate_speed_control(self.rotate_time_speed_level)
         if self.show_time_slider:
