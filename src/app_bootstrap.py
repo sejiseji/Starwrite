@@ -204,9 +204,14 @@ class BootstrapApp:
     def __init__(self) -> None:
         self.width, self.height = _screen_size()
         settings = _load_settings()
+        setup_is_complete = bool(settings.get("setup_complete"))
+        setup_requested = _setup_requested()
         self.language = settings.get("language") if settings.get("language") in ("ja", "en") else _detect_language()
-        self.country_index = COUNTRIES.index(settings.get("location_country")) if settings.get("location_country") in COUNTRIES else 0
-        self.city_index = self._city_index_for(settings.get("location_city"))
+        default_country = "JP" if self.language == "ja" else "US"
+        saved_country = settings.get("location_country") if setup_is_complete or setup_requested else default_country
+        self.country_index = COUNTRIES.index(saved_country) if saved_country in COUNTRIES else COUNTRIES.index(default_country)
+        saved_city = settings.get("location_city") if setup_is_complete or setup_requested else None
+        self.city_index = self._city_index_for(saved_city)
         self.country_page = self.country_index // LIST_PAGE_SIZE
         self.city_page = self.city_index // LIST_PAGE_SIZE
         self.prefetch_files = list(PREFETCH_CORE)
@@ -215,7 +220,8 @@ class BootstrapApp:
         self.prefetch_index = 0
         self.loading_frames = 0
         self.main_app = None
-        self.state = "COUNTRY" if _setup_requested() or not settings.get("setup_complete") else "LOADING"
+        self.state = "COUNTRY" if setup_requested or not setup_is_complete else "LOADING"
+        self.accept_input_frame = 18
         pyxel.init(self.width, self.height, title="Starwrite Sky", fps=30)
         pyxel.mouse(True)
         pyxel.run(self.update, self.draw)
@@ -275,6 +281,10 @@ class BootstrapApp:
             pass
 
     def _handle_setup_input(self) -> None:
+        if pyxel.frame_count < self.accept_input_frame:
+            return
+        if pyxel.btn(pyxel.MOUSE_BUTTON_LEFT) and not pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            return
         if not pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
             return
         x, y = pyxel.mouse_x, pyxel.mouse_y
@@ -305,6 +315,7 @@ class BootstrapApp:
                 self.city_index = 0
                 self.city_page = 0
                 self.state = "CITY"
+                self.accept_input_frame = pyxel.frame_count + 6
                 return
 
     def _handle_city_input(self, x: int, y: int) -> None:
@@ -322,11 +333,13 @@ class BootstrapApp:
             if city_index < len(self.cities) and self._hit(x, y, rect):
                 self.city_index = city_index
                 self.state = "CONFIRM"
+                self.accept_input_frame = pyxel.frame_count + 6
                 return
 
     def _handle_confirm_input(self, x: int, y: int) -> None:
         if self._hit(x, y, self._rect("back")):
             self.state = "CITY"
+            self.accept_input_frame = pyxel.frame_count + 6
         elif self._hit(x, y, self._rect("start")):
             self._save_selection()
             self.state = "LOADING"
