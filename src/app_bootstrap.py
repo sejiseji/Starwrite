@@ -400,12 +400,8 @@ class BootstrapApp:
     def _start_main_app(self) -> None:
         self.state = "MAIN"
         _prepare_import_layout()
-        try:
-            from src.app_pyxres_sounds import StarSkyApp
-        except ModuleNotFoundError as error:
-            if error.name not in ("src", "src.app_pyxres_sounds"):
-                raise
-            from app_pyxres_sounds import StarSkyApp
+        os.path.exists(os.path.join(os.getcwd(), "src", "app_pyxres_sounds.py"))
+        from app_pyxres_sounds import StarSkyApp
 
         self.main_app = StarSkyApp(start_pyxel=False)
 
