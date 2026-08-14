@@ -12,6 +12,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import pyxel
 
 from audio.bgm import install_starwrite_bgm, play_starwrite_bgm, stop_starwrite_bgm
+from audio.ui_sfx import StarwriteUISfx
 from astronomy.coordinates import equatorial_to_enu
 from astronomy.catalog import Constellation
 from astronomy.events import MeteorShowerEvent
@@ -242,6 +243,7 @@ class StarSkyApp:
         self.capture_ready = False
         self.ready_signaled = False
         self.audio_ready = False
+        self.ui_sfx = StarwriteUISfx()
         self.bgm_installed = False
         self.bgm_playing = False
         self.scheduled_ui_sounds: list[tuple[int, int]] = []
@@ -729,6 +731,7 @@ class StarSkyApp:
         self.selected_index = (self.selected_index + delta) % len(CONSTELLATIONS)
         self.selected_star_id = None
         self.selected_feature_id = None
+        self._play_selection_sound("constellation")
 
     def _selected_constellation_anchor_label(self) -> str | None:
         star_id = self.selected_constellation.anchor_star_id
@@ -749,6 +752,7 @@ class StarSkyApp:
         if self._select_constellation_label_at_point(point):
             self.selected_star_id = None
             self.selected_feature_id = None
+            self._play_selection_sound("constellation")
             return True
         star_id = self._nearest_constellation_star_id(point, STAR_TAP_RADIUS_PX)
         if star_id is None:
@@ -758,6 +762,7 @@ class StarSkyApp:
                 self.selected_index = index
                 self.selected_star_id = None
                 self.selected_feature_id = None
+                self._play_selection_sound("constellation")
                 return True
         return False
 
@@ -774,6 +779,7 @@ class StarSkyApp:
             return False
         self.selected_star_id = star_id
         self.selected_feature_id = None
+        self._play_selection_sound("star")
         return True
 
     def _select_sky_feature_at_point(self, point: tuple[int, int]) -> bool:
@@ -783,6 +789,7 @@ class StarSkyApp:
             if self._point_in_rect(point, rect):
                 self.selected_feature_id = feature_id
                 self.selected_star_id = None
+                self._play_selection_sound("feature")
                 return True
         return False
 
@@ -963,13 +970,21 @@ class StarSkyApp:
                 pyxel.load(resource)
                 self._setup_audio_fallback_sounds()
                 self._install_bgm()
+                self._install_selection_sfx()
                 self.audio_ready = True
                 return
             except Exception:
                 continue
         self._setup_audio_fallback_sounds()
         self._install_bgm()
+        self._install_selection_sfx()
         self.audio_ready = True
+
+    def _install_selection_sfx(self) -> None:
+        try:
+            self.ui_sfx.install()
+        except Exception:
+            pass
 
     def _install_bgm(self) -> None:
         try:
@@ -993,6 +1008,21 @@ class StarSkyApp:
             self._setup_audio()
         try:
             pyxel.play(UI_SOUND_CHANNEL, sound_id)
+        except Exception:
+            pass
+
+    def _play_selection_sound(self, kind: str) -> None:
+        if not self.sound_enabled:
+            return
+        if not self.audio_ready:
+            self._setup_audio()
+        try:
+            if kind == "constellation":
+                self.ui_sfx.constellation()
+            elif kind == "star":
+                self.ui_sfx.star()
+            elif kind == "feature":
+                self.ui_sfx.feature()
         except Exception:
             pass
 
