@@ -36,7 +36,7 @@ http://localhost:8000/
 The browser entrypoint uses Pyxel Web custom tags:
 
 ```html
-<pyxel-run root="." name="src/app_v2.py"></pyxel-run>
+<pyxel-run root="." name="src/app_pyxres_sounds.py"></pyxel-run>
 ```
 
 ## Controls
@@ -129,8 +129,11 @@ Two publishing options are supported:
 
 - Enable GitHub Pages from the repository branch/root.
 
-The deployed root serves `index.html`, which loads Pyxel Web from jsDelivr and
-runs `src/app_v2.py`.
+The deployed root serves `index.html`, which loads the vendored Pyxel Web
+wrapper from `assets/vendor/pyxel/pyxel.js` and runs
+`src/app_pyxres_sounds.py`. Pyxel's wheel, CSS, startup images, and import hook
+are vendored with the project to reduce startup fetches from the Pyxel CDN.
+Pyodide itself is still loaded from its upstream CDN in this prototype.
 
 ## Mobile Display
 
