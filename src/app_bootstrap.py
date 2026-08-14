@@ -134,10 +134,9 @@ COUNTRY_LABELS = {
 LIST_PAGE_SIZE = 6
 INPUT_COOLDOWN_FRAMES = 12
 INITIAL_INPUT_LOCK_FRAMES = 24
-SETUP_PRESS_FRAMES = 10
-SETUP_TRANSITION_DELAY_FRAMES = 9
-SETUP_PARTICLE_FRAMES = 24
-SETUP_PARTICLE_COUNT = 18
+SETUP_TRANSITION_DELAY_FRAMES = 5
+SETUP_PARTICLE_FRAMES = 14
+SETUP_PARTICLE_COUNT = 24
 BOOT_FONT = {
     "A": ("01110", "10001", "10001", "11111", "10001", "10001", "10001"),
     "B": ("11110", "10001", "10001", "11110", "10001", "10001", "11110"),
@@ -522,12 +521,6 @@ class BootstrapApp:
             if pyxel.frame_count - start_frame <= SETUP_PARTICLE_FRAMES
         ]
 
-    def _button_press_offset(self, rect: tuple[int, int, int, int]) -> int:
-        for effect_rect, start_frame in self.press_effects:
-            if effect_rect == rect and 0 <= pyxel.frame_count - start_frame <= SETUP_PRESS_FRAMES:
-                return 2
-        return 0
-
     def _ensure_ja_requirements(self) -> None:
         changed = False
         for path in PREFETCH_JA:
@@ -789,18 +782,10 @@ class BootstrapApp:
 
     def _button(self, rect: tuple[int, int, int, int], label: str, active: bool, color: int, scale: int = 1) -> None:
         x, y, w, h = rect
-        offset = self._button_press_offset(rect)
-        if offset:
-            pyxel.rect(x, y, w, h, 0)
-            pyxel.rectb(x, y, w, h, 1)
-        draw_x = x + offset
-        draw_y = y + offset
-        draw_w = w - offset
-        draw_h = h - offset
-        pyxel.rect(draw_x, draw_y, draw_w, draw_h, 5 if active else 1)
-        pyxel.rectb(draw_x, draw_y, draw_w, draw_h, 10 if active else 13)
+        pyxel.rect(x, y, w, h, 5 if active else 1)
+        pyxel.rectb(x, y, w, h, 10 if active else 13)
         text = self._fit_text(label, w - 12, scale)
-        self._center_text(text, draw_y + max(3, (draw_h - 7 * scale) // 2), color, draw_x, draw_w, scale)
+        self._center_text(text, y + max(3, (h - 7 * scale) // 2), color, x, w, scale)
 
     def _draw_setup_press_particles(self) -> None:
         for rect, start_frame in self.press_effects:
@@ -808,13 +793,13 @@ class BootstrapApp:
             if age < 0 or age > SETUP_PARTICLE_FRAMES:
                 continue
             x, y, w, h = rect
-            progress = age / SETUP_PARTICLE_FRAMES
-            color = 10 if age < 10 else 9 if age < 18 else 7
+            self._draw_setup_selection_frame(rect, age)
+            color = 10 if age < 5 else 7 if age < 10 else 9
             for index in range(SETUP_PARTICLE_COUNT):
                 side = index % 4
                 fraction = ((index * 37 + start_frame * 11) % 100) / 100.0
-                outward = int(3 + progress * (12 + (index % 5) * 2))
-                drift = ((age * (index % 3 + 1) + index * 5) % 9) - 4
+                outward = 3 + age * 2 + (index % 4)
+                drift = ((age * 3 + index * 5) % 7) - 3
                 if side == 0:
                     px = int(x + fraction * w) + drift
                     py = y - outward
@@ -828,6 +813,15 @@ class BootstrapApp:
                     px = x - outward
                     py = int(y + fraction * h) - drift
                 self._draw_setup_particle(px, py, color, index)
+
+    @staticmethod
+    def _draw_setup_selection_frame(rect: tuple[int, int, int, int], age: int) -> None:
+        x, y, w, h = rect
+        grow = 1 if age < 4 else 0
+        pyxel.rectb(x - 2 - grow, y - 2 - grow, w + 4 + grow * 2, h + 4 + grow * 2, 10)
+        pyxel.rectb(x - 3 - grow, y - 3 - grow, w + 6 + grow * 2, h + 6 + grow * 2, 9)
+        if age < 6:
+            pyxel.rectb(x - 4 - grow, y - 4 - grow, w + 8 + grow * 2, h + 8 + grow * 2, 7)
 
     @staticmethod
     def _draw_setup_particle(x: int, y: int, color: int, index: int) -> None:
