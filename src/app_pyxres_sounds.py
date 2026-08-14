@@ -249,6 +249,7 @@ class StarSkyApp:
         self.exchange_logs: tuple[ExchangeLog, ...] = letter_store["logs"]
         self.seen_letter_ids: set[str] = letter_store["seen_letter_ids"]
         self.unread_log_id: str | None = letter_store["unread_log_id"]
+        self._ensure_letters_loaded()
         self.pending_capture: SkyCapture | None = None
         self.pending_letter_id: str | None = None
         self.pending_deliver_frame: int | None = None

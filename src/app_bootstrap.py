@@ -68,6 +68,11 @@ PREFETCH_INFO = (
     "src/data/sky_feature_descriptions.py",
     "src/data/star_descriptions.py",
 )
+PREFETCH_LETTERS = (
+    "src/data/preset_letters_extra.py",
+    "src/data/preset_letters_special.py",
+    "src/data/preset_letters.py",
+)
 PREFETCH_JA = ("src/data/font_jp.py",)
 PRELOAD_INFO_MODULES = (
     "src.data.constellation_descriptions",
@@ -75,6 +80,7 @@ PRELOAD_INFO_MODULES = (
     "src.data.sky_feature_descriptions",
     "src.data.star_descriptions",
 )
+PRELOAD_LETTER_MODULES = ("src.data.preset_letters",)
 PRELOAD_MAIN_MODULES = ("src.app_pyxres_sounds",)
 PRELOAD_JA_MODULES = ("src.data.font_jp",)
 CITIES: dict[str, tuple[tuple[str, float, float], ...]] = {
@@ -375,8 +381,8 @@ class BootstrapApp:
         self.city_index = self._city_index_for(saved_city)
         self.country_page = self.country_index // LIST_PAGE_SIZE
         self.city_page = self.city_index // LIST_PAGE_SIZE
-        self.prefetch_files = list(PREFETCH_CORE + PREFETCH_INFO)
-        self.preload_modules = list(PRELOAD_INFO_MODULES + PRELOAD_MAIN_MODULES)
+        self.prefetch_files = list(PREFETCH_CORE + PREFETCH_INFO + PREFETCH_LETTERS)
+        self.preload_modules = list(PRELOAD_INFO_MODULES + PRELOAD_LETTER_MODULES + PRELOAD_MAIN_MODULES)
         if self.language == "ja":
             self.prefetch_files.extend(PREFETCH_JA)
             self.preload_modules.extend(PRELOAD_JA_MODULES)
