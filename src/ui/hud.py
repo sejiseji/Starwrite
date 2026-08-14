@@ -1406,11 +1406,14 @@ def draw_tool_buttons(
 
 def slider_rects(width: int, height: int, side: str) -> dict[str, tuple[int, int, int, int]]:
     panel_w = 34
-    panel_h = min(440, max(230, height - 210))
     x = width - panel_w - 6 if side == "right" else 6
-    y = max(92, (height - panel_h) // 2)
+    _reset_x, reset_y, _reset_w, reset_h = tool_button_rects(width, height)["reset"]
+    _rot_x, rot_y, _rot_w, _rot_h = rotate_speed_control_rects(width, height)["panel"]
+    y = reset_y + reset_h + 22
+    panel_bottom = rot_y - 8
+    panel_h = max(180, panel_bottom - y)
     event_panel_h = 92
-    event_y = max(120, (height - event_panel_h) // 2)
+    event_y = y
     return {
         "time_minus": (x + 5, y + 8, 24, 22),
         "time_track": (x + 15, y + 34, 4, panel_h - 68),
