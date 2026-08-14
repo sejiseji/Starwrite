@@ -333,6 +333,23 @@ def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
     return ((width - button_w) // 2, main_top - button_h - 8, button_w, button_h)
 
 
+def rotate_speed_control_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
+    menu_x, menu_y, menu_w, menu_h = menu_button_rect(width, height)
+    panel_w = 118
+    panel_h = 38
+    gap = 8
+    x = menu_x + menu_w + gap
+    if x + panel_w > width - 8:
+        x = menu_x - gap - panel_w
+    x = max(8, min(width - panel_w - 8, x))
+    y = max(8, menu_y + menu_h // 2 - panel_h // 2)
+    return {
+        "panel": (x, y, panel_w, panel_h),
+        "down": (x + 5, y + 17, 20, 17),
+        "up": (x + panel_w - 25, y + 17, 20, 17),
+    }
+
+
 def main_button_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
     gap = 6
     side = 8
@@ -980,6 +997,19 @@ def _hud_lines(
 
 def draw_menu_button(opened: bool) -> None:
     draw_button(menu_button_rect(pyxel.width, pyxel.height), "CLOSE" if opened else "MENU", True)
+
+
+def draw_rotate_speed_control(speed_level: int) -> None:
+    rects = rotate_speed_control_rects(pyxel.width, pyxel.height)
+    x, y, w, h = rects["panel"]
+    pyxel.rect(x, y, w, h, 0)
+    pyxel.rectb(x, y, w, h, 10)
+    label = "ROT-T"
+    draw_big_text(x + (w - text_width(label)) // 2, y + 3, label, 10)
+    draw_button(rects["down"], "<", False)
+    value = f"SPD {max(1, min(3, speed_level))}"
+    draw_big_text(x + (w - text_width(value)) // 2, y + 21, value, 7)
+    draw_button(rects["up"], ">", False)
 
 
 def draw_menu_panel(
