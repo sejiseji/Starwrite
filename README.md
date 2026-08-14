@@ -131,7 +131,7 @@ Two publishing options are supported:
 
 The deployed root serves `index.html`, which loads the vendored Pyxel Web
 wrapper from `assets/vendor/pyxel/pyxel.js` and runs
-`src/app_bootstrap.py`. The bootstrap app shows the first Pyxel screen quickly,
+`app_bootstrap.py`. The bootstrap app shows the first Pyxel screen quickly,
 handles the initial language/city setup, starts source-file prefetching, and
 then hands control to `src/app_pyxres_sounds.py`. Pyxel's wheel, CSS, startup
 images, and import hook are vendored with the project to reduce startup fetches

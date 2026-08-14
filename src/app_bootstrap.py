@@ -400,7 +400,12 @@ class BootstrapApp:
     def _start_main_app(self) -> None:
         self.state = "MAIN"
         _prepare_import_layout()
-        from app_pyxres_sounds import StarSkyApp
+        try:
+            from src.app_pyxres_sounds import StarSkyApp
+        except ModuleNotFoundError as error:
+            if error.name not in ("src", "src.app_pyxres_sounds"):
+                raise
+            from app_pyxres_sounds import StarSkyApp
 
         self.main_app = StarSkyApp(start_pyxel=False)
 
@@ -551,5 +556,5 @@ class BootstrapApp:
                         pyxel.rect(cursor_x + gx * scale, y + gy * scale, scale, scale, color)
             cursor_x += 6 * scale
 
-
-BootstrapApp()
+if __name__ == "__main__":
+    BootstrapApp()
