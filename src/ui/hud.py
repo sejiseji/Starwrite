@@ -1126,12 +1126,12 @@ def _draw_letter_fade_mask(rect: tuple[int, int, int, int], age: int, direction:
     if visible >= 1.0:
         return
     if visible < 0.18:
-        pyxel.rect(x + 1, y + 1, w - 2, h - 2, 0)
+        pyxel.rect(x, y, w, h, 0)
         return
     step = 2 if visible < 0.48 else 3 if visible < 0.76 else 5
     phase = age % step
-    for yy in range(y + 1, y + h - 1, step):
-        for xx in range(x + 1 + ((yy + phase) % step), x + w - 1, step):
+    for yy in range(y, y + h, step):
+        for xx in range(x + ((yy + phase) % step), x + w, step):
             pyxel.pset(xx, yy, 0)
 
 
