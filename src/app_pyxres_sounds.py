@@ -281,6 +281,7 @@ class StarSkyApp:
         self.bgm_playing = False
         self.scheduled_ui_sounds: list[tuple[int, int]] = []
         self.rotation_anchor_time: datetime | None = None
+        self._select_initial_visible_constellation()
         if self.rotate_time:
             self._set_rotate_time(True)
         if self.rotate_camera:
@@ -295,6 +296,82 @@ class StarSkyApp:
     @property
     def selected_constellation(self):
         return CONSTELLATIONS[self.selected_index]
+
+    def _select_initial_visible_constellation(self) -> None:
+        projected = project_visible_stars(
+            STARS,
+            self.observer,
+            self.clock.current_time,
+            self.camera,
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT,
+        )
+        self.projected = projected
+        current_score = self._initial_constellation_score(self.selected_constellation, projected)
+        if current_score >= 250.0:
+            return
+
+        best_index = self.selected_index
+        best_score = current_score
+        for index, constellation in enumerate(CONSTELLATIONS):
+            score = self._initial_constellation_score(constellation, projected)
+            if score > best_score:
+                best_index = index
+                best_score = score
+        if best_score < 0.0 or best_index == self.selected_index:
+            return
+        self.selected_index = best_index
+        self.selected_star_id = None
+        self.selected_feature_id = None
+        self.selected_moon = False
+
+    def _initial_constellation_score(
+        self,
+        constellation: Constellation,
+        projected: dict[int, ScreenPoint],
+    ) -> float:
+        points = [projected.get(star_id) for star_id in constellation.main_star_ids]
+        canvas_points = [
+            point
+            for point in points
+            if point is not None and 0 <= point.x <= SCREEN_WIDTH and 0 <= point.y <= SCREEN_HEIGHT
+        ]
+        required_points = 1 if len(constellation.main_star_ids) <= 1 else 2
+        if len(canvas_points) < required_points:
+            return -1.0
+
+        sky_right = SCREEN_WIDTH - 72
+        sky_bottom = SCREEN_HEIGHT - 104
+        safe_points = [
+            point
+            for point in canvas_points
+            if 12 <= point.x <= sky_right and 12 <= point.y <= sky_bottom
+        ]
+        if not safe_points:
+            return -1.0
+
+        xs = [point.x for point in canvas_points]
+        ys = [point.y for point in canvas_points]
+        span = max(max(xs) - min(xs), max(ys) - min(ys))
+        center_x = sum(point.x for point in canvas_points) / len(canvas_points)
+        center_y = sum(point.y for point in canvas_points) / len(canvas_points)
+        target_x = (SCREEN_WIDTH - 72) * 0.5
+        target_y = (SCREEN_HEIGHT - 104) * 0.5
+        center_distance = math.hypot(center_x - target_x, center_y - target_y)
+
+        score = len(canvas_points) * 80.0 + len(safe_points) * 45.0
+        score += min(span, 160.0) * 0.7
+        score += max(0.0, 260.0 - center_distance)
+        if can_capture(constellation, projected, SCREEN_WIDTH, SCREEN_HEIGHT, margin=24, min_span=14.0):
+            score += 1000.0
+        anchor_id = constellation.anchor_star_id
+        if anchor_id is not None:
+            anchor = projected.get(anchor_id)
+            if anchor in safe_points:
+                score += 180.0
+            elif anchor in canvas_points:
+                score += 80.0
+        return score
 
     def _load_capture(self) -> SkyCapture | None:
         data = _load_json(CAPTURE_KEY)
