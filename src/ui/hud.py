@@ -417,7 +417,7 @@ def log_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
 
 def menu_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     panel_w = min(width - 16, 244)
-    panel_h = 208
+    panel_h = 178
     button_x, button_y, _, _ = menu_button_rect(width, height)
     x = max(8, min(width - panel_w - 8, button_x + 35 - panel_w // 2))
     return (x, max(8, button_y - panel_h - 6), panel_w, panel_h)
@@ -435,11 +435,10 @@ def panel_toggle_rects(width: int, height: int) -> dict[str, tuple[int, int, int
         "info": (x + 8, y + 34, button_w, 24),
         "guides": (x + 12 + button_w, y + 34, button_w, 24),
         "constellations": (x + 16 + button_w * 2, y + 34, button_w, 24),
-        "features": (x + 8, y + 64, min(112, w - 16), 24),
-        "side": (x + 8, y + 104, min(96, w - 16), 24),
-        "language": (x + 8, y + 176, 72, 24),
-        "sound": (x + 90, y + 176, 62, 24),
-        "bgm": (x + 162, y + 176, 62, 24),
+        "side": (x + 8, y + 74, min(96, w - 16), 24),
+        "language": (x + 8, y + 146, 72, 24),
+        "sound": (x + 90, y + 146, 62, 24),
+        "bgm": (x + 162, y + 146, 62, 24),
     }
 
 
@@ -1033,7 +1032,6 @@ def draw_menu_panel(
     show_info: bool,
     show_guides: bool,
     show_constellations: bool,
-    show_features: bool,
     sound_enabled: bool,
     bgm_enabled: bool,
     slider_side: str,
@@ -1049,19 +1047,18 @@ def draw_menu_panel(
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["info"], "INFO", show_info)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["guides"], "GUIDE", show_guides)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["constellations"], "CONST", show_constellations)
-    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["features"], "FEATURE", show_features)
-    draw_big_text(x + 8, y + 93, "SLIDER", 7)
+    draw_big_text(x + 8, y + 63, "SLIDER", 7)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["side"], slider_side.upper(), True)
-    draw_big_text(x + 8, y + 135, f"EVENT SRC {event_source_label}", 13)
-    draw_big_text(x + 8, y + 148, f"EVENTS {event_count}", 13)
-    draw_big_text(x + 8, y + 162, "LANGUAGE", 7)
+    draw_big_text(x + 8, y + 105, f"EVENT SRC {event_source_label}", 13)
+    draw_big_text(x + 8, y + 118, f"EVENTS {event_count}", 13)
+    draw_big_text(x + 8, y + 132, "LANGUAGE", 7)
     language_label = "JA" if language == "en" else "EN"
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language_label, True)
     sound_rect = panel_toggle_rects(pyxel.width, pyxel.height)["sound"]
-    draw_big_text(sound_rect[0], y + 162, "SE", 7)
+    draw_big_text(sound_rect[0], y + 132, "SE", 7)
     draw_button(sound_rect, "ON" if sound_enabled else "OFF", sound_enabled)
     bgm_rect = panel_toggle_rects(pyxel.width, pyxel.height)["bgm"]
-    draw_big_text(bgm_rect[0], y + 162, "BGM", 7)
+    draw_big_text(bgm_rect[0], y + 132, "BGM", 7)
     draw_button(bgm_rect, "ON" if bgm_enabled else "OFF", bgm_enabled)
 
 
@@ -1382,7 +1379,8 @@ def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int
         "event": (x, 60, button_w, button_h),
         "rotate": (x, 86, button_w, button_h),
         "rotate_camera": (x, 112, button_w, button_h),
-        "reset": (x, 138, button_w, button_h),
+        "features": (x, 138, button_w, button_h),
+        "reset": (x, 164, button_w, button_h),
     }
 
 
@@ -1392,6 +1390,7 @@ def draw_tool_buttons(
     show_event_slider: bool,
     rotate_time: bool,
     rotate_camera: bool,
+    show_features: bool,
 ) -> None:
     rects = tool_button_rects(pyxel.width, pyxel.height)
     draw_button(rects["time"], "TIME", show_time_slider)
@@ -1399,6 +1398,9 @@ def draw_tool_buttons(
     draw_button(rects["event"], "EVENT", show_event_slider)
     draw_button(rects["rotate"], "ROT-T", rotate_time)
     draw_button(rects["rotate_camera"], "ROT-C", rotate_camera)
+    feature_fill = 11 if show_features else 3
+    feature_text = 0 if show_features else 7
+    draw_button_colored(rects["features"], "FEATURE", feature_fill, 11, feature_text)
     draw_button(rects["reset"], "RESET", False)
 
 

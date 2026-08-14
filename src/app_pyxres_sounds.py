@@ -533,6 +533,12 @@ class StarSkyApp:
                 next_state = not self.rotate_camera
                 self._set_rotate_camera(next_state)
                 self._play_ui_sound(SOUND_TOOL_ON if next_state else SOUND_LETTER_CLOSE)
+            elif key == "features":
+                next_state = not self.show_features
+                self.show_features = next_state
+                if not self.show_features:
+                    self.selected_feature_id = None
+                self._play_ui_sound(SOUND_TOOL_ON if next_state else SOUND_LETTER_CLOSE)
             elif key == "reset":
                 self._reset_view()
                 self._play_ui_sound(SOUND_RESET)
@@ -560,10 +566,6 @@ class StarSkyApp:
                 self.show_guides = not self.show_guides
             elif key == "constellations":
                 self.show_constellations = not self.show_constellations
-            elif key == "features":
-                self.show_features = not self.show_features
-                if not self.show_features:
-                    self.selected_feature_id = None
             elif key == "side":
                 self.slider_side = "left" if self.slider_side == "right" else "right"
             elif key == "language":
@@ -1471,6 +1473,7 @@ class StarSkyApp:
             self.show_event_slider,
             self.rotate_time,
             self.rotate_camera,
+            self.show_features,
         )
         if self.rotate_camera:
             draw_rotate_camera_speed_control(self.rotate_camera_speed_level)
@@ -1487,7 +1490,6 @@ class StarSkyApp:
                 self.show_info,
                 self.show_guides,
                 self.show_constellations,
-                self.show_features,
                 self.sound_enabled,
                 self.bgm_enabled,
                 self.slider_side,
