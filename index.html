@@ -419,9 +419,13 @@
       const pyxelRun = document.querySelector("pyxel-run");
       const minimumStartupMs = 1200;
       const startupForwardDelayMs = 720;
+      const startupCanvasFallbackMs = 4200;
+      const startupMaxFallbackMs = 12000;
       let startupShownAt = 0;
       let startupHideTimer = 0;
       let startupReleaseTimer = 0;
+      let startupCanvasFallbackTimer = 0;
+      let startupMaxFallbackTimer = 0;
       let startupInteractionSeen = false;
       let startupReady = false;
       let startupDismissed = false;
@@ -448,6 +452,28 @@
         startupReleaseTimer = window.setTimeout(releasePyxelStartWhenReady, 50);
       }
 
+      function hasPyxelCanvas() {
+        return Boolean(
+          document.querySelector("canvas") ||
+            (pyxelRun && pyxelRun.shadowRoot && pyxelRun.shadowRoot.querySelector("canvas"))
+        );
+      }
+
+      function scheduleStartupFallbacks() {
+        window.clearTimeout(startupCanvasFallbackTimer);
+        window.clearTimeout(startupMaxFallbackTimer);
+        startupCanvasFallbackTimer = window.setTimeout(() => {
+          if (!startupDismissed && hasPyxelCanvas()) {
+            hideStartupLoader();
+          }
+        }, startupCanvasFallbackMs);
+        startupMaxFallbackTimer = window.setTimeout(() => {
+          if (!startupDismissed) {
+            hideStartupLoader();
+          }
+        }, startupMaxFallbackMs);
+      }
+
       function schedulePyxelStartRelease() {
         const elapsed = startupShownAt ? performance.now() - startupShownAt : 0;
         const delay = Math.max(0, startupForwardDelayMs - elapsed);
@@ -470,6 +496,8 @@
           startupLoader.classList.remove("is-visible");
           startupLoader.setAttribute("aria-hidden", "true");
           startupDismissed = true;
+          window.clearTimeout(startupCanvasFallbackTimer);
+          window.clearTimeout(startupMaxFallbackTimer);
         }, remaining);
       }
 
@@ -489,6 +517,7 @@
         startupGate.setAttribute("aria-hidden", "true");
         startupLoader.classList.add("is-visible");
         startupLoader.setAttribute("aria-hidden", "false");
+        scheduleStartupFallbacks();
         if (!force) {
           schedulePyxelStartRelease();
         }
