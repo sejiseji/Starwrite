@@ -116,11 +116,12 @@ SOUND_LETTER_CLOSE = 3
 SOUND_TOOL_ON = 4
 SOUND_SLIDER_TICK = 5
 SOUND_LETTER_RECEIVED_REPEAT_DELAY_FRAMES = CUT_IN_FRAMES // 2
+LETTER_UI_SOUND_VOLUME = "4"
 STARWRITE_SOUND_FALLBACKS = {
     SOUND_RESET: ("f#2e2d2d3e3f3g3a3", "t" * 8, "4" * 8, "n" * 8, 5),
-    SOUND_LETTER_RECEIVED: ("g3d4g4g4g3d4g4g4", "t" * 8, "4" * 8, "n" * 8, 8),
-    SOUND_LETTER_OPEN: ("f3f3b3b3f#4f#4", "t" * 6, "4" * 6, "n" * 6, 4),
-    SOUND_LETTER_CLOSE: ("f3d3a2d2", "t" * 4, "4" * 4, "n" * 4, 4),
+    SOUND_LETTER_RECEIVED: ("g3d4g4g4g3d4g4g4", "t" * 8, LETTER_UI_SOUND_VOLUME * 8, "n" * 8, 8),
+    SOUND_LETTER_OPEN: ("f3f3b3b3f#4f#4", "t" * 6, LETTER_UI_SOUND_VOLUME * 6, "n" * 6, 4),
+    SOUND_LETTER_CLOSE: ("f3d3a2d2", "t" * 4, LETTER_UI_SOUND_VOLUME * 4, "n" * 4, 4),
     SOUND_TOOL_ON: ("c4e4", "tt", "44", "nn", 3),
     SOUND_SLIDER_TICK: ("c5g5", "pp", "32", "ff", 3),
 }
