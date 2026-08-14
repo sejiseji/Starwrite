@@ -94,6 +94,7 @@ CUT_IN_FRAMES = 150
 LETTER_RECEIVE_DELAY_MIN_SECONDS = 5.0
 LETTER_RECEIVE_DELAY_MAX_SECONDS = 8.0
 PYXEL_TARGET_FPS = 30.0
+SUMMARY_PANEL_ANIMATION_FRAMES = 24
 STARWRITE_SOUND_RESOURCES = (
     "starwrite.pyxres",
     "./starwrite.pyxres",
@@ -230,6 +231,7 @@ class StarSkyApp:
         self.selected_log_id: str | None = None
         self.selected_star_id: int | None = None
         self.selected_feature_id: str | None = None
+        self.summary_panel_animation_start_frame: int | None = None
         self.cut_in_start_frame: int | None = None
         self.cut_in_message = ""
         self.last_mouse: tuple[int, int] | None = None
@@ -1038,6 +1040,7 @@ class StarSkyApp:
             pass
 
     def _play_selection_sound(self, kind: str) -> None:
+        self.summary_panel_animation_start_frame = pyxel.frame_count
         if not self.sound_enabled:
             return
         if not self.audio_ready:
@@ -1210,6 +1213,7 @@ class StarSkyApp:
             self.language,
             self._selected_constellation_anchor_label(),
             self._selected_star_summary() or self._selected_feature_summary(),
+            self._summary_panel_animation_age(),
         )
         if self.meteor_event is not None:
             draw_event_banner(self.meteor_event, self.language)
@@ -1253,6 +1257,15 @@ class StarSkyApp:
                 draw_cut_in(self.cut_in_message, age, CUT_IN_FRAMES)
             else:
                 self.cut_in_start_frame = None
+
+    def _summary_panel_animation_age(self) -> int | None:
+        if self.summary_panel_animation_start_frame is None:
+            return None
+        age = pyxel.frame_count - self.summary_panel_animation_start_frame
+        if age >= SUMMARY_PANEL_ANIMATION_FRAMES:
+            self.summary_panel_animation_start_frame = None
+            return None
+        return age
 
     def _draw_capture_background(self, capture: SkyCapture) -> None:
         observer = Observer(capture.latitude_deg, capture.longitude_deg)

@@ -508,6 +508,7 @@ def draw_selected_constellation_summary(
     language: Language,
     anchor_star_label: str | None,
     panel_summary: tuple[str, tuple[str, str], int] | None = None,
+    animation_age: int | None = None,
 ) -> None:
     tool_left = tool_button_rects(pyxel.width, pyxel.height)["time"][0]
     x = 8
@@ -516,6 +517,9 @@ def draw_selected_constellation_summary(
     h = 49
     if w < 140:
         return
+    if animation_age is not None and animation_age < 24:
+        progress = max(0.0, min(1.0, animation_age / 23.0))
+        y -= int((1.0 - progress) * (1.0 - progress) * 7)
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 1)
     if panel_summary is not None:
@@ -528,6 +532,45 @@ def draw_selected_constellation_summary(
     draw_display_text(x + 7, y + 5, _clip_display_text(title, w - 14), title_color)
     for index, line in enumerate(lines):
         draw_display_text(x + 7, y + 19 + index * 13, _clip_display_text(line, w - 14), 13)
+    if animation_age is not None and animation_age < 24:
+        _draw_summary_panel_sparkles((x, y, w, h), animation_age)
+
+
+def _draw_summary_panel_sparkles(rect: tuple[int, int, int, int], age: int) -> None:
+    x, y, w, h = rect
+    progress = max(0.0, min(1.0, age / 23.0))
+    color = 10 if age < 9 else 7 if age < 17 else 13
+    seeds = (
+        (0.08, 0.05, -5, -4),
+        (0.24, 0.00, 0, -7),
+        (0.48, 0.02, 3, -6),
+        (0.73, 0.06, 5, -3),
+        (0.92, 0.18, 6, 0),
+        (0.98, 0.72, 7, 4),
+        (0.68, 0.96, 3, 6),
+        (0.36, 1.00, -2, 7),
+        (0.06, 0.82, -6, 4),
+        (0.00, 0.38, -7, -1),
+    )
+    for index, (rx, ry, dx, dy) in enumerate(seeds):
+        drift = 1.0 + progress * 2.2
+        px = int(x + rx * w + dx * drift)
+        py = int(y + ry * h + dy * drift)
+        if not (0 <= px < pyxel.width and 0 <= py < pyxel.height):
+            continue
+        if (age + index) % 3 == 0:
+            _sparkle_pset(px, py, 7)
+            _sparkle_pset(px - 1, py, color)
+            _sparkle_pset(px + 1, py, color)
+            _sparkle_pset(px, py - 1, color)
+            _sparkle_pset(px, py + 1, color)
+        else:
+            _sparkle_pset(px, py, color)
+
+
+def _sparkle_pset(x: int, y: int, color: int) -> None:
+    if 0 <= x < pyxel.width and 0 <= y < pyxel.height:
+        pyxel.pset(x, y, color)
 
 
 def _constellation_summary_lines(
