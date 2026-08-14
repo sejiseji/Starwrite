@@ -134,8 +134,8 @@ COUNTRY_LABELS = {
 LIST_PAGE_SIZE = 6
 INPUT_COOLDOWN_FRAMES = 12
 INITIAL_INPUT_LOCK_FRAMES = 24
-SETUP_TRANSITION_DELAY_FRAMES = 5
 SETUP_PARTICLE_FRAMES = 14
+SETUP_TRANSITION_DELAY_FRAMES = SETUP_PARTICLE_FRAMES + 1
 SETUP_PARTICLE_COUNT = 24
 SETUP_BACKGROUND_STAR_POINTS = (
     (19, 31, 10, 1),
@@ -603,6 +603,7 @@ class BootstrapApp:
         if pyxel.frame_count < transition_frame:
             return True
         self.pending_setup_transition = None
+        self.press_effects.clear()
         self.state = target_state
         self._cooldown()
         return True
