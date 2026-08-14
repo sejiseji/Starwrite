@@ -4,8 +4,8 @@ import math
 from dataclasses import dataclass
 from datetime import UTC, datetime
 
-from astronomy.coordinates import equatorial_to_enu
-from astronomy.time import julian_date, local_sidereal_time
+from src.astronomy.coordinates import equatorial_to_enu
+from src.astronomy.time import julian_date, local_sidereal_time
 
 EARTH_RADIUS_KM = 6378.14
 

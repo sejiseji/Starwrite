@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 
-from astronomy.catalog import Constellation
+from src.astronomy.catalog import Constellation
 from .vector import Vec3
 
 

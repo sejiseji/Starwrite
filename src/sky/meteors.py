@@ -4,10 +4,10 @@ import math
 from dataclasses import dataclass
 from datetime import datetime, time, timedelta, tzinfo
 
-from astronomy.coordinates import equatorial_to_enu
-from astronomy.events import MeteorShowerEvent
-from astronomy.observer import Observer
-from astronomy.time import julian_date, local_sidereal_time
+from src.astronomy.coordinates import equatorial_to_enu
+from src.astronomy.events import MeteorShowerEvent
+from src.astronomy.observer import Observer
+from src.astronomy.time import julian_date, local_sidereal_time
 from .camera import SkyCamera
 from .vector import Vec3
 

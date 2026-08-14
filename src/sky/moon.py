@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 
-from astronomy.moon import MoonState, compute_moon
+from src.astronomy.moon import MoonState, compute_moon
 
 
 @dataclass(slots=True)

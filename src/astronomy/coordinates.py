@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 
-from sky.vector import Vec3
+from src.sky.vector import Vec3
 
 
 def equatorial_to_enu(

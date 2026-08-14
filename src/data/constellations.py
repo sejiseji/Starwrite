@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from astronomy.catalog import Constellation
+from src.astronomy.catalog import Constellation
 
 
 CONSTELLATIONS: tuple[Constellation, ...] = (

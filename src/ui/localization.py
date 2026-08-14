@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Literal
 
-from astronomy.catalog import Constellation
-from astronomy.events import MeteorShowerEvent
-from data.sky_features import Asterism, SkyPath
+from src.astronomy.catalog import Constellation
+from src.astronomy.events import MeteorShowerEvent
+from src.data.sky_features import Asterism, SkyPath
 
 Language = Literal["en", "ja"]
 

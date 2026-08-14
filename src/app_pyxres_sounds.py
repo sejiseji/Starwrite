@@ -14,21 +14,21 @@ import pyxel
 if not hasattr(pyxel, "pix") and hasattr(pyxel, "pset"):
     pyxel.pix = pyxel.pset
 
-from audio.bgm import install_starwrite_bgm, play_starwrite_bgm, stop_starwrite_bgm
-from audio.ui_sfx import StarwriteUISfx
-from astronomy.coordinates import equatorial_to_enu
-from astronomy.catalog import Constellation
-from astronomy.events import MeteorShowerEvent
-from astronomy.moon import get_phase_name, moon_light_level, moon_state_from_dict, moon_state_to_dict
-from astronomy.observer import Observer
-from astronomy.time import julian_date, local_sidereal_time
-from data.constellations import CONSTELLATIONS
-from data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
-from data.sky_features import ASTERISMS, SKY_PATHS
-from data.stars import STARS, STARS_BY_ID, STAR_NAMES
-from sky.camera import SkyCamera
-from sky.capture import ScreenPoint, SkyCapture, can_capture, capture_from_dict, capture_to_dict
-from sky.letters import (
+from src.audio.bgm import install_starwrite_bgm, play_starwrite_bgm, stop_starwrite_bgm
+from src.audio.ui_sfx import StarwriteUISfx
+from src.astronomy.coordinates import equatorial_to_enu
+from src.astronomy.catalog import Constellation
+from src.astronomy.events import MeteorShowerEvent
+from src.astronomy.moon import get_phase_name, moon_light_level, moon_state_from_dict, moon_state_to_dict
+from src.astronomy.observer import Observer
+from src.astronomy.time import julian_date, local_sidereal_time
+from src.data.constellations import CONSTELLATIONS
+from src.data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
+from src.data.sky_features import ASTERISMS, SKY_PATHS
+from src.data.stars import STARS, STARS_BY_ID, STAR_NAMES
+from src.sky.camera import SkyCamera
+from src.sky.capture import ScreenPoint, SkyCapture, can_capture, capture_from_dict, capture_to_dict
+from src.sky.letters import (
     ExchangeLog,
     PresetLetter,
     append_log,
@@ -37,16 +37,16 @@ from sky.letters import (
     log_to_dict,
     match_letter,
 )
-from sky.meteors import (
+from src.sky.meteors import (
     active_meteor_event,
     adjacent_meteor_event,
     meteor_peak_datetime,
     meteor_radiant_direction,
 )
-from sky.moon import MoonController
-from sky.renderer import SkyRenderer, moon_screen_point
-from sky.simulation import SimulationClock, project_visible_stars, star_direction
-from ui.hud import (
+from src.sky.moon import MoonController
+from src.sky.renderer import SkyRenderer, moon_screen_point
+from src.sky.simulation import SimulationClock, project_visible_stars, star_direction
+from src.ui.hud import (
     back_button_rect,
     constellation_label_hit_rects,
     draw_compact_time,
@@ -86,7 +86,7 @@ from ui.hud import (
     slider_rects,
     tool_button_rects,
 )
-from ui.localization import constellation_name, next_language, sky_feature_name, star_name
+from src.ui.localization import constellation_name, next_language, sky_feature_name, star_name
 
 IPHONE16_SCREEN_HEIGHT = 696
 IPHONE16_MIN_SCREEN_WIDTH = 396
@@ -323,21 +323,21 @@ class StarSkyApp:
     def _ensure_letters_loaded(self) -> None:
         if self.letters:
             return
-        from data.preset_letters import PRESET_LETTER_PACKS
+        from src.data.preset_letters import PRESET_LETTER_PACKS
 
         self.letters = load_letters_from_packs(PRESET_LETTER_PACKS)
         self.letters_by_id = {letter.id: letter for letter in self.letters}
 
     def _star_description_for(self, star_id: int) -> dict[str, tuple[str, str]]:
         if self.star_descriptions is None:
-            from data.star_descriptions import STAR_DESCRIPTIONS
+            from src.data.star_descriptions import STAR_DESCRIPTIONS
 
             self.star_descriptions = STAR_DESCRIPTIONS
         return self.star_descriptions.get(star_id, {})
 
     def _sky_feature_description_for(self, feature_id: str) -> dict[str, tuple[str, str]]:
         if self.sky_feature_descriptions is None:
-            from data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
+            from src.data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
 
             self.sky_feature_descriptions = SKY_FEATURE_DESCRIPTIONS
         return self.sky_feature_descriptions.get(feature_id, {})
@@ -933,7 +933,7 @@ class StarSkyApp:
         return projected_paths
 
     def _menu_panel_hit_rect(self) -> tuple[int, int, int, int]:
-        from ui.hud import menu_panel_rect
+        from src.ui.hud import menu_panel_rect
 
         return menu_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
 
@@ -1105,7 +1105,7 @@ class StarSkyApp:
     def _selected_moon_summary(self) -> tuple[str, tuple[str, str], int] | None:
         if not self.selected_moon or self.moon.state is None:
             return None
-        from data.moon_descriptions import moon_description, moon_phase_description, moon_phase_title
+        from src.data.moon_descriptions import moon_description, moon_phase_description, moon_phase_title
 
         phase_key = get_phase_name(self.moon.state.illumination, self.moon.state.waxing)
         return (

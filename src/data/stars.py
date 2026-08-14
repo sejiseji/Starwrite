@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 
-from astronomy.catalog import Star
+from src.astronomy.catalog import Star
 
 
 def _hours_to_rad(hours: float) -> float:

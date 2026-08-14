@@ -426,7 +426,7 @@ class BootstrapApp:
     def _start_main_app(self) -> None:
         self.state = "MAIN"
         _prepare_import_layout()
-        from app_pyxres_sounds import StarSkyApp
+        from src.app_pyxres_sounds import StarSkyApp
 
         self.main_app = StarSkyApp(start_pyxel=False)
 

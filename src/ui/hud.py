@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import pyxel
 
-from astronomy.catalog import Constellation
-from astronomy.moon import MoonState
-from astronomy.observer import Observer
+from src.astronomy.catalog import Constellation
+from src.astronomy.moon import MoonState
+from src.astronomy.observer import Observer
 try:
     raise ImportError
 except Exception:
@@ -124,13 +124,13 @@ except Exception:
              'en': ('The phoenix rises out of flame.', 'Its wings open over southern sky.')},
      'COL': {'ja': ('洪水の先を探した白い鳩。', '冬の南空に小さく羽ばたく。'),
              'en': ('A dove searches beyond the flood.', 'Small wings beat in winter sky.')}}
-from data.sky_features import ASTERISMS, SKY_PATHS, Asterism, SkyPath
-from sky.capture import ScreenPoint, SkyCapture
-from sky.camera import SkyCamera
-from sky.letters import ExchangeLog, PresetLetter, display_letter_text
-from sky.meteors import MeteorEventView
-from sky.simulation import SimulationClock
-from ui.localization import Language, constellation_name, meteor_event_name, sky_feature_name
+from src.data.sky_features import ASTERISMS, SKY_PATHS, Asterism, SkyPath
+from src.sky.capture import ScreenPoint, SkyCapture
+from src.sky.camera import SkyCamera
+from src.sky.letters import ExchangeLog, PresetLetter, display_letter_text
+from src.sky.meteors import MeteorEventView
+from src.sky.simulation import SimulationClock
+from src.ui.localization import Language, constellation_name, meteor_event_name, sky_feature_name
 
 SCALE = 2
 GLYPH_W = 3
@@ -274,7 +274,7 @@ def draw_display_text(x: int, y: int, text: str, col: int) -> None:
 def _ensure_japanese_font_loaded() -> dict[int, tuple[int, tuple[str, ...]]]:
     global GLYPHS
     if GLYPHS is None:
-        from data.font_jp import GLYPHS as loaded_glyphs
+        from src.data.font_jp import GLYPHS as loaded_glyphs
 
         GLYPHS = loaded_glyphs
     return GLYPHS

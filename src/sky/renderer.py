@@ -4,8 +4,8 @@ import math
 
 import pyxel
 
-from astronomy.catalog import Constellation
-from astronomy.moon import MoonState, moon_light_level
+from src.astronomy.catalog import Constellation
+from src.astronomy.moon import MoonState, moon_light_level
 from .camera import SkyCamera
 from .capture import ScreenPoint
 from .meteors import MeteorEventView

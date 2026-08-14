@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Protocol
 
-from astronomy.moon import moon_tags_from_capture_data
+from src.astronomy.moon import moon_tags_from_capture_data
 from .capture import SkyCapture, capture_from_dict, capture_to_dict
 
 MAX_LOGS = 100

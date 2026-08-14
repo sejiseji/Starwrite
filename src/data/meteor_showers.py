@@ -4,7 +4,7 @@ import math
 from dataclasses import dataclass
 from datetime import date, timedelta
 
-from astronomy.events import MeteorShowerEvent
+from src.astronomy.events import MeteorShowerEvent
 
 EVENT_YEAR_START = 2006
 EVENT_YEAR_END = 2046
