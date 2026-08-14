@@ -19,6 +19,14 @@ IPHONE16_MIN_SCREEN_WIDTH = 396
 IPHONE16_MAX_SCREEN_WIDTH = 430
 SMARTPHONE_FIRST_SCREEN_SIZE = (IPHONE16_MIN_SCREEN_WIDTH, IPHONE16_SCREEN_HEIGHT)
 SETTINGS_KEY = "starwrite_v02_settings"
+IMPORT_DIRS = (
+    "src",
+    "src/astronomy",
+    "src/audio",
+    "src/data",
+    "src/sky",
+    "src/ui",
+)
 PREFETCH_CORE = (
     "src/app_pyxres_sounds.py",
     "src/audio/bgm.py",
@@ -203,6 +211,19 @@ def _setup_requested() -> bool:
         return False
 
 
+def _prepare_import_layout() -> None:
+    cwd = os.getcwd()
+    src_path = os.path.join(cwd, "src")
+    for path in IMPORT_DIRS:
+        try:
+            os.makedirs(os.path.join(cwd, path), exist_ok=True)
+        except OSError:
+            pass
+    for path in (src_path, "src", cwd):
+        if path not in sys.path:
+            sys.path.insert(0, path)
+
+
 class BootstrapApp:
     def __init__(self) -> None:
         self.width, self.height = _screen_size()
@@ -378,12 +399,8 @@ class BootstrapApp:
 
     def _start_main_app(self) -> None:
         self.state = "MAIN"
-        try:
-            from src.app_pyxres_sounds import StarSkyApp
-        except ModuleNotFoundError as error:
-            if error.name not in ("src", "src.app_pyxres_sounds"):
-                raise
-            from app_pyxres_sounds import StarSkyApp
+        _prepare_import_layout()
+        from app_pyxres_sounds import StarSkyApp
 
         self.main_app = StarSkyApp(start_pyxel=False)
 
