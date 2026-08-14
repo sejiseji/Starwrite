@@ -116,7 +116,7 @@ STARWRITE_SOUND_FALLBACKS = {
     SOUND_LETTER_OPEN: ("f3f3b3b3f#4f#4", "t" * 6, "4" * 6, "n" * 6, 4),
     SOUND_LETTER_CLOSE: ("f3d3a2d2", "t" * 4, "4" * 4, "n" * 4, 4),
     SOUND_TOOL_ON: ("c4e4", "tt", "44", "nn", 3),
-    SOUND_SLIDER_TICK: ("c3", "n", "3", "n", 2),
+    SOUND_SLIDER_TICK: ("c5g5", "pp", "32", "ff", 3),
 }
 STAR_TAP_RADIUS_PX = 14
 STAR_TAP_MOVE_TOLERANCE_PX = 6
@@ -607,11 +607,12 @@ class StarSkyApp:
 
     def _step_slider(self, label: str, direction: int) -> None:
         before = self.clock.current_time
+        before_tick = self._slider_tick_value(label, before)
         if label == "event":
             changed = self._advance_event(direction)
         elif label == "time":
             self.clock.add_minutes(direction * 15)
-            changed = self.clock.current_time != before
+            changed = self._slider_tick_value(label, self.clock.current_time) != before_tick
         else:
             self.clock.add_days(direction)
             changed = self.clock.current_time != before
@@ -646,7 +647,7 @@ class StarSkyApp:
 
     def _slider_tick_value(self, label: str, value: datetime) -> int:
         if label == "time":
-            return int(value.timestamp() // (15 * 60))
+            return int(value.timestamp() // (60 * 60))
         if label == "event":
             return int(value.timestamp())
         return value.year * 12 + value.month

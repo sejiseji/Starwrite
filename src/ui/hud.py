@@ -835,13 +835,19 @@ def draw_meteor_event(event_view: MeteorEventView, language: Language) -> None:
 
 
 def draw_event_banner(event_view: MeteorEventView, language: Language) -> None:
+    heading = "【天体イベント】" if language == "ja" else "CELESTIAL EVENT"
+    heading_width = display_text_width(heading)
+    heading_x = max(4, min(pyxel.width - heading_width - 4, (pyxel.width - heading_width) // 2))
+    draw_display_bold_text(heading_x, 4, heading, 10)
+
     label = meteor_event_name(event_view.event, language)
     width = display_text_width(label)
     x = max(4, min(pyxel.width - width - 4, (pyxel.width - width) // 2))
-    draw_display_bold_text(x, 8, label, 10)
+    draw_display_bold_text(x, 17, label, 10)
+
     period = _event_period_label(event_view)
     period_x = max(4, min(pyxel.width - text_width(period) - 4, (pyxel.width - text_width(period)) // 2))
-    draw_bold_text(period_x, 21, period, 10)
+    draw_bold_text(period_x, 30, period, 10)
 
 
 def _event_period_label(event_view: MeteorEventView) -> str:
