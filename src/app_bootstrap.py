@@ -4,6 +4,7 @@ import json
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 sys.path.insert(0, os.path.dirname(__file__))
 sys.path.insert(0, "src")
 
@@ -210,9 +211,10 @@ class BootstrapApp:
         setup_requested = _setup_requested()
         self.language = settings.get("language") if settings.get("language") in ("ja", "en") else _detect_language()
         default_country = "JP" if self.language == "ja" else "US"
-        saved_country = settings.get("location_country") if setup_is_complete or setup_requested else default_country
+        use_saved_location = setup_is_complete and not setup_requested
+        saved_country = settings.get("location_country") if use_saved_location else default_country
         self.country_index = COUNTRIES.index(saved_country) if saved_country in COUNTRIES else COUNTRIES.index(default_country)
-        saved_city = settings.get("location_city") if setup_is_complete or setup_requested else None
+        saved_city = settings.get("location_city") if use_saved_location else None
         self.city_index = self._city_index_for(saved_city)
         self.country_page = self.country_index // LIST_PAGE_SIZE
         self.city_page = self.city_index // LIST_PAGE_SIZE
@@ -306,12 +308,13 @@ class BootstrapApp:
             self._handle_confirm_input(x, y)
 
     def _handle_country_input(self, x: int, y: int) -> None:
-        if self._hit(x, y, self._rect("page_prev")):
+        page_count = self._page_count(len(COUNTRIES))
+        if self.country_page > 0 and self._hit(x, y, self._rect("page_prev")):
             self.country_page = max(0, self.country_page - 1)
             self._cooldown()
             return
-        if self._hit(x, y, self._rect("page_next")):
-            self.country_page = min(self._page_count(len(COUNTRIES)) - 1, self.country_page + 1)
+        if self.country_page < page_count - 1 and self._hit(x, y, self._rect("page_next")):
+            self.country_page = min(page_count - 1, self.country_page + 1)
             self._cooldown()
             return
         for index, rect in self._list_rects():
@@ -325,12 +328,13 @@ class BootstrapApp:
                 return
 
     def _handle_city_input(self, x: int, y: int) -> None:
-        if self._hit(x, y, self._rect("page_prev")):
+        page_count = self._page_count(len(self.cities))
+        if self.city_page > 0 and self._hit(x, y, self._rect("page_prev")):
             self.city_page = max(0, self.city_page - 1)
             self._cooldown()
             return
-        if self._hit(x, y, self._rect("page_next")):
-            self.city_page = min(self._page_count(len(self.cities)) - 1, self.city_page + 1)
+        if self.city_page < page_count - 1 and self._hit(x, y, self._rect("page_next")):
+            self.city_page = min(page_count - 1, self.city_page + 1)
             self._cooldown()
             return
         if self._hit(x, y, self._rect("back")):
@@ -374,31 +378,29 @@ class BootstrapApp:
 
     def _start_main_app(self) -> None:
         self.state = "MAIN"
-        namespace = {
-            "__file__": "src/app_pyxres_sounds.py",
-            "__name__": "starwrite_main_app",
-            "__package__": "",
-        }
-        with open("src/app_pyxres_sounds.py", encoding="utf-8") as source:
-            code = compile(source.read(), "src/app_pyxres_sounds.py", "exec")
-        exec(code, namespace)
-        StarSkyApp = namespace["StarSkyApp"]
+        try:
+            from src.app_pyxres_sounds import StarSkyApp
+        except ModuleNotFoundError as error:
+            if error.name not in ("src", "src.app_pyxres_sounds"):
+                raise
+            from app_pyxres_sounds import StarSkyApp
+
         self.main_app = StarSkyApp(start_pyxel=False)
 
     def _rect(self, key: str) -> tuple[int, int, int, int]:
-        bottom = self.height - 58
+        bottom = self.height - 66
         rects = {
             "ja": (12, 78, (self.width - 36) // 2, 44),
             "en": (24 + (self.width - 36) // 2, 78, (self.width - 36) // 2, 44),
-            "back": (12, bottom, 88, 42),
-            "page_prev": (116, bottom, 92, 42),
-            "page_next": (self.width - 104, bottom, 92, 42),
-            "start": (self.width - 156, bottom, 144, 42),
+            "back": (12, bottom, 112, 48),
+            "page_prev": (12, bottom, 136, 48),
+            "page_next": (self.width - 148, bottom, 136, 48),
+            "start": (self.width - 172, bottom, 160, 48),
         }
         return rects[key]
 
     def _list_rects(self) -> tuple[tuple[int, tuple[int, int, int, int]], ...]:
-        top = 154
+        top = 190 if self.state == "CITY" else 154
         height = 54
         gap = 8
         return tuple((index, (12, top + index * (height + gap), self.width - 24, height)) for index in range(LIST_PAGE_SIZE))
@@ -424,7 +426,8 @@ class BootstrapApp:
         else:
             self._draw_confirm()
         loaded = min(self.prefetch_index, len(self.prefetch_files))
-        self._center_text(f"PREP {loaded}/{len(self.prefetch_files)}", self.height - 16, 5)
+        if loaded < len(self.prefetch_files):
+            self._center_text(f"PREP {loaded}/{len(self.prefetch_files)}", self.height - 16, 5)
 
     def _draw_country_list(self) -> None:
         self._center_text("SELECT COUNTRY", 132, 7, scale=2)
@@ -439,15 +442,15 @@ class BootstrapApp:
         self._pager(self.country_page, self._page_count(len(COUNTRIES)))
 
     def _draw_city_list(self) -> None:
-        self._center_text(COUNTRY_LABELS.get(self.country, self.country), 126, 10, scale=2)
-        self._center_text("SELECT CITY", 148, 7)
+        self._center_text(COUNTRY_LABELS.get(self.country, self.country), 128, 10, scale=2)
+        self._center_text("SELECT CITY", 154, 7)
         start = self.city_page * LIST_PAGE_SIZE
         for row, rect in self._list_rects():
             city_index = start + row
             if city_index >= len(self.cities):
                 continue
             self._button(rect, self.cities[city_index][0], city_index == self.city_index, 7, scale=2)
-        self._button(self._rect("back"), "BACK", False, 7)
+        self._button(self._rect("back"), "BACK", False, 7, scale=2)
         self._pager(self.city_page, self._page_count(len(self.cities)))
 
     def _draw_confirm(self) -> None:
@@ -457,15 +460,16 @@ class BootstrapApp:
         self._center_text(name, 258, 7, scale=2)
         self._center_text(f"LAT {latitude:.1f}", 318, 13)
         self._center_text(f"LON {longitude:.1f}", 334, 13)
-        self._button(self._rect("back"), "BACK", False, 7)
-        self._button(self._rect("start"), "START", True, 11)
+        self._button(self._rect("back"), "BACK", False, 7, scale=2)
+        self._button(self._rect("start"), "START", True, 11, scale=2)
 
     def _pager(self, page: int, pages: int) -> None:
         if page > 0:
-            self._button(self._rect("page_prev"), "< PAGE", False, 7)
+            self._button(self._rect("page_prev"), "< PAGE", False, 7, scale=2)
         if page < pages - 1:
-            self._button(self._rect("page_next"), "PAGE >", False, 7)
-        self._center_text(f"{page + 1}/{pages}", self.height - 46, 13)
+            self._button(self._rect("page_next"), "PAGE >", False, 7, scale=2)
+        if pages > 1:
+            self._center_text(f"{page + 1}/{pages}", self.height - 34, 13)
 
     def _draw_loading(self) -> None:
         y = self.height // 2 - 18
