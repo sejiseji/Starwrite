@@ -417,7 +417,7 @@ def log_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
 
 def menu_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     panel_w = min(width - 16, 244)
-    panel_h = 208
+    panel_h = 178
     button_x, button_y, _, _ = menu_button_rect(width, height)
     x = max(8, min(width - panel_w - 8, button_x + 35 - panel_w // 2))
     return (x, max(8, button_y - panel_h - 6), panel_w, panel_h)
@@ -435,11 +435,10 @@ def panel_toggle_rects(width: int, height: int) -> dict[str, tuple[int, int, int
         "info": (x + 8, y + 34, button_w, 24),
         "guides": (x + 12 + button_w, y + 34, button_w, 24),
         "constellations": (x + 16 + button_w * 2, y + 34, button_w, 24),
-        "location": (x + 8, y + 64, min(112, w - 16), 24),
-        "side": (x + 8, y + 104, min(96, w - 16), 24),
-        "language": (x + 8, y + 176, 72, 24),
-        "sound": (x + 90, y + 176, 62, 24),
-        "bgm": (x + 162, y + 176, 62, 24),
+        "side": (x + 8, y + 74, min(96, w - 16), 24),
+        "language": (x + 8, y + 146, 72, 24),
+        "sound": (x + 90, y + 146, 62, 24),
+        "bgm": (x + 162, y + 146, 62, 24),
     }
 
 
@@ -480,53 +479,6 @@ def draw_main_buttons(has_unread: bool, capture_pending: bool) -> None:
 
 def draw_back_button() -> None:
     draw_button(back_button_rect(pyxel.width, pyxel.height), "BACK", False)
-
-
-def location_selector_rect(width: int, height: int) -> tuple[int, int, int, int]:
-    panel_w = min(width - 28, 372)
-    panel_h = 178
-    x = (width - panel_w) // 2
-    y = max(44, (height - panel_h) // 2)
-    return (x, y, panel_w, panel_h)
-
-
-def location_selector_button_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
-    x, y, w, h = location_selector_rect(width, height)
-    return {
-        "country_prev": (x + 10, y + 48, 30, 24),
-        "country_next": (x + w - 40, y + 48, 30, 24),
-        "city_prev": (x + 10, y + 92, 30, 24),
-        "city_next": (x + w - 40, y + 92, 30, 24),
-        "apply": (x + 10, y + h - 36, w - 20, 26),
-    }
-
-
-def draw_location_selector(
-    country_label: str,
-    city_label: str,
-    latitude_deg: float,
-    longitude_deg: float,
-    language: Language,
-) -> None:
-    x, y, w, h = location_selector_rect(pyxel.width, pyxel.height)
-    pyxel.rect(x, y, w, h, 0)
-    pyxel.rectb(x, y, w, h, 11)
-    draw_back_button()
-    draw_display_text(x + 10, y + 10, "LOCATION", 11)
-    guide = "場所は手動で選びます。" if language == "ja" else "Choose a reference city."
-    country_prefix = "国" if language == "ja" else "COUNTRY"
-    city_prefix = "都市" if language == "ja" else "CITY"
-    draw_display_text(x + 10, y + 27, _clip_display_text(guide, w - 20), 13)
-    rects = location_selector_button_rects(pyxel.width, pyxel.height)
-    draw_button(rects["country_prev"], "-", False)
-    draw_button(rects["country_next"], "+", False)
-    draw_display_text(x + 48, y + 52, _clip_display_text(f"{country_prefix} {country_label}", w - 96), 7)
-    draw_button(rects["city_prev"], "-", False)
-    draw_button(rects["city_next"], "+", False)
-    draw_display_text(x + 48, y + 96, _clip_display_text(f"{city_prefix} {city_label}", w - 96), 7)
-    coords = f"LAT {latitude_deg:+.1f}  LON {longitude_deg:+.1f}"
-    draw_display_text(x + 10, y + 124, coords, 13)
-    draw_button_colored(rects["apply"], "APPLY", 11, 3, 0)
 
 
 def draw_cut_in(message: str, frame_age: int, duration_frames: int) -> None:
@@ -1095,19 +1047,18 @@ def draw_menu_panel(
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["info"], "INFO", show_info)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["guides"], "GUIDE", show_guides)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["constellations"], "CONST", show_constellations)
-    draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["location"], "LOCATION", False)
-    draw_big_text(x + 8, y + 93, "SLIDER", 7)
+    draw_big_text(x + 8, y + 63, "SLIDER", 7)
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["side"], slider_side.upper(), True)
-    draw_big_text(x + 8, y + 135, f"EVENT SRC {event_source_label}", 13)
-    draw_big_text(x + 8, y + 148, f"EVENTS {event_count}", 13)
-    draw_big_text(x + 8, y + 162, "LANGUAGE", 7)
+    draw_big_text(x + 8, y + 105, f"EVENT SRC {event_source_label}", 13)
+    draw_big_text(x + 8, y + 118, f"EVENTS {event_count}", 13)
+    draw_big_text(x + 8, y + 132, "LANGUAGE", 7)
     language_label = "JA" if language == "en" else "EN"
     draw_button(panel_toggle_rects(pyxel.width, pyxel.height)["language"], language_label, True)
     sound_rect = panel_toggle_rects(pyxel.width, pyxel.height)["sound"]
-    draw_big_text(sound_rect[0], y + 162, "SE", 7)
+    draw_big_text(sound_rect[0], y + 132, "SE", 7)
     draw_button(sound_rect, "ON" if sound_enabled else "OFF", sound_enabled)
     bgm_rect = panel_toggle_rects(pyxel.width, pyxel.height)["bgm"]
-    draw_big_text(bgm_rect[0], y + 162, "BGM", 7)
+    draw_big_text(bgm_rect[0], y + 132, "BGM", 7)
     draw_button(bgm_rect, "ON" if bgm_enabled else "OFF", bgm_enabled)
 
 

@@ -33,7 +33,6 @@ COMMON_LETTER_KANJI = (
 def _import_app_data():
     sys.path.insert(0, str(SRC))
     from data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
-    from data.locations import LOCATION_COUNTRIES, location_label
     from data.moon_descriptions import MOON_DESCRIPTIONS, MOON_PHASE_DESCRIPTIONS
     from data.preset_letters import PRESET_LETTER_PACKS
     from data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
@@ -56,8 +55,6 @@ def _import_app_data():
         STAR_NAMES_JA,
         MOON_DESCRIPTIONS,
         MOON_PHASE_DESCRIPTIONS,
-        LOCATION_COUNTRIES,
-        location_label,
     )
 
 
@@ -73,8 +70,6 @@ def _required_text() -> str:
         star_names,
         moon_descriptions,
         moon_phase_descriptions,
-        location_countries,
-        location_label_func,
     ) = _import_app_data()
     parts = [
         ASCII_PRINTABLE,
@@ -92,12 +87,7 @@ def _required_text() -> str:
         *sky_feature_names.values(),
         *star_names.values(),
         *moon_descriptions.values(),
-        "場所は手動で選びます。国都市",
     ]
-    for country in location_countries:
-        parts.append(location_label_func(country, "ja"))
-        for city in country["cities"]:
-            parts.append(location_label_func(city, "ja"))
     for descriptions in moon_phase_descriptions.values():
         parts.extend(str(value) for value in descriptions.values())
     for pack in letter_packs.values():
