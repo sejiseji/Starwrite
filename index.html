@@ -52,6 +52,33 @@
         }
       }
     </style>
+    <link rel="preload" href="assets/vendor/pyodide/v314.0.4/full/pyodide.js" as="script" />
+    <link rel="modulepreload" href="assets/vendor/pyodide/v314.0.4/full/pyodide.asm.mjs" />
+    <link
+      rel="preload"
+      href="assets/vendor/pyodide/v314.0.4/full/pyodide.asm.wasm"
+      as="fetch"
+      type="application/wasm"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/vendor/pyodide/v314.0.4/full/python_stdlib.zip"
+      as="fetch"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/vendor/pyodide/v314.0.4/full/pyodide-lock.json"
+      as="fetch"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/vendor/pyxel/pyxel-2.9.9-cp311-abi3-emscripten_5_0_3_wasm32.whl"
+      as="fetch"
+      crossorigin
+    />
     <script>
       (() => {
         const token = Date.now().toString(36);

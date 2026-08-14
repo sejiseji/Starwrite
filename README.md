@@ -133,7 +133,9 @@ The deployed root serves `index.html`, which loads the vendored Pyxel Web
 wrapper from `assets/vendor/pyxel/pyxel.js` and runs
 `src/app_pyxres_sounds.py`. Pyxel's wheel, CSS, startup images, and import hook
 are vendored with the project to reduce startup fetches from the Pyxel CDN.
-Pyodide itself is still loaded from its upstream CDN in this prototype.
+Pyodide v314.0.4 runtime files are also vendored under
+`assets/vendor/pyodide/v314.0.4/full/`, and `index.html` preloads the main
+runtime files while the Pyxel start screen is visible.
 
 ## Mobile Display
 
