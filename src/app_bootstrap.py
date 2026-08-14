@@ -676,16 +676,10 @@ class BootstrapApp:
             self._cooldown()
         elif self._hit(x, y, self._rect("start")):
             self._play_setup_sound(BOOT_SOUND_SELECT)
+            self._add_setup_press_effect(self._rect("start"))
             self._save_selection()
-            self.state = "LOADING"
-            self.loading_frames = 0
-            self.loading_star_points = None
-            self.loading_star_key = None
-            self.mirror_files = _unique_paths(self.prefetch_files)
-            self.mirror_index = 0
-            self.preload_index = 0
-            self.preload_retry_frame = 0
-            self.preload_error = ""
+            self._schedule_setup_transition("LOADING")
+            self._cooldown()
 
     def _cooldown(self) -> None:
         self.accept_input_frame = pyxel.frame_count + INPUT_COOLDOWN_FRAMES
@@ -701,7 +695,10 @@ class BootstrapApp:
             return True
         self.pending_setup_transition = None
         self.press_effects.clear()
-        self.state = target_state
+        if target_state == "LOADING":
+            self._enter_loading()
+        else:
+            self.state = target_state
         self._cooldown()
         return True
 
@@ -744,6 +741,17 @@ class BootstrapApp:
             }
         )
         _save_settings(settings)
+
+    def _enter_loading(self) -> None:
+        self.state = "LOADING"
+        self.loading_frames = 0
+        self.loading_star_points = None
+        self.loading_star_key = None
+        self.mirror_files = _unique_paths(self.prefetch_files)
+        self.mirror_index = 0
+        self.preload_index = 0
+        self.preload_retry_frame = 0
+        self.preload_error = ""
 
     def _install_setup_sounds(self) -> None:
         if self.setup_sounds_ready:
