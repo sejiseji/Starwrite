@@ -493,10 +493,14 @@ def draw_hud(
         draw_big_text(8, pyxel.height - 35, f"CAPTURED {latest_capture.selected_constellation_id or 'SKY'}", 11)
 
 
-def draw_compact_time(clock: SimulationClock) -> None:
+def draw_compact_time(
+    clock: SimulationClock,
+    highlight_date: bool = False,
+    highlight_time: bool = False,
+) -> None:
     scale = 3
-    draw_bold_text_scaled(8, 8, clock.current_time.strftime("%b %d"), 7, scale)
-    draw_bold_text_scaled(8, 27, clock.current_time.strftime("%H:%M"), 7, scale)
+    draw_bold_text_scaled(8, 8, clock.current_time.strftime("%b %d"), 10 if highlight_date else 7, scale)
+    draw_bold_text_scaled(8, 27, clock.current_time.strftime("%H:%M"), 10 if highlight_time else 7, scale)
 
 
 def draw_selected_constellation_summary(
@@ -1191,8 +1195,8 @@ def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int
     button_h = 22
     x = max(6, width - button_w - 6)
     return {
-        "time": (x, 8, button_w, button_h),
-        "month": (x, 34, button_w, button_h),
+        "month": (x, 8, button_w, button_h),
+        "time": (x, 34, button_w, button_h),
         "event": (x, 60, button_w, button_h),
         "reset": (x, 86, button_w, button_h),
     }

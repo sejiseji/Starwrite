@@ -1176,7 +1176,7 @@ class StarSkyApp:
                 self.language,
             )
         else:
-            draw_compact_time(self.clock)
+            draw_compact_time(self.clock, self.show_month_slider, self.show_time_slider)
         draw_constellation_labels(CONSTELLATIONS, self.selected_constellation, self.projected, self.language)
         if self.show_features:
             draw_sky_features(self.projected, self.projected_sky_paths, self.language, moon_light_level(self.moon.state))
