@@ -99,6 +99,8 @@ COUNTRY_LABELS = {
     "TH": "THAILAND",
 }
 LIST_PAGE_SIZE = 6
+INPUT_COOLDOWN_FRAMES = 12
+INITIAL_INPUT_LOCK_FRAMES = 24
 BOOT_FONT = {
     "A": ("01110", "10001", "10001", "11111", "10001", "10001", "10001"),
     "B": ("11110", "10001", "10001", "11110", "10001", "10001", "11110"),
@@ -221,7 +223,7 @@ class BootstrapApp:
         self.loading_frames = 0
         self.main_app = None
         self.state = "COUNTRY" if setup_requested or not setup_is_complete else "LOADING"
-        self.accept_input_frame = 18
+        self.accept_input_frame = INITIAL_INPUT_LOCK_FRAMES
         pyxel.init(self.width, self.height, title="Starwrite Sky", fps=30)
         pyxel.mouse(True)
         pyxel.run(self.update, self.draw)
@@ -290,10 +292,12 @@ class BootstrapApp:
         x, y = pyxel.mouse_x, pyxel.mouse_y
         if self._hit(x, y, self._rect("ja")):
             self.language = "ja"
+            self._cooldown()
             if PREFETCH_JA[0] not in self.prefetch_files:
                 self.prefetch_files.extend(PREFETCH_JA)
         elif self._hit(x, y, self._rect("en")):
             self.language = "en"
+            self._cooldown()
         elif self.state == "COUNTRY":
             self._handle_country_input(x, y)
         elif self.state == "CITY":
@@ -304,9 +308,11 @@ class BootstrapApp:
     def _handle_country_input(self, x: int, y: int) -> None:
         if self._hit(x, y, self._rect("page_prev")):
             self.country_page = max(0, self.country_page - 1)
+            self._cooldown()
             return
         if self._hit(x, y, self._rect("page_next")):
             self.country_page = min(self._page_count(len(COUNTRIES)) - 1, self.country_page + 1)
+            self._cooldown()
             return
         for index, rect in self._list_rects():
             country_index = self.country_page * LIST_PAGE_SIZE + index
@@ -315,35 +321,41 @@ class BootstrapApp:
                 self.city_index = 0
                 self.city_page = 0
                 self.state = "CITY"
-                self.accept_input_frame = pyxel.frame_count + 6
+                self._cooldown()
                 return
 
     def _handle_city_input(self, x: int, y: int) -> None:
-        if self._hit(x, y, self._rect("back")):
-            self.state = "COUNTRY"
-            return
         if self._hit(x, y, self._rect("page_prev")):
             self.city_page = max(0, self.city_page - 1)
+            self._cooldown()
             return
         if self._hit(x, y, self._rect("page_next")):
             self.city_page = min(self._page_count(len(self.cities)) - 1, self.city_page + 1)
+            self._cooldown()
+            return
+        if self._hit(x, y, self._rect("back")):
+            self.state = "COUNTRY"
+            self._cooldown()
             return
         for index, rect in self._list_rects():
             city_index = self.city_page * LIST_PAGE_SIZE + index
             if city_index < len(self.cities) and self._hit(x, y, rect):
                 self.city_index = city_index
                 self.state = "CONFIRM"
-                self.accept_input_frame = pyxel.frame_count + 6
+                self._cooldown()
                 return
 
     def _handle_confirm_input(self, x: int, y: int) -> None:
         if self._hit(x, y, self._rect("back")):
             self.state = "CITY"
-            self.accept_input_frame = pyxel.frame_count + 6
+            self._cooldown()
         elif self._hit(x, y, self._rect("start")):
             self._save_selection()
             self.state = "LOADING"
             self.loading_frames = 0
+
+    def _cooldown(self) -> None:
+        self.accept_input_frame = pyxel.frame_count + INPUT_COOLDOWN_FRAMES
 
     def _save_selection(self) -> None:
         name, latitude, longitude = self.city
@@ -370,14 +382,13 @@ class BootstrapApp:
         self.main_app = StarSkyApp(start_pyxel=False)
 
     def _rect(self, key: str) -> tuple[int, int, int, int]:
-        cx = self.width // 2
         bottom = self.height - 58
         rects = {
             "ja": (12, 78, (self.width - 36) // 2, 44),
             "en": (24 + (self.width - 36) // 2, 78, (self.width - 36) // 2, 44),
-            "back": (12, bottom, 104, 42),
-            "page_prev": (12, bottom, 104, 42),
-            "page_next": (self.width - 116, bottom, 104, 42),
+            "back": (12, bottom, 88, 42),
+            "page_prev": (116, bottom, 92, 42),
+            "page_next": (self.width - 104, bottom, 92, 42),
             "start": (self.width - 156, bottom, 144, 42),
         }
         return rects[key]
