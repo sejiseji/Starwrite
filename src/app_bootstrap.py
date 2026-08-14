@@ -374,11 +374,15 @@ class BootstrapApp:
 
     def _start_main_app(self) -> None:
         self.state = "MAIN"
-        try:
-            from src.app_pyxres_sounds import StarSkyApp
-        except Exception:
-            from app_pyxres_sounds import StarSkyApp
-
+        namespace = {
+            "__file__": "src/app_pyxres_sounds.py",
+            "__name__": "starwrite_main_app",
+            "__package__": "",
+        }
+        with open("src/app_pyxres_sounds.py", encoding="utf-8") as source:
+            code = compile(source.read(), "src/app_pyxres_sounds.py", "exec")
+        exec(code, namespace)
+        StarSkyApp = namespace["StarSkyApp"]
         self.main_app = StarSkyApp(start_pyxel=False)
 
     def _rect(self, key: str) -> tuple[int, int, int, int]:
