@@ -538,21 +538,17 @@ class StarSkyApp:
         if self._point_in_rect(point, rects[f"{label}_plus"]):
             self._step_slider(label, -1)
             return True
-        if label == "event" and self._point_in_rect(point, self._expanded_rect(rects["event_track"], 12)):
-            track = rects["event_track"]
-            if self._advance_event(1 if point[1] <= track[1] + track[3] // 2 else -1):
-                self._play_ui_sound(SOUND_SLIDER_TICK)
+        if label == "event" and self._point_in_rect(point, rects["event_panel"]):
             return True
-        if label == "event" and self._point_in_rect(point, self._expanded_rect(rects["event_knob"], 8)):
-            return True
-        if self._point_in_rect(point, self._expanded_rect(rects[f"{label}_knob"], 8)):
+        if label != "event" and self._point_in_rect(point, self._expanded_rect(rects[f"{label}_knob"], 8)):
             self._start_slider_drag(label, point[1])
             return True
-        if self._point_in_rect(point, self._expanded_rect(rects[f"{label}_track"], 12)):
+        if label != "event" and self._point_in_rect(point, self._expanded_rect(rects[f"{label}_track"], 12)):
             self._start_slider_drag(label, point[1])
             self._update_slider_drag(point[1])
             return True
-        if self._point_in_rect(point, rects["panel"]):
+        panel_rect = rects["event_panel"] if label == "event" else rects["panel"]
+        if self._point_in_rect(point, panel_rect):
             return True
         return False
 
@@ -619,6 +615,9 @@ class StarSkyApp:
             self.clock.add_days(direction)
             changed = self.clock.current_time != before
         if changed:
+            if label == "event":
+                self._play_selection_sound("feature")
+                return
             self._play_ui_sound(SOUND_SLIDER_TICK)
 
     def _start_slider_drag(self, label: str, y: int) -> None:

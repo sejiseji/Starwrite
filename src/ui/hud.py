@@ -536,13 +536,15 @@ def draw_selected_constellation_summary(
     for index, line in enumerate(lines):
         draw_display_text(x + 7, y + 19 + index * 13, _clip_display_text(line, w - 14), 13)
     if animation_age is not None and animation_age < 24:
-        _draw_summary_panel_sparkles((x, y, w, h), animation_age)
+        _draw_summary_panel_sparkles((x, y, w, h), animation_age, highlight_color)
 
 
-def _draw_summary_panel_sparkles(rect: tuple[int, int, int, int], age: int) -> None:
+def _draw_summary_panel_sparkles(rect: tuple[int, int, int, int], age: int, highlight_color: int | None) -> None:
     x, y, w, h = rect
     progress = max(0.0, min(1.0, age / 23.0))
-    color = 10 if age < 9 else 7 if age < 17 else 13
+    colors = _summary_sparkle_colors(highlight_color)
+    main_color = colors[age % len(colors)]
+    accent_color = colors[(age // 3 + 1) % len(colors)]
     seeds = (
         (0.08, 0.05, -5, -4),
         (0.24, 0.00, 0, -7),
@@ -561,16 +563,30 @@ def _draw_summary_panel_sparkles(rect: tuple[int, int, int, int], age: int) -> N
         py = int(y + ry * h + dy * drift)
         if not (0 <= px < pyxel.width and 0 <= py < pyxel.height):
             continue
+        dot_color = colors[(index + age // 2) % len(colors)]
+        _sparkle_pset(px, py, dot_color)
+        if index % 2 == 0:
+            _sparkle_pset(px + (1 if index % 4 == 0 else -1), py + 1, accent_color)
         if (age + index) % 5 == 0:
-            _draw_diagonal_sparkle(px, py, color)
+            _draw_diagonal_sparkle(px, py, main_color)
         elif (age + index) % 3 == 0:
             _sparkle_pset(px, py, 7)
-            _sparkle_pset(px - 1, py, color)
-            _sparkle_pset(px + 1, py, color)
-            _sparkle_pset(px, py - 1, color)
-            _sparkle_pset(px, py + 1, color)
-        else:
-            _sparkle_pset(px, py, color)
+            _sparkle_pset(px - 1, py, accent_color)
+            _sparkle_pset(px + 1, py, accent_color)
+            _sparkle_pset(px, py - 1, accent_color)
+            _sparkle_pset(px, py + 1, accent_color)
+
+
+def _summary_sparkle_colors(highlight_color: int | None) -> tuple[int, ...]:
+    if highlight_color == 8:
+        return (8, 2, 7)
+    if highlight_color == 11:
+        return (11, 3, 7)
+    if highlight_color == 10:
+        return (10, 7)
+    if highlight_color is not None:
+        return (highlight_color, 7, 13)
+    return (10, 7, 13)
 
 
 def _sparkle_pset(x: int, y: int, color: int) -> None:
@@ -1295,6 +1311,8 @@ def slider_rects(width: int, height: int, side: str) -> dict[str, tuple[int, int
     panel_h = min(440, max(230, height - 210))
     x = width - panel_w - 6 if side == "right" else 6
     y = max(92, (height - panel_h) // 2)
+    event_panel_h = 92
+    event_y = max(120, (height - event_panel_h) // 2)
     return {
         "time_minus": (x + 5, y + 8, 24, 22),
         "time_track": (x + 15, y + 34, 4, panel_h - 68),
@@ -1304,10 +1322,11 @@ def slider_rects(width: int, height: int, side: str) -> dict[str, tuple[int, int
         "month_track": (x + 15, y + 34, 4, panel_h - 68),
         "month_knob": (x + 8, y + panel_h // 2 - 10, 18, 20),
         "month_plus": (x + 5, y + panel_h - 30, 24, 22),
-        "event_minus": (x + 5, y + 8, 24, 22),
-        "event_track": (x + 15, y + 34, 4, panel_h - 68),
-        "event_knob": (x + 8, y + panel_h // 2 - 10, 18, 20),
-        "event_plus": (x + 5, y + panel_h - 30, 24, 22),
+        "event_minus": (x + 5, event_y + 13, 24, 22),
+        "event_track": (x + 15, event_y + 40, 4, 12),
+        "event_knob": (x + 8, event_y + 36, 18, 20),
+        "event_plus": (x + 5, event_y + 57, 24, 22),
+        "event_panel": (x, event_y, panel_w, event_panel_h),
         "panel": (x, y, panel_w, panel_h),
     }
 
@@ -1315,12 +1334,15 @@ def slider_rects(width: int, height: int, side: str) -> dict[str, tuple[int, int
 def draw_slider(side: str, label: str, knob_ratio: float = 0.5, rect_key: str | None = None) -> None:
     rects = slider_rects(pyxel.width, pyxel.height, side)
     key = rect_key or label.lower()
-    x, y, w, h = rects["panel"]
+    x, y, w, h = rects["event_panel"] if key == "event" else rects["panel"]
     pyxel.rect(x, y, w, h, 0)
     pyxel.rectb(x, y, w, h, 13)
     label_x = max(4, min(pyxel.width - text_width(label) - 4, x + 5))
     draw_big_text(label_x, y - 14, label, 7)
     draw_button(rects[f"{key}_minus"], "+", False)
+    if key == "event":
+        draw_button(rects[f"{key}_plus"], "-", False)
+        return
     track = rects[f"{key}_track"]
     pyxel.rect(track[0], track[1], track[2], track[3], 13)
     knob = rects[f"{key}_knob"]
