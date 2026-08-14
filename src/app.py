@@ -213,6 +213,7 @@ class StarSkyApp:
         self.show_time_slider = bool(settings.get("show_time_slider", False))
         self.show_month_slider = bool(settings.get("show_month_slider", False))
         self.show_event_slider = bool(settings.get("show_event_slider", False))
+        self.rotate_time = bool(settings.get("rotate_time", False))
         self.sound_enabled = bool(settings.get("sound_enabled", True))
         self.bgm_enabled = bool(settings.get("bgm_enabled", True))
         self.language = normalize_language(settings.get("language", "en"))
@@ -255,6 +256,8 @@ class StarSkyApp:
         self.bgm_installed = False
         self.bgm_playing = False
         self.scheduled_ui_sounds: list[tuple[int, int]] = []
+        if self.rotate_time:
+            self._set_rotate_time(True)
 
         set_desktop_letter_text_mode(DESKTOP_VIEW)
         pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, title="Starwrite Sky", fps=30)
@@ -342,8 +345,9 @@ class StarSkyApp:
         if pyxel.btnp(pyxel.KEY_C):
             self.show_constellations = not self.show_constellations
         if pyxel.btnp(pyxel.KEY_SPACE):
-            self.clock.pause() if self.clock.running else self.clock.play()
+            self._set_rotate_time(not self.rotate_time)
         if pyxel.btnp(pyxel.KEY_M):
+            self._set_rotate_time(False)
             self.mode = "DATE" if self.mode == "TONIGHT" else "TONIGHT"
             self.clock.speed = 86400.0 if self.mode == "DATE" else 600.0
         if pyxel.btnp(pyxel.KEY_TAB):
@@ -476,6 +480,10 @@ class StarSkyApp:
                     self.show_time_slider = False
                     self.show_month_slider = False
                 self._play_ui_sound(SOUND_TOOL_ON if next_state else SOUND_LETTER_CLOSE)
+            elif key == "rotate":
+                next_state = not self.rotate_time
+                self._set_rotate_time(next_state)
+                self._play_ui_sound(SOUND_TOOL_ON if next_state else SOUND_LETTER_CLOSE)
             elif key == "reset":
                 self._reset_view()
                 self._play_ui_sound(SOUND_RESET)
@@ -604,6 +612,7 @@ class StarSkyApp:
             self._play_ui_sound(SOUND_LETTER_CLOSE)
 
     def _step_slider(self, label: str, direction: int) -> None:
+        self._set_rotate_time(False)
         before = self.clock.current_time
         before_tick = self._slider_tick_value(label, before)
         if label == "event":
@@ -621,11 +630,21 @@ class StarSkyApp:
             self._play_ui_sound(SOUND_SLIDER_TICK)
 
     def _start_slider_drag(self, label: str, y: int) -> None:
+        self._set_rotate_time(False)
         self.active_slider = label
         self.slider_drag_start_y = y
         self.slider_drag_start_time = self.clock.current_time
         self.slider_last_tick_value = self._slider_tick_value(label, self.clock.current_time)
         self.clock.pause()
+
+    def _set_rotate_time(self, enabled: bool) -> None:
+        self.rotate_time = enabled
+        if enabled:
+            self.mode = "TONIGHT"
+            self.clock.speed = 600.0
+            self.clock.play()
+        else:
+            self.clock.pause()
 
     def _update_slider_drag(self, y: int) -> None:
         if self.active_slider is None:
@@ -654,6 +673,7 @@ class StarSkyApp:
         return value.year * 12 + value.month
 
     def _advance_event(self, direction: int) -> bool:
+        self._set_rotate_time(False)
         event = adjacent_meteor_event(METEOR_SHOWERS, self.clock.current_time, direction)
         if event is None:
             return False
@@ -667,7 +687,7 @@ class StarSkyApp:
         return self.clock.current_time != before
 
     def _reset_view(self) -> None:
-        self.clock.pause()
+        self._set_rotate_time(False)
         self.clock.current_time = _current_observation_datetime()
         self.camera.yaw = 0.0
         self.camera.pitch = math.radians(45.0)
@@ -1178,6 +1198,7 @@ class StarSkyApp:
                 "show_time_slider": self.show_time_slider,
                 "show_month_slider": self.show_month_slider,
                 "show_event_slider": self.show_event_slider,
+                "rotate_time": self.rotate_time,
                 "sound_enabled": self.sound_enabled,
                 "bgm_enabled": self.bgm_enabled,
                 "language": self.language,
@@ -1269,7 +1290,7 @@ class StarSkyApp:
             moon_point = moon_screen_point(self.moon.state, self.camera, SCREEN_WIDTH, SCREEN_HEIGHT)
             if moon_point is not None and self._point_near_center(moon_point, 46):
                 draw_focused_moon(moon_point, self.moon.state, self.language)
-        draw_tool_buttons(self.show_time_slider, self.show_month_slider, self.show_event_slider)
+        draw_tool_buttons(self.show_time_slider, self.show_month_slider, self.show_event_slider, self.rotate_time)
         if self.show_time_slider:
             draw_slider(self.slider_side, "TIME", self.slider_knob_ratio if self.active_slider == "time" else 0.5)
         if self.show_month_slider:
