@@ -452,12 +452,14 @@ def menu_close_rect(width: int, height: int) -> tuple[int, int, int, int]:
 def panel_toggle_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
     x, y, w, _ = menu_panel_rect(width, height)
     button_w = max(68, (w - 32) // 3)
+    row_button_x = x + 104
+    row_button_w = w - 112
     return {
         "info": (x + 8, y + 34, button_w, 24),
         "guides": (x + 12 + button_w, y + 34, button_w, 24),
         "constellations": (x + 16 + button_w * 2, y + 34, button_w, 24),
-        "side": (x + 8, y + 74, min(96, w - 16), 24),
-        "location": (x + 112, y + 102, min(112, w - 120), 24),
+        "side": (row_button_x, y + 72, row_button_w, 24),
+        "location": (row_button_x, y + 104, row_button_w, 24),
         "language": (x + 8, y + 190, 72, 24),
         "sound": (x + 90, y + 190, 62, 24),
         "bgm": (x + 162, y + 190, 62, 24),
@@ -1086,10 +1088,10 @@ def draw_menu_panel(
     draw_button(toggle_rects["info"], _menu_text(language, "INFO", "情報"), show_info)
     draw_button(toggle_rects["guides"], _menu_text(language, "GUIDE", "補助"), show_guides)
     draw_button(toggle_rects["constellations"], _menu_text(language, "CONST", "星座"), show_constellations)
-    draw_display_text(x + 8, y + 63, _menu_text(language, "SLIDER", "スライダー"), 7)
+    draw_display_text(x + 8, y + 77, _menu_text(language, "SLIDER", "スライダー"), 7)
     side_label = slider_side.upper() if language == "en" else "左" if slider_side == "left" else "右"
     draw_button(toggle_rects["side"], side_label, True)
-    draw_display_text(x + 8, y + 106, _menu_text(language, "LOCATION", "場所"), 7)
+    draw_display_text(x + 8, y + 109, _menu_text(language, "LOCATION", "場所"), 7)
     draw_button(toggle_rects["location"], _menu_text(language, "CHANGE", "変更"), False)
     draw_display_text(x + 8, y + 136, _menu_text(language, f"EVENT SRC {event_source_label}", f"イベント情報 {event_source_label}"), 13)
     draw_display_text(x + 8, y + 150, _menu_text(language, f"EVENTS {event_count}", f"イベント {event_count}"), 13)
