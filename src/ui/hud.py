@@ -322,18 +322,24 @@ def _glyph_location_for(codepoint: int) -> tuple[int, int, int, int] | None:
 
 def _draw_bitmap_text(x: int, y: int, text: str, col: int, scale: int = 1) -> None:
     cursor_x = x
-    if col != 7:
-        pyxel.pal(7, col)
+    glyphs = _ensure_japanese_font_loaded()
     for char in text:
-        location = _glyph_location_for(ord(char))
-        if location is None:
+        glyph = glyphs.get(ord(char)) or glyphs.get(ord("?"))
+        if glyph is None:
             cursor_x += FONT_CELL_WIDTH * scale
             continue
-        bank, source_x, source_y, advance = location
-        pyxel.blt(cursor_x, y, bank, source_x, source_y, FONT_CELL_WIDTH, FONT_CELL_HEIGHT, 0, 0, scale)
+        advance, rows = glyph
+        for row_index, row in enumerate(rows):
+            for column_index, value in enumerate(row):
+                if value == "0":
+                    continue
+                draw_x = cursor_x + column_index * scale
+                draw_y = y + row_index * scale
+                if scale == 1:
+                    pyxel.pset(draw_x, draw_y, col)
+                else:
+                    pyxel.rect(draw_x, draw_y, scale, scale, col)
         cursor_x += advance * scale
-    if col != 7:
-        pyxel.pal()
 
 
 def draw_bold_text_scaled(x: int, y: int, text: str, col: int, scale: int) -> None:
