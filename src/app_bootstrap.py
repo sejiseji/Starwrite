@@ -137,12 +137,72 @@ COUNTRY_LABELS = {
     "TW": "TAIWAN",
     "TH": "THAILAND",
 }
+COUNTRY_LABELS_JA = {
+    "JP": "日本",
+    "US": "アメリカ",
+    "GB": "イギリス",
+    "FR": "フランス",
+    "DE": "ドイツ",
+    "FI": "フィンランド",
+    "AU": "オーストラリア",
+    "NZ": "ニュージーランド",
+    "BR": "ブラジル",
+    "ZA": "南アフリカ",
+    "SG": "シンガポール",
+    "IN": "インド",
+    "CA": "カナダ",
+    "KR": "韓国",
+    "TW": "台湾",
+    "TH": "タイ",
+}
+CITY_LABELS_JA = {
+    "Tokyo": "東京",
+    "Fukushima": "福島",
+    "Sapporo": "札幌",
+    "Sendai": "仙台",
+    "Niigata": "新潟",
+    "Nagoya": "名古屋",
+    "Osaka": "大阪",
+    "Hiroshima": "広島",
+    "Fukuoka": "福岡",
+    "Naha": "那覇",
+    "New York": "ニューヨーク",
+    "Los Angeles": "ロサンゼルス",
+    "Chicago": "シカゴ",
+    "Seattle": "シアトル",
+    "Honolulu": "ホノルル",
+    "London": "ロンドン",
+    "Paris": "パリ",
+    "Berlin": "ベルリン",
+    "Helsinki": "ヘルシンキ",
+    "Tampere": "タンペレ",
+    "Sydney": "シドニー",
+    "Melbourne": "メルボルン",
+    "Hobart": "ホバート",
+    "Auckland": "オークランド",
+    "Sao Paulo": "サンパウロ",
+    "Cape Town": "ケープタウン",
+    "Singapore": "シンガポール",
+    "Delhi": "デリー",
+    "Toronto": "トロント",
+    "Vancouver": "バンクーバー",
+    "Seoul": "ソウル",
+    "Taipei": "台北",
+    "Bangkok": "バンコク",
+}
 LIST_PAGE_SIZE = 6
 INPUT_COOLDOWN_FRAMES = 12
 INITIAL_INPUT_LOCK_FRAMES = 24
 SETUP_PARTICLE_FRAMES = 14
 SETUP_TRANSITION_DELAY_FRAMES = SETUP_PARTICLE_FRAMES + 1
 SETUP_PARTICLE_COUNT = 24
+BOOT_SOUND_CHANNEL = 3
+BOOT_SOUND_SELECT = 2
+BOOT_SOUND_BACK = 3
+BOOT_SOUND_FALLBACKS = {
+    BOOT_SOUND_SELECT: ("f3f3b3b3f#4f#4", "t" * 6, "4" * 6, "n" * 6, 4),
+    BOOT_SOUND_BACK: ("f3d3a2d2", "t" * 4, "4" * 4, "n" * 4, 4),
+}
 SETUP_BACKGROUND_STAR_POINTS = (
     (19, 31, 10, 1),
     (92, 168, 7, 0),
@@ -381,10 +441,12 @@ class BootstrapApp:
         self.city_index = self._city_index_for(saved_city)
         self.country_page = self.country_index // LIST_PAGE_SIZE
         self.city_page = self.city_index // LIST_PAGE_SIZE
-        self.prefetch_files = list(PREFETCH_CORE + PREFETCH_INFO + PREFETCH_LETTERS)
-        self.preload_modules = list(PRELOAD_INFO_MODULES + PRELOAD_LETTER_MODULES + PRELOAD_MAIN_MODULES)
+        self.prefetch_files = list(PREFETCH_CORE)
         if self.language == "ja":
             self.prefetch_files.extend(PREFETCH_JA)
+        self.prefetch_files.extend(PREFETCH_INFO + PREFETCH_LETTERS)
+        self.preload_modules = list(PRELOAD_INFO_MODULES + PRELOAD_LETTER_MODULES + PRELOAD_MAIN_MODULES)
+        if self.language == "ja":
             self.preload_modules.extend(PRELOAD_JA_MODULES)
         self.prefetch_index = 0
         self.prefetch_pending_path: str | None = None
@@ -401,6 +463,9 @@ class BootstrapApp:
         self.loading_star_points: tuple[tuple[int, int, int, int], ...] | None = None
         self.loading_star_key: tuple[float, float, int, float, float, float, int, int] | None = None
         self.loading_frames = 0
+        self.sound_enabled = bool(settings.get("sound_enabled", True))
+        self.setup_sounds_ready = False
+        self.jp_glyphs: dict[int, tuple[int, tuple[str, ...]]] | None = None
         self.main_app = None
         self.state = "COUNTRY" if setup_requested or not setup_is_complete else "LOADING"
         self.accept_input_frame = INITIAL_INPUT_LOCK_FRAMES
@@ -419,6 +484,21 @@ class BootstrapApp:
     @property
     def city(self) -> tuple[str, float, float]:
         return self.cities[self.city_index % len(self.cities)]
+
+    def _localized(self, english: str, japanese: str) -> str:
+        if self.language == "ja" and self._japanese_glyphs() is not None:
+            return japanese
+        return english
+
+    def _country_label(self, code: str) -> str:
+        if self.language == "ja" and self._japanese_glyphs() is not None:
+            return COUNTRY_LABELS_JA.get(code, COUNTRY_LABELS.get(code, code))
+        return COUNTRY_LABELS.get(code, code)
+
+    def _city_label(self, name: str) -> str:
+        if self.language == "ja" and self._japanese_glyphs() is not None:
+            return CITY_LABELS_JA.get(name, name)
+        return name
 
     def _city_index_for(self, city_name: object) -> int:
         country = COUNTRIES[self.country_index]
@@ -521,11 +601,13 @@ class BootstrapApp:
             return
         x, y = pyxel.mouse_x, pyxel.mouse_y
         if self._hit(x, y, self._rect("ja")):
+            self._play_setup_sound(BOOT_SOUND_SELECT)
             self.language = "ja"
             self._add_setup_press_effect(self._rect("ja"))
             self._cooldown()
             self._ensure_ja_requirements()
         elif self._hit(x, y, self._rect("en")):
+            self._play_setup_sound(BOOT_SOUND_SELECT)
             self.language = "en"
             self._add_setup_press_effect(self._rect("en"))
             self._cooldown()
@@ -539,16 +621,19 @@ class BootstrapApp:
     def _handle_country_input(self, x: int, y: int) -> None:
         page_count = self._page_count(len(COUNTRIES))
         if self.country_page > 0 and self._hit(x, y, self._rect("page_prev")):
+            self._play_setup_sound(BOOT_SOUND_SELECT)
             self.country_page = max(0, self.country_page - 1)
             self._cooldown()
             return
         if self.country_page < page_count - 1 and self._hit(x, y, self._rect("page_next")):
+            self._play_setup_sound(BOOT_SOUND_SELECT)
             self.country_page = min(page_count - 1, self.country_page + 1)
             self._cooldown()
             return
         for index, rect in self._list_rects():
             country_index = self.country_page * LIST_PAGE_SIZE + index
             if country_index < len(COUNTRIES) and self._hit(x, y, rect):
+                self._play_setup_sound(BOOT_SOUND_SELECT)
                 self.country_index = country_index
                 self.city_index = 0
                 self.city_page = 0
@@ -560,20 +645,24 @@ class BootstrapApp:
     def _handle_city_input(self, x: int, y: int) -> None:
         page_count = self._page_count(len(self.cities))
         if self.city_page > 0 and self._hit(x, y, self._rect("page_prev")):
+            self._play_setup_sound(BOOT_SOUND_SELECT)
             self.city_page = max(0, self.city_page - 1)
             self._cooldown()
             return
         if self.city_page < page_count - 1 and self._hit(x, y, self._rect("page_next")):
+            self._play_setup_sound(BOOT_SOUND_SELECT)
             self.city_page = min(page_count - 1, self.city_page + 1)
             self._cooldown()
             return
         if self._hit(x, y, self._rect("back")):
+            self._play_setup_sound(BOOT_SOUND_BACK)
             self.state = "COUNTRY"
             self._cooldown()
             return
         for index, rect in self._list_rects():
             city_index = self.city_page * LIST_PAGE_SIZE + index
             if city_index < len(self.cities) and self._hit(x, y, rect):
+                self._play_setup_sound(BOOT_SOUND_SELECT)
                 self.city_index = city_index
                 self._add_setup_press_effect(rect)
                 self._schedule_setup_transition("CONFIRM")
@@ -582,9 +671,11 @@ class BootstrapApp:
 
     def _handle_confirm_input(self, x: int, y: int) -> None:
         if self._hit(x, y, self._rect("back")):
+            self._play_setup_sound(BOOT_SOUND_BACK)
             self.state = "CITY"
             self._cooldown()
         elif self._hit(x, y, self._rect("start")):
+            self._play_setup_sound(BOOT_SOUND_SELECT)
             self._save_selection()
             self.state = "LOADING"
             self.loading_frames = 0
@@ -630,7 +721,8 @@ class BootstrapApp:
         changed = False
         for path in PREFETCH_JA:
             if path not in self.prefetch_files:
-                self.prefetch_files.append(path)
+                insert_at = self.prefetch_index + (1 if self.prefetch_pending_path is not None else 0)
+                self.prefetch_files.insert(min(insert_at, len(self.prefetch_files)), path)
                 changed = True
         for module in PRELOAD_JA_MODULES:
             if module not in self.preload_modules:
@@ -652,6 +744,28 @@ class BootstrapApp:
             }
         )
         _save_settings(settings)
+
+    def _install_setup_sounds(self) -> None:
+        if self.setup_sounds_ready:
+            return
+        try:
+            for sound_id, definition in BOOT_SOUND_FALLBACKS.items():
+                notes, tones, volumes, effects, speed = definition
+                pyxel.sound(sound_id).set(notes, tones, volumes, effects, speed)
+            self.setup_sounds_ready = True
+        except Exception:
+            self.setup_sounds_ready = False
+
+    def _play_setup_sound(self, sound_id: int) -> None:
+        if not self.sound_enabled:
+            return
+        self._install_setup_sounds()
+        if not self.setup_sounds_ready:
+            return
+        try:
+            pyxel.play(BOOT_SOUND_CHANNEL, sound_id)
+        except Exception:
+            pass
 
     def _start_main_app(self) -> None:
         self.state = "MAIN"
@@ -702,8 +816,8 @@ class BootstrapApp:
     def _rect(self, key: str) -> tuple[int, int, int, int]:
         bottom = self.height - 66
         rects = {
-            "ja": (12, 82, (self.width - 36) // 2, 44),
-            "en": (24 + (self.width - 36) // 2, 82, (self.width - 36) // 2, 44),
+            "ja": (12, 88, (self.width - 36) // 2, 44),
+            "en": (24 + (self.width - 36) // 2, 88, (self.width - 36) // 2, 44),
             "back": (12, bottom, 112, 48),
             "page_prev": (12, bottom, 136, 48),
             "page_next": (self.width - 148, bottom, 136, 48),
@@ -712,7 +826,7 @@ class BootstrapApp:
         return rects[key]
 
     def _list_rects(self) -> tuple[tuple[int, tuple[int, int, int, int]], ...]:
-        top = 196 if self.state == "CITY" else 164
+        top = 208 if self.state == "CITY" else 178
         height = 54
         gap = 8
         return tuple((index, (12, top + index * (height + gap), self.width - 24, height)) for index in range(LIST_PAGE_SIZE))
@@ -728,8 +842,8 @@ class BootstrapApp:
 
     def _draw_setup(self) -> None:
         self._center_text("STARWRITE", 18, 7, scale=2)
-        self._center_text("NO LOCATION ACCESS", 44, 13)
-        self._center_text("SELECT UI LANGUAGE", 58, 7, scale=2)
+        self._center_text(self._localized("NO LOCATION ACCESS", "位置情報は取得しません"), 44, 13)
+        self._center_text(self._localized("SELECT UI LANGUAGE", "表示言語を選択"), 58, 7, scale=2)
         self._button(self._rect("ja"), "JA", self.language == "ja", 10, scale=2)
         self._button(self._rect("en"), "EN", self.language == "en", 10, scale=2)
         if self.state == "COUNTRY":
@@ -741,47 +855,70 @@ class BootstrapApp:
         self._draw_setup_press_particles()
         loaded = min(self.prefetch_index, len(self.prefetch_files))
         if loaded < len(self.prefetch_files):
-            self._center_text(f"PREP {loaded}/{len(self.prefetch_files)}", self.height - 16, 5)
+            self._center_text(f"{self._localized('PREP', '準備')} {loaded}/{len(self.prefetch_files)}", self.height - 16, 5)
 
     def _draw_country_list(self) -> None:
-        self._center_text("SELECT COUNTRY", 140, 7, scale=2)
+        self._center_text(self._localized("SELECT COUNTRY", "国を選択"), 148, 7, scale=2)
         start = self.country_page * LIST_PAGE_SIZE
         for row, rect in self._list_rects():
             country_index = start + row
             if country_index >= len(COUNTRIES):
                 continue
             code = COUNTRIES[country_index]
-            label = f"{code}  {COUNTRY_LABELS.get(code, code)}"
+            label = f"{code}  {self._country_label(code)}"
             self._button(rect, label, country_index == self.country_index, 7, scale=2)
         self._pager(self.country_page, self._page_count(len(COUNTRIES)))
 
     def _draw_city_list(self) -> None:
-        self._center_text(COUNTRY_LABELS.get(self.country, self.country), 136, 10, scale=2)
-        self._center_text("SELECT CITY", 164, 7, scale=2)
+        self._center_text(self._country_label(self.country), 138, 10, scale=2)
+        self._center_text(self._localized("SELECT CITY", "都市を選択"), 172, 7, scale=2)
         start = self.city_page * LIST_PAGE_SIZE
         for row, rect in self._list_rects():
             city_index = start + row
             if city_index >= len(self.cities):
                 continue
-            self._button(rect, self.cities[city_index][0], city_index == self.city_index, 7, scale=2)
-        self._button(self._rect("back"), "BACK", False, 7, scale=2)
+            self._button(rect, self._city_label(self.cities[city_index][0]), city_index == self.city_index, 7, scale=2)
+        self._button(self._rect("back"), self._localized("BACK", "戻る"), False, 7, scale=2)
         self._pager(self.city_page, self._page_count(len(self.cities)))
 
     def _draw_confirm(self) -> None:
         name, latitude, longitude = self.city
-        self._center_text("CONFIRM SKY", 148, 7, scale=2)
-        self._center_text(COUNTRY_LABELS.get(self.country, self.country), 224, 10, scale=2)
-        self._center_text(name, 258, 7, scale=2)
+        self._center_text(self._localized("CONFIRM SKY", "空を確認"), 148, 7, scale=2)
+        self._center_text(self._country_label(self.country), 224, 10, scale=2)
+        self._center_text(self._city_label(name), 258, 7, scale=2)
         self._center_text(f"LAT {latitude:.1f}", 318, 13)
         self._center_text(f"LON {longitude:.1f}", 334, 13)
-        self._button(self._rect("back"), "BACK", False, 7, scale=2)
-        self._button(self._rect("start"), "START", True, 11, scale=2)
+        self._draw_confirm_note()
+        self._button(self._rect("back"), self._localized("BACK", "戻る"), False, 7, scale=2)
+        self._button(self._rect("start"), self._localized("START", "開始"), True, 11, scale=2)
+
+    def _draw_confirm_note(self) -> None:
+        panel_x = 24
+        panel_y = 374
+        panel_w = self.width - 48
+        panel_h = 70
+        pyxel.rect(panel_x, panel_y, panel_w, panel_h, 0)
+        pyxel.rectb(panel_x, panel_y, panel_w, panel_h, 1)
+        if self.language == "ja" and self._japanese_glyphs() is not None:
+            lines = (
+                "読み込みの為、画面が一時的に",
+                "固まることがあります。",
+                "そのまましばらくお待ちください。",
+            )
+        else:
+            lines = (
+                "LOADING MAY BRIEFLY FREEZE",
+                "THE SCREEN.",
+                "PLEASE WAIT A MOMENT.",
+            )
+        for index, line in enumerate(lines):
+            self._center_text(line, panel_y + 12 + index * 17, 13, panel_x, panel_w)
 
     def _pager(self, page: int, pages: int) -> None:
         if page > 0:
-            self._button(self._rect("page_prev"), "< PAGE", False, 7, scale=2)
+            self._button(self._rect("page_prev"), self._localized("< PAGE", "前へ"), False, 7, scale=2)
         if page < pages - 1:
-            self._button(self._rect("page_next"), "PAGE >", False, 7, scale=2)
+            self._button(self._rect("page_next"), self._localized("PAGE >", "次へ"), False, 7, scale=2)
         if pages > 1:
             self._center_text(f"{page + 1}/{pages}", self.height - 34, 13)
 
@@ -897,7 +1034,7 @@ class BootstrapApp:
         pyxel.rect(x, y, w, h, 5 if active else 1)
         pyxel.rectb(x, y, w, h, 10 if active else 13)
         text = self._fit_text(label, w - 12, scale)
-        self._center_text(text, y + max(3, (h - 7 * scale) // 2), color, x, w, scale)
+        self._center_text(text, y + max(3, (h - self._text_height(text, scale)) // 2), color, x, w, scale)
 
     def _draw_setup_press_particles(self) -> None:
         for rect, start_frame in self.press_effects:
@@ -968,13 +1105,12 @@ class BootstrapApp:
     ) -> None:
         area_x = 0 if x is None else x
         area_w = self.width if width is None else width
-        draw_x = area_x + max(0, (area_w - self._text_width(text, scale)) // 2)
+        draw_x = area_x + max(0, (area_w - self._display_text_width(text, scale)) // 2)
         self._draw_text(draw_x, y, text, color, scale)
 
-    @staticmethod
-    def _fit_text(text: str, max_width: int, scale: int) -> str:
-        value = text.upper()
-        while len(value) > 1 and BootstrapApp._text_width(value, scale) > max_width:
+    def _fit_text(self, text: str, max_width: int, scale: int) -> str:
+        value = text.upper() if text.isascii() else text
+        while len(value) > 1 and self._display_text_width(value, scale) > max_width:
             value = value[:-1]
         return value
 
@@ -985,7 +1121,39 @@ class BootstrapApp:
         return (len(text) * 6 - 1) * scale
 
     @staticmethod
-    def _draw_text(x: int, y: int, text: str, color: int, scale: int) -> None:
+    def _text_height(text: str, scale: int) -> int:
+        if text and not text.isascii():
+            return 13 * scale
+        return 7 * scale
+
+    def _display_text_width(self, text: str, scale: int) -> int:
+        if text.isascii():
+            return self._text_width(text, scale)
+        glyphs = self._japanese_glyphs()
+        if glyphs is None:
+            return self._text_width("?" * len(text), scale)
+        width = 0
+        for char in text:
+            glyph = glyphs.get(ord(char)) or glyphs.get(ord("?"))
+            width += (glyph[0] if glyph else 10) * scale
+        return width
+
+    def _japanese_glyphs(self) -> dict[int, tuple[int, tuple[str, ...]]] | None:
+        if self.jp_glyphs is not None:
+            return self.jp_glyphs
+        try:
+            _prepare_import_layout()
+            from src.data.font_jp import GLYPHS
+        except Exception:
+            return None
+        self.jp_glyphs = GLYPHS
+        return self.jp_glyphs
+
+    def _draw_text(self, x: int, y: int, text: str, color: int, scale: int) -> None:
+        if not text.isascii():
+            if self._draw_japanese_text(x, y, text, color, scale):
+                return
+            text = "?" * len(text)
         cursor_x = x
         for char in text.upper():
             glyph = BOOT_FONT.get(char, BOOT_FONT[" "])
@@ -994,6 +1162,24 @@ class BootstrapApp:
                     if bit == "1":
                         pyxel.rect(cursor_x + gx * scale, y + gy * scale, scale, scale, color)
             cursor_x += 6 * scale
+
+    def _draw_japanese_text(self, x: int, y: int, text: str, color: int, scale: int) -> bool:
+        glyphs = self._japanese_glyphs()
+        if glyphs is None:
+            return False
+        cursor_x = x
+        for char in text:
+            glyph = glyphs.get(ord(char)) or glyphs.get(ord("?"))
+            if glyph is None:
+                cursor_x += 10 * scale
+                continue
+            advance, rows = glyph
+            for row_index, row in enumerate(rows):
+                for column_index, value in enumerate(row):
+                    if value == "0":
+                        continue
+                    pyxel.rect(cursor_x + column_index * scale, y + row_index * scale, scale, scale, color)
+            cursor_x += advance * scale
 
 if __name__ == "__main__":
     BootstrapApp()

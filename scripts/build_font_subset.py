@@ -22,6 +22,26 @@ FULLWIDTH_UPPERCASE = "".join(chr(code) for code in range(0xFF21, 0xFF3B))
 FULLWIDTH_LOWERCASE = "".join(chr(code) for code in range(0xFF41, 0xFF5B))
 JAPANESE_PUNCTUATION = "　。、，．・：；？！ー〜～（）「」『』【】〈〉《》〔〕…‥"
 JAPANESE_OPERATORS = "＋−－×÷＝"
+SETUP_UI_JA = (
+    "位置情報は取得しません"
+    "表示言語を選択"
+    "国を選択"
+    "都市を選択"
+    "空を確認"
+    "戻る"
+    "開始"
+    "前へ"
+    "次へ"
+    "準備"
+    "読み込みの為、画面が一時的に固まることがあります。"
+    "そのまましばらくお待ちください。"
+    "日本アメリカイギリスフランスドイツフィンランドオーストラリアニュージーランド"
+    "ブラジル南アフリカシンガポールインドカナダ韓国台湾タイ"
+    "東京福島札幌仙台新潟名古屋大阪広島福岡那覇"
+    "ニューヨークロサンゼルスシカゴシアトルホノルルロンドンパリベルリン"
+    "ヘルシンキタンペレシドニーメルボルンホバートオークランドサンパウロ"
+    "ケープタウンデリートロントバンクーバーソウル台北バンコク"
+)
 COMMON_LETTER_KANJI = (
     "日本語生活仕事学校会社家族友達父母兄弟姉妹子供朝昼夕夜今日明日昨日今年去年"
     "時間分秒年月日春夏秋冬空星月雨雪風雲海山川街駅道電車電話部屋窓台所本音声"
@@ -31,6 +51,7 @@ COMMON_LETTER_KANJI = (
 
 
 def _import_app_data():
+    sys.path.insert(0, str(ROOT))
     sys.path.insert(0, str(SRC))
     from data.constellation_descriptions import CONSTELLATION_DESCRIPTIONS
     from data.moon_descriptions import MOON_DESCRIPTIONS, MOON_PHASE_DESCRIPTIONS
@@ -81,6 +102,7 @@ def _required_text() -> str:
         FULLWIDTH_LOWERCASE,
         JAPANESE_PUNCTUATION,
         JAPANESE_OPERATORS,
+        SETUP_UI_JA,
         COMMON_LETTER_KANJI,
         *constellation_names.values(),
         *meteor_event_names.values(),

@@ -30,6 +30,26 @@ FULLWIDTH_UPPERCASE = "".join(chr(code) for code in range(0xFF21, 0xFF3B))
 FULLWIDTH_LOWERCASE = "".join(chr(code) for code in range(0xFF41, 0xFF5B))
 JAPANESE_PUNCTUATION = "　。、，．・：；？！ー〜～（）「」『』【】〈〉《》〔〕…‥"
 JAPANESE_OPERATORS = "＋−－×÷＝"
+SETUP_UI_JA = (
+    "位置情報は取得しません"
+    "表示言語を選択"
+    "国を選択"
+    "都市を選択"
+    "空を確認"
+    "戻る"
+    "開始"
+    "前へ"
+    "次へ"
+    "準備"
+    "読み込みの為、画面が一時的に固まることがあります。"
+    "そのまましばらくお待ちください。"
+    "日本アメリカイギリスフランスドイツフィンランドオーストラリアニュージーランド"
+    "ブラジル南アフリカシンガポールインドカナダ韓国台湾タイ"
+    "東京福島札幌仙台新潟名古屋大阪広島福岡那覇"
+    "ニューヨークロサンゼルスシカゴシアトルホノルルロンドンパリベルリン"
+    "ヘルシンキタンペレシドニーメルボルンホバートオークランドサンパウロ"
+    "ケープタウンデリートロントバンクーバーソウル台北バンコク"
+)
 COMMON_LETTER_KANJI = "日本語生活仕事駅帰雨母電話終電"
 
 
@@ -114,6 +134,7 @@ class FontSubsetTests(unittest.TestCase):
             FULLWIDTH_LOWERCASE,
             JAPANESE_PUNCTUATION,
             JAPANESE_OPERATORS,
+            SETUP_UI_JA,
             COMMON_LETTER_KANJI,
         ]
         required = {ord(char) for label in labels for char in label}
@@ -139,6 +160,7 @@ class FontSubsetTests(unittest.TestCase):
             FULLWIDTH_LOWERCASE,
             JAPANESE_PUNCTUATION,
             JAPANESE_OPERATORS,
+            SETUP_UI_JA,
             COMMON_LETTER_KANJI,
         ]
         required = {ord(char) for label in labels for char in label}
