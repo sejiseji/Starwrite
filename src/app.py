@@ -23,6 +23,7 @@ from data.constellations import CONSTELLATIONS
 from data.locations import LOCATION_COUNTRIES, location_label
 from data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
 from data.moon_descriptions import moon_description, moon_phase_description, moon_phase_title
+from data.preset_letters import PRESET_LETTER_PACKS
 from data.sky_features import ASTERISMS, SKY_PATHS
 from data.sky_feature_descriptions import SKY_FEATURE_DESCRIPTIONS
 from data.star_descriptions import STAR_DESCRIPTIONS
@@ -300,8 +301,8 @@ class StarSkyApp:
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.constellation_star_ids = {star_id for constellation in CONSTELLATIONS for star_id in constellation.main_star_ids}
         self.latest_capture = self._load_capture()
-        self.letters: tuple[PresetLetter, ...] = ()
-        self.letters_by_id: dict[str, PresetLetter] = {}
+        self.letters = load_letters_from_packs(PRESET_LETTER_PACKS)
+        self.letters_by_id: dict[str, PresetLetter] = {letter.id: letter for letter in self.letters}
         letter_store = self._load_letter_store()
         self.exchange_logs: tuple[ExchangeLog, ...] = letter_store["logs"]
         self.seen_letter_ids: set[str] = letter_store["seen_letter_ids"]
@@ -345,6 +346,7 @@ class StarSkyApp:
 
         set_desktop_letter_text_mode(DESKTOP_VIEW)
         pyxel.init(SCREEN_WIDTH, SCREEN_HEIGHT, title="Starwrite Sky", fps=30)
+        self._setup_audio()
         pyxel.mouse(True)
         pyxel.run(self.update, self.draw)
 
@@ -377,17 +379,8 @@ class StarSkyApp:
             "unread_log_id": data.get("unread_log_id"),
         }
 
-    def _ensure_letters_loaded(self) -> None:
-        if self.letters:
-            return
-        from data.preset_letters import PRESET_LETTER_PACKS
-
-        self.letters = load_letters_from_packs(PRESET_LETTER_PACKS)
-        self.letters_by_id = {letter.id: letter for letter in self.letters}
-
     def update(self) -> None:
-        if self.ready_signaled:
-            self._update_bgm()
+        self._update_bgm()
         self._finish_letter_close_animation()
         if self.ui_state == "SKY":
             self.clock.update(1.0 / 30.0)
@@ -1007,7 +1000,6 @@ class StarSkyApp:
         return menu_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
 
     def _active_letter_panel_rect(self) -> tuple[int, int, int, int]:
-        self._ensure_letters_loaded()
         log = self._selected_log()
         if log is None:
             return letter_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -1294,7 +1286,6 @@ class StarSkyApp:
         return True
 
     def _capture(self) -> None:
-        self._ensure_letters_loaded()
         focused_star = self._focused_star()
         self.latest_capture = SkyCapture(
             schema_version=1,
@@ -1532,7 +1523,6 @@ class StarSkyApp:
             return
 
         if self.ui_state == "LOG":
-            self._ensure_letters_loaded()
             self.renderer.draw(
                 self.projected,
                 CONSTELLATIONS,
@@ -1553,7 +1543,6 @@ class StarSkyApp:
             return
 
         if self.ui_state in ("LETTER", "LOG_DETAIL"):
-            self._ensure_letters_loaded()
             log = self._selected_log()
             if log is not None:
                 self._draw_capture_background(log.capture)
