@@ -137,6 +137,104 @@ INITIAL_INPUT_LOCK_FRAMES = 24
 SETUP_TRANSITION_DELAY_FRAMES = 5
 SETUP_PARTICLE_FRAMES = 14
 SETUP_PARTICLE_COUNT = 24
+SETUP_BACKGROUND_STAR_POINTS = (
+    (19, 31, 10, 1),
+    (92, 168, 7, 0),
+    (165, 305, 7, 0),
+    (238, 442, 7, 0),
+    (311, 579, 7, 0),
+    (384, 20, 13, 0),
+    (27, 157, 7, 0),
+    (100, 294, 7, 0),
+    (173, 431, 7, 0),
+    (246, 568, 7, 0),
+    (319, 9, 13, 0),
+    (392, 146, 12, 0),
+    (35, 283, 7, 0),
+    (108, 420, 7, 0),
+    (181, 557, 7, 0),
+    (254, 694, 13, 0),
+    (327, 135, 7, 0),
+    (400, 272, 10, 0),
+    (43, 409, 7, 0),
+    (116, 546, 7, 0),
+    (189, 683, 13, 0),
+    (262, 124, 7, 0),
+    (335, 261, 12, 0),
+    (408, 398, 7, 0),
+    (51, 535, 7, 0),
+    (124, 672, 13, 0),
+    (197, 113, 7, 0),
+    (270, 250, 7, 0),
+    (343, 387, 7, 0),
+    (416, 524, 7, 0),
+    (59, 661, 13, 0),
+    (132, 102, 7, 1),
+    (205, 239, 7, 0),
+    (278, 376, 12, 0),
+    (351, 513, 10, 0),
+    (424, 650, 13, 0),
+    (67, 91, 7, 0),
+    (140, 228, 7, 0),
+    (213, 365, 7, 0),
+    (286, 502, 7, 0),
+    (359, 639, 13, 0),
+    (2, 80, 7, 0),
+    (75, 217, 7, 0),
+    (148, 354, 7, 0),
+    (221, 491, 12, 0),
+    (294, 628, 13, 0),
+    (367, 69, 7, 0),
+    (10, 206, 7, 0),
+    (83, 343, 7, 0),
+    (156, 480, 7, 0),
+    (229, 617, 13, 0),
+    (302, 58, 10, 0),
+    (375, 195, 7, 0),
+    (18, 332, 7, 0),
+    (91, 469, 7, 0),
+    (164, 606, 12, 0),
+    (237, 47, 7, 0),
+    (310, 184, 7, 0),
+    (383, 321, 7, 0),
+    (26, 458, 7, 0),
+    (99, 595, 13, 0),
+    (172, 36, 7, 0),
+    (245, 173, 7, 1),
+    (318, 310, 7, 0),
+    (391, 447, 7, 0),
+    (34, 584, 13, 0),
+    (107, 25, 12, 0),
+    (180, 162, 7, 0),
+    (253, 299, 10, 0),
+    (326, 436, 7, 0),
+    (399, 573, 13, 0),
+    (42, 14, 7, 0),
+    (115, 151, 7, 0),
+    (188, 288, 7, 0),
+    (261, 425, 7, 0),
+    (334, 562, 13, 0),
+    (407, 3, 7, 0),
+    (50, 140, 12, 0),
+    (123, 277, 7, 0),
+    (196, 414, 7, 0),
+    (269, 551, 13, 0),
+    (342, 688, 7, 0),
+    (415, 129, 7, 0),
+    (58, 266, 7, 0),
+    (131, 403, 7, 0),
+    (204, 540, 10, 0),
+    (277, 677, 7, 0),
+    (350, 118, 7, 0),
+    (423, 255, 12, 0),
+    (66, 392, 7, 0),
+    (139, 529, 13, 0),
+    (212, 666, 7, 0),
+    (285, 107, 7, 0),
+    (358, 244, 7, 1),
+    (1, 381, 7, 0),
+    (74, 518, 13, 0),
+)
 BOOT_FONT = {
     "A": ("01110", "10001", "10001", "11111", "10001", "10001", "10001"),
     "B": ("11110", "10001", "10001", "11110", "10001", "10001", "11110"),
@@ -350,7 +448,7 @@ class BootstrapApp:
         if self.state == "LOADING":
             self._draw_loading_sky_background()
         else:
-            self._draw_stars()
+            self._draw_setup_star_background()
         if self.state in ("COUNTRY", "CITY", "CONFIRM"):
             self._draw_setup()
         else:
@@ -705,7 +803,7 @@ class BootstrapApp:
 
     def _draw_loading_sky_background(self) -> None:
         if not self._ensure_loading_star_points():
-            self._draw_stars()
+            self._draw_setup_star_background()
             return
         assert self.loading_star_points is not None
         for x, y, color, radius in self.loading_star_points:
@@ -773,12 +871,18 @@ class BootstrapApp:
         except Exception:
             return False
 
-    def _draw_stars(self) -> None:
-        for index in range(80):
-            x = (index * 73 + 19) % self.width
-            y = (index * 137 + 31 + pyxel.frame_count // 3) % self.height
-            color = 7 if index % 5 else 10
-            pyxel.pset(x, y, color)
+    def _draw_setup_star_background(self) -> None:
+        for x, y, color, radius in SETUP_BACKGROUND_STAR_POINTS:
+            if x < 0 or y < 0 or x >= self.width or y >= self.height:
+                continue
+            if radius:
+                pyxel.pset(x - 1, y, color)
+                pyxel.pset(x, y - 1, color)
+                pyxel.pset(x, y, color)
+                pyxel.pset(x + 1, y, color)
+                pyxel.pset(x, y + 1, color)
+            else:
+                pyxel.pset(x, y, color)
 
     def _button(self, rect: tuple[int, int, int, int], label: str, active: bool, color: int, scale: int = 1) -> None:
         x, y, w, h = rect
