@@ -5,6 +5,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
+sys.path.insert(0, "src")
 
 import pyxel
 
@@ -79,6 +80,70 @@ CITIES: dict[str, tuple[tuple[str, float, float], ...]] = {
     "TH": (("Bangkok", 13.7563, 100.5018),),
 }
 COUNTRIES = tuple(CITIES)
+COUNTRY_LABELS = {
+    "JP": "JAPAN",
+    "US": "UNITED STATES",
+    "GB": "UNITED KINGDOM",
+    "FR": "FRANCE",
+    "DE": "GERMANY",
+    "FI": "FINLAND",
+    "AU": "AUSTRALIA",
+    "NZ": "NEW ZEALAND",
+    "BR": "BRAZIL",
+    "ZA": "SOUTH AFRICA",
+    "SG": "SINGAPORE",
+    "IN": "INDIA",
+    "CA": "CANADA",
+    "KR": "SOUTH KOREA",
+    "TW": "TAIWAN",
+    "TH": "THAILAND",
+}
+LIST_PAGE_SIZE = 6
+BOOT_FONT = {
+    "A": ("01110", "10001", "10001", "11111", "10001", "10001", "10001"),
+    "B": ("11110", "10001", "10001", "11110", "10001", "10001", "11110"),
+    "C": ("01111", "10000", "10000", "10000", "10000", "10000", "01111"),
+    "D": ("11110", "10001", "10001", "10001", "10001", "10001", "11110"),
+    "E": ("11111", "10000", "10000", "11110", "10000", "10000", "11111"),
+    "F": ("11111", "10000", "10000", "11110", "10000", "10000", "10000"),
+    "G": ("01111", "10000", "10000", "10111", "10001", "10001", "01111"),
+    "H": ("10001", "10001", "10001", "11111", "10001", "10001", "10001"),
+    "I": ("11111", "00100", "00100", "00100", "00100", "00100", "11111"),
+    "J": ("00111", "00010", "00010", "00010", "10010", "10010", "01100"),
+    "K": ("10001", "10010", "10100", "11000", "10100", "10010", "10001"),
+    "L": ("10000", "10000", "10000", "10000", "10000", "10000", "11111"),
+    "M": ("10001", "11011", "10101", "10101", "10001", "10001", "10001"),
+    "N": ("10001", "11001", "10101", "10011", "10001", "10001", "10001"),
+    "O": ("01110", "10001", "10001", "10001", "10001", "10001", "01110"),
+    "P": ("11110", "10001", "10001", "11110", "10000", "10000", "10000"),
+    "Q": ("01110", "10001", "10001", "10001", "10101", "10010", "01101"),
+    "R": ("11110", "10001", "10001", "11110", "10100", "10010", "10001"),
+    "S": ("01111", "10000", "10000", "01110", "00001", "00001", "11110"),
+    "T": ("11111", "00100", "00100", "00100", "00100", "00100", "00100"),
+    "U": ("10001", "10001", "10001", "10001", "10001", "10001", "01110"),
+    "V": ("10001", "10001", "10001", "10001", "10001", "01010", "00100"),
+    "W": ("10001", "10001", "10001", "10101", "10101", "10101", "01010"),
+    "X": ("10001", "10001", "01010", "00100", "01010", "10001", "10001"),
+    "Y": ("10001", "10001", "01010", "00100", "00100", "00100", "00100"),
+    "Z": ("11111", "00001", "00010", "00100", "01000", "10000", "11111"),
+    "0": ("01110", "10001", "10011", "10101", "11001", "10001", "01110"),
+    "1": ("00100", "01100", "00100", "00100", "00100", "00100", "01110"),
+    "2": ("01110", "10001", "00001", "00010", "00100", "01000", "11111"),
+    "3": ("11110", "00001", "00001", "01110", "00001", "00001", "11110"),
+    "4": ("00010", "00110", "01010", "10010", "11111", "00010", "00010"),
+    "5": ("11111", "10000", "10000", "11110", "00001", "00001", "11110"),
+    "6": ("01110", "10000", "10000", "11110", "10001", "10001", "01110"),
+    "7": ("11111", "00001", "00010", "00100", "01000", "01000", "01000"),
+    "8": ("01110", "10001", "10001", "01110", "10001", "10001", "01110"),
+    "9": ("01110", "10001", "10001", "01111", "00001", "00001", "01110"),
+    "-": ("00000", "00000", "00000", "11111", "00000", "00000", "00000"),
+    "/": ("00001", "00010", "00010", "00100", "01000", "01000", "10000"),
+    ".": ("00000", "00000", "00000", "00000", "00000", "01100", "01100"),
+    "+": ("00000", "00100", "00100", "11111", "00100", "00100", "00000"),
+    "<": ("00010", "00100", "01000", "10000", "01000", "00100", "00010"),
+    ">": ("01000", "00100", "00010", "00001", "00010", "00100", "01000"),
+    " ": ("00000", "00000", "00000", "00000", "00000", "00000", "00000"),
+}
 
 
 def _screen_size() -> tuple[int, int]:
@@ -142,13 +207,15 @@ class BootstrapApp:
         self.language = settings.get("language") if settings.get("language") in ("ja", "en") else _detect_language()
         self.country_index = COUNTRIES.index(settings.get("location_country")) if settings.get("location_country") in COUNTRIES else 0
         self.city_index = self._city_index_for(settings.get("location_city"))
+        self.country_page = self.country_index // LIST_PAGE_SIZE
+        self.city_page = self.city_index // LIST_PAGE_SIZE
         self.prefetch_files = list(PREFETCH_CORE)
         if self.language == "ja":
             self.prefetch_files.extend(PREFETCH_JA)
         self.prefetch_index = 0
         self.loading_frames = 0
         self.main_app = None
-        self.state = "SETUP" if _setup_requested() or not settings.get("setup_complete") else "LOADING"
+        self.state = "COUNTRY" if _setup_requested() or not settings.get("setup_complete") else "LOADING"
         pyxel.init(self.width, self.height, title="Starwrite Sky", fps=30)
         pyxel.mouse(True)
         pyxel.run(self.update, self.draw)
@@ -177,7 +244,7 @@ class BootstrapApp:
             self.main_app.update()
             return
         self._prefetch_step()
-        if self.state == "SETUP":
+        if self.state in ("COUNTRY", "CITY", "CONFIRM"):
             self._handle_setup_input()
         elif self.state == "LOADING":
             self.loading_frames += 1
@@ -190,7 +257,7 @@ class BootstrapApp:
             return
         pyxel.cls(0)
         self._draw_stars()
-        if self.state == "SETUP":
+        if self.state in ("COUNTRY", "CITY", "CONFIRM"):
             self._draw_setup()
         else:
             self._draw_loading()
@@ -217,16 +284,49 @@ class BootstrapApp:
                 self.prefetch_files.extend(PREFETCH_JA)
         elif self._hit(x, y, self._rect("en")):
             self.language = "en"
-        elif self._hit(x, y, self._rect("country_prev")):
-            self.country_index = (self.country_index - 1) % len(COUNTRIES)
-            self.city_index = 0
-        elif self._hit(x, y, self._rect("country_next")):
-            self.country_index = (self.country_index + 1) % len(COUNTRIES)
-            self.city_index = 0
-        elif self._hit(x, y, self._rect("city_prev")):
-            self.city_index = (self.city_index - 1) % len(self.cities)
-        elif self._hit(x, y, self._rect("city_next")):
-            self.city_index = (self.city_index + 1) % len(self.cities)
+        elif self.state == "COUNTRY":
+            self._handle_country_input(x, y)
+        elif self.state == "CITY":
+            self._handle_city_input(x, y)
+        elif self.state == "CONFIRM":
+            self._handle_confirm_input(x, y)
+
+    def _handle_country_input(self, x: int, y: int) -> None:
+        if self._hit(x, y, self._rect("page_prev")):
+            self.country_page = max(0, self.country_page - 1)
+            return
+        if self._hit(x, y, self._rect("page_next")):
+            self.country_page = min(self._page_count(len(COUNTRIES)) - 1, self.country_page + 1)
+            return
+        for index, rect in self._list_rects():
+            country_index = self.country_page * LIST_PAGE_SIZE + index
+            if country_index < len(COUNTRIES) and self._hit(x, y, rect):
+                self.country_index = country_index
+                self.city_index = 0
+                self.city_page = 0
+                self.state = "CITY"
+                return
+
+    def _handle_city_input(self, x: int, y: int) -> None:
+        if self._hit(x, y, self._rect("back")):
+            self.state = "COUNTRY"
+            return
+        if self._hit(x, y, self._rect("page_prev")):
+            self.city_page = max(0, self.city_page - 1)
+            return
+        if self._hit(x, y, self._rect("page_next")):
+            self.city_page = min(self._page_count(len(self.cities)) - 1, self.city_page + 1)
+            return
+        for index, rect in self._list_rects():
+            city_index = self.city_page * LIST_PAGE_SIZE + index
+            if city_index < len(self.cities) and self._hit(x, y, rect):
+                self.city_index = city_index
+                self.state = "CONFIRM"
+                return
+
+    def _handle_confirm_input(self, x: int, y: int) -> None:
+        if self._hit(x, y, self._rect("back")):
+            self.state = "CITY"
         elif self._hit(x, y, self._rect("start")):
             self._save_selection()
             self.state = "LOADING"
@@ -249,23 +349,35 @@ class BootstrapApp:
 
     def _start_main_app(self) -> None:
         self.state = "MAIN"
-        from app_pyxres_sounds import StarSkyApp
+        try:
+            from src.app_pyxres_sounds import StarSkyApp
+        except Exception:
+            from app_pyxres_sounds import StarSkyApp
 
         self.main_app = StarSkyApp(start_pyxel=False)
 
     def _rect(self, key: str) -> tuple[int, int, int, int]:
         cx = self.width // 2
-        top = 138
+        bottom = self.height - 58
         rects = {
-            "ja": (cx - 112, top + 76, 104, 34),
-            "en": (cx + 8, top + 76, 104, 34),
-            "country_prev": (cx - 146, top + 156, 40, 34),
-            "country_next": (cx + 106, top + 156, 40, 34),
-            "city_prev": (cx - 146, top + 226, 40, 34),
-            "city_next": (cx + 106, top + 226, 40, 34),
-            "start": (cx - 92, top + 306, 184, 40),
+            "ja": (12, 78, (self.width - 36) // 2, 44),
+            "en": (24 + (self.width - 36) // 2, 78, (self.width - 36) // 2, 44),
+            "back": (12, bottom, 104, 42),
+            "page_prev": (12, bottom, 104, 42),
+            "page_next": (self.width - 116, bottom, 104, 42),
+            "start": (self.width - 156, bottom, 144, 42),
         }
         return rects[key]
+
+    def _list_rects(self) -> tuple[tuple[int, tuple[int, int, int, int]], ...]:
+        top = 154
+        height = 54
+        gap = 8
+        return tuple((index, (12, top + index * (height + gap), self.width - 24, height)) for index in range(LIST_PAGE_SIZE))
+
+    @staticmethod
+    def _page_count(count: int) -> int:
+        return max(1, (count + LIST_PAGE_SIZE - 1) // LIST_PAGE_SIZE)
 
     @staticmethod
     def _hit(x: int, y: int, rect: tuple[int, int, int, int]) -> bool:
@@ -273,32 +385,66 @@ class BootstrapApp:
         return rx <= x < rx + rw and ry <= y < ry + rh
 
     def _draw_setup(self) -> None:
-        cx = self.width // 2
-        top = 138
-        self._center_text("STARWRITE", top, 7)
-        self._center_text("CHOOSE A SKY TO BEGIN", top + 24, 13)
-        self._center_text("NO LOCATION ACCESS", top + 42, 5)
-        self._label("LANGUAGE", cx - 112, top + 62)
-        self._button(self._rect("ja"), "JA", self.language == "ja", 10)
-        self._button(self._rect("en"), "EN", self.language == "en", 10)
-        self._label("COUNTRY / REGION", cx - 112, top + 136)
-        self._button(self._rect("country_prev"), "-", False, 7)
-        self._button(self._rect("country_next"), "+", False, 7)
-        self._center_text(self.country, top + 167, 7)
-        self._label("CITY", cx - 112, top + 206)
-        self._button(self._rect("city_prev"), "-", False, 7)
-        self._button(self._rect("city_next"), "+", False, 7)
-        self._center_text(self.city[0], top + 237, 7)
-        self._button(self._rect("start"), "START", True, 11)
+        self._center_text("STARWRITE", 18, 7, scale=2)
+        self._center_text("NO LOCATION ACCESS", 44, 13)
+        self._button(self._rect("ja"), "JA", self.language == "ja", 10, scale=2)
+        self._button(self._rect("en"), "EN", self.language == "en", 10, scale=2)
+        if self.state == "COUNTRY":
+            self._draw_country_list()
+        elif self.state == "CITY":
+            self._draw_city_list()
+        else:
+            self._draw_confirm()
         loaded = min(self.prefetch_index, len(self.prefetch_files))
-        self._center_text(f"PREPARING {loaded}/{len(self.prefetch_files)}", top + 366, 5)
+        self._center_text(f"PREP {loaded}/{len(self.prefetch_files)}", self.height - 16, 5)
+
+    def _draw_country_list(self) -> None:
+        self._center_text("SELECT COUNTRY", 132, 7, scale=2)
+        start = self.country_page * LIST_PAGE_SIZE
+        for row, rect in self._list_rects():
+            country_index = start + row
+            if country_index >= len(COUNTRIES):
+                continue
+            code = COUNTRIES[country_index]
+            label = f"{code}  {COUNTRY_LABELS.get(code, code)}"
+            self._button(rect, label, country_index == self.country_index, 7, scale=2)
+        self._pager(self.country_page, self._page_count(len(COUNTRIES)))
+
+    def _draw_city_list(self) -> None:
+        self._center_text(COUNTRY_LABELS.get(self.country, self.country), 126, 10, scale=2)
+        self._center_text("SELECT CITY", 148, 7)
+        start = self.city_page * LIST_PAGE_SIZE
+        for row, rect in self._list_rects():
+            city_index = start + row
+            if city_index >= len(self.cities):
+                continue
+            self._button(rect, self.cities[city_index][0], city_index == self.city_index, 7, scale=2)
+        self._button(self._rect("back"), "BACK", False, 7)
+        self._pager(self.city_page, self._page_count(len(self.cities)))
+
+    def _draw_confirm(self) -> None:
+        name, latitude, longitude = self.city
+        self._center_text("CONFIRM SKY", 148, 7, scale=2)
+        self._center_text(COUNTRY_LABELS.get(self.country, self.country), 224, 10, scale=2)
+        self._center_text(name, 258, 7, scale=2)
+        self._center_text(f"LAT {latitude:.1f}", 318, 13)
+        self._center_text(f"LON {longitude:.1f}", 334, 13)
+        self._button(self._rect("back"), "BACK", False, 7)
+        self._button(self._rect("start"), "START", True, 11)
+
+    def _pager(self, page: int, pages: int) -> None:
+        if page > 0:
+            self._button(self._rect("page_prev"), "< PAGE", False, 7)
+        if page < pages - 1:
+            self._button(self._rect("page_next"), "PAGE >", False, 7)
+        self._center_text(f"{page + 1}/{pages}", self.height - 46, 13)
 
     def _draw_loading(self) -> None:
         y = self.height // 2 - 18
         dots = "." * ((pyxel.frame_count // 12) % 4)
-        self._center_text("LOADING SKY" + dots, y, 7)
+        self._center_text("LOADING SKY" + dots, y, 7, scale=2)
         loaded = min(self.prefetch_index, len(self.prefetch_files))
-        self._center_text(f"FILES {loaded}/{len(self.prefetch_files)}", y + 22, 13)
+        self._center_text(f"FILES {loaded}/{len(self.prefetch_files)}", y + 30, 13)
 
     def _draw_stars(self) -> None:
         for index in range(80):
@@ -307,20 +453,54 @@ class BootstrapApp:
             color = 7 if index % 5 else 10
             pyxel.pset(x, y, color)
 
-    def _button(self, rect: tuple[int, int, int, int], label: str, active: bool, color: int) -> None:
+    def _button(self, rect: tuple[int, int, int, int], label: str, active: bool, color: int, scale: int = 1) -> None:
         x, y, w, h = rect
         pyxel.rect(x, y, w, h, 5 if active else 1)
         pyxel.rectb(x, y, w, h, 10 if active else 13)
-        self._center_text(label, y + max(3, (h - 5) // 2), color, x, w)
+        text = self._fit_text(label, w - 12, scale)
+        self._center_text(text, y + max(3, (h - 7 * scale) // 2), color, x, w, scale)
 
     @staticmethod
     def _label(text: str, x: int, y: int) -> None:
         pyxel.text(x, y, text, 13)
 
-    def _center_text(self, text: str, y: int, color: int, x: int | None = None, width: int | None = None) -> None:
+    def _center_text(
+        self,
+        text: str,
+        y: int,
+        color: int,
+        x: int | None = None,
+        width: int | None = None,
+        scale: int = 1,
+    ) -> None:
         area_x = 0 if x is None else x
         area_w = self.width if width is None else width
-        pyxel.text(area_x + max(0, (area_w - len(text) * 4) // 2), y, text, color)
+        draw_x = area_x + max(0, (area_w - self._text_width(text, scale)) // 2)
+        self._draw_text(draw_x, y, text, color, scale)
+
+    @staticmethod
+    def _fit_text(text: str, max_width: int, scale: int) -> str:
+        value = text.upper()
+        while len(value) > 1 and BootstrapApp._text_width(value, scale) > max_width:
+            value = value[:-1]
+        return value
+
+    @staticmethod
+    def _text_width(text: str, scale: int) -> int:
+        if not text:
+            return 0
+        return (len(text) * 6 - 1) * scale
+
+    @staticmethod
+    def _draw_text(x: int, y: int, text: str, color: int, scale: int) -> None:
+        cursor_x = x
+        for char in text.upper():
+            glyph = BOOT_FONT.get(char, BOOT_FONT[" "])
+            for gy, row in enumerate(glyph):
+                for gx, bit in enumerate(row):
+                    if bit == "1":
+                        pyxel.rect(cursor_x + gx * scale, y + gy * scale, scale, scale, color)
+            cursor_x += 6 * scale
 
 
 BootstrapApp()
