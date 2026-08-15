@@ -54,6 +54,7 @@ from ui.hud import (
     draw_focused_star,
     draw_focused_moon,
     draw_letter_view,
+    draw_location_badge,
     draw_log_list,
     draw_main_buttons,
     draw_meteor_event,
@@ -1558,6 +1559,8 @@ class StarSkyApp:
                 len(METEOR_SHOWERS),
                 self.language,
             )
+        if not self.menu_open:
+            draw_location_badge(self.location_country, self.location_city, self.language)
         draw_menu_button(self.menu_open)
         draw_main_buttons(self.unread_log_id is not None, self.pending_deliver_frame is not None)
         self._draw_active_cut_in()

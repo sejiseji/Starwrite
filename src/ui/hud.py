@@ -130,7 +130,7 @@ from src.sky.camera import SkyCamera
 from src.sky.letters import ExchangeLog, PresetLetter, display_letter_text
 from src.sky.meteors import MeteorEventView
 from src.sky.simulation import SimulationClock
-from src.ui.localization import Language, constellation_name, meteor_event_name, sky_feature_name
+from src.ui.localization import Language, city_name, constellation_name, country_name, meteor_event_name, sky_feature_name
 
 SCALE = 2
 GLYPH_W = 3
@@ -352,6 +352,13 @@ def menu_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
     button_h = 22
     main_top = main_button_rects(width, height)["letter"][1]
     return ((width - button_w) // 2, main_top - button_h - 8, button_w, button_h)
+
+
+def location_badge_rect(width: int, height: int) -> tuple[int, int, int, int]:
+    log_x, _log_y, log_w, _log_h = main_button_rects(width, height)["log"]
+    _menu_x, menu_y, _menu_w, _menu_h = menu_button_rect(width, height)
+    panel_h = 34
+    return (log_x, menu_y - panel_h - 6, log_w, panel_h)
 
 
 def rotate_speed_control_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
@@ -1045,6 +1052,39 @@ def _hud_lines(
 
 def draw_menu_button(opened: bool) -> None:
     draw_button(menu_button_rect(pyxel.width, pyxel.height), "CLOSE" if opened else "MENU", True)
+
+
+def _draw_centered_display_text(text: str, x: int, y: int, w: int, col: int) -> None:
+    draw_display_text(x + max(3, (w - display_text_width(text)) // 2), y, text, col)
+
+
+def draw_location_badge(country_code: str | None, city: str | None, language: Language) -> None:
+    country = country_name(country_code, language)
+    city_label = city_name(city, language)
+    if not country and not city_label:
+        return
+
+    x, y, w, h = location_badge_rect(pyxel.width, pyxel.height)
+    pyxel.rect(x, y, w, h, 0)
+    pyxel.rectb(x, y, w, h, 10)
+    pyxel.rectb(x + 2, y + 2, w - 4, h - 4, 1)
+
+    # Small framed corners keep the badge distinct without competing with controls.
+    for corner_x, corner_y, sx, sy in (
+        (x + 3, y + 3, 1, 1),
+        (x + w - 4, y + 3, -1, 1),
+        (x + 3, y + h - 4, 1, -1),
+        (x + w - 4, y + h - 4, -1, -1),
+    ):
+        pyxel.pset(corner_x, corner_y, 10)
+        pyxel.pset(corner_x + sx, corner_y, 7)
+        pyxel.pset(corner_x, corner_y + sy, 7)
+
+    if country and city_label:
+        _draw_centered_display_text(country, x, y + 6, w, 10)
+        _draw_centered_display_text(city_label, x, y + 19, w, 7)
+    else:
+        _draw_centered_display_text(country or city_label, x, y + 13, w, 10)
 
 
 def draw_rotate_speed_control(speed_level: int) -> None:

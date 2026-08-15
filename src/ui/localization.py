@@ -131,6 +131,80 @@ METEOR_EVENT_NAMES_JA: dict[str, str] = {
     "URS": "こぐま座流星群",
 }
 
+COUNTRY_NAMES_EN: dict[str, str] = {
+    "JP": "JAPAN",
+    "US": "UNITED STATES",
+    "GB": "UNITED KINGDOM",
+    "FR": "FRANCE",
+    "DE": "GERMANY",
+    "FI": "FINLAND",
+    "AU": "AUSTRALIA",
+    "NZ": "NEW ZEALAND",
+    "BR": "BRAZIL",
+    "ZA": "SOUTH AFRICA",
+    "SG": "SINGAPORE",
+    "IN": "INDIA",
+    "CA": "CANADA",
+    "KR": "SOUTH KOREA",
+    "TW": "TAIWAN",
+    "TH": "THAILAND",
+}
+
+COUNTRY_NAMES_JA: dict[str, str] = {
+    "JP": "日本",
+    "US": "アメリカ",
+    "GB": "イギリス",
+    "FR": "フランス",
+    "DE": "ドイツ",
+    "FI": "フィンランド",
+    "AU": "オーストラリア",
+    "NZ": "ニュージーランド",
+    "BR": "ブラジル",
+    "ZA": "南アフリカ",
+    "SG": "シンガポール",
+    "IN": "インド",
+    "CA": "カナダ",
+    "KR": "韓国",
+    "TW": "台湾",
+    "TH": "タイ",
+}
+
+CITY_NAMES_JA: dict[str, str] = {
+    "Tokyo": "東京",
+    "Fukushima": "福島",
+    "Sapporo": "札幌",
+    "Sendai": "仙台",
+    "Niigata": "新潟",
+    "Nagoya": "名古屋",
+    "Osaka": "大阪",
+    "Hiroshima": "広島",
+    "Fukuoka": "福岡",
+    "Naha": "那覇",
+    "New York": "ニューヨーク",
+    "Los Angeles": "ロサンゼルス",
+    "Chicago": "シカゴ",
+    "Seattle": "シアトル",
+    "Honolulu": "ホノルル",
+    "London": "ロンドン",
+    "Paris": "パリ",
+    "Berlin": "ベルリン",
+    "Helsinki": "ヘルシンキ",
+    "Tampere": "タンペレ",
+    "Sydney": "シドニー",
+    "Melbourne": "メルボルン",
+    "Hobart": "ホバート",
+    "Auckland": "オークランド",
+    "Sao Paulo": "サンパウロ",
+    "Cape Town": "ケープタウン",
+    "Singapore": "シンガポール",
+    "Delhi": "デリー",
+    "Toronto": "トロント",
+    "Vancouver": "バンクーバー",
+    "Seoul": "ソウル",
+    "Taipei": "台北",
+    "Bangkok": "バンコク",
+}
+
 STAR_NAMES_JA: dict[int, str] = {
     11767: "ポラリス",
     32349: "シリウス",
@@ -591,6 +665,22 @@ def meteor_event_name(event: MeteorShowerEvent, language: Language) -> str:
     if language == "ja":
         return METEOR_EVENT_NAMES_JA.get(event.id.split("-", 1)[0], event.name)
     return event.name
+
+
+def country_name(country_code: str | None, language: Language) -> str:
+    if not country_code:
+        return ""
+    if language == "ja":
+        return COUNTRY_NAMES_JA.get(country_code, country_code)
+    return COUNTRY_NAMES_EN.get(country_code, country_code)
+
+
+def city_name(city: str | None, language: Language) -> str:
+    if not city:
+        return ""
+    if language == "ja":
+        return CITY_NAMES_JA.get(city, city)
+    return city
 
 
 def star_name(star_id: int, english_name: str, language: Language) -> str:

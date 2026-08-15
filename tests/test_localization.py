@@ -4,7 +4,7 @@ import unittest
 
 from data.constellations import CONSTELLATIONS
 from data.meteor_showers import METEOR_SHOWERS
-from ui.localization import constellation_name, meteor_event_name, normalize_language, star_name
+from ui.localization import city_name, constellation_name, country_name, meteor_event_name, normalize_language, star_name
 
 
 class LocalizationTests(unittest.TestCase):
@@ -30,6 +30,12 @@ class LocalizationTests(unittest.TestCase):
 
         self.assertEqual(meteor_event_name(perseids, "ja"), "ペルセウス座流星群")
         self.assertEqual(meteor_event_name(perseids, "en"), "Perseids")
+
+    def test_location_name_can_be_japanese(self) -> None:
+        self.assertEqual(country_name("BR", "ja"), "ブラジル")
+        self.assertEqual(country_name("BR", "en"), "BRAZIL")
+        self.assertEqual(city_name("Sao Paulo", "ja"), "サンパウロ")
+        self.assertEqual(city_name("Sao Paulo", "en"), "Sao Paulo")
 
 
 if __name__ == "__main__":
