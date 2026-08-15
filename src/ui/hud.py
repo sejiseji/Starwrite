@@ -1614,6 +1614,14 @@ CONSTELLATION_JA_BUTTON_LINES = {
     "TRA": ("みなみの", "さんかく座"),
 }
 SEARCH_TAB_KEYS = ("constellation", "star", "group")
+STAR_MAGNITUDE_COLORS = {
+    1: 10,
+    2: 9,
+    3: 7,
+    4: 12,
+    5: 13,
+    6: 6,
+}
 
 
 @dataclass(slots=True, frozen=True)
@@ -1623,6 +1631,29 @@ class SearchListItem:
     selected: bool
     available: bool
     label_lines: tuple[str, ...] | None = None
+    accent_color: int | None = None
+
+
+def star_magnitude_rank(magnitude: float) -> int:
+    try:
+        value = float(magnitude)
+    except (TypeError, ValueError, OverflowError):
+        return 6
+    if value <= 1.5:
+        return 1
+    if value <= 2.5:
+        return 2
+    if value <= 3.5:
+        return 3
+    if value <= 4.5:
+        return 4
+    if value <= 5.5:
+        return 5
+    return 6
+
+
+def star_magnitude_color(magnitude: float) -> int:
+    return STAR_MAGNITUDE_COLORS[star_magnitude_rank(magnitude)]
 
 
 def constellation_list_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
@@ -1740,6 +1771,8 @@ def draw_search_list(
     note_w = display_text_width(note)
     note_y = y + 42 if note.isascii() else y + 40
     draw_display_text(x + max(8, (w - note_w) // 2), note_y, note, 13)
+    if active_tab == "star":
+        _draw_star_magnitude_legend(language, x + 18, y + 59)
     draw_button(constellation_list_close_rect(pyxel.width, pyxel.height), "X", False)
 
     view = constellation_list_view_rect(pyxel.width, pyxel.height)
@@ -1775,6 +1808,18 @@ def _draw_constellation_search_tabs(language: Language, active_tab: str) -> None
             draw_button_colored(rect, labels[key], 5, 10, 7)
         else:
             draw_button_colored(rect, labels[key], 1, 13, 13)
+
+
+def _draw_star_magnitude_legend(language: Language, x: int, y: int) -> None:
+    label = "等級" if language == "ja" else "MAG"
+    draw_display_text(x, y, label, 13)
+    cursor_x = x + display_text_width(label) + 10
+    for rank in range(1, 7):
+        color = STAR_MAGNITUDE_COLORS[rank]
+        pyxel.rect(cursor_x, y + 2, 8, 8, color)
+        pyxel.rectb(cursor_x - 1, y + 1, 10, 10, 13)
+        draw_big_text(cursor_x + 13, y, str(rank), color)
+        cursor_x += 31
 
 
 def _draw_constellation_list_button(
@@ -1836,6 +1881,9 @@ def _draw_search_list_button(
         fill, edge, text_col = 0, 5, 13
     pyxel.rect(x, y, w, h, fill)
     pyxel.rectb(x, y, w, h, edge)
+    if item.accent_color is not None and item.available:
+        accent = max(0, min(15, int(item.accent_color)))
+        pyxel.rectb(x + 1, y + 1, w - 2, h - 2, accent)
     if item.selected:
         pyxel.rectb(x + 2, y + 2, w - 4, h - 4, 10)
 

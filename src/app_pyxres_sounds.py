@@ -79,6 +79,7 @@ from src.ui.hud import (
     draw_slider,
     draw_sky_features,
     draw_tool_buttons,
+    star_magnitude_color,
     focused_moon_hit_rect,
     focused_star_hit_rect,
     menu_button_rect,
@@ -1064,6 +1065,8 @@ class StarSkyApp:
                     star_name(star_id, STAR_NAMES[star_id], self.language),
                     self.selected_star_id == star_id,
                     self._star_can_rise(STARS_BY_ID[star_id]),
+                    None,
+                    star_magnitude_color(STARS_BY_ID[star_id].magnitude),
                 )
                 for star_id in self._search_list_star_ids()
                 if star_id in STARS_BY_ID

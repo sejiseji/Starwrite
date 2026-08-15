@@ -9,7 +9,13 @@ sys.modules.setdefault("pyxel", types.SimpleNamespace(width=396, height=696))
 from data.sky_features import ASTERISMS, SKY_PATHS
 from data.stars import STAR_NAMES
 from ui.localization import sky_feature_name, star_name
-from src.ui.hud import _search_button_label_lines, constellation_list_button_rects, text_width
+from src.ui.hud import (
+    _search_button_label_lines,
+    constellation_list_button_rects,
+    star_magnitude_color,
+    star_magnitude_rank,
+    text_width,
+)
 
 
 class SearchListWrappingTests(unittest.TestCase):
@@ -27,6 +33,14 @@ class SearchListWrappingTests(unittest.TestCase):
                 self.assertLessEqual(len(lines), 3)
                 for line in lines:
                     self.assertLessEqual(text_width(line.upper()), max_width)
+
+    def test_star_magnitude_rank_uses_visual_magnitude_classes(self) -> None:
+        self.assertEqual(star_magnitude_rank(-1.46), 1)
+        self.assertEqual(star_magnitude_rank(1.50), 1)
+        self.assertEqual(star_magnitude_rank(1.51), 2)
+        self.assertEqual(star_magnitude_rank(5.50), 5)
+        self.assertEqual(star_magnitude_rank(5.51), 6)
+        self.assertIn(star_magnitude_color(2.1), range(16))
 
 
 if __name__ == "__main__":
