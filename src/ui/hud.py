@@ -1649,6 +1649,15 @@ def constellation_list_tab_rects(width: int, height: int) -> dict[str, tuple[int
     }
 
 
+def constellation_list_language_rect(width: int, height: int) -> tuple[int, int, int, int]:
+    tabs = constellation_list_tab_rects(width, height)
+    group_x, group_y, group_w, group_h = tabs["group"]
+    close_x, _close_y, _close_w, _close_h = constellation_list_close_rect(width, height)
+    button_x = group_x + group_w + 6
+    button_w = max(42, min(58, close_x - button_x - 8))
+    return (button_x, group_y, button_w, group_h)
+
+
 def constellation_list_view_rect(width: int, height: int) -> tuple[int, int, int, int]:
     x, y, w, h = constellation_list_panel_rect(width, height)
     return (x + 8, y + 74, w - 16, h - 88)
@@ -1727,6 +1736,7 @@ def draw_search_list(
     title_y = y + 14 if title.isascii() else y + 12
     draw_display_bold_text(x + 18, title_y, title, 7)
     _draw_constellation_search_tabs(language, active_tab)
+    draw_button_colored(constellation_list_language_rect(pyxel.width, pyxel.height), language.upper(), 1, 10, 7)
     note_w = display_text_width(note)
     note_y = y + 42 if note.isascii() else y + 40
     draw_display_text(x + max(8, (w - note_w) // 2), note_y, note, 13)

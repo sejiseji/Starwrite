@@ -51,6 +51,7 @@ from src.ui.hud import (
     constellation_label_hit_rects,
     constellation_list_button_rects,
     constellation_list_close_rect,
+    constellation_list_language_rect,
     constellation_list_max_scroll,
     constellation_list_panel_rect,
     constellation_list_tab_rects,
@@ -1002,6 +1003,13 @@ class StarSkyApp:
                     self._clamp_constellation_list_scroll()
                     self._play_ui_sound(SOUND_TOOL_ON)
                 return True
+        if self._point_in_rect(point, constellation_list_language_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+            self._store_search_scroll()
+            self.language = next_language(self.language)
+            self._clamp_constellation_list_scroll()
+            self._save_settings()
+            self._play_ui_sound(SOUND_TOOL_ON)
+            return True
         view = constellation_list_view_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
         if not self._point_in_rect(point, view):
             return True
