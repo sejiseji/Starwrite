@@ -969,9 +969,6 @@ class BootstrapApp:
         panel_x = 24
         panel_y = 374
         panel_w = self.width - 48
-        panel_h = 70
-        pyxel.rect(panel_x, panel_y, panel_w, panel_h, 0)
-        pyxel.rectb(panel_x, panel_y, panel_w, panel_h, 1)
         if self.language == "ja" and self._japanese_glyphs() is not None:
             lines = (
                 "「開始」を押すと、",
@@ -986,8 +983,14 @@ class BootstrapApp:
                 "THE SCREEN.",
                 "PLEASE WAIT A MOMENT.",
             )
+        line_step = 17
+        padding_y = 12
+        text_height = max(self._text_height(line, 1) for line in lines)
+        panel_h = padding_y * 2 + text_height + line_step * (len(lines) - 1)
+        pyxel.rect(panel_x, panel_y, panel_w, panel_h, 0)
+        pyxel.rectb(panel_x, panel_y, panel_w, panel_h, 1)
         for index, line in enumerate(lines):
-            self._center_text(line, panel_y + 12 + index * 17, 13, panel_x, panel_w)
+            self._center_text(line, panel_y + padding_y + index * line_step, 13, panel_x, panel_w)
 
     def _pager(self, page: int, pages: int) -> None:
         if page > 0:
