@@ -1615,12 +1615,12 @@ CONSTELLATION_JA_BUTTON_LINES = {
 }
 SEARCH_TAB_KEYS = ("constellation", "star", "group")
 STAR_MAGNITUDE_COLORS = {
-    1: 10,
+    1: 8,
     2: 9,
-    3: 7,
-    4: 12,
-    5: 13,
-    6: 6,
+    3: 10,
+    4: 7,
+    5: 6,
+    6: 13,
 }
 
 
