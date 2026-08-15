@@ -1602,7 +1602,7 @@ def draw_slider(side: str, label: str, knob_ratio: float = 0.5, rect_key: str | 
 
 
 CONSTELLATION_LIST_COLUMNS = 4
-CONSTELLATION_LIST_BUTTON_H = 34
+CONSTELLATION_LIST_BUTTON_H = 44
 CONSTELLATION_LIST_GAP = 4
 CONSTELLATION_SINGLE_WORD_SPLITS = {
     "CAMELOPARDALIS": ("CAMELO", "PARDALIS"),
@@ -1849,7 +1849,7 @@ def _draw_search_list_button(
 
 def _search_button_label_lines(label: str, language: Language, max_width: int) -> tuple[str, ...]:
     if language == "en":
-        return _constellation_button_label_lines(label.upper(), max_width)
+        return _english_search_button_label_lines(label.upper(), max_width, 3)
     if display_text_width(label) <= max_width:
         return (label,)
     separators = ("の", "・", " ")
@@ -1868,6 +1868,51 @@ def _search_button_label_lines(label: str, language: Language, max_width: int) -
             best = (left, right)
             best_score = score
     return best or (label,)
+
+
+def _english_search_button_label_lines(text: str, max_width: int, max_lines: int) -> tuple[str, ...]:
+    if text_width(text) <= max_width:
+        return (text,)
+    words = []
+    for word in text.split():
+        if text_width(word) <= max_width:
+            words.append(word)
+            continue
+        words.extend(_split_long_constellation_word(word, max_width))
+    if len(words) <= 1:
+        return _split_long_constellation_word(text, max_width)[:max_lines]
+
+    best: tuple[str, ...] | None = None
+    best_score = 999999999
+    for line_count in range(2, min(max_lines, len(words)) + 1):
+        for candidate in _partition_words(words, line_count):
+            widths = [text_width(line) for line in candidate]
+            overflow = sum(max(0, width - max_width) for width in widths)
+            widest = max(widths)
+            balance = max(widths) - min(widths)
+            score = overflow * 100000 + widest * 10 + balance + line_count * 8
+            if overflow == 0:
+                score -= 10000
+            if score < best_score:
+                best = candidate
+                best_score = score
+        if best is not None and max(text_width(line) for line in best) <= max_width:
+            return best
+    return best or (text,)
+
+
+def _partition_words(words: list[str], line_count: int) -> tuple[tuple[str, ...], ...]:
+    if line_count <= 1:
+        return ((" ".join(words),),)
+    if len(words) <= line_count:
+        return (tuple(words),)
+    candidates: list[tuple[str, ...]] = []
+    max_first_end = len(words) - line_count + 1
+    for first_end in range(1, max_first_end + 1):
+        first = " ".join(words[:first_end])
+        for rest in _partition_words(words[first_end:], line_count - 1):
+            candidates.append((first, *rest))
+    return tuple(candidates)
 
 
 def _constellation_button_label_lines(text: str, max_width: int) -> tuple[str, ...]:
