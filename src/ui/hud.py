@@ -321,7 +321,12 @@ def _glyph_location_for(codepoint: int) -> tuple[int, int, int, int] | None:
 
 
 def _draw_bitmap_text(x: int, y: int, text: str, col: int, scale: int = 1) -> None:
-    cursor_x = x
+    try:
+        color = max(0, min(15, int(col)))
+    except (TypeError, ValueError, OverflowError):
+        color = 7
+    cursor_x = int(x)
+    base_y = int(y)
     glyphs = _ensure_japanese_font_loaded()
     for char in text:
         glyph = glyphs.get(ord(char)) or glyphs.get(ord("?"))
@@ -334,11 +339,13 @@ def _draw_bitmap_text(x: int, y: int, text: str, col: int, scale: int = 1) -> No
                 if value == "0":
                     continue
                 draw_x = cursor_x + column_index * scale
-                draw_y = y + row_index * scale
+                draw_y = base_y + row_index * scale
+                if draw_x < 0 or draw_y < 0 or draw_x >= pyxel.width or draw_y >= pyxel.height:
+                    continue
                 if scale == 1:
-                    pyxel.pset(draw_x, draw_y, col)
+                    pyxel.pset(draw_x, draw_y, color)
                 else:
-                    pyxel.rect(draw_x, draw_y, scale, scale, col)
+                    pyxel.rect(draw_x, draw_y, scale, scale, color)
         cursor_x += advance * scale
 
 
