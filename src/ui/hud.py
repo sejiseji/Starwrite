@@ -234,8 +234,11 @@ def draw_text_scaled(x: int, y: int, text: str, col: int, scale: int) -> None:
         pixel_scale = max(1, int(scale))
     except (TypeError, ValueError, OverflowError):
         pixel_scale = SCALE
-    cursor_x = int(x)
-    base_y = int(y)
+    try:
+        cursor_x = int(x)
+        base_y = int(y)
+    except (TypeError, ValueError, OverflowError):
+        return
     for char in text.upper():
         glyph = FONT.get(char, FONT[" "])
         for row, bits in enumerate(glyph):
@@ -332,8 +335,11 @@ def _draw_bitmap_text(x: int, y: int, text: str, col: int, scale: int = 1) -> No
         color = max(0, min(15, int(col)))
     except (TypeError, ValueError, OverflowError):
         color = 7
-    cursor_x = int(x)
-    base_y = int(y)
+    try:
+        cursor_x = int(x)
+        base_y = int(y)
+    except (TypeError, ValueError, OverflowError):
+        return
     glyphs = _ensure_japanese_font_loaded()
     for char in text:
         glyph = glyphs.get(ord(char)) or glyphs.get(ord("?"))
@@ -1170,21 +1176,15 @@ def draw_setup_restart_confirm(language: Language) -> None:
     title = _menu_text(language, "CHANGE SKY", "空の設定を変更")
     line1 = _menu_text(language, "RETURN TO LANGUAGE / COUNTRY / CITY.", "言語・国・都市の選択へ戻ります。")
     line2 = _menu_text(language, "CURRENT SKY VIEW WILL CLOSE.", "現在の星空表示は中断されます。")
-    _draw_centered_display_text(title, y + 14, 10, x, w)
-    _draw_centered_display_text(line1, y + 48, 7, x, w)
-    _draw_centered_display_text(line2, y + 66, 13, x, w)
+    _draw_centered_display_text(title, x, y + 14, w, 10)
+    _draw_centered_display_text(line1, x, y + 48, w, 7)
+    _draw_centered_display_text(line2, x, y + 66, w, 13)
     draw_button(rects["no"], _menu_text(language, "NO", "いいえ"), False)
     draw_button(rects["yes"], _menu_text(language, "YES", "はい"), True)
 
 
 def _menu_text(language: Language, english: str, japanese: str) -> str:
     return japanese if language == "ja" else english
-
-
-def _draw_centered_display_text(text: str, y: int, color: int, x: int, width: int) -> None:
-    text_width_value = display_text_width(text)
-    draw_display_text(x + max(4, (width - text_width_value) // 2), y, text, color)
-
 
 def draw_letter_view(
     log: ExchangeLog,
