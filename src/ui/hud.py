@@ -226,20 +226,27 @@ def text_width_scaled(text: str, scale: int) -> int:
 
 
 def draw_text_scaled(x: int, y: int, text: str, col: int, scale: int) -> None:
-    cursor_x = x
+    try:
+        color = max(0, min(15, int(col)))
+    except (TypeError, ValueError, OverflowError):
+        color = 7
+    try:
+        pixel_scale = max(1, int(scale))
+    except (TypeError, ValueError, OverflowError):
+        pixel_scale = SCALE
+    cursor_x = int(x)
+    base_y = int(y)
     for char in text.upper():
         glyph = FONT.get(char, FONT[" "])
         for row, bits in enumerate(glyph):
             for column, bit in enumerate(bits):
                 if bit == "1":
-                    pyxel.rect(
-                        cursor_x + column * scale,
-                        y + row * scale,
-                        scale,
-                        scale,
-                        col,
-                    )
-        cursor_x += GLYPH_W * scale + 2
+                    draw_x = cursor_x + column * pixel_scale
+                    draw_y = base_y + row * pixel_scale
+                    if draw_x < 0 or draw_y < 0 or draw_x >= pyxel.width or draw_y >= pyxel.height:
+                        continue
+                    pyxel.rect(draw_x, draw_y, pixel_scale, pixel_scale, color)
+        cursor_x += GLYPH_W * pixel_scale + 2
 
 
 def draw_big_text(x: int, y: int, text: str, col: int) -> None:
