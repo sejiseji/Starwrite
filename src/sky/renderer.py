@@ -5,6 +5,7 @@ import math
 import pyxel
 
 from src.astronomy.catalog import Constellation
+from src.astronomy.events import MeteorShowerEvent
 from src.astronomy.moon import MoonState, moon_light_level
 from .camera import SkyCamera
 from .capture import ScreenPoint
@@ -273,6 +274,8 @@ class SkyRenderer:
             pyxel.pset(x + lit_side * (radius + 1), y, edge_color)
 
     def draw_meteors(self, event_view: MeteorEventView, width: int, height: int) -> None:
+        if not isinstance(event_view.event, MeteorShowerEvent):
+            return
         if event_view.radiant_screen is None:
             return
         radiant_x, radiant_y = event_view.radiant_screen

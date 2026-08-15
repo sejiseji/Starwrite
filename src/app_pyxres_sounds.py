@@ -18,12 +18,12 @@ from src.audio.bgm import install_starwrite_bgm, play_starwrite_bgm, stop_starwr
 from src.audio.ui_sfx import StarwriteUISfx
 from src.astronomy.coordinates import equatorial_to_enu
 from src.astronomy.catalog import Constellation
-from src.astronomy.events import MeteorShowerEvent
+from src.astronomy.events import LunarEclipseEvent, SkyEvent
 from src.astronomy.moon import get_phase_name, moon_light_level, moon_state_from_dict, moon_state_to_dict
 from src.astronomy.observer import Observer
 from src.astronomy.time import julian_date, local_sidereal_time
 from src.data.constellations import CONSTELLATIONS
-from src.data.meteor_showers import EVENT_SOURCE_LABEL, METEOR_SHOWERS
+from src.data.sky_events import EVENT_SOURCE_LABEL, SKY_EVENTS
 from src.data.sky_features import ASTERISMS, SKY_PATHS
 from src.data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from src.sky.camera import SkyCamera
@@ -38,13 +38,13 @@ from src.sky.letters import (
     match_letter,
 )
 from src.sky.meteors import (
-    active_meteor_event,
-    adjacent_visible_meteor_event,
-    meteor_peak_datetime,
+    active_sky_event,
+    adjacent_visible_sky_event,
+    event_peak_datetime,
     meteor_radiant_direction,
 )
 from src.sky.moon import MoonController
-from src.sky.renderer import SkyRenderer, moon_screen_point
+from src.sky.renderer import SkyRenderer, moon_direction, moon_screen_point
 from src.sky.simulation import SimulationClock, project_visible_stars, star_direction
 from src.ui.hud import (
     back_button_rect,
@@ -495,8 +495,8 @@ class StarSkyApp:
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
         )
-        self.meteor_event = active_meteor_event(
-            METEOR_SHOWERS,
+        self.meteor_event = active_sky_event(
+            SKY_EVENTS,
             self.observer,
             self.clock.current_time,
             self.camera,
@@ -1046,8 +1046,8 @@ class StarSkyApp:
         self._set_rotate_time(False)
         self._set_rotate_camera(False)
         event_tz = _timezone_from_offset(self.utc_offset_minutes)
-        event = adjacent_visible_meteor_event(
-            METEOR_SHOWERS,
+        event = adjacent_visible_sky_event(
+            SKY_EVENTS,
             self.observer,
             self.clock.current_time,
             direction,
@@ -1057,7 +1057,7 @@ class StarSkyApp:
             return False
         before = self.clock.current_time
         self.clock.pause()
-        self.clock.current_time = meteor_peak_datetime(event, event_tz)
+        self.clock.current_time = event_peak_datetime(event, event_tz)
         self._frame_event(event)
         return self.clock.current_time != before
 
@@ -1363,8 +1363,15 @@ class StarSkyApp:
         z = sum(direction.z for direction in directions) / len(directions)
         return self._frame_direction(x, y, z)
 
-    def _frame_event(self, event: MeteorShowerEvent) -> None:
+    def _frame_event(self, event: SkyEvent) -> None:
         self._clear_detail_selection()
+        if isinstance(event, LunarEclipseEvent):
+            self.moon.update(self.clock.current_time, self.observer.latitude_deg, self.observer.longitude_deg)
+            if self.moon.state is not None and self.moon.state.visible:
+                self.selected_moon = True
+                direction = moon_direction(self.moon.state)
+                self._frame_direction(direction.x, direction.y, direction.z)
+            return
         if event.related_constellation_id is not None:
             for index, constellation in enumerate(CONSTELLATIONS):
                 if constellation.id != event.related_constellation_id:
@@ -1713,7 +1720,7 @@ class StarSkyApp:
                 self.bgm_enabled,
                 self.slider_side,
                 EVENT_SOURCE_LABEL,
-                len(METEOR_SHOWERS),
+                len(SKY_EVENTS),
                 self.language,
             )
         if not self.menu_open:
@@ -1754,7 +1761,7 @@ class StarSkyApp:
             SCREEN_HEIGHT,
         )
         selected_constellation = self._constellation_by_id(capture.selected_constellation_id) or self.selected_constellation
-        meteor_event = active_meteor_event(METEOR_SHOWERS, observer, capture.captured_at, camera, SCREEN_WIDTH, SCREEN_HEIGHT)
+        meteor_event = active_sky_event(SKY_EVENTS, observer, capture.captured_at, camera, SCREEN_WIDTH, SCREEN_HEIGHT)
         projected_sky_paths = self._project_sky_paths_for(camera, observer, capture.captured_at)
         self.renderer.draw(
             projected,

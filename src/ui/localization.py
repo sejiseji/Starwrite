@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Literal
 
 from src.astronomy.catalog import Constellation
-from src.astronomy.events import MeteorShowerEvent
+from src.astronomy.events import LunarEclipseEvent, MeteorShowerEvent, SkyEvent
 from src.data.sky_features import Asterism, SkyPath
 
 Language = Literal["en", "ja"]
@@ -665,6 +665,14 @@ def meteor_event_name(event: MeteorShowerEvent, language: Language) -> str:
     if language == "ja":
         return METEOR_EVENT_NAMES_JA.get(event.id.split("-", 1)[0], event.name)
     return event.name
+
+
+def sky_event_name(event: SkyEvent, language: Language) -> str:
+    if isinstance(event, LunarEclipseEvent):
+        if language == "ja":
+            return "皆既月食" if event.eclipse_type == "total" else "部分月食"
+        return event.name
+    return meteor_event_name(event, language)
 
 
 def country_name(country_code: str | None, language: Language) -> str:

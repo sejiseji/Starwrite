@@ -237,8 +237,9 @@ Moon position and phase use a compact low-precision lunar ephemeris in
 local Capture/Letter matching tags, not observatory-grade measurement.
 - Recurring showers: 29 annual showers, including southern-sky and equatorial
   showers used by the EVENT control.
-- Total generated events: 1189.
-- Source label shown in the app menu: IMO.
+- Meteor-shower generated events: 1189.
+- Lunar eclipse events: 59 total/partial eclipses from 2006 through 2046.
+- Source label shown in the app menu: IMO/NASA.
 
 The meteor-shower data is a v0.1 approximation based on the International
 Meteor Organization meteor-shower calendar / working-list style data: shower
@@ -246,6 +247,14 @@ names, typical peak dates, approximate radiants, ZHR, and parent bodies are
 expanded into one event per shower per year. Meteors are visualized as
 simplified streaks radiating from the radiant, not as a physical particle
 simulation or exact year-specific forecast.
+
+The lunar-eclipse data is a v0.1 event catalog derived from NASA's decade
+tables of lunar eclipses by Fred Espenak / NASA GSFC. Starwrite includes Total
+and Partial eclipses only; Penumbral eclipses are intentionally omitted because
+they are subtle visually. NASA's tables list the greatest-eclipse time in TD;
+this prototype treats those values as approximate UTC for event navigation and
+city-based Moon-above-horizon filtering. Eclipse data acknowledgment:
+`Eclipse Predictions by Fred Espenak, NASA's GSFC`.
 
 The prototype also includes a small sky-feature overlay controlled by the
 `FEATURE` menu toggle. It uses bright green guide lines and labels for common
@@ -297,3 +306,8 @@ license in this section.
 - International Meteor Organization, major meteor showers: https://www.imo.net/observations/methods/visual-observation/major/
 - International Meteor Organization, meteor shower calendar archive / working list context: https://www.imo.net/resources/calendar/2019/
 - IMO / AMS meteor shower calendar: https://newimo.amsmeteors.org/
+- NASA lunar eclipses 2001-2010: https://eclipse.gsfc.nasa.gov/LEdecade/LEdecade2001.html
+- NASA lunar eclipses 2011-2020: https://eclipse.gsfc.nasa.gov/LEdecade/LEdecade2011.html
+- NASA lunar eclipses 2021-2030: https://eclipse.gsfc.nasa.gov/LEdecade/LEdecade2021.html
+- NASA lunar eclipses 2031-2040: https://eclipse.gsfc.nasa.gov/LEdecade/LEdecade2031.html
+- NASA lunar eclipses 2041-2050: https://eclipse.gsfc.nasa.gov/LEdecade/LEdecade2041.html

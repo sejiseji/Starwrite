@@ -3,6 +3,7 @@ from __future__ import annotations
 import pyxel
 
 from src.astronomy.catalog import Constellation
+from src.astronomy.events import LunarEclipseEvent, MeteorShowerEvent
 from src.astronomy.moon import MoonState
 from src.astronomy.observer import Observer
 try:
@@ -130,7 +131,7 @@ from src.sky.camera import SkyCamera
 from src.sky.letters import ExchangeLog, PresetLetter, display_letter_text
 from src.sky.meteors import MeteorEventView
 from src.sky.simulation import SimulationClock
-from src.ui.localization import Language, city_name, constellation_name, country_name, meteor_event_name, sky_feature_name
+from src.ui.localization import Language, city_name, constellation_name, country_name, sky_event_name, sky_feature_name
 
 SCALE = 2
 GLYPH_W = 3
@@ -1001,10 +1002,12 @@ def focused_moon_hit_rect(point: tuple[float, float], moon: MoonState, language:
 
 
 def draw_meteor_event(event_view: MeteorEventView, language: Language) -> None:
+    if not isinstance(event_view.event, MeteorShowerEvent):
+        return
     if event_view.radiant_screen is None:
         return
     radiant_x, radiant_y = event_view.radiant_screen
-    label = meteor_event_name(event_view.event, language)
+    label = sky_event_name(event_view.event, language)
     width = display_text_width(label)
     label_x = max(4, min(pyxel.width - width - 4, int(radiant_x) + 10))
     label_y = max(58, min(pyxel.height - 76, int(radiant_y) - 8))
@@ -1022,17 +1025,20 @@ def draw_event_banner(event_view: MeteorEventView, language: Language) -> None:
     heading_x = max(4, min(pyxel.width - heading_width - 4, (pyxel.width - heading_width) // 2))
     draw_display_bold_text(heading_x, 4, heading, 10)
 
-    label = meteor_event_name(event_view.event, language)
+    label = sky_event_name(event_view.event, language)
     width = display_text_width(label)
     x = max(4, min(pyxel.width - width - 4, (pyxel.width - width) // 2))
     draw_display_bold_text(x, 17, label, 10)
 
-    period = _event_period_label(event_view)
+    period = _event_period_label(event_view, language)
     period_x = max(4, min(pyxel.width - text_width(period) - 4, (pyxel.width - text_width(period)) // 2))
     draw_bold_text(period_x, 30, period, 10)
 
 
-def _event_period_label(event_view: MeteorEventView) -> str:
+def _event_period_label(event_view: MeteorEventView, language: Language) -> str:
+    if isinstance(event_view.event, LunarEclipseEvent):
+        event_date = event_view.event.display_start
+        return f"( {event_date:%Y/%m/%d} PEAK )"
     start = event_view.event.display_start
     end = event_view.event.display_end
     if start.year == end.year and start.month == end.month:

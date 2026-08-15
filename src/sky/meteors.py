@@ -5,7 +5,8 @@ from dataclasses import dataclass
 from datetime import datetime, time, timedelta, tzinfo
 
 from src.astronomy.coordinates import equatorial_to_enu
-from src.astronomy.events import MeteorShowerEvent
+from src.astronomy.events import LunarEclipseEvent, MeteorShowerEvent, SkyEvent
+from src.astronomy.moon import compute_moon
 from src.astronomy.observer import Observer
 from src.astronomy.time import julian_date, local_sidereal_time
 from .camera import SkyCamera
@@ -14,7 +15,7 @@ from .vector import Vec3
 
 @dataclass(slots=True, frozen=True)
 class MeteorEventView:
-    event: MeteorShowerEvent
+    event: SkyEvent
     radiant_direction: Vec3
     radiant_screen: tuple[float, float] | None
     activity: float
@@ -38,6 +39,34 @@ def meteor_activity(event: MeteorShowerEvent, observation_time: datetime) -> flo
 
 def meteor_peak_datetime(event: MeteorShowerEvent, tz: tzinfo) -> datetime:
     return datetime.combine(event.display_end, time(event.peak_hour_local, 0), tzinfo=tz)
+
+
+def lunar_eclipse_peak_datetime(event: LunarEclipseEvent, tz: tzinfo) -> datetime:
+    return event.greatest_at_utc.astimezone(tz)
+
+
+def event_peak_datetime(event: SkyEvent, tz: tzinfo) -> datetime:
+    if isinstance(event, LunarEclipseEvent):
+        return lunar_eclipse_peak_datetime(event, tz)
+    return meteor_peak_datetime(event, tz)
+
+
+def lunar_eclipse_activity(event: LunarEclipseEvent, observation_time: datetime) -> float:
+    if observation_time.tzinfo is None:
+        raise ValueError("observation_time must be timezone-aware")
+
+    peak = lunar_eclipse_peak_datetime(event, observation_time.tzinfo)
+    minutes_from_peak = abs((observation_time - peak).total_seconds()) / 60.0
+    half_window = max(45.0, event.duration_minutes / 2.0)
+    if minutes_from_peak > half_window:
+        return 0.0
+    return max(0.35, 1.0 - minutes_from_peak / half_window)
+
+
+def event_activity(event: SkyEvent, observation_time: datetime) -> float:
+    if isinstance(event, LunarEclipseEvent):
+        return lunar_eclipse_activity(event, observation_time)
+    return meteor_activity(event, observation_time)
 
 
 def adjacent_meteor_event_time(
@@ -73,6 +102,42 @@ def adjacent_meteor_event(
         if event_time < current_time - timedelta(minutes=1):
             return event
     return event_times[-1][1]
+
+
+def adjacent_visible_sky_event(
+    events: tuple[SkyEvent, ...],
+    observer: Observer,
+    current_time: datetime,
+    direction: int,
+    event_tz: tzinfo | None = None,
+) -> SkyEvent | None:
+    if current_time.tzinfo is None:
+        raise ValueError("current_time must be timezone-aware")
+    if not events:
+        return None
+    if event_tz is None:
+        event_tz = current_time.tzinfo
+    current_event_time = current_time.astimezone(event_tz)
+
+    event_times = sorted(
+        ((event_peak_datetime(event, event_tz), event) for event in events),
+        key=lambda item: (item[0], item[1].id),
+    )
+    ordered = event_times if direction >= 0 else tuple(reversed(event_times))
+    margin = timedelta(minutes=1)
+    for event_time, event in ordered:
+        if direction >= 0 and event_time <= current_event_time + margin:
+            continue
+        if direction < 0 and event_time >= current_event_time - margin:
+            continue
+        if sky_event_visible(event, observer, event_time):
+            return event
+
+    wrapped = event_times if direction >= 0 else tuple(reversed(event_times))
+    for event_time, event in wrapped:
+        if sky_event_visible(event, observer, event_time):
+            return event
+    return None
 
 
 def adjacent_visible_meteor_event(
@@ -111,6 +176,27 @@ def adjacent_visible_meteor_event(
     return None
 
 
+def lunar_eclipse_visible(
+    event: LunarEclipseEvent,
+    observer: Observer,
+    event_time: datetime | None = None,
+) -> bool:
+    peak = event.greatest_at_utc
+    half_window = timedelta(minutes=max(45.0, event.duration_minutes / 2.0))
+    samples = (peak - half_window, peak, peak + half_window)
+    for sample in samples:
+        moon = compute_moon(sample, observer.latitude_deg, observer.longitude_deg)
+        if moon.altitude_deg > 0.0:
+            return True
+    return False
+
+
+def sky_event_visible(event: SkyEvent, observer: Observer, event_time: datetime) -> bool:
+    if isinstance(event, LunarEclipseEvent):
+        return lunar_eclipse_visible(event, observer, event_time)
+    return meteor_radiant_direction(event, observer, event_time).z > 0.0
+
+
 def meteor_radiant_direction(
     event: MeteorShowerEvent,
     observer: Observer,
@@ -124,6 +210,24 @@ def meteor_radiant_direction(
         math.radians(observer.latitude_deg),
         lst,
     )
+
+
+def lunar_eclipse_direction(
+    event: LunarEclipseEvent,
+    observer: Observer,
+    observation_time: datetime,
+) -> Vec3:
+    moon = compute_moon(observation_time, observer.latitude_deg, observer.longitude_deg)
+    az = math.radians(moon.azimuth_deg)
+    alt = math.radians(moon.altitude_deg)
+    cos_alt = math.cos(alt)
+    return Vec3(math.sin(az) * cos_alt, math.cos(az) * cos_alt, math.sin(alt)).normalized()
+
+
+def sky_event_direction(event: SkyEvent, observer: Observer, observation_time: datetime) -> Vec3:
+    if isinstance(event, LunarEclipseEvent):
+        return lunar_eclipse_direction(event, observer, observation_time)
+    return meteor_radiant_direction(event, observer, observation_time)
 
 
 def active_meteor_event(
@@ -144,6 +248,29 @@ def active_meteor_event(
             continue
         projected = camera.project(radiant, screen_width, screen_height)
         view = MeteorEventView(event, radiant, projected, activity, camera)
+        if best is None or view.activity > best.activity:
+            best = view
+    return best
+
+
+def active_sky_event(
+    events: tuple[SkyEvent, ...],
+    observer: Observer,
+    observation_time: datetime,
+    camera: SkyCamera,
+    screen_width: int,
+    screen_height: int,
+) -> MeteorEventView | None:
+    best: MeteorEventView | None = None
+    for event in events:
+        activity = event_activity(event, observation_time)
+        if activity <= 0.0:
+            continue
+        direction = sky_event_direction(event, observer, observation_time)
+        if direction.z <= 0.0:
+            continue
+        projected = camera.project(direction, screen_width, screen_height)
+        view = MeteorEventView(event, direction, projected, activity, camera)
         if best is None or view.activity > best.activity:
             best = view
     return best

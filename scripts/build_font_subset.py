@@ -50,6 +50,7 @@ MENU_UI_JA = (
     "はい"
     "いいえ"
 )
+EVENT_UI_JA = "天体イベント皆既月食部分月食"
 COMMON_LETTER_KANJI = (
     "日本語生活仕事学校会社家族友達父母兄弟姉妹子供朝昼夕夜今日明日昨日今年去年"
     "時間分秒年月日春夏秋冬空星月雨雪風雲海山川街駅道電車電話部屋窓台所本音声"
@@ -112,6 +113,7 @@ def _required_text() -> str:
         JAPANESE_OPERATORS,
         SETUP_UI_JA,
         MENU_UI_JA,
+        EVENT_UI_JA,
         COMMON_LETTER_KANJI,
         *constellation_names.values(),
         *meteor_event_names.values(),
