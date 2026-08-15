@@ -1294,6 +1294,11 @@ class StarSkyApp:
     def _selected_panel_summary(self) -> tuple[str, tuple[str, str], int] | None:
         return self._selected_star_summary() or self._selected_feature_summary() or self._selected_moon_summary()
 
+    def _clear_detail_selection(self) -> None:
+        self.selected_star_id = None
+        self.selected_feature_id = None
+        self.selected_moon = False
+
     def _selected_panel_highlight_color(self) -> int:
         summary = self._selected_panel_summary()
         if summary is not None:
@@ -1359,6 +1364,7 @@ class StarSkyApp:
         return self._frame_direction(x, y, z)
 
     def _frame_event(self, event: MeteorShowerEvent) -> None:
+        self._clear_detail_selection()
         if event.related_constellation_id is not None:
             for index, constellation in enumerate(CONSTELLATIONS):
                 if constellation.id != event.related_constellation_id:
