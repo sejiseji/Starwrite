@@ -667,6 +667,20 @@ def constellation_sort_key(constellation: Constellation, language: Language) -> 
     return (constellation.name.casefold(), constellation.id)
 
 
+def star_sort_key(star_id: int, english_name: str, language: Language) -> tuple[str, int]:
+    name = star_name(star_id, english_name, language)
+    if language == "ja":
+        return (_japanese_sort_text(name), star_id)
+    return (english_name.casefold(), star_id)
+
+
+def sky_feature_sort_key(feature: Asterism | SkyPath, language: Language) -> tuple[str, str]:
+    name = sky_feature_name(feature, language)
+    if language == "ja":
+        return (_japanese_sort_text(name), feature.id)
+    return (feature.name.casefold(), feature.id)
+
+
 def _japanese_sort_text(text: str) -> str:
     converted = []
     for char in text:

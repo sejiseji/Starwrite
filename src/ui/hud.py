@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 import pyxel
 
 from src.astronomy.catalog import Constellation
@@ -1614,6 +1616,15 @@ CONSTELLATION_JA_BUTTON_LINES = {
 SEARCH_TAB_KEYS = ("constellation", "star", "group")
 
 
+@dataclass(slots=True, frozen=True)
+class SearchListItem:
+    id: str
+    label: str
+    selected: bool
+    available: bool
+    label_lines: tuple[str, ...] | None = None
+
+
 def constellation_list_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
     x = 8
     y = 44
@@ -1675,6 +1686,25 @@ def draw_constellation_list(
     language: Language,
     scroll: int,
 ) -> None:
+    items = tuple(
+        SearchListItem(
+            constellation.id,
+            constellation_name(constellation, language),
+            constellation.id == selected.id,
+            constellation.id in available_ids,
+            CONSTELLATION_JA_BUTTON_LINES.get(constellation.id) if language == "ja" else None,
+        )
+        for constellation in constellations
+    )
+    draw_search_list(items, "constellation", language, scroll)
+
+
+def draw_search_list(
+    items: tuple[SearchListItem, ...],
+    active_tab: str,
+    language: Language,
+    scroll: int,
+) -> None:
     panel = constellation_list_panel_rect(pyxel.width, pyxel.height)
     x, y, w, h = panel
     pyxel.rect(x, y, w, h, 0)
@@ -1682,13 +1712,21 @@ def draw_constellation_list(
     pyxel.rectb(x + 2, y + 2, w - 4, h - 4, 1)
     if language == "ja":
         title = "探す"
-        note = "グレー表示は観測不可の星座です"
+        note = {
+            "constellation": "グレー表示は観測不可の星座です",
+            "star": "グレー表示は観測不可の星です",
+            "group": "グレー表示は観測不可の星群です",
+        }.get(active_tab, "グレー表示は観測不可です")
     else:
         title = "SEARCH"
-        note = "GRAY BUTTONS ARE BELOW YOUR SKY"
+        note = {
+            "constellation": "GRAY CONSTELLATIONS ARE BELOW YOUR SKY",
+            "star": "GRAY STARS ARE BELOW YOUR SKY",
+            "group": "GRAY GROUPS ARE BELOW YOUR SKY",
+        }.get(active_tab, "GRAY BUTTONS ARE BELOW YOUR SKY")
     title_y = y + 14 if title.isascii() else y + 12
     draw_display_bold_text(x + 18, title_y, title, 7)
-    _draw_constellation_search_tabs(language, "constellation")
+    _draw_constellation_search_tabs(language, active_tab)
     note_w = display_text_width(note)
     note_y = y + 42 if note.isascii() else y + 40
     draw_display_text(x + max(8, (w - note_w) // 2), note_y, note, 13)
@@ -1696,20 +1734,17 @@ def draw_constellation_list(
 
     view = constellation_list_view_rect(pyxel.width, pyxel.height)
     view_x, view_y, view_w, view_h = view
-    rects = constellation_list_button_rects(pyxel.width, pyxel.height, len(constellations), scroll)
+    rects = constellation_list_button_rects(pyxel.width, pyxel.height, len(items), scroll)
     for index, rect in enumerate(rects):
         rx, ry, _rw, rh = rect
         if ry < view_y or ry + rh > view_y + view_h:
             continue
-        constellation = constellations[index]
-        _draw_constellation_list_button(
+        _draw_search_list_button(
             rect,
-            constellation,
-            constellation.id == selected.id,
-            constellation.id in available_ids,
+            items[index],
             language,
         )
-    _draw_constellation_list_scrollbar(view_x + view_w - 3, view_y, view_h, scroll, constellation_list_max_scroll(pyxel.width, pyxel.height, len(constellations)))
+    _draw_constellation_list_scrollbar(view_x + view_w - 3, view_y, view_h, scroll, constellation_list_max_scroll(pyxel.width, pyxel.height, len(items)))
 
 
 def _draw_constellation_search_tabs(language: Language, active_tab: str) -> None:
@@ -1775,6 +1810,64 @@ def _draw_constellation_list_button(
     label_w = display_text_width(name)
     text_y = y + max(3, (h - FONT_CELL_HEIGHT) // 2)
     draw_display_text(x + max(4, (w - label_w) // 2), text_y, name, text_col)
+
+
+def _draw_search_list_button(
+    rect: tuple[int, int, int, int],
+    item: SearchListItem,
+    language: Language,
+) -> None:
+    x, y, w, h = rect
+    if item.selected:
+        fill, edge, text_col = 5, 10, 7
+    elif item.available:
+        fill, edge, text_col = 1, 13, 7
+    else:
+        fill, edge, text_col = 0, 5, 13
+    pyxel.rect(x, y, w, h, fill)
+    pyxel.rectb(x, y, w, h, edge)
+    if item.selected:
+        pyxel.rectb(x + 2, y + 2, w - 4, h - 4, 10)
+
+    lines = item.label_lines or _search_button_label_lines(item.label, language, w - 8)
+    if language == "en":
+        total_h = len(lines) * (GLYPH_H * SCALE) + max(0, len(lines) - 1) * 2
+        text_y = y + max(3, (h - total_h) // 2)
+        for line in lines:
+            line_w = text_width(line.upper())
+            draw_big_text(x + max(4, (w - line_w) // 2), text_y, line, text_col)
+            text_y += GLYPH_H * SCALE + 2
+        return
+
+    total_h = len(lines) * FONT_CELL_HEIGHT + max(0, len(lines) - 1) * 2
+    text_y = y + max(3, (h - total_h) // 2)
+    for line in lines:
+        line_w = display_text_width(line)
+        draw_display_text(x + max(4, (w - line_w) // 2), text_y, line, text_col)
+        text_y += FONT_CELL_HEIGHT + 2
+
+
+def _search_button_label_lines(label: str, language: Language, max_width: int) -> tuple[str, ...]:
+    if language == "en":
+        return _constellation_button_label_lines(label.upper(), max_width)
+    if display_text_width(label) <= max_width:
+        return (label,)
+    separators = ("の", "・", " ")
+    best: tuple[str, str] | None = None
+    best_score = 999999
+    for index in range(1, len(label)):
+        bonus = -1000 if label[index - 1] in separators or label[index] in separators else 0
+        left = label[:index]
+        right = label[index:]
+        widest = max(display_text_width(left), display_text_width(right))
+        balance = abs(display_text_width(left) - display_text_width(right))
+        score = widest * 10 + balance + bonus
+        if widest <= max_width:
+            score -= 10000
+        if score < best_score:
+            best = (left, right)
+            best_score = score
+    return best or (label,)
 
 
 def _constellation_button_label_lines(text: str, max_width: int) -> tuple[str, ...]:

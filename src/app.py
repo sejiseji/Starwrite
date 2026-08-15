@@ -21,7 +21,7 @@ from astronomy.observer import Observer
 from astronomy.time import julian_date, local_sidereal_time
 from data.constellations import CONSTELLATIONS
 from data.sky_events import EVENT_SOURCE_LABEL, SKY_EVENTS
-from data.sky_features import ASTERISMS, SKY_PATHS
+from data.sky_features import ASTERISMS, SKY_PATHS, Asterism, SkyPath
 from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
 from sky.capture import ScreenPoint, SkyCapture, can_capture, capture_from_dict, capture_to_dict
@@ -50,9 +50,11 @@ from ui.hud import (
     constellation_list_close_rect,
     constellation_list_max_scroll,
     constellation_list_panel_rect,
+    constellation_list_tab_rects,
     constellation_list_view_rect,
+    SearchListItem,
     draw_compact_time,
-    draw_constellation_list,
+    draw_search_list,
     draw_cut_in,
     draw_event_banner,
     draw_hud,
@@ -90,7 +92,15 @@ from ui.hud import (
     slider_rects,
     tool_button_rects,
 )
-from ui.localization import constellation_name, constellation_sort_key, next_language, sky_feature_name, star_name
+from ui.localization import (
+    constellation_name,
+    constellation_sort_key,
+    next_language,
+    sky_feature_name,
+    sky_feature_sort_key,
+    star_name,
+    star_sort_key,
+)
 
 IPHONE16_SCREEN_HEIGHT = 696
 IPHONE16_MIN_SCREEN_WIDTH = 396
@@ -271,6 +281,7 @@ class StarSkyApp:
         self.language = "en"
         self.menu_open = False
         self.ui_state = "SKY"
+        self.search_tab = "constellation"
         self.constellation_list_scroll = 0
         self.constellation_list_available_ids: set[str] = set()
         self.constellation_list_pointer_down: tuple[int, int] | None = None
@@ -753,6 +764,7 @@ class StarSkyApp:
         self.show_month_slider = False
         self.show_event_slider = False
         self.menu_open = False
+        self.search_tab = "constellation"
         self.constellation_list_scroll = 0
         self.constellation_list_available_ids = {
             constellation.id for constellation in CONSTELLATIONS if self._constellation_can_rise(constellation)
@@ -801,15 +813,22 @@ class StarSkyApp:
         if not self._point_in_rect(point, panel):
             self._go_back()
             return True
+        for tab, rect in constellation_list_tab_rects(SCREEN_WIDTH, SCREEN_HEIGHT).items():
+            if self._point_in_rect(point, rect):
+                if tab != self.search_tab:
+                    self.search_tab = tab
+                    self.constellation_list_scroll = 0
+                    self._play_ui_sound(SOUND_TOOL_ON)
+                return True
         view = constellation_list_view_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
         if not self._point_in_rect(point, view):
             return True
-        constellations = self._constellation_list_constellations()
+        items = self._search_list_items()
         for index, rect in enumerate(
             constellation_list_button_rects(
                 SCREEN_WIDTH,
                 SCREEN_HEIGHT,
-                len(constellations),
+                len(items),
                 self.constellation_list_scroll,
             )
         ):
@@ -819,14 +838,13 @@ class StarSkyApp:
                 continue
             if not self._point_in_rect(point, rect):
                 continue
-            constellation = constellations[index]
-            if constellation.id not in self.constellation_list_available_ids:
+            item = items[index]
+            if not item.available:
                 self._play_ui_sound(SOUND_LETTER_CLOSE)
                 return True
-            source_index = self._constellation_index_by_id(constellation.id)
-            if source_index is not None and self._start_constellation_auto_pan(source_index):
+            if self._start_search_item_auto_pan(item):
                 self.ui_state = "SKY"
-                self._play_selection_sound("constellation")
+                self._play_selection_sound(self._selection_sound_kind_for_search_tab())
             else:
                 self._play_ui_sound(SOUND_LETTER_CLOSE)
             return True
@@ -836,9 +854,67 @@ class StarSkyApp:
         max_scroll = constellation_list_max_scroll(
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
-            len(self._constellation_list_constellations()),
+            len(self._search_list_items()),
         )
         self.constellation_list_scroll = max(0, min(max_scroll, int(value)))
+
+    def _search_list_items(self) -> tuple[SearchListItem, ...]:
+        if self.search_tab == "star":
+            return tuple(
+                SearchListItem(
+                    f"star:{star_id}",
+                    star_name(star_id, STAR_NAMES[star_id], self.language),
+                    self.selected_star_id == star_id,
+                    self._star_can_rise(STARS_BY_ID[star_id]),
+                )
+                for star_id in self._search_list_star_ids()
+                if star_id in STARS_BY_ID
+            )
+        if self.search_tab == "group":
+            return tuple(
+                SearchListItem(
+                    f"feature:{feature.id}",
+                    sky_feature_name(feature, self.language),
+                    self.selected_feature_id == feature.id,
+                    self._sky_feature_can_rise(feature),
+                )
+                for feature in self._search_list_sky_features()
+            )
+        return tuple(
+            SearchListItem(
+                f"constellation:{constellation.id}",
+                constellation_name(constellation, self.language),
+                constellation.id == self.selected_constellation.id,
+                self._constellation_can_rise(constellation),
+                None,
+            )
+            for constellation in self._constellation_list_constellations()
+        )
+
+    def _search_list_star_ids(self) -> tuple[int, ...]:
+        return tuple(sorted(STAR_NAMES, key=lambda star_id: star_sort_key(star_id, STAR_NAMES[star_id], self.language)))
+
+    def _search_list_sky_features(self) -> tuple[Asterism | SkyPath, ...]:
+        return tuple(sorted((*ASTERISMS, *SKY_PATHS), key=lambda feature: sky_feature_sort_key(feature, self.language)))
+
+    def _selection_sound_kind_for_search_tab(self) -> str:
+        if self.search_tab == "star":
+            return "star"
+        if self.search_tab == "group":
+            return "feature"
+        return "constellation"
+
+    def _start_search_item_auto_pan(self, item: SearchListItem) -> bool:
+        kind, _sep, raw_id = item.id.partition(":")
+        if kind == "star":
+            try:
+                return self._start_star_auto_pan(int(raw_id))
+            except ValueError:
+                return False
+        if kind == "feature":
+            return self._start_sky_feature_auto_pan(raw_id)
+        source_index = self._constellation_index_by_id(raw_id)
+        return source_index is not None and self._start_constellation_auto_pan(source_index)
 
     def _constellation_list_constellations(self) -> tuple[Constellation, ...]:
         return tuple(sorted(CONSTELLATIONS, key=lambda constellation: constellation_sort_key(constellation, self.language)))
@@ -1336,21 +1412,71 @@ class StarSkyApp:
         self._frame_constellation(self.selected_constellation)
 
     def _constellation_can_rise(self, constellation: Constellation) -> bool:
-        latitude = self.observer.latitude_deg
         for star_id in constellation.main_star_ids:
             star = STARS_BY_ID.get(star_id)
             if star is None:
                 continue
-            declination = math.degrees(star.dec_rad)
-            if 90.0 - abs(latitude - declination) > 1.0:
+            if self._star_can_rise(star):
                 return True
         return False
+
+    def _star_can_rise(self, star) -> bool:
+        declination = math.degrees(star.dec_rad)
+        return 90.0 - abs(self.observer.latitude_deg - declination) > 1.0
+
+    def _sky_feature_can_rise(self, feature: Asterism | SkyPath) -> bool:
+        if isinstance(feature, Asterism):
+            return any(
+                star is not None and self._star_can_rise(star)
+                for star_id in feature.star_ids
+                for star in (STARS_BY_ID.get(star_id),)
+            )
+        return any(90.0 - abs(self.observer.latitude_deg - math.degrees(dec_rad)) > 1.0 for _ra_rad, dec_rad in feature.points)
 
     def _start_constellation_auto_pan(self, index: int) -> bool:
         target = self._nearest_constellation_observation_target(CONSTELLATIONS[index])
         if target is None:
             return False
         target_time, target_direction = target
+        self.selected_index = index
+        self._clear_detail_selection()
+        self.summary_panel_animation_start_frame = pyxel.frame_count
+        return self._start_direction_auto_pan(target_time, target_direction, max(self.camera.fov_deg, 76.0))
+
+    def _start_star_auto_pan(self, star_id: int) -> bool:
+        star = STARS_BY_ID.get(star_id)
+        if star is None:
+            return False
+        target = self._nearest_star_observation_target(star)
+        if target is None:
+            return False
+        target_time, target_direction = target
+        constellation = self._constellation_for_star(star_id)
+        if constellation is not None:
+            source_index = self._constellation_index_by_id(constellation.id)
+            if source_index is not None:
+                self.selected_index = source_index
+        self.selected_star_id = star_id
+        self.selected_feature_id = None
+        self.selected_moon = False
+        self.summary_panel_animation_start_frame = pyxel.frame_count
+        return self._start_direction_auto_pan(target_time, target_direction, max(self.camera.fov_deg, 62.0))
+
+    def _start_sky_feature_auto_pan(self, feature_id: str) -> bool:
+        feature = self._sky_feature_by_id(feature_id)
+        if not isinstance(feature, (Asterism, SkyPath)):
+            return False
+        target = self._nearest_sky_feature_observation_target(feature)
+        if target is None:
+            return False
+        target_time, target_direction = target
+        self.selected_feature_id = feature_id
+        self.selected_star_id = None
+        self.selected_moon = False
+        self.summary_panel_animation_start_frame = pyxel.frame_count
+        return self._start_direction_auto_pan(target_time, target_direction, max(self.camera.fov_deg, 78.0))
+
+    def _start_direction_auto_pan(self, target_time: datetime, target_direction, target_fov: float) -> bool:
         target_yaw, target_pitch = self._camera_angles_for_direction(
             target_direction.x,
             target_direction.y,
@@ -1362,9 +1488,6 @@ class StarSkyApp:
         self.show_time_slider = False
         self.show_month_slider = False
         self.show_event_slider = False
-        self.selected_index = index
-        self._clear_detail_selection()
-        self.summary_panel_animation_start_frame = pyxel.frame_count
         self.constellation_auto_pan = {
             "start_frame": pyxel.frame_count,
             "duration": CONSTELLATION_AUTO_PAN_FRAMES,
@@ -1375,7 +1498,7 @@ class StarSkyApp:
             "start_pitch": self.camera.pitch,
             "target_pitch": target_pitch,
             "start_fov": self.camera.fov_deg,
-            "target_fov": max(self.camera.fov_deg, 76.0),
+            "target_fov": target_fov,
         }
         return True
 
@@ -1427,6 +1550,105 @@ class StarSkyApp:
             if direction.z > (0.0 if relaxed else 0.04):
                 directions.append(direction)
         required = 1 if relaxed else max(1, min(3, (len(constellation.main_star_ids) + 1) // 2))
+        if len(directions) < required:
+            return None
+        x = sum(direction.x for direction in directions) / len(directions)
+        y = sum(direction.y for direction in directions) / len(directions)
+        z = sum(direction.z for direction in directions) / len(directions)
+        length = math.sqrt(x * x + y * y + z * z)
+        if length <= 0.0:
+            return None
+        from sky.vector import Vec3
+
+        return Vec3(x / length, y / length, z / length)
+
+    def _nearest_star_observation_target(self, star):
+        if not self._star_can_rise(star):
+            return None
+        for threshold in (0.35, 0.16, 0.04):
+            target = self._first_star_target_above(star, threshold)
+            if target is not None:
+                return target
+        return self._best_star_target(star)
+
+    def _first_star_target_above(self, star, threshold: float):
+        max_steps = int(CONSTELLATION_SEARCH_DAYS * 24 * 60 / CONSTELLATION_SEARCH_STEP_MINUTES)
+        for step in range(max_steps + 1):
+            when = self.clock.current_time + timedelta(minutes=step * CONSTELLATION_SEARCH_STEP_MINUTES)
+            direction = star_direction(star, self.observer, when)
+            if direction.z >= threshold:
+                return when, direction
+        return None
+
+    def _best_star_target(self, star):
+        max_steps = int(CONSTELLATION_SEARCH_DAYS * 24 * 60 / CONSTELLATION_SEARCH_STEP_MINUTES)
+        best: tuple[datetime, object] | None = None
+        best_z = -1.0
+        for step in range(max_steps + 1):
+            when = self.clock.current_time + timedelta(minutes=step * CONSTELLATION_SEARCH_STEP_MINUTES)
+            direction = star_direction(star, self.observer, when)
+            if direction.z > best_z:
+                best = (when, direction)
+                best_z = direction.z
+        return best if best_z > 0.0 else None
+
+    def _nearest_sky_feature_observation_target(self, feature: Asterism | SkyPath):
+        if not self._sky_feature_can_rise(feature):
+            return None
+        for threshold in (0.35, 0.16):
+            target = self._first_sky_feature_target_above(feature, threshold)
+            if target is not None:
+                return target
+        return self._best_sky_feature_target(feature)
+
+    def _first_sky_feature_target_above(self, feature: Asterism | SkyPath, threshold: float):
+        max_steps = int(CONSTELLATION_SEARCH_DAYS * 24 * 60 / CONSTELLATION_SEARCH_STEP_MINUTES)
+        for step in range(max_steps + 1):
+            when = self.clock.current_time + timedelta(minutes=step * CONSTELLATION_SEARCH_STEP_MINUTES)
+            direction = self._sky_feature_center_direction_at(feature, when)
+            if direction is not None and direction.z >= threshold:
+                return when, direction
+        return None
+
+    def _best_sky_feature_target(self, feature: Asterism | SkyPath):
+        max_steps = int(CONSTELLATION_SEARCH_DAYS * 24 * 60 / CONSTELLATION_SEARCH_STEP_MINUTES)
+        best: tuple[datetime, object] | None = None
+        best_z = -1.0
+        for step in range(max_steps + 1):
+            when = self.clock.current_time + timedelta(minutes=step * CONSTELLATION_SEARCH_STEP_MINUTES)
+            direction = self._sky_feature_center_direction_at(feature, when, relaxed=True)
+            if direction is None:
+                continue
+            if direction.z > best_z:
+                best = (when, direction)
+                best_z = direction.z
+        return best
+
+    def _sky_feature_center_direction_at(
+        self,
+        feature: Asterism | SkyPath,
+        observation_time: datetime,
+        relaxed: bool = False,
+    ):
+        directions = []
+        if isinstance(feature, Asterism):
+            for star_id in feature.star_ids:
+                star = STARS_BY_ID.get(star_id)
+                if star is None:
+                    continue
+                direction = star_direction(star, self.observer, observation_time)
+                if direction.z > (0.0 if relaxed else 0.04):
+                    directions.append(direction)
+            required = 1 if relaxed else max(1, min(3, (len(feature.star_ids) + 1) // 2))
+        else:
+            jd = julian_date(observation_time)
+            lst = local_sidereal_time(jd, math.radians(self.observer.longitude_deg))
+            lat = math.radians(self.observer.latitude_deg)
+            for ra_rad, dec_rad in feature.points:
+                direction = equatorial_to_enu(ra_rad, dec_rad, lat, lst)
+                if direction.z > (0.0 if relaxed else 0.04):
+                    directions.append(direction)
+            required = 1 if relaxed else 2
         if len(directions) < required:
             return None
         x = sum(direction.x for direction in directions) / len(directions)
@@ -1785,13 +2007,7 @@ class StarSkyApp:
                 self.observer.latitude_deg,
                 self.projected_sky_paths,
             )
-            draw_constellation_list(
-                self._constellation_list_constellations(),
-                self.selected_constellation,
-                self.constellation_list_available_ids,
-                self.language,
-                self.constellation_list_scroll,
-            )
+            draw_search_list(self._search_list_items(), self.search_tab, self.language, self.constellation_list_scroll)
             self._draw_active_cut_in()
             self._signal_ready()
             return

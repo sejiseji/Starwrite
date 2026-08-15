@@ -4,6 +4,8 @@ import unittest
 
 from data.constellations import CONSTELLATIONS
 from data.meteor_showers import METEOR_SHOWERS
+from data.sky_features import ASTERISMS, SKY_PATHS
+from data.stars import STAR_NAMES
 from ui.localization import (
     city_name,
     constellation_name,
@@ -11,7 +13,10 @@ from ui.localization import (
     country_name,
     meteor_event_name,
     normalize_language,
+    sky_feature_name,
+    sky_feature_sort_key,
     star_name,
+    star_sort_key,
 )
 
 
@@ -44,6 +49,21 @@ class LocalizationTests(unittest.TestCase):
     def test_star_name_can_be_japanese(self) -> None:
         self.assertEqual(star_name(11767, "Polaris", "ja"), "ポラリス")
         self.assertEqual(star_name(11767, "Polaris", "en"), "Polaris")
+
+    def test_star_sort_key_matches_display_language(self) -> None:
+        ja_ordered = sorted(STAR_NAMES, key=lambda star_id: star_sort_key(star_id, STAR_NAMES[star_id], "ja"))
+        en_ordered = sorted(STAR_NAMES, key=lambda star_id: star_sort_key(star_id, STAR_NAMES[star_id], "en"))
+
+        self.assertEqual(star_name(ja_ordered[0], STAR_NAMES[ja_ordered[0]], "ja"), "11・かみのけ")
+        self.assertEqual(star_name(en_ordered[0], STAR_NAMES[en_ordered[0]], "en"), "1 Lacertae")
+
+    def test_sky_feature_sort_key_matches_display_language(self) -> None:
+        features = (*ASTERISMS, *SKY_PATHS)
+        ja_ordered = sorted(features, key=lambda feature: sky_feature_sort_key(feature, "ja"))
+        en_ordered = sorted(features, key=lambda feature: sky_feature_sort_key(feature, "en"))
+
+        self.assertEqual(sky_feature_name(ja_ordered[0], "ja"), "アルゴー船の名残")
+        self.assertEqual(sky_feature_name(en_ordered[0], "en"), "Argo Ship Remnant")
 
     def test_meteor_event_name_can_be_japanese(self) -> None:
         perseids = next(event for event in METEOR_SHOWERS if event.id == "PER-2026")
