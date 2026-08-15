@@ -972,12 +972,14 @@ class BootstrapApp:
         pyxel.rectb(panel_x, panel_y, panel_w, panel_h, 1)
         if self.language == "ja" and self._japanese_glyphs() is not None:
             lines = (
+                "「開始」を押すと、",
                 "読み込みの為、画面が一時的に",
                 "固まることがあります。",
                 "そのまましばらくお待ちください。",
             )
         else:
             lines = (
+                "WHEN YOU PRESS START,",
                 "LOADING MAY BRIEFLY FREEZE",
                 "THE SCREEN.",
                 "PLEASE WAIT A MOMENT.",
