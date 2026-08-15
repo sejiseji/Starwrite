@@ -1512,6 +1512,7 @@ class StarSkyApp:
         if target is None:
             return False
         target_time, target_direction = target
+        self.show_features = True
         self.selected_feature_id = feature_id
         self.selected_star_id = None
         self.selected_moon = False
