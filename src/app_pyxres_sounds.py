@@ -183,6 +183,8 @@ CONSTELLATION_SEARCH_DAYS = 3
 CONSTELLATION_SEARCH_STEP_MINUTES = 15
 CONSTELLATION_AUTO_PAN_FRAMES = int(PYXEL_TARGET_FPS * 1.5)
 CONSTELLATION_LIST_DRAG_TOLERANCE_PX = 8
+SEARCH_TABS = ("constellation", "star", "group")
+SEARCH_DISPLAY_DEFAULTS = {"star_magnitude": "all"}
 
 
 def _storage():
@@ -225,6 +227,32 @@ def _coerce_utc_offset(value: object) -> int | None:
     except (TypeError, ValueError):
         return None
     return max(-720, min(840, minutes))
+
+
+def _coerce_search_tab(value: object) -> str:
+    return str(value) if value in SEARCH_TABS else "constellation"
+
+
+def _coerce_search_scrolls(value: object) -> dict[str, int]:
+    scrolls = {tab: 0 for tab in SEARCH_TABS}
+    if not isinstance(value, dict):
+        return scrolls
+    for tab in SEARCH_TABS:
+        try:
+            scrolls[tab] = max(0, int(value.get(tab, 0)))
+        except (TypeError, ValueError):
+            scrolls[tab] = 0
+    return scrolls
+
+
+def _coerce_search_display_state(value: object) -> dict[str, str]:
+    state = dict(SEARCH_DISPLAY_DEFAULTS)
+    if not isinstance(value, dict):
+        return state
+    star_magnitude = value.get("star_magnitude")
+    if star_magnitude in ("all", "1", "2", "3", "4", "5", "6"):
+        state["star_magnitude"] = str(star_magnitude)
+    return state
 
 
 def _location_utc_offset_minutes(settings: dict) -> int:
@@ -290,8 +318,10 @@ class StarSkyApp:
         self.confirm_setup_restart = False
         self.request_setup_restart = False
         self.ui_state = "SKY"
-        self.search_tab = "constellation"
-        self.constellation_list_scroll = 0
+        self.search_tab = _coerce_search_tab(settings.get("search_tab"))
+        self.search_scroll_by_tab = _coerce_search_scrolls(settings.get("search_scroll_by_tab"))
+        self.search_display_state = _coerce_search_display_state(settings.get("search_display_state"))
+        self.constellation_list_scroll = self.search_scroll_by_tab.get(self.search_tab, 0)
         self.constellation_list_available_ids: set[str] = set()
         self.constellation_list_pointer_down: tuple[int, int] | None = None
         self.constellation_list_pointer_last: tuple[int, int] | None = None
@@ -914,11 +944,11 @@ class StarSkyApp:
         self.show_month_slider = False
         self.show_event_slider = False
         self.menu_open = False
-        self.search_tab = "constellation"
-        self.constellation_list_scroll = 0
         self.constellation_list_available_ids = {
             constellation.id for constellation in CONSTELLATIONS if self._constellation_can_rise(constellation)
         }
+        self.constellation_list_scroll = self.search_scroll_by_tab.get(self.search_tab, 0)
+        self._clamp_constellation_list_scroll()
         self.constellation_list_pointer_down = None
         self.constellation_list_pointer_last = None
         self.constellation_list_pointer_dragged = False
@@ -966,8 +996,10 @@ class StarSkyApp:
         for tab, rect in constellation_list_tab_rects(SCREEN_WIDTH, SCREEN_HEIGHT).items():
             if self._point_in_rect(point, rect):
                 if tab != self.search_tab:
+                    self._store_search_scroll()
                     self.search_tab = tab
-                    self.constellation_list_scroll = 0
+                    self.constellation_list_scroll = self.search_scroll_by_tab.get(tab, 0)
+                    self._clamp_constellation_list_scroll()
                     self._play_ui_sound(SOUND_TOOL_ON)
                 return True
         view = constellation_list_view_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -993,6 +1025,7 @@ class StarSkyApp:
                 self._play_ui_sound(SOUND_LETTER_CLOSE)
                 return True
             if self._start_search_item_auto_pan(item):
+                self._store_search_scroll()
                 self.ui_state = "SKY"
                 self._play_selection_sound(self._selection_sound_kind_for_search_tab())
             else:
@@ -1007,6 +1040,13 @@ class StarSkyApp:
             len(self._search_list_items()),
         )
         self.constellation_list_scroll = max(0, min(max_scroll, int(value)))
+        self._store_search_scroll()
+
+    def _clamp_constellation_list_scroll(self) -> None:
+        self._scroll_constellation_list(self.constellation_list_scroll)
+
+    def _store_search_scroll(self) -> None:
+        self.search_scroll_by_tab[self.search_tab] = max(0, int(self.constellation_list_scroll))
 
     def _search_list_items(self) -> tuple[SearchListItem, ...]:
         if self.search_tab == "star":
@@ -1096,6 +1136,8 @@ class StarSkyApp:
             self._start_letter_close_animation("LOG" if closing_state == "LOG_DETAIL" else "SKY")
             self._play_ui_sound(SOUND_LETTER_CLOSE)
             return
+        if closing_state == "CONSTELLATION_LIST":
+            self._store_search_scroll()
         self.ui_state = "SKY"
         self.selected_log_id = None
         if closing_state != "SKY":
@@ -2098,6 +2140,9 @@ class StarSkyApp:
                 "rotate_camera_speed_level": self.rotate_camera_speed_level,
                 "sound_enabled": self.sound_enabled,
                 "bgm_enabled": self.bgm_enabled,
+                "search_tab": self.search_tab,
+                "search_scroll_by_tab": self.search_scroll_by_tab,
+                "search_display_state": self.search_display_state,
                 "language": self.language,
                 "location_country": self.location_country,
                 "location_city": self.location_city,
