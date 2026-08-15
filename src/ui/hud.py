@@ -1607,6 +1607,10 @@ CONSTELLATION_SINGLE_WORD_SPLITS = {
     "MICROSCOPIUM": ("MICRO", "SCOPIUM"),
     "TELESCOPIUM": ("TELE", "SCOPIUM"),
 }
+CONSTELLATION_JA_BUTTON_LINES = {
+    "CRA": ("みなみの", "かんむり座"),
+    "TRA": ("みなみの", "さんかく座"),
+}
 
 
 def constellation_list_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
@@ -1722,6 +1726,16 @@ def _draw_constellation_list_button(
             line_w = text_width(line)
             draw_big_text(x + max(4, (w - line_w) // 2), text_y, line, text_col)
             text_y += GLYPH_H * SCALE + 2
+        return
+
+    ja_lines = CONSTELLATION_JA_BUTTON_LINES.get(constellation.id)
+    if ja_lines is not None:
+        total_h = len(ja_lines) * FONT_CELL_HEIGHT + max(0, len(ja_lines) - 1) * 2
+        text_y = y + max(3, (h - total_h) // 2)
+        for line in ja_lines:
+            line_w = display_text_width(line)
+            draw_display_text(x + max(4, (w - line_w) // 2), text_y, line, text_col)
+            text_y += FONT_CELL_HEIGHT + 2
         return
 
     label_w = display_text_width(name)
