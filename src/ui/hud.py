@@ -1066,8 +1066,9 @@ def _draw_centered_display_text(text: str, x: int, y: int, w: int, col: int) -> 
 
 
 def draw_location_badge(country_code: str | None, city: str | None, language: Language) -> None:
-    country = country_name(country_code, language)
-    city_label = city_name(city, language)
+    _ = language
+    country = country_name(country_code, "en")
+    city_label = city_name(city, "en")
     if not country and not city_label:
         return
 
