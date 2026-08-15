@@ -49,7 +49,13 @@ from src.sky.simulation import SimulationClock, project_visible_stars, star_dire
 from src.ui.hud import (
     back_button_rect,
     constellation_label_hit_rects,
+    constellation_list_button_rects,
+    constellation_list_close_rect,
+    constellation_list_max_scroll,
+    constellation_list_panel_rect,
+    constellation_list_view_rect,
     draw_compact_time,
+    draw_constellation_list,
     draw_cut_in,
     draw_event_banner,
     draw_hud,
@@ -163,6 +169,10 @@ DESKTOP_VIEW = _is_desktop_view()
 ROTATE_TIME_SPEEDS = {-3: -3600.0, -2: -1200.0, -1: -300.0, 0: 0.0, 1: 300.0, 2: 1200.0, 3: 3600.0}
 ROTATE_CAMERA_SPEEDS = {-3: -24.0, -2: -12.0, -1: -4.0, 0: 0.0, 1: 4.0, 2: 12.0, 3: 24.0}
 ROTATION_LIMIT = timedelta(days=365.25 * 20)
+CONSTELLATION_SEARCH_DAYS = 3
+CONSTELLATION_SEARCH_STEP_MINUTES = 15
+CONSTELLATION_AUTO_PAN_FRAMES = int(PYXEL_TARGET_FPS * 1.5)
+CONSTELLATION_LIST_DRAG_TOLERANCE_PX = 8
 
 
 def _storage():
@@ -270,6 +280,12 @@ class StarSkyApp:
         self.confirm_setup_restart = False
         self.request_setup_restart = False
         self.ui_state = "SKY"
+        self.constellation_list_scroll = 0
+        self.constellation_list_available_ids: set[str] = set()
+        self.constellation_list_pointer_down: tuple[int, int] | None = None
+        self.constellation_list_pointer_last: tuple[int, int] | None = None
+        self.constellation_list_pointer_dragged = False
+        self.constellation_auto_pan: dict[str, object] | None = None
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.constellation_star_ids = {star_id for constellation in CONSTELLATIONS for star_id in constellation.main_star_ids}
         self.latest_capture = self._load_capture()
@@ -469,13 +485,18 @@ class StarSkyApp:
             self._update_bgm()
         self._finish_letter_close_animation()
         if self.ui_state == "SKY":
-            self.clock.update(1.0 / 30.0)
-            self._update_rotate_camera(1.0 / 30.0)
-            self._enforce_rotation_limit()
+            if self.constellation_auto_pan is None:
+                self.clock.update(1.0 / 30.0)
+                self._update_rotate_camera(1.0 / 30.0)
+                self._enforce_rotation_limit()
+            else:
+                self.clock.pause()
         self._update_pending_receive()
         self._update_scheduled_ui_sounds()
         self._handle_keys()
         self._handle_mouse()
+        if self.ui_state == "SKY":
+            self._update_constellation_auto_pan()
         if self.ui_state != "SKY":
             if pyxel.frame_count % 30 == 0:
                 self._save_settings()
@@ -513,6 +534,8 @@ class StarSkyApp:
                 return
             if self._key_pressed("KEY_ESCAPE") or self._key_pressed("KEY_BACKSPACE"):
                 self._go_back()
+            return
+        if self.constellation_auto_pan is not None:
             return
         if pyxel.btnp(pyxel.KEY_H):
             self.show_info = not self.show_info
@@ -583,6 +606,12 @@ class StarSkyApp:
 
     def _handle_mouse(self) -> None:
         current = (pyxel.mouse_x, pyxel.mouse_y)
+        if self.constellation_auto_pan is not None:
+            self._consume_pinch_zoom_delta()
+            self.active_slider = None
+            self.last_mouse = None
+            self.sky_pointer_down = None
+            return
         if self.confirm_setup_restart:
             self._consume_pinch_zoom_delta()
             if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
@@ -594,6 +623,10 @@ class StarSkyApp:
         if self.ui_state != "SKY":
             self._consume_pinch_zoom_delta()
             if self._letter_view_is_closing():
+                self.last_mouse = None
+                return
+            if self.ui_state == "CONSTELLATION_LIST":
+                self._handle_constellation_list_mouse(current)
                 self.last_mouse = None
                 return
             if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
@@ -699,6 +732,8 @@ class StarSkyApp:
             elif key == "reset":
                 self._reset_view()
                 self._play_ui_sound(SOUND_RESET)
+            elif key == "search":
+                self._open_constellation_list()
             return True
         if self._handle_slider_click(point):
             return True
@@ -860,6 +895,94 @@ class StarSkyApp:
                     self._play_ui_sound(SOUND_LETTER_OPEN)
                 return True
         return True
+
+    def _open_constellation_list(self) -> None:
+        self._set_rotate_time(False)
+        self._set_rotate_camera(False)
+        self.show_time_slider = False
+        self.show_month_slider = False
+        self.show_event_slider = False
+        self.menu_open = False
+        self.constellation_list_scroll = 0
+        self.constellation_list_available_ids = {
+            constellation.id for constellation in CONSTELLATIONS if self._constellation_can_rise(constellation)
+        }
+        self.constellation_list_pointer_down = None
+        self.constellation_list_pointer_last = None
+        self.constellation_list_pointer_dragged = False
+        self.ui_state = "CONSTELLATION_LIST"
+        self._play_ui_sound(SOUND_TOOL_ON)
+
+    def _handle_constellation_list_mouse(self, point: tuple[int, int]) -> None:
+        wheel = getattr(pyxel, "mouse_wheel", 0)
+        if wheel:
+            self._scroll_constellation_list(self.constellation_list_scroll - int(float(wheel) * 42))
+
+        if pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            self.constellation_list_pointer_down = point
+            self.constellation_list_pointer_last = point
+            self.constellation_list_pointer_dragged = False
+            return
+
+        if pyxel.btn(pyxel.MOUSE_BUTTON_LEFT):
+            if self.constellation_list_pointer_last is not None:
+                dy = point[1] - self.constellation_list_pointer_last[1]
+                if abs(dy) >= 1:
+                    self._scroll_constellation_list(self.constellation_list_scroll - dy)
+                if self.constellation_list_pointer_down is not None:
+                    total_dx = point[0] - self.constellation_list_pointer_down[0]
+                    total_dy = point[1] - self.constellation_list_pointer_down[1]
+                    if total_dx * total_dx + total_dy * total_dy > CONSTELLATION_LIST_DRAG_TOLERANCE_PX ** 2:
+                        self.constellation_list_pointer_dragged = True
+                self.constellation_list_pointer_last = point
+            return
+
+        if self.constellation_list_pointer_down is not None and not self.constellation_list_pointer_dragged:
+            self._handle_constellation_list_tap(point)
+        self.constellation_list_pointer_down = None
+        self.constellation_list_pointer_last = None
+        self.constellation_list_pointer_dragged = False
+
+    def _handle_constellation_list_tap(self, point: tuple[int, int]) -> bool:
+        if self._point_in_rect(point, constellation_list_close_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+            self._go_back()
+            return True
+        panel = constellation_list_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
+        if not self._point_in_rect(point, panel):
+            self._go_back()
+            return True
+        view = constellation_list_view_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
+        if not self._point_in_rect(point, view):
+            return True
+        for index, rect in enumerate(
+            constellation_list_button_rects(
+                SCREEN_WIDTH,
+                SCREEN_HEIGHT,
+                len(CONSTELLATIONS),
+                self.constellation_list_scroll,
+            )
+        ):
+            _x, rect_y, _w, rect_h = rect
+            _view_x, view_y, _view_w, view_h = view
+            if rect_y < view_y or rect_y + rect_h > view_y + view_h:
+                continue
+            if not self._point_in_rect(point, rect):
+                continue
+            constellation = CONSTELLATIONS[index]
+            if constellation.id not in self.constellation_list_available_ids:
+                self._play_ui_sound(SOUND_LETTER_CLOSE)
+                return True
+            if self._start_constellation_auto_pan(index):
+                self.ui_state = "SKY"
+                self._play_selection_sound("constellation")
+            else:
+                self._play_ui_sound(SOUND_LETTER_CLOSE)
+            return True
+        return True
+
+    def _scroll_constellation_list(self, value: int) -> None:
+        max_scroll = constellation_list_max_scroll(SCREEN_WIDTH, SCREEN_HEIGHT, len(CONSTELLATIONS))
+        self.constellation_list_scroll = max(0, min(max_scroll, int(value)))
 
     def _open_letter(self) -> None:
         self._ensure_letters_loaded()
@@ -1347,6 +1470,147 @@ class StarSkyApp:
     def _frame_selected_constellation(self) -> None:
         self._frame_constellation(self.selected_constellation)
 
+    def _constellation_can_rise(self, constellation: Constellation) -> bool:
+        latitude = self.observer.latitude_deg
+        for star_id in constellation.main_star_ids:
+            star = STARS_BY_ID.get(star_id)
+            if star is None:
+                continue
+            declination = math.degrees(star.dec_rad)
+            if 90.0 - abs(latitude - declination) > 1.0:
+                return True
+        return False
+
+    def _start_constellation_auto_pan(self, index: int) -> bool:
+        target = self._nearest_constellation_observation_target(CONSTELLATIONS[index])
+        if target is None:
+            return False
+        target_time, target_direction = target
+        target_yaw, target_pitch = self._camera_angles_for_direction(
+            target_direction.x,
+            target_direction.y,
+            target_direction.z,
+        )
+        self._set_rotate_time(False)
+        self._set_rotate_camera(False)
+        self.clock.pause()
+        self.show_time_slider = False
+        self.show_month_slider = False
+        self.show_event_slider = False
+        self.selected_index = index
+        self._clear_detail_selection()
+        self.summary_panel_animation_start_frame = pyxel.frame_count
+        self.constellation_auto_pan = {
+            "start_frame": pyxel.frame_count,
+            "duration": CONSTELLATION_AUTO_PAN_FRAMES,
+            "start_time": self.clock.current_time,
+            "target_time": target_time,
+            "start_yaw": self.camera.yaw,
+            "target_yaw": target_yaw,
+            "start_pitch": self.camera.pitch,
+            "target_pitch": target_pitch,
+            "start_fov": self.camera.fov_deg,
+            "target_fov": max(self.camera.fov_deg, 76.0),
+        }
+        return True
+
+    def _nearest_constellation_observation_target(self, constellation: Constellation):
+        if not self._constellation_can_rise(constellation):
+            return None
+        thresholds = (0.35, 0.16)
+        for threshold in thresholds:
+            target = self._first_constellation_target_above(constellation, threshold)
+            if target is not None:
+                return target
+        return self._best_constellation_target(constellation)
+
+    def _first_constellation_target_above(self, constellation: Constellation, threshold: float):
+        max_steps = int(CONSTELLATION_SEARCH_DAYS * 24 * 60 / CONSTELLATION_SEARCH_STEP_MINUTES)
+        for step in range(max_steps + 1):
+            when = self.clock.current_time + timedelta(minutes=step * CONSTELLATION_SEARCH_STEP_MINUTES)
+            direction = self._constellation_center_direction_at(constellation, when)
+            if direction is not None and direction.z >= threshold:
+                return when, direction
+        return None
+
+    def _best_constellation_target(self, constellation: Constellation):
+        max_steps = int(CONSTELLATION_SEARCH_DAYS * 24 * 60 / CONSTELLATION_SEARCH_STEP_MINUTES)
+        best: tuple[datetime, object] | None = None
+        best_z = -1.0
+        for step in range(max_steps + 1):
+            when = self.clock.current_time + timedelta(minutes=step * CONSTELLATION_SEARCH_STEP_MINUTES)
+            direction = self._constellation_center_direction_at(constellation, when, relaxed=True)
+            if direction is None:
+                continue
+            if direction.z > best_z:
+                best = (when, direction)
+                best_z = direction.z
+        return best
+
+    def _constellation_center_direction_at(
+        self,
+        constellation: Constellation,
+        observation_time: datetime,
+        relaxed: bool = False,
+    ):
+        directions = []
+        for star_id in constellation.main_star_ids:
+            star = STARS_BY_ID.get(star_id)
+            if star is None:
+                continue
+            direction = star_direction(star, self.observer, observation_time)
+            if direction.z > (0.0 if relaxed else 0.04):
+                directions.append(direction)
+        required = 1 if relaxed else max(1, min(3, (len(constellation.main_star_ids) + 1) // 2))
+        if len(directions) < required:
+            return None
+        x = sum(direction.x for direction in directions) / len(directions)
+        y = sum(direction.y for direction in directions) / len(directions)
+        z = sum(direction.z for direction in directions) / len(directions)
+        length = math.sqrt(x * x + y * y + z * z)
+        if length <= 0.0:
+            return None
+        from src.sky.vector import Vec3
+
+        return Vec3(x / length, y / length, z / length)
+
+    def _camera_angles_for_direction(self, x: float, y: float, z: float) -> tuple[float, float]:
+        length = math.sqrt(x * x + y * y + z * z)
+        if length <= 0.0:
+            return self.camera.yaw, self.camera.pitch
+        return math.atan2(x, y), math.asin(max(-1.0, min(1.0, z / length)))
+
+    def _update_constellation_auto_pan(self) -> None:
+        pan = self.constellation_auto_pan
+        if pan is None:
+            return
+        start_frame = int(pan["start_frame"])
+        duration = max(1, int(pan["duration"]))
+        t = max(0.0, min(1.0, (pyxel.frame_count - start_frame) / duration))
+        eased = t * t * (3.0 - 2.0 * t)
+        start_time = pan["start_time"]
+        target_time = pan["target_time"]
+        if isinstance(start_time, datetime) and isinstance(target_time, datetime):
+            start_ts = start_time.timestamp()
+            target_ts = target_time.timestamp()
+            self.clock.current_time = datetime.fromtimestamp(
+                start_ts + (target_ts - start_ts) * eased,
+                start_time.tzinfo,
+            )
+        self.camera.yaw = self._lerp_angle(float(pan["start_yaw"]), float(pan["target_yaw"]), eased)
+        self.camera.pitch = self._lerp(float(pan["start_pitch"]), float(pan["target_pitch"]), eased)
+        self.camera.fov_deg = self._lerp(float(pan["start_fov"]), float(pan["target_fov"]), eased)
+        self.camera.clamp()
+        if t >= 1.0:
+            self.constellation_auto_pan = None
+
+    def _lerp(self, start: float, end: float, t: float) -> float:
+        return start + (end - start) * t
+
+    def _lerp_angle(self, start: float, end: float, t: float) -> float:
+        delta = (end - start + math.pi) % math.tau - math.pi
+        return start + delta * t
+
     def _frame_constellation(self, constellation: Constellation) -> bool:
         directions = []
         for star_id in constellation.main_star_ids:
@@ -1639,6 +1903,32 @@ class StarSkyApp:
                 self._draw_active_cut_in()
             else:
                 self.ui_state = "SKY"
+            self._signal_ready()
+            return
+
+        if self.ui_state == "CONSTELLATION_LIST":
+            self.renderer.draw(
+                self.projected,
+                CONSTELLATIONS,
+                self.selected_constellation,
+                self.show_constellations,
+                self.show_guides,
+                self.camera,
+                SCREEN_WIDTH,
+                SCREEN_HEIGHT,
+                self.meteor_event,
+                self.moon.state,
+                self.observer.latitude_deg,
+                self.projected_sky_paths,
+            )
+            draw_constellation_list(
+                CONSTELLATIONS,
+                self.selected_constellation,
+                self.constellation_list_available_ids,
+                self.language,
+                self.constellation_list_scroll,
+            )
+            self._draw_active_cut_in()
             self._signal_ready()
             return
 

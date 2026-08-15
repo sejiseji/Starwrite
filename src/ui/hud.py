@@ -524,6 +524,19 @@ def draw_button(rect: tuple[int, int, int, int], label: str, active: bool) -> No
     draw_button_colored(rect, label, fill, edge, 7)
 
 
+def draw_icon_search_button(rect: tuple[int, int, int, int], active: bool = False) -> None:
+    x, y, w, h = rect
+    fill = 5 if active else 1
+    edge = 10 if active else 13
+    pyxel.rect(x, y, w, h, fill)
+    pyxel.rectb(x, y, w, h, edge)
+    center_x = x + w // 2 - 4
+    center_y = y + h // 2 - 2
+    pyxel.circb(center_x, center_y, 5, 7)
+    pyxel.line(center_x + 4, center_y + 4, center_x + 10, center_y + 10, 7)
+    pyxel.pset(center_x - 2, center_y - 2, 7)
+
+
 def draw_checkbox(rect: tuple[int, int, int, int], label: str, checked: bool) -> None:
     x, y, _, h = rect
     box = min(14, h - 8)
@@ -1511,6 +1524,7 @@ def tool_button_rects(width: int, _height: int) -> dict[str, tuple[int, int, int
         "rotate_camera": (x, 112, button_w, button_h),
         "features": (x, 138, button_w, button_h),
         "reset": (x, 164, button_w, button_h),
+        "search": (x, 190, button_w, button_h),
     }
 
 
@@ -1532,14 +1546,15 @@ def draw_tool_buttons(
     feature_text = 0 if show_features else 7
     draw_button_colored(rects["features"], "FEATURE", feature_fill, 11, feature_text)
     draw_button(rects["reset"], "RESET", False)
+    draw_icon_search_button(rects["search"], False)
 
 
 def slider_rects(width: int, height: int, side: str) -> dict[str, tuple[int, int, int, int]]:
     panel_w = 34
     x = width - panel_w - 6 if side == "right" else 6
-    _reset_x, reset_y, _reset_w, reset_h = tool_button_rects(width, height)["reset"]
+    _search_x, search_y, _search_w, search_h = tool_button_rects(width, height)["search"]
     _rot_x, rot_y, _rot_w, _rot_h = rotate_speed_control_rects(width, height)["panel"]
-    y = reset_y + reset_h + 22
+    y = search_y + search_h + 14
     panel_bottom = rot_y - 8
     panel_h = max(180, panel_bottom - y)
     event_panel_h = 92
@@ -1582,3 +1597,177 @@ def draw_slider(side: str, label: str, knob_ratio: float = 0.5, rect_key: str | 
     pyxel.rect(knob[0], knob_y, knob[2], knob[3], 5)
     pyxel.rectb(knob[0], knob_y, knob[2], knob[3], 10)
     draw_button(rects[f"{key}_plus"], "-", False)
+
+
+CONSTELLATION_LIST_COLUMNS = 4
+CONSTELLATION_LIST_BUTTON_H = 34
+CONSTELLATION_LIST_GAP = 4
+CONSTELLATION_SINGLE_WORD_SPLITS = {
+    "CAMELOPARDALIS": ("CAMELO", "PARDALIS"),
+    "MICROSCOPIUM": ("MICRO", "SCOPIUM"),
+    "TELESCOPIUM": ("TELE", "SCOPIUM"),
+}
+
+
+def constellation_list_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
+    x = 8
+    y = 44
+    return (x, y, width - x * 2, height - y - 44)
+
+
+def constellation_list_close_rect(width: int, height: int) -> tuple[int, int, int, int]:
+    x, y, w, _h = constellation_list_panel_rect(width, height)
+    return (x + w - 32, y + 8, 24, 24)
+
+
+def constellation_list_view_rect(width: int, height: int) -> tuple[int, int, int, int]:
+    x, y, w, h = constellation_list_panel_rect(width, height)
+    return (x + 8, y + 74, w - 16, h - 88)
+
+
+def constellation_list_max_scroll(width: int, height: int, count: int) -> int:
+    _x, _y, _w, view_h = constellation_list_view_rect(width, height)
+    rows = (count + CONSTELLATION_LIST_COLUMNS - 1) // CONSTELLATION_LIST_COLUMNS
+    content_h = rows * CONSTELLATION_LIST_BUTTON_H + max(0, rows - 1) * CONSTELLATION_LIST_GAP
+    return max(0, content_h - view_h)
+
+
+def constellation_list_button_rects(
+    width: int,
+    height: int,
+    count: int,
+    scroll: int,
+) -> list[tuple[int, int, int, int]]:
+    view_x, view_y, view_w, _view_h = constellation_list_view_rect(width, height)
+    button_w = (view_w - CONSTELLATION_LIST_GAP * (CONSTELLATION_LIST_COLUMNS - 1)) // CONSTELLATION_LIST_COLUMNS
+    rects = []
+    for index in range(count):
+        column = index % CONSTELLATION_LIST_COLUMNS
+        row = index // CONSTELLATION_LIST_COLUMNS
+        x = view_x + column * (button_w + CONSTELLATION_LIST_GAP)
+        y = view_y + row * (CONSTELLATION_LIST_BUTTON_H + CONSTELLATION_LIST_GAP) - scroll
+        rects.append((x, y, button_w, CONSTELLATION_LIST_BUTTON_H))
+    return rects
+
+
+def draw_constellation_list(
+    constellations: tuple[Constellation, ...],
+    selected: Constellation,
+    available_ids: set[str],
+    language: Language,
+    scroll: int,
+) -> None:
+    panel = constellation_list_panel_rect(pyxel.width, pyxel.height)
+    x, y, w, h = panel
+    pyxel.rect(x, y, w, h, 0)
+    pyxel.rectb(x, y, w, h, 13)
+    pyxel.rectb(x + 2, y + 2, w - 4, h - 4, 1)
+    if language == "ja":
+        title = "星座を探す"
+        note = "グレー表示は観測不可の星座です"
+    else:
+        title = "CONSTELLATIONS"
+        note = "GRAY BUTTONS ARE BELOW YOUR SKY"
+    title_w = display_text_width(title)
+    title_y = y + 14 if title.isascii() else y + 12
+    draw_display_bold_text(x + max(8, (w - title_w) // 2), title_y, title, 7)
+    note_w = display_text_width(note)
+    note_y = y + 42 if note.isascii() else y + 40
+    draw_display_text(x + max(8, (w - note_w) // 2), note_y, note, 13)
+    draw_button(constellation_list_close_rect(pyxel.width, pyxel.height), "X", False)
+
+    view = constellation_list_view_rect(pyxel.width, pyxel.height)
+    view_x, view_y, view_w, view_h = view
+    rects = constellation_list_button_rects(pyxel.width, pyxel.height, len(constellations), scroll)
+    for index, rect in enumerate(rects):
+        rx, ry, _rw, rh = rect
+        if ry < view_y or ry + rh > view_y + view_h:
+            continue
+        constellation = constellations[index]
+        _draw_constellation_list_button(
+            rect,
+            constellation,
+            constellation.id == selected.id,
+            constellation.id in available_ids,
+            language,
+        )
+    _draw_constellation_list_scrollbar(view_x + view_w - 3, view_y, view_h, scroll, constellation_list_max_scroll(pyxel.width, pyxel.height, len(constellations)))
+
+
+def _draw_constellation_list_button(
+    rect: tuple[int, int, int, int],
+    constellation: Constellation,
+    selected: bool,
+    available: bool,
+    language: Language,
+) -> None:
+    x, y, w, h = rect
+    if selected:
+        fill, edge, text_col = 5, 10, 7
+    elif available:
+        fill, edge, text_col = 1, 13, 7
+    else:
+        fill, edge, text_col = 0, 5, 13
+    pyxel.rect(x, y, w, h, fill)
+    pyxel.rectb(x, y, w, h, edge)
+    if selected:
+        pyxel.rectb(x + 2, y + 2, w - 4, h - 4, 10)
+
+    name = constellation_name(constellation, language)
+    if language == "en":
+        lines = _constellation_button_label_lines(name.upper(), w - 8)
+        total_h = len(lines) * (GLYPH_H * SCALE) + max(0, len(lines) - 1) * 2
+        text_y = y + max(3, (h - total_h) // 2)
+        for line in lines:
+            line_w = text_width(line)
+            draw_big_text(x + max(4, (w - line_w) // 2), text_y, line, text_col)
+            text_y += GLYPH_H * SCALE + 2
+        return
+
+    label_w = display_text_width(name)
+    text_y = y + max(3, (h - FONT_CELL_HEIGHT) // 2)
+    draw_display_text(x + max(4, (w - label_w) // 2), text_y, name, text_col)
+
+
+def _constellation_button_label_lines(text: str, max_width: int) -> tuple[str, ...]:
+    if text_width(text) <= max_width:
+        return (text,)
+    words = text.split()
+    if len(words) <= 1:
+        return _split_long_constellation_word(text, max_width)
+    best: tuple[str, str] | None = None
+    best_score = 999999
+    for split_at in range(1, len(words)):
+        left = " ".join(words[:split_at])
+        right = " ".join(words[split_at:])
+        widest = max(text_width(left), text_width(right))
+        balance = abs(text_width(left) - text_width(right))
+        score = widest * 10 + balance
+        if widest <= max_width:
+            score -= 10000
+        if score < best_score:
+            best = (left, right)
+            best_score = score
+    return best or (text,)
+
+
+def _split_long_constellation_word(text: str, max_width: int) -> tuple[str, ...]:
+    preferred = CONSTELLATION_SINGLE_WORD_SPLITS.get(text)
+    if preferred is not None and all(text_width(line) <= max_width for line in preferred):
+        return preferred
+    max_chars = max(4, (max_width + 2) // CHAR_STEP)
+    if len(text) <= max_chars:
+        return (text,)
+    split_at = min(len(text) - 3, max(3, len(text) // 2))
+    if text_width(text[:split_at]) > max_width:
+        split_at = max(3, max_chars)
+    return (text[:split_at], text[split_at:])
+
+
+def _draw_constellation_list_scrollbar(x: int, y: int, h: int, scroll: int, max_scroll: int) -> None:
+    if max_scroll <= 0:
+        return
+    pyxel.rect(x, y, 2, h, 1)
+    knob_h = max(18, h * h // (h + max_scroll))
+    knob_y = y + int((h - knob_h) * max(0.0, min(1.0, scroll / max_scroll)))
+    pyxel.rect(x - 1, knob_y, 4, knob_h, 13)
