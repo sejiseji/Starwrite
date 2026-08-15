@@ -90,7 +90,7 @@ from ui.hud import (
     slider_rects,
     tool_button_rects,
 )
-from ui.localization import constellation_name, next_language, sky_feature_name, star_name
+from ui.localization import constellation_name, constellation_sort_key, next_language, sky_feature_name, star_name
 
 IPHONE16_SCREEN_HEIGHT = 696
 IPHONE16_MIN_SCREEN_WIDTH = 396
@@ -804,11 +804,12 @@ class StarSkyApp:
         view = constellation_list_view_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
         if not self._point_in_rect(point, view):
             return True
+        constellations = self._constellation_list_constellations()
         for index, rect in enumerate(
             constellation_list_button_rects(
                 SCREEN_WIDTH,
                 SCREEN_HEIGHT,
-                len(CONSTELLATIONS),
+                len(constellations),
                 self.constellation_list_scroll,
             )
         ):
@@ -818,11 +819,12 @@ class StarSkyApp:
                 continue
             if not self._point_in_rect(point, rect):
                 continue
-            constellation = CONSTELLATIONS[index]
+            constellation = constellations[index]
             if constellation.id not in self.constellation_list_available_ids:
                 self._play_ui_sound(SOUND_LETTER_CLOSE)
                 return True
-            if self._start_constellation_auto_pan(index):
+            source_index = self._constellation_index_by_id(constellation.id)
+            if source_index is not None and self._start_constellation_auto_pan(source_index):
                 self.ui_state = "SKY"
                 self._play_selection_sound("constellation")
             else:
@@ -831,8 +833,21 @@ class StarSkyApp:
         return True
 
     def _scroll_constellation_list(self, value: int) -> None:
-        max_scroll = constellation_list_max_scroll(SCREEN_WIDTH, SCREEN_HEIGHT, len(CONSTELLATIONS))
+        max_scroll = constellation_list_max_scroll(
+            SCREEN_WIDTH,
+            SCREEN_HEIGHT,
+            len(self._constellation_list_constellations()),
+        )
         self.constellation_list_scroll = max(0, min(max_scroll, int(value)))
+
+    def _constellation_list_constellations(self) -> tuple[Constellation, ...]:
+        return tuple(sorted(CONSTELLATIONS, key=lambda constellation: constellation_sort_key(constellation, self.language)))
+
+    def _constellation_index_by_id(self, constellation_id: str) -> int | None:
+        for index, constellation in enumerate(CONSTELLATIONS):
+            if constellation.id == constellation_id:
+                return index
+        return None
 
     def _open_letter(self) -> None:
         self._ensure_letters_loaded()
@@ -1771,7 +1786,7 @@ class StarSkyApp:
                 self.projected_sky_paths,
             )
             draw_constellation_list(
-                CONSTELLATIONS,
+                self._constellation_list_constellations(),
                 self.selected_constellation,
                 self.constellation_list_available_ids,
                 self.language,

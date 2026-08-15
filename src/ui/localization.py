@@ -661,6 +661,23 @@ def constellation_name(constellation: Constellation, language: Language) -> str:
     return constellation.name
 
 
+def constellation_sort_key(constellation: Constellation, language: Language) -> tuple[str, str]:
+    if language == "ja":
+        return (_japanese_sort_text(constellation_name(constellation, language).removesuffix("座")), constellation.id)
+    return (constellation.name.casefold(), constellation.id)
+
+
+def _japanese_sort_text(text: str) -> str:
+    converted = []
+    for char in text:
+        codepoint = ord(char)
+        if 0x30A1 <= codepoint <= 0x30F6:
+            converted.append(chr(codepoint - 0x60))
+        else:
+            converted.append(char)
+    return "".join(converted)
+
+
 def meteor_event_name(event: MeteorShowerEvent, language: Language) -> str:
     if language == "ja":
         return METEOR_EVENT_NAMES_JA.get(event.id.split("-", 1)[0], event.name)

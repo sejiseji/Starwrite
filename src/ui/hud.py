@@ -1611,6 +1611,7 @@ CONSTELLATION_JA_BUTTON_LINES = {
     "CRA": ("みなみの", "かんむり座"),
     "TRA": ("みなみの", "さんかく座"),
 }
+SEARCH_TAB_KEYS = ("constellation", "star", "group")
 
 
 def constellation_list_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
@@ -1622,6 +1623,19 @@ def constellation_list_panel_rect(width: int, height: int) -> tuple[int, int, in
 def constellation_list_close_rect(width: int, height: int) -> tuple[int, int, int, int]:
     x, y, w, _h = constellation_list_panel_rect(width, height)
     return (x + w - 32, y + 8, 24, 24)
+
+
+def constellation_list_tab_rects(width: int, height: int) -> dict[str, tuple[int, int, int, int]]:
+    x, y, _w, _h = constellation_list_panel_rect(width, height)
+    tab_w = 58
+    tab_h = 24
+    gap = 4
+    tab_x = x + 78
+    tab_y = y + 10
+    return {
+        key: (tab_x + index * (tab_w + gap), tab_y, tab_w, tab_h)
+        for index, key in enumerate(SEARCH_TAB_KEYS)
+    }
 
 
 def constellation_list_view_rect(width: int, height: int) -> tuple[int, int, int, int]:
@@ -1667,14 +1681,14 @@ def draw_constellation_list(
     pyxel.rectb(x, y, w, h, 13)
     pyxel.rectb(x + 2, y + 2, w - 4, h - 4, 1)
     if language == "ja":
-        title = "星座を探す"
+        title = "探す"
         note = "グレー表示は観測不可の星座です"
     else:
-        title = "CONSTELLATIONS"
+        title = "SEARCH"
         note = "GRAY BUTTONS ARE BELOW YOUR SKY"
-    title_w = display_text_width(title)
     title_y = y + 14 if title.isascii() else y + 12
-    draw_display_bold_text(x + max(8, (w - title_w) // 2), title_y, title, 7)
+    draw_display_bold_text(x + 18, title_y, title, 7)
+    _draw_constellation_search_tabs(language, "constellation")
     note_w = display_text_width(note)
     note_y = y + 42 if note.isascii() else y + 40
     draw_display_text(x + max(8, (w - note_w) // 2), note_y, note, 13)
@@ -1696,6 +1710,26 @@ def draw_constellation_list(
             language,
         )
     _draw_constellation_list_scrollbar(view_x + view_w - 3, view_y, view_h, scroll, constellation_list_max_scroll(pyxel.width, pyxel.height, len(constellations)))
+
+
+def _draw_constellation_search_tabs(language: Language, active_tab: str) -> None:
+    if language == "ja":
+        labels = {
+            "constellation": "星座",
+            "star": "星",
+            "group": "星群",
+        }
+    else:
+        labels = {
+            "constellation": "CONST",
+            "star": "STAR",
+            "group": "GROUP",
+        }
+    for key, rect in constellation_list_tab_rects(pyxel.width, pyxel.height).items():
+        if key == active_tab:
+            draw_button_colored(rect, labels[key], 5, 10, 7)
+        else:
+            draw_button_colored(rect, labels[key], 1, 13, 13)
 
 
 def _draw_constellation_list_button(

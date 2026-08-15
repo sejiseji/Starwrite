@@ -4,7 +4,15 @@ import unittest
 
 from data.constellations import CONSTELLATIONS
 from data.meteor_showers import METEOR_SHOWERS
-from ui.localization import city_name, constellation_name, country_name, meteor_event_name, normalize_language, star_name
+from ui.localization import (
+    city_name,
+    constellation_name,
+    constellation_sort_key,
+    country_name,
+    meteor_event_name,
+    normalize_language,
+    star_name,
+)
 
 
 class LocalizationTests(unittest.TestCase):
@@ -20,6 +28,18 @@ class LocalizationTests(unittest.TestCase):
         self.assertEqual(constellation_name(perseus, "ja"), "ペルセウス座")
         self.assertEqual(constellation_name(perseus, "en"), "Perseus")
         self.assertEqual(constellation_name(aquarius, "ja"), "みずがめ座")
+
+    def test_constellation_sort_key_matches_display_language(self) -> None:
+        ja_ordered = sorted(CONSTELLATIONS, key=lambda item: constellation_sort_key(item, "ja"))
+        en_ordered = sorted(CONSTELLATIONS, key=lambda item: constellation_sort_key(item, "en"))
+        ja_names = [constellation_name(constellation, "ja") for constellation in ja_ordered[:5]]
+        en_names = [constellation.name for constellation in en_ordered[:5]]
+
+        self.assertEqual(
+            ja_names,
+            ["アンドロメダ座", "いっかくじゅう座", "いて座", "いるか座", "インディアン座"],
+        )
+        self.assertEqual(en_names, ["Andromeda", "Antlia", "Apus", "Aquarius", "Aquila"])
 
     def test_star_name_can_be_japanese(self) -> None:
         self.assertEqual(star_name(11767, "Polaris", "ja"), "ポラリス")
