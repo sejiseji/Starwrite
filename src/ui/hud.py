@@ -1881,11 +1881,12 @@ def _draw_search_list_button(
         fill, edge, text_col = 0, 5, 13
     pyxel.rect(x, y, w, h, fill)
     pyxel.rectb(x, y, w, h, edge)
-    if item.accent_color is not None and item.available:
-        accent = max(0, min(15, int(item.accent_color)))
-        pyxel.rectb(x + 1, y + 1, w - 2, h - 2, accent)
     if item.selected:
         pyxel.rectb(x + 2, y + 2, w - 4, h - 4, 10)
+    if item.accent_color is not None and item.available:
+        accent = max(0, min(15, int(item.accent_color)))
+        pyxel.rect(x + 2, y + 2, 8, 8, accent)
+        pyxel.rectb(x + 1, y + 1, 10, 10, 10 if item.selected else 13)
 
     lines = item.label_lines or _search_button_label_lines(item.label, language, w - 8)
     if language == "en":
