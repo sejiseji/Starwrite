@@ -1404,7 +1404,7 @@ class StarSkyApp:
         self.cut_in_start_frame = pyxel.frame_count
         self.cut_in_position = "lower"
         if self.language == "ja":
-            self.cut_in_message = "フォーカスロック対象が\n観測範囲外のシーズンを通過中です"
+            self.cut_in_message = "フォーカスロック対象が\n観測範囲の外に出ました。"
         else:
             self.cut_in_message = "The focus-lock target is outside\nthe observable range this season."
 
