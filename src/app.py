@@ -2116,7 +2116,7 @@ class StarSkyApp:
         self.exchange_logs = append_log(self.exchange_logs, log)
         self.unread_log_id = log.id
         self.cut_in_start_frame = pyxel.frame_count
-        self.cut_in_position = "top"
+        self.cut_in_position = "lower"
         self.cut_in_message = "なにかとどいたみたい。" if self.language == "ja" else "something arrived."
         self._play_letter_received_sound()
         self.pending_capture = None
