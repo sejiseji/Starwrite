@@ -1406,7 +1406,7 @@ class StarSkyApp:
         if self.language == "ja":
             self.cut_in_message = "フォーカスロック対象が\n観測範囲の外に出ました。"
         else:
-            self.cut_in_message = "The focus-lock target is outside\nthe observable range this season."
+            self.cut_in_message = "The focus-lock target\nmoved out of range."
 
     def _show_focus_lock_visible_again_message(self) -> None:
         self.cut_in_start_frame = pyxel.frame_count
@@ -1414,7 +1414,7 @@ class StarSkyApp:
         if self.language == "ja":
             self.cut_in_message = "フォーカスロック対象が\n観測範囲に戻りました"
         else:
-            self.cut_in_message = "The focus-lock target\nis visible again."
+            self.cut_in_message = "The focus-lock target\nis back in range."
 
     def _ensure_rotation_anchor(self) -> None:
         if self.rotation_anchor_time is None:
