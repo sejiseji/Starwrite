@@ -645,7 +645,7 @@ def draw_selected_constellation_summary(
         title_color = 10
     title_right = x + w - 7
     if focus_lock_label is not None:
-        button_rect = focus_lock_button_rect(pyxel.width, pyxel.height)
+        button_rect = focus_lock_button_rect(pyxel.width, pyxel.height, (x, y, w, h))
         _draw_focus_lock_button(button_rect, focus_lock_label, focus_lock_active, focus_lock_available)
         title_right = min(title_right, button_rect[0] - 4)
     draw_display_text(x + 7, y + 5, _clip_display_text(title, max(24, title_right - x - 7)), title_color)
@@ -664,8 +664,12 @@ def selected_summary_panel_rect(width: int, height: int) -> tuple[int, int, int,
     return (x, y, w, h)
 
 
-def focus_lock_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
-    x, y, w, _h = selected_summary_panel_rect(width, height)
+def focus_lock_button_rect(
+    width: int,
+    height: int,
+    panel_rect: tuple[int, int, int, int] | None = None,
+) -> tuple[int, int, int, int]:
+    x, y, w, _h = panel_rect or selected_summary_panel_rect(width, height)
     button_w = min(86, max(64, w - 120))
     return (x + w - button_w - 6, y + 4, button_w, 15)
 
@@ -685,18 +689,18 @@ def _draw_focus_lock_button(
         fill, edge, text_col = 1, 13, 7
     pyxel.rect(x, y, w, h, fill)
     pyxel.rectb(x, y, w, h, edge)
-    _draw_lock_icon(x + 4, y + 3, text_col)
+    _draw_lock_icon(x + 5, y + 2, text_col)
     text = label.upper()
     text_w = text_width_scaled(text, 1)
-    draw_text_scaled(x + max(15, w - text_w - 4), y + 5, text, text_col, 1)
+    draw_text_scaled(x + max(18, w - text_w - 4), y + 5, text, text_col, 1)
 
 
 def _draw_lock_icon(x: int, y: int, color: int) -> None:
     pyxel.rectb(x + 1, y, 6, 5, color)
-    pyxel.rect(x, y + 5, 8, 7, color)
-    pyxel.pset(x + 3, y + 8, 0)
+    pyxel.rect(x, y + 5, 8, 6, color)
+    pyxel.pset(x + 3, y + 7, 0)
+    pyxel.pset(x + 4, y + 7, 0)
     pyxel.pset(x + 4, y + 8, 0)
-    pyxel.pset(x + 4, y + 9, 0)
 
 
 def _draw_summary_panel_sparkles(rect: tuple[int, int, int, int], age: int, highlight_color: int | None) -> None:
