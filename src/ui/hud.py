@@ -564,16 +564,16 @@ def draw_back_button() -> None:
     draw_button(back_button_rect(pyxel.width, pyxel.height), "BACK", False)
 
 
-def draw_cut_in(message: str, frame_age: int, duration_frames: int) -> None:
+def draw_cut_in(message: str, frame_age: int, duration_frames: int, centered: bool = False) -> None:
     if frame_age < 0 or frame_age >= duration_frames:
         return
     lines = tuple(line for line in message.splitlines() if line) or (message,)
     width = max(display_text_width(line) for line in lines)
     x = max(12, min(pyxel.width - width - 12, (pyxel.width - width) // 2))
-    y = 42
+    box_h = 24 + len(lines) * 13
+    y = max(16, (pyxel.height - box_h) // 2 + 12) if centered else 42
     box_x = max(0, x - 16)
     box_w = min(pyxel.width - box_x, width + 32)
-    box_h = 24 + len(lines) * 13
     pyxel.rect(box_x, y - 12, box_w, box_h, 3)
     pyxel.rectb(box_x, y - 12, box_w, box_h, 11)
     for index, line in enumerate(lines):
@@ -684,7 +684,7 @@ def _draw_focus_lock_button(
     if not available:
         fill, edge, text_col = 0, 5, 13
     elif active:
-        fill, edge, text_col = 5, 10, 7
+        fill, edge, text_col = 7, 10, 1
     else:
         fill, edge, text_col = 1, 13, 7
     pyxel.rect(x, y, w, h, fill)

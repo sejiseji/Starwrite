@@ -370,6 +370,7 @@ class StarSkyApp:
         self.letter_view_closing_target_state: str | None = None
         self.cut_in_start_frame: int | None = None
         self.cut_in_message = ""
+        self.cut_in_centered = False
         self.last_mouse: tuple[int, int] | None = None
         self.sky_pointer_down: tuple[int, int] | None = None
         self.sky_pointer_dragged = False
@@ -1401,6 +1402,7 @@ class StarSkyApp:
 
     def _show_focus_lock_out_of_range_message(self) -> None:
         self.cut_in_start_frame = pyxel.frame_count
+        self.cut_in_centered = True
         if self.language == "ja":
             self.cut_in_message = "フォーカスロック対象が\n観測範囲外のシーズンを通過中です"
         else:
@@ -1408,6 +1410,7 @@ class StarSkyApp:
 
     def _show_focus_lock_visible_again_message(self) -> None:
         self.cut_in_start_frame = pyxel.frame_count
+        self.cut_in_centered = True
         if self.language == "ja":
             self.cut_in_message = "フォーカスロック対象が\n観測範囲に戻りました"
         else:
@@ -2263,6 +2266,7 @@ class StarSkyApp:
         self.exchange_logs = append_log(self.exchange_logs, log)
         self.unread_log_id = log.id
         self.cut_in_start_frame = pyxel.frame_count
+        self.cut_in_centered = False
         self.cut_in_message = "なにかとどいたみたい。" if self.language == "ja" else "something arrived."
         self._play_letter_received_sound()
         self.pending_capture = None
@@ -2590,9 +2594,10 @@ class StarSkyApp:
         if self.cut_in_start_frame is not None:
             age = pyxel.frame_count - self.cut_in_start_frame
             if age < CUT_IN_FRAMES:
-                draw_cut_in(self.cut_in_message, age, CUT_IN_FRAMES)
+                draw_cut_in(self.cut_in_message, age, CUT_IN_FRAMES, self.cut_in_centered)
             else:
                 self.cut_in_start_frame = None
+                self.cut_in_centered = False
 
     def _summary_panel_animation_age(self) -> int | None:
         if self.summary_panel_animation_start_frame is None:
