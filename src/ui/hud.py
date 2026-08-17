@@ -900,11 +900,15 @@ def draw_sky_features(
     language: Language,
     moon_light: float = 0.0,
 ) -> None:
-    color = 5 if moon_light > 0.65 else FEATURE_COLOR
+    color = feature_display_color(moon_light)
     for path in SKY_PATHS:
         draw_sky_path(path, sky_paths.get(path.id, []), language, color)
     for index, asterism in enumerate(ASTERISMS):
         draw_asterism(asterism, points, index, language, color)
+
+
+def feature_display_color(moon_light: float = 0.0) -> int:
+    return FEATURE_COLOR
 
 
 def draw_asterism(
