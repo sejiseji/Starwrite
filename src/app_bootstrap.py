@@ -55,6 +55,7 @@ PREFETCH_CORE = (
     "src/data/stars.py",
     "src/sky/camera.py",
     "src/sky/capture.py",
+    "src/sky/focus_lock.py",
     "src/sky/letters.py",
     "src/sky/meteors.py",
     "src/sky/moon.py",

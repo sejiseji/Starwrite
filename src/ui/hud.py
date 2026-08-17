@@ -567,14 +567,18 @@ def draw_back_button() -> None:
 def draw_cut_in(message: str, frame_age: int, duration_frames: int) -> None:
     if frame_age < 0 or frame_age >= duration_frames:
         return
-    width = display_text_width(message)
+    lines = tuple(line for line in message.splitlines() if line) or (message,)
+    width = max(display_text_width(line) for line in lines)
     x = max(12, min(pyxel.width - width - 12, (pyxel.width - width) // 2))
     y = 42
     box_x = max(0, x - 16)
     box_w = min(pyxel.width - box_x, width + 32)
-    pyxel.rect(box_x, y - 12, box_w, 38, 3)
-    pyxel.rectb(box_x, y - 12, box_w, 38, 11)
-    draw_display_bold_text(x, y, message, 7)
+    box_h = 24 + len(lines) * 13
+    pyxel.rect(box_x, y - 12, box_w, box_h, 3)
+    pyxel.rectb(box_x, y - 12, box_w, box_h, 11)
+    for index, line in enumerate(lines):
+        line_w = display_text_width(line)
+        draw_display_bold_text(x + max(0, (width - line_w) // 2), y + index * 13, line, 7)
 
 
 def draw_hud(
@@ -618,12 +622,11 @@ def draw_selected_constellation_summary(
     panel_summary: tuple[str, tuple[str, str], int] | None = None,
     animation_age: int | None = None,
     highlight_color: int | None = None,
+    focus_lock_label: str | None = None,
+    focus_lock_active: bool = False,
+    focus_lock_available: bool = True,
 ) -> None:
-    tool_left = tool_button_rects(pyxel.width, pyxel.height)["time"][0]
-    x = 8
-    y = 50
-    w = tool_left - x - 8
-    h = 49
+    x, y, w, h = selected_summary_panel_rect(pyxel.width, pyxel.height)
     if w < 140:
         return
     if animation_age is not None and animation_age < 24:
@@ -640,11 +643,60 @@ def draw_selected_constellation_summary(
         title = f"{constellation.id}  {name.upper() if language == 'en' else name}"
         lines = _constellation_summary_lines(constellation, language, anchor_star_label)
         title_color = 10
-    draw_display_text(x + 7, y + 5, _clip_display_text(title, w - 14), title_color)
+    title_right = x + w - 7
+    if focus_lock_label is not None:
+        button_rect = focus_lock_button_rect(pyxel.width, pyxel.height)
+        _draw_focus_lock_button(button_rect, focus_lock_label, focus_lock_active, focus_lock_available)
+        title_right = min(title_right, button_rect[0] - 4)
+    draw_display_text(x + 7, y + 5, _clip_display_text(title, max(24, title_right - x - 7)), title_color)
     for index, line in enumerate(lines):
         draw_display_text(x + 7, y + 19 + index * 13, _clip_display_text(line, w - 14), 13)
     if animation_age is not None and animation_age < 24:
         _draw_summary_panel_sparkles((x, y, w, h), animation_age, highlight_color)
+
+
+def selected_summary_panel_rect(width: int, height: int) -> tuple[int, int, int, int]:
+    tool_left = tool_button_rects(width, height)["time"][0]
+    x = 8
+    y = 50
+    w = tool_left - x - 8
+    h = 49
+    return (x, y, w, h)
+
+
+def focus_lock_button_rect(width: int, height: int) -> tuple[int, int, int, int]:
+    x, y, w, _h = selected_summary_panel_rect(width, height)
+    button_w = min(86, max(64, w - 120))
+    return (x + w - button_w - 6, y + 4, button_w, 15)
+
+
+def _draw_focus_lock_button(
+    rect: tuple[int, int, int, int],
+    label: str,
+    active: bool,
+    available: bool,
+) -> None:
+    x, y, w, h = rect
+    if not available:
+        fill, edge, text_col = 0, 5, 13
+    elif active:
+        fill, edge, text_col = 5, 10, 7
+    else:
+        fill, edge, text_col = 1, 13, 7
+    pyxel.rect(x, y, w, h, fill)
+    pyxel.rectb(x, y, w, h, edge)
+    _draw_lock_icon(x + 4, y + 3, text_col)
+    text = label.upper()
+    text_w = text_width_scaled(text, 1)
+    draw_text_scaled(x + max(15, w - text_w - 4), y + 5, text, text_col, 1)
+
+
+def _draw_lock_icon(x: int, y: int, color: int) -> None:
+    pyxel.rectb(x + 1, y, 6, 5, color)
+    pyxel.rect(x, y + 5, 8, 7, color)
+    pyxel.pset(x + 3, y + 8, 0)
+    pyxel.pset(x + 4, y + 8, 0)
+    pyxel.pset(x + 4, y + 9, 0)
 
 
 def _draw_summary_panel_sparkles(rect: tuple[int, int, int, int], age: int, highlight_color: int | None) -> None:
@@ -1014,6 +1066,19 @@ def focused_moon_hit_rect(point: tuple[float, float], moon: MoonState, language:
     x2 = max(label_x + width + 6, x + 12)
     y2 = max(label_y + 20, y + 12)
     return (x1, y1, x2 - x1, y2 - y1)
+
+
+def draw_focus_lock_reticle(color: int, out_of_range: bool = False) -> None:
+    x = pyxel.width // 2
+    y = pyxel.height // 2
+    col = 13 if out_of_range else color
+    pyxel.line(x - 9, y, x - 4, y, col)
+    pyxel.line(x + 4, y, x + 9, y, col)
+    pyxel.line(x, y - 9, x, y - 4, col)
+    pyxel.line(x, y + 4, x, y + 9, col)
+    pyxel.rectb(x - 3, y - 3, 7, 7, col)
+    if not out_of_range:
+        pyxel.pset(x, y, 7)
 
 
 def draw_meteor_event(event_view: MeteorEventView, language: Language) -> None:

@@ -25,6 +25,18 @@ from data.sky_features import ASTERISMS, SKY_PATHS, Asterism, SkyPath
 from data.stars import STARS, STARS_BY_ID, STAR_NAMES
 from sky.camera import SkyCamera
 from sky.capture import ScreenPoint, SkyCapture, can_capture, capture_from_dict, capture_to_dict
+from sky.focus_lock import (
+    FOCUS_ACQUIRE_FRAMES,
+    VISIBILITY_CONFIRM_FRAMES,
+    FocusLockPhase,
+    FocusLockState,
+    FocusTarget,
+    FocusTargetKind,
+    acquire_ease,
+    all_hidden_below_horizon,
+    any_visible_above_horizon,
+    mean_direction,
+)
 from sky.letters import (
     ExchangeLog,
     PresetLetter,
@@ -58,6 +70,7 @@ from ui.hud import (
     draw_search_list,
     draw_cut_in,
     draw_event_banner,
+    draw_focus_lock_reticle,
     draw_hud,
     draw_constellation_labels,
     draw_focused_star,
@@ -77,6 +90,7 @@ from ui.hud import (
     draw_tool_buttons,
     star_magnitude_color,
     focused_moon_hit_rect,
+    focus_lock_button_rect,
     focused_star_hit_rect,
     menu_button_rect,
     menu_close_rect,
@@ -320,6 +334,7 @@ class StarSkyApp:
         self.constellation_list_pointer_last: tuple[int, int] | None = None
         self.constellation_list_pointer_dragged = False
         self.constellation_auto_pan: dict[str, object] | None = None
+        self.focus_lock = FocusLockState()
         self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
         self.constellation_star_ids = {star_id for constellation in CONSTELLATIONS for star_id in constellation.main_star_ids}
         self.latest_capture = self._load_capture()
@@ -431,7 +446,8 @@ class StarSkyApp:
         if self.ui_state == "SKY":
             if self.constellation_auto_pan is None:
                 self.clock.update(1.0 / 30.0)
-                self._update_rotate_camera(1.0 / 30.0)
+                if not self.focus_lock.enabled:
+                    self._update_rotate_camera(1.0 / 30.0)
                 self._enforce_rotation_limit()
             else:
                 self.clock.pause()
@@ -441,6 +457,7 @@ class StarSkyApp:
         self._handle_mouse()
         if self.ui_state == "SKY":
             self._update_constellation_auto_pan()
+            self._update_focus_lock()
         if self.ui_state != "SKY":
             if pyxel.frame_count % 30 == 0:
                 self._save_settings()
@@ -497,6 +514,7 @@ class StarSkyApp:
         if pyxel.btnp(pyxel.KEY_TAB):
             self._select_constellation(-1 if self._shift_pressed() else 1)
         if pyxel.btnp(pyxel.KEY_F):
+            self._disable_focus_lock()
             self._set_rotate_camera(False)
             self._frame_selected_constellation()
         if pyxel.btnp(pyxel.KEY_RETURN):
@@ -518,6 +536,7 @@ class StarSkyApp:
             or pyxel.btnp(pyxel.KEY_X, 10, 4)
         )
         if camera_key_active:
+            self._disable_focus_lock()
             self._set_rotate_camera(False)
         if pyxel.btn(pyxel.KEY_A):
             self.camera.yaw -= 0.035
@@ -590,6 +609,7 @@ class StarSkyApp:
                 dy = current[1] - self.last_mouse[1]
                 if dx * dx + dy * dy > STAR_TAP_MOVE_TOLERANCE_PX * STAR_TAP_MOVE_TOLERANCE_PX:
                     self.sky_pointer_dragged = True
+                    self._disable_focus_lock()
                     self._set_rotate_camera(False)
                 self.camera.yaw -= dx * 0.008
                 self.camera.pitch += dy * 0.008
@@ -615,6 +635,8 @@ class StarSkyApp:
             self.camera.clamp()
 
     def _handle_ui_click(self, point: tuple[int, int]) -> bool:
+        if not self.menu_open and self._handle_focus_lock_button_click(point):
+            return True
         for key, rect in main_button_rects(SCREEN_WIDTH, SCREEN_HEIGHT).items():
             if not self._point_in_rect(point, rect):
                 continue
@@ -760,6 +782,21 @@ class StarSkyApp:
             self._change_rotate_camera_speed(1)
             return True
         return self._point_in_rect(point, rects["panel"])
+
+    def _handle_focus_lock_button_click(self, point: tuple[int, int]) -> bool:
+        if not self._point_in_rect(point, focus_lock_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+            return False
+        if self.focus_lock.enabled:
+            self._disable_focus_lock()
+            self._play_ui_sound(SOUND_LETTER_CLOSE)
+            return True
+        target = self._current_panel_focus_target()
+        if target is None:
+            self._play_ui_sound(SOUND_LETTER_CLOSE)
+            return True
+        self._begin_focus_lock(target)
+        self._play_ui_sound(SOUND_TOOL_ON)
+        return True
 
     def _handle_modal_click(self, point: tuple[int, int]) -> bool:
         if self._point_in_rect(point, back_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
@@ -1092,6 +1129,8 @@ class StarSkyApp:
         self._play_ui_sound(SOUND_SLIDER_TICK)
 
     def _set_rotate_camera(self, enabled: bool) -> None:
+        if enabled:
+            self._disable_focus_lock()
         self.rotate_camera = enabled
 
     def _change_rotate_camera_speed(self, direction: int) -> None:
@@ -1109,6 +1148,120 @@ class StarSkyApp:
         if degrees:
             self.camera.yaw = (self.camera.yaw + math.radians(degrees) + math.pi) % (math.tau) - math.pi
             self.camera.clamp()
+
+    def _begin_focus_lock(self, target: FocusTarget) -> None:
+        self.constellation_auto_pan = None
+        self._set_rotate_camera(False)
+        self.focus_lock.target = target
+        self.focus_lock.acquire_start_frame = pyxel.frame_count
+        self.focus_lock.start_yaw = self.camera.yaw
+        self.focus_lock.start_pitch = self.camera.pitch
+        self.focus_lock.last_valid_yaw = self.camera.yaw
+        self.focus_lock.last_valid_pitch = self.camera.pitch
+        self.focus_lock.hidden_frames = 0
+        self.focus_lock.visible_frames = 0
+        vectors = self._focus_target_vectors(target)
+        if vectors is None:
+            self.focus_lock.clear()
+            return
+        _direction, directions = vectors
+        if any_visible_above_horizon(directions):
+            self.focus_lock.phase = FocusLockPhase.ACQUIRING
+        else:
+            self.focus_lock.phase = FocusLockPhase.OUT_OF_RANGE
+            self._show_focus_lock_out_of_range_message()
+
+    def _disable_focus_lock(self) -> None:
+        if self.focus_lock.enabled:
+            self.focus_lock.clear()
+
+    def _retarget_focus_lock(self) -> None:
+        if not self.focus_lock.enabled:
+            return
+        target = self._current_panel_focus_target()
+        if target is None:
+            self._disable_focus_lock()
+            return
+        self.focus_lock.target = target
+        self.focus_lock.acquire_start_frame = pyxel.frame_count
+        self.focus_lock.start_yaw = self.camera.yaw
+        self.focus_lock.start_pitch = self.camera.pitch
+        self.focus_lock.hidden_frames = 0
+        self.focus_lock.visible_frames = 0
+        vectors = self._focus_target_vectors(target)
+        if vectors is None:
+            self._disable_focus_lock()
+            return
+        _direction, directions = vectors
+        self.focus_lock.phase = FocusLockPhase.ACQUIRING if any_visible_above_horizon(directions) else FocusLockPhase.OUT_OF_RANGE
+
+    def _update_focus_lock(self) -> None:
+        if not self.focus_lock.enabled:
+            return
+        target = self.focus_lock.target
+        if target is None:
+            self._disable_focus_lock()
+            return
+        vectors = self._focus_target_vectors(target)
+        if vectors is None:
+            self._disable_focus_lock()
+            return
+        direction, directions = vectors
+        if self.focus_lock.phase is FocusLockPhase.OUT_OF_RANGE:
+            self.camera.yaw = self.focus_lock.last_valid_yaw
+            self.camera.pitch = self.focus_lock.last_valid_pitch
+            if any_visible_above_horizon(directions):
+                self.focus_lock.visible_frames += 1
+            else:
+                self.focus_lock.visible_frames = 0
+            if self.focus_lock.visible_frames >= VISIBILITY_CONFIRM_FRAMES:
+                self.focus_lock.phase = FocusLockPhase.ACQUIRING
+                self.focus_lock.acquire_start_frame = pyxel.frame_count
+                self.focus_lock.start_yaw = self.camera.yaw
+                self.focus_lock.start_pitch = self.camera.pitch
+                self.focus_lock.hidden_frames = 0
+                self.focus_lock.visible_frames = 0
+                self._show_focus_lock_visible_again_message()
+            return
+
+        if all_hidden_below_horizon(directions):
+            self.focus_lock.hidden_frames += 1
+        else:
+            self.focus_lock.hidden_frames = 0
+        if self.focus_lock.hidden_frames >= VISIBILITY_CONFIRM_FRAMES:
+            self.focus_lock.phase = FocusLockPhase.OUT_OF_RANGE
+            self.focus_lock.visible_frames = 0
+            self._show_focus_lock_out_of_range_message()
+            return
+
+        target_yaw, target_pitch = self._camera_angles_for_direction(direction.x, direction.y, direction.z)
+        if self.focus_lock.phase is FocusLockPhase.ACQUIRING:
+            eased = acquire_ease(pyxel.frame_count, self.focus_lock.acquire_start_frame)
+            self.camera.yaw = self._lerp_angle(self.focus_lock.start_yaw, target_yaw, eased)
+            self.camera.pitch = self._lerp(self.focus_lock.start_pitch, target_pitch, eased)
+            if pyxel.frame_count - self.focus_lock.acquire_start_frame >= FOCUS_ACQUIRE_FRAMES - 1:
+                self.focus_lock.phase = FocusLockPhase.TRACKING
+        else:
+            self.focus_lock.phase = FocusLockPhase.TRACKING
+            self.camera.yaw = target_yaw
+            self.camera.pitch = target_pitch
+        self.camera.clamp()
+        self.focus_lock.last_valid_yaw = self.camera.yaw
+        self.focus_lock.last_valid_pitch = self.camera.pitch
+
+    def _show_focus_lock_out_of_range_message(self) -> None:
+        self.cut_in_start_frame = pyxel.frame_count
+        if self.language == "ja":
+            self.cut_in_message = "フォーカスロック対象が\n観測範囲外のシーズンを通過中です"
+        else:
+            self.cut_in_message = "The focus-lock target is outside\nthe observable range this season."
+
+    def _show_focus_lock_visible_again_message(self) -> None:
+        self.cut_in_start_frame = pyxel.frame_count
+        if self.language == "ja":
+            self.cut_in_message = "フォーカスロック対象が\n観測範囲に戻りました"
+        else:
+            self.cut_in_message = "The focus-lock target\nis visible again."
 
     def _ensure_rotation_anchor(self) -> None:
         if self.rotation_anchor_time is None:
@@ -1176,11 +1329,13 @@ class StarSkyApp:
         self.clock.pause()
         self.clock.current_time = event_peak_datetime(event, event_tz)
         self._frame_event(event)
+        self._retarget_focus_lock()
         return self.clock.current_time != before
 
     def _reset_view(self) -> None:
         self._set_rotate_time(False)
         self._set_rotate_camera(False)
+        self._disable_focus_lock()
         self.clock.current_time = _current_observation_datetime(self.utc_offset_minutes)
         self.camera.yaw = 0.0
         self.camera.pitch = math.radians(45.0)
@@ -1278,6 +1433,7 @@ class StarSkyApp:
         self.selected_feature_id = None
         self.selected_moon = False
         self._play_selection_sound("constellation")
+        self._retarget_focus_lock()
 
     def _selected_constellation_anchor_label(self) -> str | None:
         star_id = self.selected_constellation.anchor_star_id
@@ -1302,6 +1458,7 @@ class StarSkyApp:
             self.selected_feature_id = None
             self.selected_moon = False
             self._play_selection_sound("constellation")
+            self._retarget_focus_lock()
             return True
         star_id = self._nearest_constellation_star_id(point, STAR_TAP_RADIUS_PX)
         if star_id is None:
@@ -1313,10 +1470,13 @@ class StarSkyApp:
                 self.selected_feature_id = None
                 self.selected_moon = False
                 self._play_selection_sound("constellation")
+                self._retarget_focus_lock()
                 return True
         return False
 
     def _select_focused_star_at_point(self, point: tuple[int, int]) -> bool:
+        if self.focus_lock.enabled:
+            return False
         focused_star = self._focused_star()
         if focused_star is None:
             return False
@@ -1331,9 +1491,12 @@ class StarSkyApp:
         self.selected_feature_id = None
         self.selected_moon = False
         self._play_selection_sound("star")
+        self._retarget_focus_lock()
         return True
 
     def _select_focused_moon_at_point(self, point: tuple[int, int]) -> bool:
+        if self.focus_lock.enabled:
+            return False
         if self.moon.state is None:
             return False
         moon_point = moon_screen_point(self.moon.state, self.camera, SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -1345,6 +1508,7 @@ class StarSkyApp:
         self.selected_feature_id = None
         self.selected_moon = True
         self._play_selection_sound("star")
+        self._retarget_focus_lock()
         return True
 
     def _select_sky_feature_at_point(self, point: tuple[int, int]) -> bool:
@@ -1356,6 +1520,7 @@ class StarSkyApp:
                 self.selected_star_id = None
                 self.selected_moon = False
                 self._play_selection_sound("feature")
+                self._retarget_focus_lock()
                 return True
         return False
 
@@ -1411,6 +1576,22 @@ class StarSkyApp:
     def _selected_panel_summary(self) -> tuple[str, tuple[str, str], int] | None:
         return self._selected_star_summary() or self._selected_feature_summary() or self._selected_moon_summary()
 
+    def _current_panel_focus_target(self) -> FocusTarget | None:
+        if self.selected_star_id is not None and self.selected_star_id in STARS_BY_ID:
+            return FocusTarget(FocusTargetKind.STAR, self.selected_star_id)
+        if self.selected_feature_id is not None:
+            feature = self._sky_feature_by_id(self.selected_feature_id)
+            if isinstance(feature, Asterism):
+                return FocusTarget(FocusTargetKind.ASTERISM, feature.id)
+            if isinstance(feature, SkyPath):
+                anchor = self._select_focus_path_anchor(feature)
+                if anchor is None:
+                    return None
+                return FocusTarget(FocusTargetKind.SKY_PATH, feature.id, anchor[0], anchor[1])
+        if self.selected_moon:
+            return None
+        return FocusTarget(FocusTargetKind.CONSTELLATION, self.selected_constellation.id)
+
     def _clear_detail_selection(self) -> None:
         self.selected_star_id = None
         self.selected_feature_id = None
@@ -1420,6 +1601,31 @@ class StarSkyApp:
         summary = self._selected_panel_summary()
         if summary is not None:
             return summary[2]
+        return 10
+
+    def _focus_lock_button_label(self) -> str:
+        if self.focus_lock.phase is FocusLockPhase.OUT_OF_RANGE:
+            return "OUT OF RANGE"
+        if self.focus_lock.enabled:
+            return "LOCKED"
+        return "FOCUS LOCK"
+
+    def _focus_lock_button_available(self) -> bool:
+        if self.focus_lock.enabled:
+            return True
+        target = self._current_panel_focus_target()
+        return target is not None and self._focus_target_vectors(target) is not None
+
+    def _focus_lock_reticle_color(self) -> int:
+        target = self.focus_lock.target or self._current_panel_focus_target()
+        if target is None:
+            return 10
+        if target.kind is FocusTargetKind.STAR:
+            return 8
+        if target.kind is FocusTargetKind.CONSTELLATION:
+            return 10
+        if target.kind in (FocusTargetKind.ASTERISM, FocusTargetKind.SKY_PATH):
+            return 11
         return 10
 
     def _constellation_for_star(self, star_id: int) -> Constellation | None:
@@ -1432,6 +1638,66 @@ class StarSkyApp:
         for feature in (*ASTERISMS, *SKY_PATHS):
             if feature.id == feature_id:
                 return feature
+        return None
+
+    def _select_focus_path_anchor(self, path: SkyPath) -> tuple[float, float] | None:
+        jd = julian_date(self.clock.current_time)
+        lst = local_sidereal_time(jd, math.radians(self.observer.longitude_deg))
+        lat = math.radians(self.observer.latitude_deg)
+        camera_front = self.camera.front()
+        best_point: tuple[float, float] | None = None
+        best_score = -2.0
+        for ra_rad, dec_rad in path.points:
+            direction = equatorial_to_enu(ra_rad, dec_rad, lat, lst)
+            if direction.z <= 0.0:
+                continue
+            score = direction.dot(camera_front)
+            if score > best_score:
+                best_score = score
+                best_point = (ra_rad, dec_rad)
+        return best_point
+
+    def _equatorial_direction(self, ra_rad: float, dec_rad: float):
+        jd = julian_date(self.clock.current_time)
+        lst = local_sidereal_time(jd, math.radians(self.observer.longitude_deg))
+        return equatorial_to_enu(ra_rad, dec_rad, math.radians(self.observer.latitude_deg), lst)
+
+    def _focus_target_vectors(self, target: FocusTarget):
+        if target.kind is FocusTargetKind.STAR:
+            star = STARS_BY_ID.get(int(target.target_id))
+            if star is None:
+                return None
+            direction = star_direction(star, self.observer, self.clock.current_time)
+            return direction, (direction,)
+        if target.kind is FocusTargetKind.CONSTELLATION:
+            constellation = self._constellation_by_id(str(target.target_id))
+            if constellation is None:
+                return None
+            directions = tuple(
+                star_direction(star, self.observer, self.clock.current_time)
+                for star_id in constellation.main_star_ids
+                for star in (STARS_BY_ID.get(star_id),)
+                if star is not None
+            )
+            center = mean_direction(directions)
+            return (center, directions) if center is not None else None
+        if target.kind is FocusTargetKind.ASTERISM:
+            feature = self._sky_feature_by_id(str(target.target_id))
+            if not isinstance(feature, Asterism):
+                return None
+            directions = tuple(
+                star_direction(star, self.observer, self.clock.current_time)
+                for star_id in feature.star_ids
+                for star in (STARS_BY_ID.get(star_id),)
+                if star is not None
+            )
+            center = mean_direction(directions)
+            return (center, directions) if center is not None else None
+        if target.kind is FocusTargetKind.SKY_PATH:
+            if target.anchor_ra_rad is None or target.anchor_dec_rad is None:
+                return None
+            direction = self._equatorial_direction(target.anchor_ra_rad, target.anchor_dec_rad)
+            return direction, (direction,)
         return None
 
     def _select_constellation_label_at_point(self, point: tuple[int, int]) -> bool:
@@ -1536,6 +1802,7 @@ class StarSkyApp:
             target_direction.y,
             target_direction.z,
         )
+        self._disable_focus_lock()
         self._set_rotate_time(False)
         self._set_rotate_camera(False)
         self.clock.pause()
@@ -2109,17 +2376,26 @@ class StarSkyApp:
             self._selected_panel_summary(),
             self._summary_panel_animation_age(),
             self._selected_panel_highlight_color(),
+            self._focus_lock_button_label(),
+            self.focus_lock.enabled,
+            self._focus_lock_button_available(),
         )
         if self.meteor_event is not None:
             draw_event_banner(self.meteor_event, self.language)
-        focused_star = self._focused_star()
-        if focused_star is not None:
-            star_id, point = focused_star
-            draw_focused_star(point, star_name(star_id, STAR_NAMES[star_id], self.language))
+        if self.focus_lock.enabled:
+            draw_focus_lock_reticle(
+                self._focus_lock_reticle_color(),
+                self.focus_lock.phase is FocusLockPhase.OUT_OF_RANGE,
+            )
         else:
-            moon_point = moon_screen_point(self.moon.state, self.camera, SCREEN_WIDTH, SCREEN_HEIGHT)
-            if moon_point is not None and self._point_near_center(moon_point, 46):
-                draw_focused_moon(moon_point, self.moon.state, self.language)
+            focused_star = self._focused_star()
+            if focused_star is not None:
+                star_id, point = focused_star
+                draw_focused_star(point, star_name(star_id, STAR_NAMES[star_id], self.language))
+            else:
+                moon_point = moon_screen_point(self.moon.state, self.camera, SCREEN_WIDTH, SCREEN_HEIGHT)
+                if moon_point is not None and self._point_near_center(moon_point, 46):
+                    draw_focused_moon(moon_point, self.moon.state, self.language)
         draw_tool_buttons(
             self.show_time_slider,
             self.show_month_slider,
