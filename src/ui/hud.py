@@ -564,14 +564,20 @@ def draw_back_button() -> None:
     draw_button(back_button_rect(pyxel.width, pyxel.height), "BACK", False)
 
 
-def draw_cut_in(message: str, frame_age: int, duration_frames: int, centered: bool = False) -> None:
+def draw_cut_in(message: str, frame_age: int, duration_frames: int, position: str = "top") -> None:
     if frame_age < 0 or frame_age >= duration_frames:
         return
     lines = tuple(line for line in message.splitlines() if line) or (message,)
     width = max(display_text_width(line) for line in lines)
     x = max(12, min(pyxel.width - width - 12, (pyxel.width - width) // 2))
     box_h = 24 + len(lines) * 13
-    y = max(16, (pyxel.height - box_h) // 2 + 12) if centered else 42
+    if position == "lower":
+        _badge_x, badge_y, _badge_w, _badge_h = location_badge_rect(pyxel.width, pyxel.height)
+        y = max(58, badge_y - box_h - 8 + 12)
+    elif position == "center":
+        y = max(16, (pyxel.height - box_h) // 2 + 12)
+    else:
+        y = 42
     box_x = max(0, x - 16)
     box_w = min(pyxel.width - box_x, width + 32)
     pyxel.rect(box_x, y - 12, box_w, box_h, 3)
