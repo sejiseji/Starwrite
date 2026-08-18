@@ -374,6 +374,7 @@ class StarSkyApp:
         self.last_mouse: tuple[int, int] | None = None
         self.sky_pointer_down: tuple[int, int] | None = None
         self.sky_pointer_dragged = False
+        self.pinch_ignore_frames = 0
         self.active_slider: str | None = None
         self.slider_drag_start_y = 0
         self.slider_drag_start_time = self.clock.current_time
@@ -669,6 +670,19 @@ class StarSkyApp:
 
     def _handle_mouse(self) -> None:
         current = (pyxel.mouse_x, pyxel.mouse_y)
+        if self._pinch_input_active():
+            if self.ui_state == "SKY":
+                self._apply_pinch_zoom()
+            else:
+                self._consume_pinch_zoom_delta()
+            self.active_slider = None
+            self.slider_last_tick_value = None
+            self.last_mouse = None
+            self.sky_pointer_down = None
+            self.sky_pointer_dragged = True
+            self.constellation_list_pointer_down = None
+            self.constellation_list_pointer_last = None
+            return
         if self.constellation_auto_pan is not None:
             self._consume_pinch_zoom_delta()
             self.active_slider = None
@@ -739,8 +753,7 @@ class StarSkyApp:
             self.camera.clamp()
         pinch_delta = self._consume_pinch_zoom_delta()
         if pinch_delta:
-            self.camera.fov_deg -= pinch_delta * 0.08
-            self.camera.clamp()
+            self._apply_pinch_zoom(pinch_delta)
 
     def _handle_ui_click(self, point: tuple[int, int]) -> bool:
         if self.confirm_setup_restart:
@@ -1569,9 +1582,34 @@ class StarSkyApp:
 
             delta = float(getattr(window, "starwritePinchDelta", 0.0))
             window.starwritePinchDelta = 0.0
+            if abs(delta) > 0.01:
+                self.pinch_ignore_frames = max(self.pinch_ignore_frames, 4)
             return delta
         except Exception:
             return 0.0
+
+    def _pinch_input_active(self) -> bool:
+        if self.pinch_ignore_frames > 0:
+            self.pinch_ignore_frames -= 1
+            return True
+        try:
+            from js import Date, window  # type: ignore
+
+            if bool(getattr(window, "starwritePinchActive", False)):
+                self.pinch_ignore_frames = 4
+                return True
+            suppress_until = float(getattr(window, "starwritePinchSuppressUntil", 0.0))
+            if suppress_until > float(Date.now()):
+                return True
+        except Exception:
+            return False
+        return False
+
+    def _apply_pinch_zoom(self, pinch_delta: float | None = None) -> None:
+        delta = self._consume_pinch_zoom_delta() if pinch_delta is None else pinch_delta
+        if delta:
+            self.camera.fov_deg -= delta * 0.08
+            self.camera.clamp()
 
     def _set_latitude(self, value: float) -> None:
         self.observer = Observer(max(-90.0, min(90.0, value)), self.observer.longitude_deg)

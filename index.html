@@ -140,7 +140,10 @@
     <pyxel-run root="." name="app_bootstrap.py"></pyxel-run>
     <script>
       window.starwritePinchDelta = 0;
+      window.starwritePinchActive = false;
+      window.starwritePinchSuppressUntil = 0;
       let starwriteLastPinchDistance = 0;
+      const starwritePinchSuppressMs = 180;
 
       function starwriteTouchDistance(event) {
         if (!event.touches || event.touches.length < 2) {
@@ -156,17 +159,28 @@
           starwriteLastPinchDistance = 0;
           return;
         }
+        window.starwritePinchActive = true;
         starwriteLastPinchDistance = starwriteTouchDistance(event);
         if (event.cancelable) {
           event.preventDefault();
         }
+        event.stopPropagation();
       }
 
       function starwriteHandlePinchMove(event) {
         if (!event.touches || event.touches.length < 2) {
+          if (window.starwritePinchActive) {
+            window.starwritePinchActive = false;
+            window.starwritePinchSuppressUntil = Date.now() + starwritePinchSuppressMs;
+            if (event.cancelable) {
+              event.preventDefault();
+            }
+            event.stopPropagation();
+          }
           starwriteLastPinchDistance = 0;
           return;
         }
+        window.starwritePinchActive = true;
         const distance = starwriteTouchDistance(event);
         if (starwriteLastPinchDistance > 0) {
           window.starwritePinchDelta += distance - starwriteLastPinchDistance;
@@ -175,18 +189,30 @@
         if (event.cancelable) {
           event.preventDefault();
         }
+        event.stopPropagation();
       }
 
       function starwriteHandlePinchEnd(event) {
+        const wasPinching =
+          window.starwritePinchActive || Date.now() < window.starwritePinchSuppressUntil;
         if (!event.touches || event.touches.length < 2) {
+          if (window.starwritePinchActive) {
+            window.starwritePinchSuppressUntil = Date.now() + starwritePinchSuppressMs;
+          }
+          window.starwritePinchActive = false;
           starwriteLastPinchDistance = 0;
+        }
+        if (wasPinching) {
+          if (event.cancelable) {
+            event.preventDefault();
+          }
         }
       }
 
-      document.addEventListener("touchstart", starwriteHandlePinchStart, { passive: false });
-      document.addEventListener("touchmove", starwriteHandlePinchMove, { passive: false });
-      document.addEventListener("touchend", starwriteHandlePinchEnd, { passive: true });
-      document.addEventListener("touchcancel", starwriteHandlePinchEnd, { passive: true });
+      document.addEventListener("touchstart", starwriteHandlePinchStart, { passive: false, capture: true });
+      document.addEventListener("touchmove", starwriteHandlePinchMove, { passive: false, capture: true });
+      document.addEventListener("touchend", starwriteHandlePinchEnd, { passive: false, capture: true });
+      document.addEventListener("touchcancel", starwriteHandlePinchEnd, { passive: false, capture: true });
     </script>
   </body>
 </html>
