@@ -114,3 +114,24 @@ class CatalogTests(unittest.TestCase):
             for a_id, b_id in constellation.edges:
                 self.assertIn(a_id, STARS_BY_ID, constellation.id)
                 self.assertIn(b_id, STARS_BY_ID, constellation.id)
+
+    def test_reinforced_constellation_edges_remain_present(self) -> None:
+        constellations = {constellation.id: constellation for constellation in CONSTELLATIONS}
+
+        expected_edges = {
+            "ORI": ((27989, 26727), (24436, 25930), (25336, 26207)),
+            "SCO": ((78401, 80763),),
+            "GEM": ((36850, 37826), (32246, 34088)),
+            "CMA": ((32349, 33579),),
+            "UMI": ((72607, 77055),),
+            "LEP": ((23685, 24305), (27654, 27288)),
+            "VIR": ((63608, 66249),),
+            "GRU": ((108085, 112122),),
+            "COL": ((25859, 27628),),
+            "VOL": ((200303, 200302),),
+        }
+
+        for constellation_id, edges in expected_edges.items():
+            actual = {frozenset(edge) for edge in constellations[constellation_id].edges}
+            for edge in edges:
+                self.assertIn(frozenset(edge), actual, constellation_id)
