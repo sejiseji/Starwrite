@@ -406,6 +406,9 @@ class SkyRenderer:
                 if a is None or b is None:
                     continue
                 pyxel.line(int(a.x), int(a.y), int(b.x), int(b.y), col)
+                endpoint_color = LINE_SELECTED if constellation.id == selected_constellation.id else HORIZON
+                pyxel.pset(int(a.x), int(a.y), endpoint_color)
+                pyxel.pset(int(b.x), int(b.y), endpoint_color)
 
     def draw_horizon(self, camera: SkyCamera, width: int, height: int) -> None:
         last: tuple[float, float] | None = None
