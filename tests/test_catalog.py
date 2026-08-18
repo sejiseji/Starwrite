@@ -3,6 +3,8 @@ from __future__ import annotations
 import unittest
 
 from data.constellations import CONSTELLATIONS
+from data.constellation_line_reference_88 import CONSTELLATION_LINE_EDGES_HIP, CONSTELLATION_MAIN_STAR_IDS_HIP
+from data.sky_features import ASTERISMS
 from data.stars import NAMED_STARS, STAR_NAMES
 from data.stars import STARS_BY_ID
 
@@ -10,6 +12,7 @@ from data.stars import STARS_BY_ID
 class CatalogTests(unittest.TestCase):
     def test_named_stars_have_display_names(self) -> None:
         self.assertEqual({star.id for star in NAMED_STARS}, set(STAR_NAMES))
+        self.assertEqual(len({star.id for star in NAMED_STARS}), len(NAMED_STARS))
 
     def test_catalog_has_all_88_iau_constellations(self) -> None:
         constellation_ids = {constellation.id for constellation in CONSTELLATIONS}
@@ -106,6 +109,8 @@ class CatalogTests(unittest.TestCase):
 
         self.assertEqual(len(CONSTELLATIONS), 88)
         self.assertEqual(constellation_ids, expected_ids)
+        self.assertEqual(set(CONSTELLATION_LINE_EDGES_HIP), expected_ids)
+        self.assertEqual(set(CONSTELLATION_MAIN_STAR_IDS_HIP), expected_ids)
 
     def test_constellation_star_references_exist(self) -> None:
         for constellation in CONSTELLATIONS:
@@ -115,23 +120,36 @@ class CatalogTests(unittest.TestCase):
                 self.assertIn(a_id, STARS_BY_ID, constellation.id)
                 self.assertIn(b_id, STARS_BY_ID, constellation.id)
 
-    def test_reinforced_constellation_edges_remain_present(self) -> None:
+    def test_constellation_lines_match_standard_reference(self) -> None:
         constellations = {constellation.id: constellation for constellation in CONSTELLATIONS}
 
-        expected_edges = {
-            "ORI": ((27989, 26727), (24436, 25930), (25336, 26207)),
-            "SCO": ((78401, 80763),),
-            "GEM": ((36850, 37826), (32246, 34088)),
-            "CMA": ((32349, 33579),),
-            "UMI": ((72607, 77055),),
-            "LEP": ((23685, 24305), (27654, 27288)),
-            "VIR": ((63608, 66249),),
-            "GRU": ((108085, 112122),),
-            "COL": ((25859, 27628),),
-            "VOL": ((200303, 200302),),
-        }
+        for constellation_id, constellation in constellations.items():
+            self.assertEqual(constellation.edges, CONSTELLATION_LINE_EDGES_HIP[constellation_id])
+            self.assertEqual(constellation.main_star_ids, CONSTELLATION_MAIN_STAR_IDS_HIP[constellation_id])
 
-        for constellation_id, edges in expected_edges.items():
-            actual = {frozenset(edge) for edge in constellations[constellation_id].edges}
-            for edge in edges:
-                self.assertIn(frozenset(edge), actual, constellation_id)
+    def test_constellation_reference_edges_are_valid(self) -> None:
+        for constellation_id, edges in CONSTELLATION_LINE_EDGES_HIP.items():
+            seen_edges: set[frozenset[int]] = set()
+            for a_id, b_id in edges:
+                self.assertNotEqual(a_id, b_id, constellation_id)
+                undirected = frozenset((a_id, b_id))
+                self.assertNotIn(undirected, seen_edges, constellation_id)
+                seen_edges.add(undirected)
+
+    def test_feature_edges_are_not_merged_into_constellation_edges(self) -> None:
+        constellation_edges = {
+            frozenset(edge)
+            for constellation in CONSTELLATIONS
+            for edge in constellation.edges
+        }
+        star_constellations: dict[int, set[str]] = {}
+        for constellation in CONSTELLATIONS:
+            for star_id in constellation.main_star_ids:
+                star_constellations.setdefault(star_id, set()).add(constellation.id)
+
+        for feature in ASTERISMS:
+            for edge in feature.edges:
+                a_id, b_id = edge
+                shared_constellations = star_constellations.get(a_id, set()) & star_constellations.get(b_id, set())
+                if not shared_constellations:
+                    self.assertNotIn(frozenset(edge), constellation_edges, feature.id)

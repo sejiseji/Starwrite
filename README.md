@@ -156,72 +156,26 @@ gaps caused by Safari's visible toolbar area.
 
 ## Data
 
-The prototype includes 57 constellations:
+The prototype includes all 88 IAU constellation IDs. Constellation boundaries
+are IAU-defined, but stick-figure line art is not unique or official. Starwrite
+uses a single documented reference profile for consistency:
 
-- ORI - Orion
-- CYG - Cygnus
-- CAS - Cassiopeia
-- UMA - Ursa Major
-- SCO - Scorpius
-- LEO - Leo
-- TAU - Taurus
-- GEM - Gemini
-- CMA - Canis Major
-- LYR - Lyra
-- AQL - Aquila
-- BOO - Bootes
-- CRU - Crux
-- CEN - Centaurus
-- CAR - Carina
-- VIR - Virgo
-- PEG - Pegasus
-- AND - Andromeda
-- PER - Perseus
-- AUR - Auriga
-- DRA - Draco
-- CEP - Cepheus
-- AQR - Aquarius
-- CAP - Capricornus
-- UMI - Ursa Minor
-- CMI - Canis Minor
-- ERI - Eridanus
-- CET - Cetus
-- PSC - Pisces
-- ARI - Aries
-- DEL - Delphinus
-- SGE - Sagitta
-- VUL - Vulpecula
-- SGR - Sagittarius
-- OPH - Ophiuchus
-- HER - Hercules
-- CRB - Corona Borealis
-- LIB - Libra
-- CRV - Corvus
-- HYA - Hydra
-- MON - Monoceros
-- PUP - Puppis
-- VEL - Vela
-- LUP - Lupus
-- LEP - Lepus
-- CNC - Cancer
-- SER - Serpens
-- CVN - Canes Venatici
-- COM - Coma Berenices
-- TRI - Triangulum
-- LAC - Lacerta
-- LYN - Lynx
-- PAV - Pavo
-- ARA - Ara
-- GRU - Grus
-- PHE - Phoenix
-- COL - Columba
+- Line topology: ConstellationLines by Marc van der Sluys, DOI
+  `10.5281/zenodo.10397192`, CC BY 4.0.
+- HR-to-HIP crosswalk and endpoint coordinates: HYG Database v4.1 by David Nash
+  / Astronexus and contributors, CC BY-SA 4.0.
+- Runtime line endpoints: 656 constellation-line segments using 695 HIP stars.
+- Feature / Asterism overlays such as the Big Dipper, seasonal triangles,
+  Pleiades, Hyades, and Southern Cross remain separate from constellation body
+  lines.
 
-The prototype uses two star sources:
+The prototype uses three star sources:
 
 - A small hand-entered set of bright named stars with approximate J2000-style
   RA/Dec, visual magnitude, and color-index values derived from commonly
-  published astronomical facts. Prototype additions after the initial 44
-  constellations use selected bright-star rows from HYG Database v4.1.
+  published astronomical facts.
+- A compact HYG v4.1 subset containing only the HIP stars required by the
+  standardized 88-constellation line profile.
 - A deterministic synthetic faint-star background generated in code for visual
   density. These synthetic stars are not a scientific catalog.
 
@@ -302,6 +256,8 @@ license in this section.
 - Pyxel project: https://github.com/kitao/pyxel
 - Pyxel custom font sample: https://github.com/kitao/pyxel/blob/main/python/pyxel/examples/13_custom_font.py
 - Pyxel Web custom tag article by Pyxel author: https://tkitao.hatenablog.com/entry/2022/10/08/174438
+- ConstellationLines: https://github.com/MarcvdSluys/ConstellationLines
+- ConstellationLines DOI: https://doi.org/10.5281/zenodo.10397192
 - HYG Database: https://github.com/astronexus/HYG-Database
 - International Meteor Organization, major meteor showers: https://www.imo.net/observations/methods/visual-observation/major/
 - International Meteor Organization, meteor shower calendar archive / working list context: https://www.imo.net/resources/calendar/2019/

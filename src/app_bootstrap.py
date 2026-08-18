@@ -48,6 +48,8 @@ PREFETCH_CORE = (
     "src/astronomy/observer.py",
     "src/astronomy/time.py",
     "src/data/constellations.py",
+    "src/data/constellation_line_reference_88.py",
+    "src/data/constellation_line_stars.py",
     "src/data/lunar_eclipses.py",
     "src/data/meteor_showers.py",
     "src/data/sky_events.py",

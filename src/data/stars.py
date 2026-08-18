@@ -3,6 +3,7 @@ from __future__ import annotations
 import math
 
 from src.astronomy.catalog import Star
+from src.data.constellation_line_stars import CONSTELLATION_LINE_STAR_ROWS
 
 
 def _hours_to_rad(hours: float) -> float:
@@ -291,145 +292,144 @@ NAMED_STARS: tuple[Star, ...] = (
     star_from_hours(28328, 5.9858, -42.8151, 3.96, 1.15),  # Eta Columbae
     star_from_hours(28199, 5.9589, -35.2833, 4.36, -0.17),  # Gamma Columbae
     # Remaining IAU constellation support stars.
-    star_from_hours(200001, 10.4525, -31.0678, 4.25, 1.10),  # Alpha Antliae
-    star_from_hours(200002, 10.9453, -37.1378, 4.60, 1.02),  # Iota Antliae
-    star_from_hours(200003, 9.5128, -31.8894, 4.79, 1.25),  # Epsilon Antliae
-    star_from_hours(200011, 14.7977, -79.0447, 3.83, 1.45),  # Alpha Apodis
-    star_from_hours(200012, 16.7179, -77.5166, 4.24, 1.32),  # Beta Apodis
-    star_from_hours(200013, 16.5575, -78.8971, 3.87, 1.55),  # Gamma Apodis
-    star_from_hours(200014, 16.3391, -78.6957, 4.68, 0.95),  # Delta Apodis
-    star_from_hours(200021, 4.6760, -41.8638, 4.45, 0.32),  # Alpha Caeli
-    star_from_hours(200022, 4.7009, -37.1443, 5.04, 0.52),  # Beta Caeli
-    star_from_hours(200023, 5.0734, -35.4828, 4.55, 1.18),  # Gamma Caeli
-    star_from_hours(200031, 4.9008, 66.3427, 4.29, 0.12),  # Alpha Camelopardalis
-    star_from_hours(200032, 5.0569, 60.4422, 4.03, 1.12),  # Beta Camelopardalis
-    star_from_hours(200033, 3.8393, 71.3323, 4.59, 0.87),  # Gamma Camelopardalis
-    star_from_hours(200041, 8.3088, -76.9197, 4.07, 0.90),  # Alpha Chamaeleontis
-    star_from_hours(200042, 12.3058, -79.3122, 4.24, 0.55),  # Beta Chamaeleontis
-    star_from_hours(200043, 10.5920, -78.6078, 4.11, 1.05),  # Gamma Chamaeleontis
-    star_from_hours(200044, 10.7630, -80.5402, 4.45, 1.24),  # Delta Chamaeleontis
-    star_from_hours(200051, 14.7085, -64.9751, 3.19, 0.15),  # Alpha Circini
-    star_from_hours(200052, 15.2919, -58.8012, 4.07, 0.62),  # Beta Circini
-    star_from_hours(200053, 15.3896, -59.3207, 4.48, 0.26),  # Gamma Circini
-    star_from_hours(200061, 19.1579, -37.9045, 4.10, 0.95),  # Alpha Coronae Australis
-    star_from_hours(200062, 19.1671, -39.3407, 4.11, 1.12),  # Beta Coronae Australis
-    star_from_hours(200063, 19.1069, -37.0634, 4.23, 0.48),  # Gamma Coronae Australis
-    star_from_hours(200064, 18.9787, -37.1074, 4.87, 0.30),  # Epsilon Coronae Australis
-    star_from_hours(200071, 10.9962, -18.2988, 4.07, 1.07),  # Alpha Crateris
-    star_from_hours(200072, 11.1943, -22.8256, 4.46, 0.98),  # Beta Crateris
-    star_from_hours(200073, 11.4147, -17.6840, 4.08, 0.22),  # Gamma Crateris
-    star_from_hours(200074, 11.3223, -14.7785, 3.56, 1.12),  # Delta Crateris
-    star_from_hours(200081, 4.5666, -55.0450, 3.27, 0.74),  # Alpha Doradus
-    star_from_hours(200082, 5.5604, -62.4898, 3.76, 0.25),  # Beta Doradus
-    star_from_hours(200083, 4.2671, -51.4867, 4.25, 1.18),  # Gamma Doradus
-    star_from_hours(200084, 5.7462, -65.7355, 4.35, 0.95),  # Delta Doradus
-    star_from_hours(200091, 21.2637, 5.2479, 3.92, 0.52),  # Alpha Equulei
-    star_from_hours(200092, 21.3815, 6.8111, 5.16, 0.38),  # Beta Equulei
-    star_from_hours(200093, 21.1724, 10.1316, 4.69, 0.70),  # Gamma Equulei
-    star_from_hours(200094, 21.2413, 10.0069, 4.49, 1.08),  # Delta Equulei
-    star_from_hours(200101, 3.2012, -28.9869, 3.87, 0.54),  # Alpha Fornacis
-    star_from_hours(200102, 2.8182, -32.4059, 4.46, 1.02),  # Beta Fornacis
-    star_from_hours(200103, 2.0748, -29.2968, 4.69, 1.14),  # Nu Fornacis
-    star_from_hours(200111, 4.2334, -42.2944, 3.86, 1.00),  # Alpha Horologii
-    star_from_hours(200112, 2.9793, -64.0713, 4.98, 0.18),  # Beta Horologii
-    star_from_hours(200113, 4.1807, -41.9937, 4.93, 0.40),  # Delta Horologii
-    star_from_hours(200114, 2.6234, -52.5431, 5.31, 0.66),  # Eta Horologii
-    star_from_hours(200121, 0.4276, -77.2542, 2.80, 0.62),  # Beta Hydri
-    star_from_hours(200122, 1.9795, -61.5699, 2.86, 0.29),  # Alpha Hydri
-    star_from_hours(200123, 3.7873, -74.2390, 3.26, 1.60),  # Gamma Hydri
-    star_from_hours(200131, 20.6261, -47.2915, 3.11, 1.00),  # Alpha Indi
-    star_from_hours(200132, 20.9135, -58.4541, 3.67, 0.98),  # Beta Indi
-    star_from_hours(200133, 21.3311, -53.4494, 4.39, 0.35),  # Theta Indi
-    star_from_hours(200134, 21.9653, -54.9926, 4.40, 1.05),  # Delta Indi
-    star_from_hours(200141, 10.8885, 34.2149, 3.83, 0.95),  # Praecipua
-    star_from_hours(200142, 10.4647, 36.7072, 4.21, 0.88),  # Beta Leonis Minoris
-    star_from_hours(200143, 10.1238, 35.2447, 4.48, 0.42),  # 21 Leonis Minoris
-    star_from_hours(200151, 6.1707, -74.7530, 5.09, 0.95),  # Alpha Mensae
-    star_from_hours(200152, 5.0453, -71.3143, 5.31, 0.52),  # Beta Mensae
-    star_from_hours(200153, 5.5314, -76.3417, 5.19, 1.00),  # Gamma Mensae
-    star_from_hours(200161, 20.8328, -33.7797, 4.88, 0.33),  # Alpha Microscopii
-    star_from_hours(200162, 21.0215, -32.2578, 4.67, 1.02),  # Gamma Microscopii
-    star_from_hours(200163, 21.2986, -32.1725, 4.71, 0.90),  # Epsilon Microscopii
-    star_from_hours(200171, 12.6197, -69.1355, 2.69, -0.18),  # Alpha Muscae
-    star_from_hours(200172, 12.7714, -68.1081, 3.04, -0.16),  # Beta Muscae
-    star_from_hours(200173, 12.5411, -72.1329, 3.84, -0.14),  # Gamma Muscae
-    star_from_hours(200174, 13.0378, -71.5489, 3.61, 1.00),  # Delta Muscae
-    star_from_hours(200181, 16.3307, -50.1554, 4.02, 1.10),  # Gamma2 Normae
-    star_from_hours(200182, 16.4531, -47.5547, 4.47, 1.52),  # Epsilon Normae
-    star_from_hours(200183, 16.0536, -49.2297, 4.65, 0.12),  # Eta Normae
-    star_from_hours(200184, 16.1082, -45.1733, 4.73, 0.80),  # Delta Normae
-    star_from_hours(200191, 21.6913, -77.3895, 3.76, 1.00),  # Nu Octantis
-    star_from_hours(200192, 22.7677, -81.3816, 4.13, 1.62),  # Beta Octantis
-    star_from_hours(200193, 14.4489, -83.6679, 4.32, 1.15),  # Delta Octantis
-    star_from_hours(200194, 21.1461, -88.9565, 5.42, 0.45),  # Sigma Octantis
-    star_from_hours(200201, 6.8032, -61.9414, 3.27, 0.18),  # Alpha Pictoris
-    star_from_hours(200202, 5.7881, -51.0665, 3.85, 0.28),  # Beta Pictoris
-    star_from_hours(200203, 5.8305, -56.1667, 4.50, 1.08),  # Gamma Pictoris
-    star_from_hours(200211, 22.9608, -29.6222, 1.16, 0.09),  # Fomalhaut
-    star_from_hours(200212, 22.5251, -32.3460, 4.29, 0.15),  # Beta Piscis Austrini
-    star_from_hours(200213, 22.8754, -32.8754, 4.46, 1.05),  # Gamma Piscis Austrini
-    star_from_hours(200214, 22.9325, -32.5396, 4.20, 0.30),  # Delta Piscis Austrini
-    star_from_hours(200221, 8.7265, -33.1864, 3.68, 0.42),  # Alpha Pyxidis
-    star_from_hours(200222, 8.6684, -35.3083, 3.97, 1.18),  # Beta Pyxidis
-    star_from_hours(200223, 8.8422, -27.7101, 4.01, 1.00),  # Gamma Pyxidis
-    star_from_hours(200231, 4.2404, -62.4739, 3.35, 0.92),  # Alpha Reticuli
-    star_from_hours(200232, 3.7367, -64.8069, 3.84, 1.14),  # Beta Reticuli
-    star_from_hours(200233, 4.2747, -59.3017, 4.44, 1.02),  # Epsilon Reticuli
-    star_from_hours(200241, 0.9768, -29.3575, 4.30, 1.00),  # Alpha Sculptoris
-    star_from_hours(200242, 23.5495, -37.8183, 4.38, 1.12),  # Beta Sculptoris
-    star_from_hours(200243, 23.3137, -32.5320, 4.41, 1.00),  # Gamma Sculptoris
-    star_from_hours(200244, 23.8154, -28.1303, 4.57, 0.38),  # Delta Sculptoris
-    star_from_hours(200251, 18.5868, -8.2441, 3.85, 1.33),  # Alpha Scuti
-    star_from_hours(200252, 18.7862, -4.7478, 4.22, 1.18),  # Beta Scuti
-    star_from_hours(200253, 18.7046, -9.0526, 4.72, 0.28),  # Delta Scuti
-    star_from_hours(200254, 18.4866, -14.5658, 4.67, 1.08),  # Gamma Scuti
-    star_from_hours(200261, 10.1323, -0.3716, 4.49, 0.00),  # Alpha Sextantis
-    star_from_hours(200262, 10.5049, -0.6369, 5.08, 0.35),  # Beta Sextantis
-    star_from_hours(200263, 9.8751, -8.1049, 5.05, 1.02),  # Gamma Sextantis
-    star_from_hours(200271, 18.4496, -45.9685, 3.49, 0.96),  # Alpha Telescopii
-    star_from_hours(200272, 18.4805, -49.0706, 4.13, 1.12),  # Zeta Telescopii
-    star_from_hours(200273, 18.1872, -45.9544, 4.52, 1.02),  # Epsilon Telescopii
-    star_from_hours(200281, 16.8111, -69.0277, 1.91, 1.45),  # Alpha Trianguli Australis
-    star_from_hours(200282, 15.9191, -63.4307, 2.85, 0.28),  # Beta Trianguli Australis
-    star_from_hours(200283, 15.3152, -68.6795, 2.87, 1.00),  # Gamma Trianguli Australis
-    star_from_hours(200291, 22.3084, -60.2596, 2.86, 1.39),  # Alpha Tucanae
-    star_from_hours(200292, 23.2905, -58.2359, 3.99, 0.33),  # Gamma Tucanae
-    star_from_hours(200293, 0.5258, -62.9581, 4.36, 0.58),  # Beta1 Tucanae
-    star_from_hours(200294, 0.3345, -64.8748, 4.23, 0.34),  # Zeta Tucanae
-    star_from_hours(200301, 8.4289, -66.1369, 3.75, 1.10),  # Beta Volantis
-    star_from_hours(200302, 7.1458, -70.4989, 3.78, 0.98),  # Gamma2 Volantis
-    star_from_hours(200303, 7.6970, -72.6061, 3.93, 0.15),  # Zeta Volantis
-    star_from_hours(200304, 7.2805, -67.9572, 3.98, 1.04),  # Delta Volantis
-    star_from_hours(200305, 9.0408, -66.3958, 4.00, 0.28),  # Alpha Volantis
+    star_from_hours(51172, 10.4525, -31.0678, 4.25, 1.10),  # Alpha Antliae
+    star_from_hours(53502, 10.9453, -37.1378, 4.60, 1.02),  # Iota Antliae
+    star_from_hours(46657, 9.5128, -31.8894, 4.79, 1.25),  # Epsilon Antliae
+    star_from_hours(72370, 14.7977, -79.0447, 3.83, 1.45),  # Alpha Apodis
+    star_from_hours(81852, 16.7179, -77.5166, 4.24, 1.32),  # Beta Apodis
+    star_from_hours(81065, 16.5575, -78.8971, 3.87, 1.55),  # Gamma Apodis
+    star_from_hours(80047, 16.3391, -78.6957, 4.68, 0.95),  # Delta Apodis
+    star_from_hours(21770, 4.6760, -41.8638, 4.45, 0.32),  # Alpha Caeli
+    star_from_hours(21861, 4.7009, -37.1443, 5.04, 0.52),  # Beta Caeli
+    star_from_hours(23595, 5.0734, -35.4828, 4.55, 1.18),  # Gamma Caeli
+    star_from_hours(22783, 4.9008, 66.3427, 4.29, 0.12),  # Alpha Camelopardalis
+    star_from_hours(23522, 5.0569, 60.4422, 4.03, 1.12),  # Beta Camelopardalis
+    star_from_hours(17959, 3.8393, 71.3323, 4.59, 0.87),  # Gamma Camelopardalis
+    star_from_hours(40702, 8.3088, -76.9197, 4.07, 0.90),  # Alpha Chamaeleontis
+    star_from_hours(60000, 12.3058, -79.3122, 4.24, 0.55),  # Beta Chamaeleontis
+    star_from_hours(51839, 10.5920, -78.6078, 4.11, 1.05),  # Gamma Chamaeleontis
+    star_from_hours(52633, 10.7630, -80.5402, 4.45, 1.24),  # Delta Chamaeleontis
+    star_from_hours(71908, 14.7085, -64.9751, 3.19, 0.15),  # Alpha Circini
+    star_from_hours(74824, 15.2919, -58.8012, 4.07, 0.62),  # Beta Circini
+    star_from_hours(75323, 15.3896, -59.3207, 4.48, 0.26),  # Gamma Circini
+    star_from_hours(94114, 19.1579, -37.9045, 4.10, 0.95),  # Alpha Coronae Australis
+    star_from_hours(94160, 19.1671, -39.3407, 4.11, 1.12),  # Beta Coronae Australis
+    star_from_hours(93825, 19.1069, -37.0634, 4.23, 0.48),  # Gamma Coronae Australis
+    star_from_hours(93174, 18.9787, -37.1074, 4.87, 0.30),  # Epsilon Coronae Australis
+    star_from_hours(53740, 10.9962, -18.2988, 4.07, 1.07),  # Alpha Crateris
+    star_from_hours(54682, 11.1943, -22.8256, 4.46, 0.98),  # Beta Crateris
+    star_from_hours(55705, 11.4147, -17.6840, 4.08, 0.22),  # Gamma Crateris
+    star_from_hours(55282, 11.3223, -14.7785, 3.56, 1.12),  # Delta Crateris
+    star_from_hours(21281, 4.5666, -55.0450, 3.27, 0.74),  # Alpha Doradus
+    star_from_hours(26069, 5.5604, -62.4898, 3.76, 0.25),  # Beta Doradus
+    star_from_hours(19893, 4.2671, -51.4867, 4.25, 1.18),  # Gamma Doradus
+    star_from_hours(27100, 5.7462, -65.7355, 4.35, 0.95),  # Delta Doradus
+    star_from_hours(104987, 21.2637, 5.2479, 3.92, 0.52),  # Alpha Equulei
+    star_from_hours(105570, 21.3815, 6.8111, 5.16, 0.38),  # Beta Equulei
+    star_from_hours(104521, 21.1724, 10.1316, 4.69, 0.70),  # Gamma Equulei
+    star_from_hours(104858, 21.2413, 10.0069, 4.49, 1.08),  # Delta Equulei
+    star_from_hours(14879, 3.2012, -28.9869, 3.87, 0.54),  # Alpha Fornacis
+    star_from_hours(13147, 2.8182, -32.4059, 4.46, 1.02),  # Beta Fornacis
+    star_from_hours(9677, 2.0748, -29.2968, 4.69, 1.14),  # Nu Fornacis
+    star_from_hours(19747, 4.2334, -42.2944, 3.86, 1.00),  # Alpha Horologii
+    star_from_hours(13884, 2.9793, -64.0713, 4.98, 0.18),  # Beta Horologii
+    star_from_hours(19515, 4.1807, -41.9937, 4.93, 0.40),  # Delta Horologii
+    star_from_hours(12225, 2.6234, -52.5431, 5.31, 0.66),  # Eta Horologii
+    star_from_hours(2021, 0.4276, -77.2542, 2.80, 0.62),  # Beta Hydri
+    star_from_hours(9236, 1.9795, -61.5699, 2.86, 0.29),  # Alpha Hydri
+    star_from_hours(17678, 3.7873, -74.2390, 3.26, 1.60),  # Gamma Hydri
+    star_from_hours(101772, 20.6261, -47.2915, 3.11, 1.00),  # Alpha Indi
+    star_from_hours(103227, 20.9135, -58.4541, 3.67, 0.98),  # Beta Indi
+    star_from_hours(105319, 21.3311, -53.4494, 4.39, 0.35),  # Theta Indi
+    star_from_hours(108431, 21.9653, -54.9926, 4.40, 1.05),  # Delta Indi
+    star_from_hours(53229, 10.8885, 34.2149, 3.83, 0.95),  # Praecipua
+    star_from_hours(51233, 10.4647, 36.7072, 4.21, 0.88),  # Beta Leonis Minoris
+    star_from_hours(49593, 10.1238, 35.2447, 4.48, 0.42),  # 21 Leonis Minoris
+    star_from_hours(29271, 6.1707, -74.7530, 5.09, 0.95),  # Alpha Mensae
+    star_from_hours(23467, 5.0453, -71.3143, 5.31, 0.52),  # Beta Mensae
+    star_from_hours(25918, 5.5314, -76.3417, 5.19, 1.00),  # Gamma Mensae
+    star_from_hours(102831, 20.8328, -33.7797, 4.88, 0.33),  # Alpha Microscopii
+    star_from_hours(103738, 21.0215, -32.2578, 4.67, 1.02),  # Gamma Microscopii
+    star_from_hours(105140, 21.2986, -32.1725, 4.71, 0.90),  # Epsilon Microscopii
+    star_from_hours(61585, 12.6197, -69.1355, 2.69, -0.18),  # Alpha Muscae
+    star_from_hours(62322, 12.7714, -68.1081, 3.04, -0.16),  # Beta Muscae
+    star_from_hours(61199, 12.5411, -72.1329, 3.84, -0.14),  # Gamma Muscae
+    star_from_hours(63613, 13.0378, -71.5489, 3.61, 1.00),  # Delta Muscae
+    star_from_hours(80000, 16.3307, -50.1554, 4.02, 1.10),  # Gamma2 Normae
+    star_from_hours(80582, 16.4531, -47.5547, 4.47, 1.52),  # Epsilon Normae
+    star_from_hours(78639, 16.0536, -49.2297, 4.65, 0.12),  # Eta Normae
+    star_from_hours(78914, 16.1082, -45.1733, 4.73, 0.80),  # Delta Normae
+    star_from_hours(107089, 21.6913, -77.3895, 3.76, 1.00),  # Nu Octantis
+    star_from_hours(112405, 22.7677, -81.3816, 4.13, 1.62),  # Beta Octantis
+    star_from_hours(70638, 14.4489, -83.6679, 4.32, 1.15),  # Delta Octantis
+    star_from_hours(104382, 21.1461, -88.9565, 5.42, 0.45),  # Sigma Octantis
+    star_from_hours(32607, 6.8032, -61.9414, 3.27, 0.18),  # Alpha Pictoris
+    star_from_hours(27321, 5.7881, -51.0665, 3.85, 0.28),  # Beta Pictoris
+    star_from_hours(27530, 5.8305, -56.1667, 4.50, 1.08),  # Gamma Pictoris
+    star_from_hours(113368, 22.9608, -29.6222, 1.16, 0.09),  # Fomalhaut
+    star_from_hours(111188, 22.5251, -32.3460, 4.29, 0.15),  # Beta Piscis Austrini
+    star_from_hours(112948, 22.8754, -32.8754, 4.46, 1.05),  # Gamma Piscis Austrini
+    star_from_hours(113246, 22.9325, -32.5396, 4.20, 0.30),  # Delta Piscis Austrini
+    star_from_hours(42828, 8.7265, -33.1864, 3.68, 0.42),  # Alpha Pyxidis
+    star_from_hours(42515, 8.6684, -35.3083, 3.97, 1.18),  # Beta Pyxidis
+    star_from_hours(43409, 8.8422, -27.7101, 4.01, 1.00),  # Gamma Pyxidis
+    star_from_hours(19780, 4.2404, -62.4739, 3.35, 0.92),  # Alpha Reticuli
+    star_from_hours(17440, 3.7367, -64.8069, 3.84, 1.14),  # Beta Reticuli
+    star_from_hours(19921, 4.2747, -59.3017, 4.44, 1.02),  # Epsilon Reticuli
+    star_from_hours(4577, 0.9768, -29.3575, 4.30, 1.00),  # Alpha Sculptoris
+    star_from_hours(116231, 23.5495, -37.8183, 4.38, 1.12),  # Beta Sculptoris
+    star_from_hours(115102, 23.3137, -32.5320, 4.41, 1.00),  # Gamma Sculptoris
+    star_from_hours(117452, 23.8154, -28.1303, 4.57, 0.38),  # Delta Sculptoris
+    star_from_hours(91117, 18.5868, -8.2441, 3.85, 1.33),  # Alpha Scuti
+    star_from_hours(92175, 18.7862, -4.7478, 4.22, 1.18),  # Beta Scuti
+    star_from_hours(91726, 18.7046, -9.0526, 4.72, 0.28),  # Delta Scuti
+    star_from_hours(90595, 18.4866, -14.5658, 4.67, 1.08),  # Gamma Scuti
+    star_from_hours(49641, 10.1323, -0.3716, 4.49, 0.00),  # Alpha Sextantis
+    star_from_hours(51437, 10.5049, -0.6369, 5.08, 0.35),  # Beta Sextantis
+    star_from_hours(48437, 9.8751, -8.1049, 5.05, 1.02),  # Gamma Sextantis
+    star_from_hours(90422, 18.4496, -45.9685, 3.49, 0.96),  # Alpha Telescopii
+    star_from_hours(90568, 18.4805, -49.0706, 4.13, 1.12),  # Zeta Telescopii
+    star_from_hours(89112, 18.1872, -45.9544, 4.52, 1.02),  # Epsilon Telescopii
+    star_from_hours(82273, 16.8111, -69.0277, 1.91, 1.45),  # Alpha Trianguli Australis
+    star_from_hours(77952, 15.9191, -63.4307, 2.85, 0.28),  # Beta Trianguli Australis
+    star_from_hours(74946, 15.3152, -68.6795, 2.87, 1.00),  # Gamma Trianguli Australis
+    star_from_hours(110130, 22.3084, -60.2596, 2.86, 1.39),  # Alpha Tucanae
+    star_from_hours(114996, 23.2905, -58.2359, 3.99, 0.33),  # Gamma Tucanae
+    star_from_hours(2484, 0.5258, -62.9581, 4.36, 0.58),  # Beta1 Tucanae
+    star_from_hours(1599, 0.3345, -64.8748, 4.23, 0.34),  # Zeta Tucanae
+    star_from_hours(41312, 8.4289, -66.1369, 3.75, 1.10),  # Beta Volantis
+    star_from_hours(34481, 7.1458, -70.4989, 3.78, 0.98),  # Gamma2 Volantis
+    star_from_hours(37504, 7.6970, -72.6061, 3.93, 0.15),  # Zeta Volantis
+    star_from_hours(35228, 7.2805, -67.9572, 3.98, 1.04),  # Delta Volantis
+    star_from_hours(44382, 9.0408, -66.3958, 4.00, 0.28),  # Alpha Volantis
     # Feature support stars.
-    star_from_hours(200401, 10.1222, 16.7627, 3.52, -0.03),  # Eta Leonis
-    star_from_hours(200402, 10.2782, 23.4173, 3.44, 0.31),  # Zeta Leonis
-    star_from_hours(200403, 9.8794, 26.0069, 3.88, 1.22),  # Mu Leonis
-    star_from_hours(200404, 9.7642, 23.7743, 2.98, 0.81),  # Epsilon Leonis
-    star_from_hours(200405, 4.3823, 17.5425, 3.76, 0.98),  # Delta1 Tauri
-    star_from_hours(200406, 4.4769, 19.1804, 3.53, 1.01),  # Epsilon Tauri
-    star_from_hours(200407, 4.4777, 15.9622, 3.84, 0.18),  # Theta Tauri
-    star_from_hours(200408, 3.7638, 24.3677, 3.87, -0.07),  # Maia
-    star_from_hours(200409, 3.7479, 24.1133, 3.70, -0.09),  # Electra
-    star_from_hours(200410, 3.7721, 23.9484, 4.18, -0.06),  # Merope
-    star_from_hours(200411, 3.7532, 24.4673, 4.30, -0.06),  # Taygeta
-    star_from_hours(200412, 3.7467, 24.2895, 5.45, -0.05),  # Celaeno
-    star_from_hours(200413, 3.7651, 24.5546, 5.76, -0.04),  # Sterope
-    star_from_hours(200414, 3.8194, 24.0534, 3.62, -0.06),  # Atlas
-    star_from_hours(200415, 3.8198, 24.1368, 5.05, -0.08),  # Pleione
-    star_from_hours(200416, 23.2861, 3.2823, 3.70, 0.92),  # Gamma Piscium
-    star_from_hours(200417, 23.3390, 5.3813, 5.05, 1.05),  # 7 Piscium
-    star_from_hours(200418, 23.4661, 6.3791, 4.27, 1.07),  # Theta Piscium
-    star_from_hours(200419, 23.6658, 5.6263, 4.13, 0.50),  # Iota Piscium
-    star_from_hours(200420, 23.7008, 1.7800, 4.50, 1.00),  # Lambda Piscium
-    star_from_hours(200421, 23.7732, 3.4868, 5.04, 1.55),  # 19 Piscium
-    star_from_hours(200422, 22.4805, -0.0199, 3.65, 0.01),  # Zeta Aquarii
-    star_from_hours(200423, 22.5893, -0.1175, 4.04, 0.04),  # Eta Aquarii
-    star_from_hours(200424, 22.4213, 1.3774, 4.66, -0.13),  # Pi Aquarii
-    star_from_hours(200425, 17.2508, 36.8092, 3.16, 1.43),  # Pi Herculis
-    star_from_hours(200426, 16.7149, 38.9223, 3.48, 0.94),  # Eta Herculis
-    star_from_hours(200427, 16.6881, 31.6031, 2.81, 0.65),  # Zeta Herculis
-    star_from_hours(200428, 17.0048, 30.9264, 3.91, 0.95),  # Epsilon Herculis
+    star_from_hours(49583, 10.1222, 16.7627, 3.52, -0.03),  # Eta Leonis
+    star_from_hours(50335, 10.2782, 23.4173, 3.44, 0.31),  # Zeta Leonis
+    star_from_hours(48455, 9.8794, 26.0069, 3.88, 1.22),  # Mu Leonis
+    star_from_hours(47908, 9.7642, 23.7743, 2.98, 0.81),  # Epsilon Leonis
+    star_from_hours(20455, 4.3823, 17.5425, 3.76, 0.98),  # Delta1 Tauri
+    star_from_hours(20885, 4.4777, 15.9622, 3.84, 0.18),  # Theta Tauri
+    star_from_hours(17573, 3.7638, 24.3677, 3.87, -0.07),  # Maia
+    star_from_hours(17499, 3.7479, 24.1133, 3.70, -0.09),  # Electra
+    star_from_hours(17608, 3.7721, 23.9484, 4.18, -0.06),  # Merope
+    star_from_hours(17531, 3.7532, 24.4673, 4.30, -0.06),  # Taygeta
+    star_from_hours(17489, 3.7467, 24.2895, 5.45, -0.05),  # Celaeno
+    star_from_hours(17579, 3.7651, 24.5546, 5.76, -0.04),  # Sterope
+    star_from_hours(17847, 3.8194, 24.0534, 3.62, -0.06),  # Atlas
+    star_from_hours(17851, 3.8198, 24.1368, 5.05, -0.08),  # Pleione
+    star_from_hours(114971, 23.2861, 3.2823, 3.70, 0.92),  # Gamma Piscium
+    star_from_hours(115227, 23.3390, 5.3813, 5.05, 1.05),  # 7 Piscium
+    star_from_hours(115830, 23.4661, 6.3791, 4.27, 1.07),  # Theta Piscium
+    star_from_hours(116771, 23.6658, 5.6263, 4.13, 0.50),  # Iota Piscium
+    star_from_hours(116928, 23.7008, 1.7800, 4.50, 1.00),  # Lambda Piscium
+    star_from_hours(117245, 23.7732, 3.4868, 5.04, 1.55),  # 19 Piscium
+    star_from_hours(110960, 22.4805, -0.0199, 3.65, 0.01),  # Zeta Aquarii
+    star_from_hours(111497, 22.5893, -0.1175, 4.04, 0.04),  # Eta Aquarii
+    star_from_hours(110672, 22.4213, 1.3774, 4.66, -0.13),  # Pi Aquarii
+    star_from_hours(84380, 17.2508, 36.8092, 3.16, 1.43),  # Pi Herculis
+    star_from_hours(81833, 16.7149, 38.9223, 3.48, 0.94),  # Eta Herculis
+    star_from_hours(81693, 16.6881, 31.6031, 2.81, 0.65),  # Zeta Herculis
+    star_from_hours(83207, 17.0048, 30.9264, 3.91, 0.95),  # Epsilon Herculis
 )
 
 STAR_NAMES: dict[int, str] = {
@@ -700,145 +700,144 @@ STAR_NAMES: dict[int, str] = {
     28328: "Eta Columbae",
     28199: "Gamma Columbae",
     # Remaining IAU constellation support stars.
-    200001: 'Alpha Antliae',
-    200002: 'Iota Antliae',
-    200003: 'Epsilon Antliae',
-    200011: 'Alpha Apodis',
-    200012: 'Beta Apodis',
-    200013: 'Gamma Apodis',
-    200014: 'Delta Apodis',
-    200021: 'Alpha Caeli',
-    200022: 'Beta Caeli',
-    200023: 'Gamma Caeli',
-    200031: 'Alpha Camelopardalis',
-    200032: 'Beta Camelopardalis',
-    200033: 'Gamma Camelopardalis',
-    200041: 'Alpha Chamaeleontis',
-    200042: 'Beta Chamaeleontis',
-    200043: 'Gamma Chamaeleontis',
-    200044: 'Delta Chamaeleontis',
-    200051: 'Alpha Circini',
-    200052: 'Beta Circini',
-    200053: 'Gamma Circini',
-    200061: 'Alpha Coronae Australis',
-    200062: 'Beta Coronae Australis',
-    200063: 'Gamma Coronae Australis',
-    200064: 'Epsilon Coronae Australis',
-    200071: 'Alpha Crateris',
-    200072: 'Beta Crateris',
-    200073: 'Gamma Crateris',
-    200074: 'Delta Crateris',
-    200081: 'Alpha Doradus',
-    200082: 'Beta Doradus',
-    200083: 'Gamma Doradus',
-    200084: 'Delta Doradus',
-    200091: 'Alpha Equulei',
-    200092: 'Beta Equulei',
-    200093: 'Gamma Equulei',
-    200094: 'Delta Equulei',
-    200101: 'Alpha Fornacis',
-    200102: 'Beta Fornacis',
-    200103: 'Nu Fornacis',
-    200111: 'Alpha Horologii',
-    200112: 'Beta Horologii',
-    200113: 'Delta Horologii',
-    200114: 'Eta Horologii',
-    200121: 'Beta Hydri',
-    200122: 'Alpha Hydri',
-    200123: 'Gamma Hydri',
-    200131: 'Alpha Indi',
-    200132: 'Beta Indi',
-    200133: 'Theta Indi',
-    200134: 'Delta Indi',
-    200141: 'Praecipua',
-    200142: 'Beta Leonis Minoris',
-    200143: '21 Leonis Minoris',
-    200151: 'Alpha Mensae',
-    200152: 'Beta Mensae',
-    200153: 'Gamma Mensae',
-    200161: 'Alpha Microscopii',
-    200162: 'Gamma Microscopii',
-    200163: 'Epsilon Microscopii',
-    200171: 'Alpha Muscae',
-    200172: 'Beta Muscae',
-    200173: 'Gamma Muscae',
-    200174: 'Delta Muscae',
-    200181: 'Gamma2 Normae',
-    200182: 'Epsilon Normae',
-    200183: 'Eta Normae',
-    200184: 'Delta Normae',
-    200191: 'Nu Octantis',
-    200192: 'Beta Octantis',
-    200193: 'Delta Octantis',
-    200194: 'Sigma Octantis',
-    200201: 'Alpha Pictoris',
-    200202: 'Beta Pictoris',
-    200203: 'Gamma Pictoris',
-    200211: 'Fomalhaut',
-    200212: 'Beta Piscis Austrini',
-    200213: 'Gamma Piscis Austrini',
-    200214: 'Delta Piscis Austrini',
-    200221: 'Alpha Pyxidis',
-    200222: 'Beta Pyxidis',
-    200223: 'Gamma Pyxidis',
-    200231: 'Alpha Reticuli',
-    200232: 'Beta Reticuli',
-    200233: 'Epsilon Reticuli',
-    200241: 'Alpha Sculptoris',
-    200242: 'Beta Sculptoris',
-    200243: 'Gamma Sculptoris',
-    200244: 'Delta Sculptoris',
-    200251: 'Alpha Scuti',
-    200252: 'Beta Scuti',
-    200253: 'Delta Scuti',
-    200254: 'Gamma Scuti',
-    200261: 'Alpha Sextantis',
-    200262: 'Beta Sextantis',
-    200263: 'Gamma Sextantis',
-    200271: 'Alpha Telescopii',
-    200272: 'Zeta Telescopii',
-    200273: 'Epsilon Telescopii',
-    200281: 'Alpha Trianguli Australis',
-    200282: 'Beta Trianguli Australis',
-    200283: 'Gamma Trianguli Australis',
-    200291: 'Alpha Tucanae',
-    200292: 'Gamma Tucanae',
-    200293: 'Beta1 Tucanae',
-    200294: 'Zeta Tucanae',
-    200301: 'Beta Volantis',
-    200302: 'Gamma2 Volantis',
-    200303: 'Zeta Volantis',
-    200304: 'Delta Volantis',
-    200305: 'Alpha Volantis',
+    51172: 'Alpha Antliae',
+    53502: 'Iota Antliae',
+    46657: 'Epsilon Antliae',
+    72370: 'Alpha Apodis',
+    81852: 'Beta Apodis',
+    81065: 'Gamma Apodis',
+    80047: 'Delta Apodis',
+    21770: 'Alpha Caeli',
+    21861: 'Beta Caeli',
+    23595: 'Gamma Caeli',
+    22783: 'Alpha Camelopardalis',
+    23522: 'Beta Camelopardalis',
+    17959: 'Gamma Camelopardalis',
+    40702: 'Alpha Chamaeleontis',
+    60000: 'Beta Chamaeleontis',
+    51839: 'Gamma Chamaeleontis',
+    52633: 'Delta Chamaeleontis',
+    71908: 'Alpha Circini',
+    74824: 'Beta Circini',
+    75323: 'Gamma Circini',
+    94114: 'Alpha Coronae Australis',
+    94160: 'Beta Coronae Australis',
+    93825: 'Gamma Coronae Australis',
+    93174: 'Epsilon Coronae Australis',
+    53740: 'Alpha Crateris',
+    54682: 'Beta Crateris',
+    55705: 'Gamma Crateris',
+    55282: 'Delta Crateris',
+    21281: 'Alpha Doradus',
+    26069: 'Beta Doradus',
+    19893: 'Gamma Doradus',
+    27100: 'Delta Doradus',
+    104987: 'Alpha Equulei',
+    105570: 'Beta Equulei',
+    104521: 'Gamma Equulei',
+    104858: 'Delta Equulei',
+    14879: 'Alpha Fornacis',
+    13147: 'Beta Fornacis',
+    9677: 'Nu Fornacis',
+    19747: 'Alpha Horologii',
+    13884: 'Beta Horologii',
+    19515: 'Delta Horologii',
+    12225: 'Eta Horologii',
+    2021: 'Beta Hydri',
+    9236: 'Alpha Hydri',
+    17678: 'Gamma Hydri',
+    101772: 'Alpha Indi',
+    103227: 'Beta Indi',
+    105319: 'Theta Indi',
+    108431: 'Delta Indi',
+    53229: 'Praecipua',
+    51233: 'Beta Leonis Minoris',
+    49593: '21 Leonis Minoris',
+    29271: 'Alpha Mensae',
+    23467: 'Beta Mensae',
+    25918: 'Gamma Mensae',
+    102831: 'Alpha Microscopii',
+    103738: 'Gamma Microscopii',
+    105140: 'Epsilon Microscopii',
+    61585: 'Alpha Muscae',
+    62322: 'Beta Muscae',
+    61199: 'Gamma Muscae',
+    63613: 'Delta Muscae',
+    80000: 'Gamma2 Normae',
+    80582: 'Epsilon Normae',
+    78639: 'Eta Normae',
+    78914: 'Delta Normae',
+    107089: 'Nu Octantis',
+    112405: 'Beta Octantis',
+    70638: 'Delta Octantis',
+    104382: 'Sigma Octantis',
+    32607: 'Alpha Pictoris',
+    27321: 'Beta Pictoris',
+    27530: 'Gamma Pictoris',
+    113368: 'Fomalhaut',
+    111188: 'Beta Piscis Austrini',
+    112948: 'Gamma Piscis Austrini',
+    113246: 'Delta Piscis Austrini',
+    42828: 'Alpha Pyxidis',
+    42515: 'Beta Pyxidis',
+    43409: 'Gamma Pyxidis',
+    19780: 'Alpha Reticuli',
+    17440: 'Beta Reticuli',
+    19921: 'Epsilon Reticuli',
+    4577: 'Alpha Sculptoris',
+    116231: 'Beta Sculptoris',
+    115102: 'Gamma Sculptoris',
+    117452: 'Delta Sculptoris',
+    91117: 'Alpha Scuti',
+    92175: 'Beta Scuti',
+    91726: 'Delta Scuti',
+    90595: 'Gamma Scuti',
+    49641: 'Alpha Sextantis',
+    51437: 'Beta Sextantis',
+    48437: 'Gamma Sextantis',
+    90422: 'Alpha Telescopii',
+    90568: 'Zeta Telescopii',
+    89112: 'Epsilon Telescopii',
+    82273: 'Alpha Trianguli Australis',
+    77952: 'Beta Trianguli Australis',
+    74946: 'Gamma Trianguli Australis',
+    110130: 'Alpha Tucanae',
+    114996: 'Gamma Tucanae',
+    2484: 'Beta1 Tucanae',
+    1599: 'Zeta Tucanae',
+    41312: 'Beta Volantis',
+    34481: 'Gamma2 Volantis',
+    37504: 'Zeta Volantis',
+    35228: 'Delta Volantis',
+    44382: 'Alpha Volantis',
     # Feature support stars.
-    200401: 'Eta Leonis',
-    200402: 'Zeta Leonis',
-    200403: 'Mu Leonis',
-    200404: 'Epsilon Leonis',
-    200405: 'Delta1 Tauri',
-    200406: 'Epsilon Tauri',
-    200407: 'Theta Tauri',
-    200408: 'Maia',
-    200409: 'Electra',
-    200410: 'Merope',
-    200411: 'Taygeta',
-    200412: 'Celaeno',
-    200413: 'Sterope',
-    200414: 'Atlas',
-    200415: 'Pleione',
-    200416: 'Gamma Piscium',
-    200417: '7 Piscium',
-    200418: 'Theta Piscium',
-    200419: 'Iota Piscium',
-    200420: 'Lambda Piscium',
-    200421: '19 Piscium',
-    200422: 'Zeta Aquarii',
-    200423: 'Eta Aquarii',
-    200424: 'Pi Aquarii',
-    200425: 'Pi Herculis',
-    200426: 'Eta Herculis',
-    200427: 'Zeta Herculis',
-    200428: 'Epsilon Herculis',
+    49583: 'Eta Leonis',
+    50335: 'Zeta Leonis',
+    48455: 'Mu Leonis',
+    47908: 'Epsilon Leonis',
+    20455: 'Delta1 Tauri',
+    20885: 'Theta Tauri',
+    17573: 'Maia',
+    17499: 'Electra',
+    17608: 'Merope',
+    17531: 'Taygeta',
+    17489: 'Celaeno',
+    17579: 'Sterope',
+    17847: 'Atlas',
+    17851: 'Pleione',
+    114971: 'Gamma Piscium',
+    115227: '7 Piscium',
+    115830: 'Theta Piscium',
+    116771: 'Iota Piscium',
+    116928: 'Lambda Piscium',
+    117245: '19 Piscium',
+    110960: 'Zeta Aquarii',
+    111497: 'Eta Aquarii',
+    110672: 'Pi Aquarii',
+    84380: 'Pi Herculis',
+    81833: 'Eta Herculis',
+    81693: 'Zeta Herculis',
+    83207: 'Epsilon Herculis',
 }
 
 
@@ -860,5 +859,14 @@ def synthetic_stars(count: int = 1800) -> tuple[Star, ...]:
     return tuple(stars)
 
 
-STARS: tuple[Star, ...] = NAMED_STARS + synthetic_stars()
+def constellation_line_stars() -> tuple[Star, ...]:
+    named_star_ids = {star.id for star in NAMED_STARS}
+    return tuple(
+        star_from_hours(star_id, ra_hours, dec_degrees, magnitude, color_index)
+        for star_id, ra_hours, dec_degrees, magnitude, color_index in CONSTELLATION_LINE_STAR_ROWS
+        if star_id not in named_star_ids
+    )
+
+
+STARS: tuple[Star, ...] = NAMED_STARS + constellation_line_stars() + synthetic_stars()
 STARS_BY_ID: dict[int, Star] = {star.id: star for star in STARS}

@@ -26,10 +26,16 @@ class SkyFeatureTests(unittest.TestCase):
         self.assertGreaterEqual(len(ASTERISMS), 28)
         for feature in ASTERISMS:
             star_ids = set(feature.star_ids)
+            self.assertEqual(len(star_ids), len(feature.star_ids), feature.id)
             self.assertTrue(star_ids <= set(STAR_NAMES), feature.id)
+            seen_edges: set[frozenset[int]] = set()
             for a, b in feature.edges:
+                self.assertNotEqual(a, b, feature.id)
                 self.assertIn(a, star_ids, feature.id)
                 self.assertIn(b, star_ids, feature.id)
+                edge_key = frozenset((a, b))
+                self.assertNotIn(edge_key, seen_edges, feature.id)
+                seen_edges.add(edge_key)
 
     def test_milky_way_path_is_radian_equatorial_data(self) -> None:
         paths = {path.id: path for path in SKY_PATHS}
