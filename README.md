@@ -158,13 +158,16 @@ gaps caused by Safari's visible toolbar area.
 
 The prototype includes all 88 IAU constellation IDs. Constellation boundaries
 are IAU-defined, but stick-figure line art is not unique or official. Starwrite
-uses a single documented reference profile for consistency:
+uses a reviewed display profile for consistency:
 
 - Line topology: ConstellationLines by Marc van der Sluys, DOI
   `10.5281/zenodo.10397192`, CC BY 4.0.
 - HR-to-HIP crosswalk and endpoint coordinates: HYG Database v4.1 by David Nash
   / Astronexus and contributors, CC BY-SA 4.0.
-- Runtime line endpoints: 656 constellation-line segments using 695 HIP stars.
+- Review profile: Starwrite `reviewed_pyxel` constellation figure audit dated
+  2026-08-18, aligned to common modern Stellarium / Sky & Telescope-style
+  stick figures while keeping dense Pyxel linework readable.
+- Runtime line endpoints: 685 constellation-line segments using 694 HIP stars.
 - Feature / Asterism overlays such as the Big Dipper, seasonal triangles,
   Pleiades, Hyades, and Southern Cross remain separate from constellation body
   lines.

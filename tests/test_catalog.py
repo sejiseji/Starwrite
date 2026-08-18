@@ -3,7 +3,12 @@ from __future__ import annotations
 import unittest
 
 from data.constellations import CONSTELLATIONS
-from data.constellation_line_reference_88 import CONSTELLATION_LINE_EDGES_HIP, CONSTELLATION_MAIN_STAR_IDS_HIP
+from data.constellation_line_reference_88 import (
+    CONSTELLATION_LINE_EDGES_HIP,
+    CONSTELLATION_LINE_POLYLINES_HIP,
+    CONSTELLATION_MAIN_STAR_IDS_HIP,
+    validate_constellation_line_reference,
+)
 from data.sky_features import ASTERISMS
 from data.stars import NAMED_STARS, STAR_NAMES
 from data.stars import STARS_BY_ID
@@ -111,6 +116,19 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(constellation_ids, expected_ids)
         self.assertEqual(set(CONSTELLATION_LINE_EDGES_HIP), expected_ids)
         self.assertEqual(set(CONSTELLATION_MAIN_STAR_IDS_HIP), expected_ids)
+        self.assertEqual(set(CONSTELLATION_LINE_POLYLINES_HIP), expected_ids)
+
+    def test_constellation_reference_profile_counts(self) -> None:
+        edge_count = sum(len(edges) for edges in CONSTELLATION_LINE_EDGES_HIP.values())
+        endpoint_ids = {
+            star_id
+            for edges in CONSTELLATION_LINE_EDGES_HIP.values()
+            for edge in edges
+            for star_id in edge
+        }
+
+        self.assertEqual(edge_count, 685)
+        self.assertEqual(len(endpoint_ids), 694)
 
     def test_constellation_star_references_exist(self) -> None:
         for constellation in CONSTELLATIONS:
@@ -128,6 +146,7 @@ class CatalogTests(unittest.TestCase):
             self.assertEqual(constellation.main_star_ids, CONSTELLATION_MAIN_STAR_IDS_HIP[constellation_id])
 
     def test_constellation_reference_edges_are_valid(self) -> None:
+        validate_constellation_line_reference()
         for constellation_id, edges in CONSTELLATION_LINE_EDGES_HIP.items():
             seen_edges: set[frozenset[int]] = set()
             for a_id, b_id in edges:

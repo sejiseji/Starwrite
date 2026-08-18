@@ -13,38 +13,46 @@ Use it to compare each figure against common modern star-chart patterns.
 
 ## Data Notes
 
-- Generated from commit: `e152ef2`
+- Generated from commit: `d1d1499`
 - Constellations: 88
-- Edges: 656
-- Endpoint stars: 695
-- Endpoint stars without display names: 330
+- Edges: 685
+- Endpoint stars: 694
+- Endpoint stars without display names: 322
 
 ## AND -- Andromeda / アンドロメダ座
 
-Counts: stars 14, edges 13, polylines 1, branch points 3, stars without display names 10
+Counts: stars 16, edges 16, polylines 5, branch points 4, stars without display names 12
 
 ### Polylines
 
-1. HIP 116584 -> HIP 116805 -> HIP 116631 -> HIP 113726 -> HIP 116631 -> HIP 1473 -> Delta Andromedae -> Alpheratz -> Delta Andromedae -> HIP 3031 -> HIP 3693 -> HIP 3031 -> Delta Andromedae -> Mirach -> Almach -> Mirach -> HIP 7607 -> Mirach -> HIP 4436 -> HIP 3881
+1. Alpheratz -> Delta Andromedae -> Mirach -> Almach
+2. HIP 113726 -> HIP 116631 -> HIP 116805 -> HIP 116584
+3. HIP 116631 -> HIP 2912 -> Delta Andromedae
+4. HIP 2912 -> Mirach -> HIP 4436 -> HIP 3881 -> HIP 5434 -> HIP 7607
+5. Delta Andromedae -> HIP 3031 -> HIP 3693 -> HIP 4463
 
 ### Edges
 
-- HIP 116584 -- HIP 116805  |  HIP 116584 -- HIP 116805
-- HIP 116805 -- HIP 116631  |  HIP 116805 -- HIP 116631
-- HIP 116631 -- HIP 113726  |  HIP 116631 -- HIP 113726
-- HIP 116631 -- HIP 1473  |  HIP 116631 -- HIP 1473
-- HIP 1473 -- Delta Andromedae  |  HIP 1473 -- デルタ・アンドロメダ
-- Delta Andromedae -- Alpheratz  |  デルタ・アンドロメダ -- アルフェラッツ
-- Delta Andromedae -- HIP 3031  |  デルタ・アンドロメダ -- HIP 3031
+- Alpheratz -- Delta Andromedae  |  アルフェラッツ -- デルタ・アンドロメダ
+- HIP 2912 -- Delta Andromedae  |  HIP 2912 -- デルタ・アンドロメダ
+- HIP 2912 -- Mirach  |  HIP 2912 -- ミラク
+- HIP 2912 -- HIP 116631  |  HIP 2912 -- HIP 116631
+- HIP 3031 -- Delta Andromedae  |  HIP 3031 -- デルタ・アンドロメダ
 - HIP 3031 -- HIP 3693  |  HIP 3031 -- HIP 3693
 - Delta Andromedae -- Mirach  |  デルタ・アンドロメダ -- ミラク
+- HIP 3693 -- HIP 4463  |  HIP 3693 -- HIP 4463
+- HIP 3881 -- HIP 4436  |  HIP 3881 -- HIP 4436
+- HIP 3881 -- HIP 5434  |  HIP 3881 -- HIP 5434
+- HIP 4436 -- Mirach  |  HIP 4436 -- ミラク
+- HIP 5434 -- HIP 7607  |  HIP 5434 -- HIP 7607
 - Mirach -- Almach  |  ミラク -- アルマク
-- Mirach -- HIP 7607  |  ミラク -- HIP 7607
-- Mirach -- HIP 4436  |  ミラク -- HIP 4436
-- HIP 4436 -- HIP 3881  |  HIP 4436 -- HIP 3881
+- HIP 113726 -- HIP 116631  |  HIP 113726 -- HIP 116631
+- HIP 116584 -- HIP 116805  |  HIP 116584 -- HIP 116805
+- HIP 116631 -- HIP 116805  |  HIP 116631 -- HIP 116805
 
 ### Branch Points
 
+- HIP 2912 / HIP 2912 (HIP 2912): degree 3
 - Delta Andromedae / デルタ・アンドロメダ (HIP 3092): degree 4
 - Mirach / ミラク (HIP 5447): degree 4
 - HIP 116631 / HIP 116631 (HIP 116631): degree 3
@@ -52,12 +60,14 @@ Counts: stars 14, edges 13, polylines 1, branch points 3, stars without display 
 ### Stars
 
 - Alpheratz / アルフェラッツ (HIP 677, mag 2.06, RA 0.1398h, Dec 29.0904deg)
-- HIP 1473 / HIP 1473 (HIP 1473, mag 4.51, RA 0.3055h, Dec 36.7852deg) [no display name]
+- HIP 2912 / HIP 2912 (HIP 2912, mag 4.34, RA 0.6147h, Dec 33.7193deg) [no display name]
 - HIP 3031 / HIP 3031 (HIP 3031, mag 4.34, RA 0.6426h, Dec 29.3118deg) [no display name]
 - Delta Andromedae / デルタ・アンドロメダ (HIP 3092, mag 3.27, RA 0.6555h, Dec 30.8610deg)
 - HIP 3693 / HIP 3693 (HIP 3693, mag 4.08, RA 0.7890h, Dec 24.2672deg) [no display name]
 - HIP 3881 / HIP 3881 (HIP 3881, mag 4.53, RA 0.8302h, Dec 41.0789deg) [no display name]
 - HIP 4436 / HIP 4436 (HIP 4436, mag 3.86, RA 0.9459h, Dec 38.4993deg) [no display name]
+- HIP 4463 / HIP 4463 (HIP 4463, mag 4.40, RA 0.9534h, Dec 23.4176deg) [no display name]
+- HIP 5434 / HIP 5434 (HIP 5434, mag 4.26, RA 1.1584h, Dec 47.2418deg) [no display name]
 - Mirach / ミラク (HIP 5447, mag 2.07, RA 1.1622h, Dec 35.6206deg)
 - HIP 7607 / HIP 7607 (HIP 7607, mag 3.59, RA 1.6332h, Dec 48.6282deg) [no display name]
 - Almach / アルマク (HIP 9640, mag 2.10, RA 2.0649h, Dec 42.3297deg)
@@ -68,37 +78,36 @@ Counts: stars 14, edges 13, polylines 1, branch points 3, stars without display 
 
 ## ANT -- Antlia / ポンプ座
 
-Counts: stars 4, edges 3, polylines 1, branch points 0, stars without display names 2
+Counts: stars 3, edges 2, polylines 1, branch points 0, stars without display names 1
 
 ### Polylines
 
-1. Iota Antliae -> Alpha Antliae -> HIP 47758 -> HIP 46515
+1. Iota Antliae -> Alpha Antliae -> HIP 46515
 
 ### Edges
 
-- Iota Antliae -- Alpha Antliae  |  イオタ・ポンプ -- アルファ・ポンプ
-- Alpha Antliae -- HIP 47758  |  アルファ・ポンプ -- HIP 47758
-- HIP 47758 -- HIP 46515  |  HIP 47758 -- HIP 46515
+- HIP 46515 -- Alpha Antliae  |  HIP 46515 -- アルファ・ポンプ
+- Alpha Antliae -- Iota Antliae  |  アルファ・ポンプ -- イオタ・ポンプ
 
 ### Stars
 
 - HIP 46515 / HIP 46515 (HIP 46515, mag 4.51, RA 9.4874h, Dec -35.9513deg) [no display name]
-- HIP 47758 / HIP 47758 (HIP 47758, mag 4.78, RA 9.7367h, Dec -27.7695deg) [no display name]
 - Alpha Antliae / アルファ・ポンプ (HIP 51172, mag 4.25, RA 10.4525h, Dec -31.0678deg)
 - Iota Antliae / イオタ・ポンプ (HIP 53502, mag 4.60, RA 10.9453h, Dec -37.1378deg)
 
 ## APS -- Apus / ふうちょう座
 
-Counts: stars 4, edges 3, polylines 1, branch points 0, stars without display names 0
+Counts: stars 4, edges 3, polylines 2, branch points 0, stars without display names 0
 
 ### Polylines
 
-1. Alpha Apodis -> Delta Apodis -> Gamma Apodis -> Beta Apodis
+1. Alpha Apodis -> Gamma Apodis
+2. Delta Apodis -> Beta Apodis -> Gamma Apodis
 
 ### Edges
 
-- Alpha Apodis -- Delta Apodis  |  アルファ・ふうちょう -- デルタ・ふうちょう
-- Delta Apodis -- Gamma Apodis  |  デルタ・ふうちょう -- ガンマ・ふうちょう
+- Alpha Apodis -- Gamma Apodis  |  アルファ・ふうちょう -- ガンマ・ふうちょう
+- Delta Apodis -- Beta Apodis  |  デルタ・ふうちょう -- ベータ・ふうちょう
 - Gamma Apodis -- Beta Apodis  |  ガンマ・ふうちょう -- ベータ・ふうちょう
 
 ### Stars
@@ -110,42 +119,59 @@ Counts: stars 4, edges 3, polylines 1, branch points 0, stars without display na
 
 ## AQR -- Aquarius / みずがめ座
 
-Counts: stars 11, edges 10, polylines 1, branch points 1, stars without display names 5
+Counts: stars 16, edges 17, polylines 2, branch points 5, stars without display names 7
 
 ### Polylines
 
-1. HIP 114341 -> HIP 114855 -> HIP 114724 -> Eta Aquarii -> Sadachbia -> HIP 112961 -> Skat -> HIP 112961 -> Sadachbia -> Ancha -> HIP 109139 -> Ancha -> Sadachbia -> Sadalmelik -> Sadalsuud
+1. Albali -> Sadalsuud -> Sadalmelik -> Sadachbia -> Zeta Aquarii -> Eta Aquarii -> Zeta Aquarii -> Pi Aquarii -> Sadalmelik
+2. HIP 109139 -> Sadalsuud -> Sadalmelik -> Ancha -> HIP 112961 -> HIP 114724 -> HIP 115033 -> HIP 115438 -> HIP 115033 -> HIP 114341 -> HIP 115033 -> Skat -> HIP 112716 -> HIP 112961
 
 ### Edges
 
-- HIP 114341 -- HIP 114855  |  HIP 114341 -- HIP 114855
-- HIP 114855 -- HIP 114724  |  HIP 114855 -- HIP 114724
-- HIP 114724 -- Eta Aquarii  |  HIP 114724 -- イータ・みずがめ
-- Eta Aquarii -- Sadachbia  |  イータ・みずがめ -- サダクビア
-- Sadachbia -- HIP 112961  |  サダクビア -- HIP 112961
-- HIP 112961 -- Skat  |  HIP 112961 -- スカト
-- Sadachbia -- Ancha  |  サダクビア -- アンカ
-- Ancha -- HIP 109139  |  アンカ -- HIP 109139
-- Sadachbia -- Sadalmelik  |  サダクビア -- サダルメリク
-- Sadalmelik -- Sadalsuud  |  サダルメリク -- サダルスウド
+- Albali -- Sadalsuud  |  アルバリ -- サダルスウド
+- Sadalsuud -- Sadalmelik  |  サダルスウド -- サダルメリク
+- Sadalsuud -- HIP 109139  |  サダルスウド -- HIP 109139
+- Sadalmelik -- Ancha  |  サダルメリク -- アンカ
+- Sadalmelik -- Sadachbia  |  サダルメリク -- サダクビア
+- Sadalmelik -- Pi Aquarii  |  サダルメリク -- パイ・みずがめ
+- Ancha -- HIP 112961  |  アンカ -- HIP 112961
+- Sadachbia -- Zeta Aquarii  |  サダクビア -- ゼータ・みずがめ
+- Pi Aquarii -- Zeta Aquarii  |  パイ・みずがめ -- ゼータ・みずがめ
+- Zeta Aquarii -- Eta Aquarii  |  ゼータ・みずがめ -- イータ・みずがめ
+- HIP 112716 -- HIP 112961  |  HIP 112716 -- HIP 112961
+- HIP 112716 -- Skat  |  HIP 112716 -- スカト
+- HIP 112961 -- HIP 114724  |  HIP 112961 -- HIP 114724
+- Skat -- HIP 115033  |  スカト -- HIP 115033
+- HIP 114341 -- HIP 115033  |  HIP 114341 -- HIP 115033
+- HIP 114724 -- HIP 115033  |  HIP 114724 -- HIP 115033
+- HIP 115033 -- HIP 115438  |  HIP 115033 -- HIP 115438
 
 ### Branch Points
 
-- Sadachbia / サダクビア (HIP 110395): degree 4
+- Sadalsuud / サダルスウド (HIP 106278): degree 3
+- Sadalmelik / サダルメリク (HIP 109074): degree 4
+- Zeta Aquarii / ゼータ・みずがめ (HIP 110960): degree 3
+- HIP 112961 / HIP 112961 (HIP 112961): degree 3
+- HIP 115033 / HIP 115033 (HIP 115033): degree 4
 
 ### Stars
 
+- Albali / アルバリ (HIP 102618, mag 3.77, RA 20.7946h, Dec -9.4958deg)
 - Sadalsuud / サダルスウド (HIP 106278, mag 2.87, RA 21.5260h, Dec -5.5712deg)
 - Sadalmelik / サダルメリク (HIP 109074, mag 2.94, RA 22.0964h, Dec -0.3199deg)
 - HIP 109139 / HIP 109139 (HIP 109139, mag 4.29, RA 22.1073h, Dec -13.8697deg) [no display name]
 - Ancha / アンカ (HIP 110003, mag 4.17, RA 22.2806h, Dec -7.7833deg)
 - Sadachbia / サダクビア (HIP 110395, mag 3.84, RA 22.3609h, Dec -1.3873deg)
+- Pi Aquarii / パイ・みずがめ (HIP 110672, mag 4.66, RA 22.4213h, Dec 1.3774deg)
+- Zeta Aquarii / ゼータ・みずがめ (HIP 110960, mag 3.65, RA 22.4805h, Dec -0.0199deg)
 - Eta Aquarii / イータ・みずがめ (HIP 111497, mag 4.04, RA 22.5893h, Dec -0.1175deg)
+- HIP 112716 / HIP 112716 (HIP 112716, mag 4.05, RA 22.8265h, Dec -13.5926deg) [no display name]
 - HIP 112961 / HIP 112961 (HIP 112961, mag 3.73, RA 22.8769h, Dec -7.5796deg) [no display name]
 - Skat / スカト (HIP 113136, mag 3.27, RA 22.9108h, Dec -15.8208deg)
 - HIP 114341 / HIP 114341 (HIP 114341, mag 3.68, RA 23.1574h, Dec -21.1724deg) [no display name]
 - HIP 114724 / HIP 114724 (HIP 114724, mag 4.22, RA 23.2387h, Dec -6.0490deg) [no display name]
-- HIP 114855 / HIP 114855 (HIP 114855, mag 4.24, RA 23.2649h, Dec -9.0877deg) [no display name]
+- HIP 115033 / HIP 115033 (HIP 115033, mag 4.41, RA 23.2984h, Dec -9.1825deg) [no display name]
+- HIP 115438 / HIP 115438 (HIP 115438, mag 3.96, RA 23.3828h, Dec -20.1006deg) [no display name]
 
 ## AQL -- Aquila / わし座
 
@@ -220,19 +246,17 @@ Counts: stars 8, edges 8, polylines 1, branch points 3, stars without display na
 
 ## ARI -- Aries / おひつじ座
 
-Counts: stars 6, edges 5, polylines 1, branch points 0, stars without display names 3
+Counts: stars 4, edges 3, polylines 1, branch points 0, stars without display names 1
 
 ### Polylines
 
-1. HIP 14838 -> HIP 13914 -> HIP 13209 -> Hamal -> Sheratan -> Mesarthim
+1. Mesarthim -> Sheratan -> Hamal -> HIP 13209
 
 ### Edges
 
-- HIP 14838 -- HIP 13914  |  HIP 14838 -- HIP 13914
-- HIP 13914 -- HIP 13209  |  HIP 13914 -- HIP 13209
-- HIP 13209 -- Hamal  |  HIP 13209 -- ハマル
-- Hamal -- Sheratan  |  ハマル -- シェラタン
-- Sheratan -- Mesarthim  |  シェラタン -- メサルティム
+- Mesarthim -- Sheratan  |  メサルティム -- シェラタン
+- Sheratan -- Hamal  |  シェラタン -- ハマル
+- Hamal -- HIP 13209  |  ハマル -- HIP 13209
 
 ### Stars
 
@@ -240,8 +264,6 @@ Counts: stars 6, edges 5, polylines 1, branch points 0, stars without display na
 - Sheratan / シェラタン (HIP 8903, mag 2.64, RA 1.9107h, Dec 20.8080deg)
 - Hamal / ハマル (HIP 9884, mag 2.00, RA 2.1195h, Dec 23.4624deg)
 - HIP 13209 / HIP 13209 (HIP 13209, mag 3.61, RA 2.8331h, Dec 27.2605deg) [no display name]
-- HIP 13914 / HIP 13914 (HIP 13914, mag 4.63, RA 2.9869h, Dec 21.3404deg) [no display name]
-- HIP 14838 / HIP 14838 (HIP 14838, mag 4.35, RA 3.1938h, Dec 19.7267deg) [no display name]
 
 ## AUR -- Auriga / ぎょしゃ座
 
@@ -403,27 +425,27 @@ Counts: stars 2, edges 1, polylines 1, branch points 0, stars without display na
 
 ## CMA -- Canis Major / おおいぬ座
 
-Counts: stars 12, edges 13, polylines 1, branch points 3, stars without display names 7
+Counts: stars 10, edges 11, polylines 3, branch points 3, stars without display names 5
 
 ### Polylines
 
-1. HIP 33347 -> HIP 33160 -> HIP 34045 -> HIP 33347 -> Sirius -> Mirzam -> HIP 31592 -> HIP 33152 -> Adhara -> HIP 33856 -> Wezen -> Aludra -> Wezen -> HIP 33977 -> Sirius
+1. Mirzam -> Sirius -> Wezen -> Adhara -> Wezen -> Aludra
+2. Mirzam -> HIP 31592 -> HIP 33152 -> Adhara
+3. Sirius -> HIP 33347 -> HIP 34045 -> HIP 33160 -> HIP 33347
 
 ### Edges
 
-- HIP 33347 -- HIP 33160  |  HIP 33347 -- HIP 33160
-- HIP 33160 -- HIP 34045  |  HIP 33160 -- HIP 34045
-- HIP 34045 -- HIP 33347  |  HIP 34045 -- HIP 33347
-- HIP 33347 -- Sirius  |  HIP 33347 -- シリウス
-- Sirius -- Mirzam  |  シリウス -- ミルザム
 - Mirzam -- HIP 31592  |  ミルザム -- HIP 31592
+- Mirzam -- Sirius  |  ミルザム -- シリウス
 - HIP 31592 -- HIP 33152  |  HIP 31592 -- HIP 33152
+- Sirius -- HIP 33347  |  シリウス -- HIP 33347
+- Sirius -- Wezen  |  シリウス -- ウェゼン
 - HIP 33152 -- Adhara  |  HIP 33152 -- アダーラ
-- Adhara -- HIP 33856  |  アダーラ -- HIP 33856
-- HIP 33856 -- Wezen  |  HIP 33856 -- ウェゼン
+- HIP 33160 -- HIP 33347  |  HIP 33160 -- HIP 33347
+- HIP 33160 -- HIP 34045  |  HIP 33160 -- HIP 34045
+- HIP 33347 -- HIP 34045  |  HIP 33347 -- HIP 34045
+- Adhara -- Wezen  |  アダーラ -- ウェゼン
 - Wezen -- Aludra  |  ウェゼン -- アルドラ
-- Wezen -- HIP 33977  |  ウェゼン -- HIP 33977
-- HIP 33977 -- Sirius  |  HIP 33977 -- シリウス
 
 ### Branch Points
 
@@ -440,8 +462,6 @@ Counts: stars 12, edges 13, polylines 1, branch points 3, stars without display 
 - HIP 33160 / HIP 33160 (HIP 33160, mag 4.08, RA 6.9032h, Dec -12.0386deg) [no display name]
 - HIP 33347 / HIP 33347 (HIP 33347, mag 4.36, RA 6.9356h, Dec -17.0542deg) [no display name]
 - Adhara / アダーラ (HIP 33579, mag 1.50, RA 6.9771h, Dec -28.9721deg)
-- HIP 33856 / HIP 33856 (HIP 33856, mag 3.49, RA 7.0287h, Dec -27.9348deg) [no display name]
-- HIP 33977 / HIP 33977 (HIP 33977, mag 3.02, RA 7.0504h, Dec -23.8333deg) [no display name]
 - HIP 34045 / HIP 34045 (HIP 34045, mag 4.11, RA 7.0626h, Dec -15.6333deg) [no display name]
 - Wezen / ウェゼン (HIP 34444, mag 1.83, RA 7.1399h, Dec -26.3932deg)
 - Aludra / アルドラ (HIP 35904, mag 2.45, RA 7.4016h, Dec -29.3031deg)
@@ -465,28 +485,23 @@ Counts: stars 2, edges 1, polylines 1, branch points 0, stars without display na
 
 ## CAP -- Capricornus / やぎ座
 
-Counts: stars 9, edges 9, polylines 1, branch points 2, stars without display names 4
+Counts: stars 9, edges 9, polylines 1, branch points 0, stars without display names 4
 
 ### Polylines
 
-1. Algedi -> Dabih -> HIP 102485 -> HIP 102978 -> HIP 105881 -> Nashira -> Deneb Algedi -> Nashira -> HIP 105515 -> Psi Capricorni -> Dabih
+1. Algedi -> Dabih -> HIP 102485 -> HIP 102978 -> HIP 105881 -> HIP 106723 -> Deneb Algedi -> Nashira -> Psi Capricorni -> Algedi
 
 ### Edges
 
 - Algedi -- Dabih  |  アルゲディ -- ダビー
+- Algedi -- Psi Capricorni  |  アルゲディ -- プサイ・カプリコルニ
 - Dabih -- HIP 102485  |  ダビー -- HIP 102485
 - HIP 102485 -- HIP 102978  |  HIP 102485 -- HIP 102978
 - HIP 102978 -- HIP 105881  |  HIP 102978 -- HIP 105881
-- HIP 105881 -- Nashira  |  HIP 105881 -- ナシラ
+- Psi Capricorni -- Nashira  |  プサイ・カプリコルニ -- ナシラ
+- HIP 105881 -- HIP 106723  |  HIP 105881 -- HIP 106723
+- HIP 106723 -- Deneb Algedi  |  HIP 106723 -- デネブ・アルゲディ
 - Nashira -- Deneb Algedi  |  ナシラ -- デネブ・アルゲディ
-- Nashira -- HIP 105515  |  ナシラ -- HIP 105515
-- HIP 105515 -- Psi Capricorni  |  HIP 105515 -- プサイ・カプリコルニ
-- Psi Capricorni -- Dabih  |  プサイ・カプリコルニ -- ダビー
-
-### Branch Points
-
-- Dabih / ダビー (HIP 100345): degree 3
-- Nashira / ナシラ (HIP 106985): degree 3
 
 ### Stars
 
@@ -495,41 +510,35 @@ Counts: stars 9, edges 9, polylines 1, branch points 2, stars without display na
 - HIP 102485 / HIP 102485 (HIP 102485, mag 4.13, RA 20.7683h, Dec -25.2709deg) [no display name]
 - HIP 102978 / HIP 102978 (HIP 102978, mag 4.12, RA 20.8637h, Dec -26.9191deg) [no display name]
 - Psi Capricorni / プサイ・カプリコルニ (HIP 104139, mag 4.13, RA 21.0991h, Dec -17.2329deg)
-- HIP 105515 / HIP 105515 (HIP 105515, mag 4.28, RA 21.3708h, Dec -16.8345deg) [no display name]
 - HIP 105881 / HIP 105881 (HIP 105881, mag 3.77, RA 21.4445h, Dec -22.4113deg) [no display name]
+- HIP 106723 / HIP 106723 (HIP 106723, mag 4.51, RA 21.6180h, Dec -19.4660deg) [no display name]
 - Nashira / ナシラ (HIP 106985, mag 3.69, RA 21.6682h, Dec -16.6623deg)
 - Deneb Algedi / デネブ・アルゲディ (HIP 107556, mag 2.85, RA 21.7840h, Dec -16.1273deg)
 
 ## CAR -- Carina / りゅうこつ座
 
-Counts: stars 11, edges 10, polylines 1, branch points 0, stars without display names 7
+Counts: stars 8, edges 7, polylines 1, branch points 0, stars without display names 5
 
 ### Polylines
 
-1. Canopus -> HIP 32761 -> HIP 38827 -> Avior -> Aspidiske -> HIP 50371 -> HIP 51576 -> HIP 52419 -> HIP 50099 -> Miaplacidus -> HIP 48002
+1. Canopus -> Miaplacidus -> HIP 50099 -> HIP 52419 -> HIP 51576 -> HIP 50371 -> Aspidiske -> HIP 43238
 
 ### Edges
 
-- Canopus -- HIP 32761  |  カノープス -- HIP 32761
-- HIP 32761 -- HIP 38827  |  HIP 32761 -- HIP 38827
-- HIP 38827 -- Avior  |  HIP 38827 -- アビオル
-- Avior -- Aspidiske  |  アビオル -- アスピディスケ
+- Canopus -- Miaplacidus  |  カノープス -- ミアプラキドゥス
+- HIP 43238 -- Aspidiske  |  HIP 43238 -- アスピディスケ
+- Miaplacidus -- HIP 50099  |  ミアプラキドゥス -- HIP 50099
 - Aspidiske -- HIP 50371  |  アスピディスケ -- HIP 50371
+- HIP 50099 -- HIP 52419  |  HIP 50099 -- HIP 52419
 - HIP 50371 -- HIP 51576  |  HIP 50371 -- HIP 51576
 - HIP 51576 -- HIP 52419  |  HIP 51576 -- HIP 52419
-- HIP 52419 -- HIP 50099  |  HIP 52419 -- HIP 50099
-- HIP 50099 -- Miaplacidus  |  HIP 50099 -- ミアプラキドゥス
-- Miaplacidus -- HIP 48002  |  ミアプラキドゥス -- HIP 48002
 
 ### Stars
 
 - Canopus / カノープス (HIP 30438, mag -0.74, RA 6.3992h, Dec -52.6957deg)
-- HIP 32761 / HIP 32761 (HIP 32761, mag 4.41, RA 6.8309h, Dec -53.6224deg) [no display name]
-- HIP 38827 / HIP 38827 (HIP 38827, mag 3.46, RA 7.9463h, Dec -52.9824deg) [no display name]
-- Avior / アビオル (HIP 41037, mag 1.86, RA 8.3752h, Dec -59.5095deg)
+- HIP 43238 / HIP 43238 (HIP 43238, mag 7.71, RA 8.8079h, Dec -55.4492deg) [no display name]
 - Miaplacidus / ミアプラキドゥス (HIP 45238, mag 1.67, RA 9.2200h, Dec -69.7172deg)
 - Aspidiske / アスピディスケ (HIP 45556, mag 2.21, RA 9.2848h, Dec -59.2752deg)
-- HIP 48002 / HIP 48002 (HIP 48002, mag 2.92, RA 9.7850h, Dec -65.0720deg) [no display name]
 - HIP 50099 / HIP 50099 (HIP 50099, mag 3.29, RA 10.2290h, Dec -70.0379deg) [no display name]
 - HIP 50371 / HIP 50371 (HIP 50371, mag 3.39, RA 10.2847h, Dec -61.3323deg) [no display name]
 - HIP 51576 / HIP 51576 (HIP 51576, mag 3.30, RA 10.5337h, Dec -61.6853deg) [no display name]
@@ -560,81 +569,88 @@ Counts: stars 5, edges 4, polylines 1, branch points 0, stars without display na
 
 ## CEN -- Centaurus / ケンタウルス座
 
-Counts: stars 19, edges 18, polylines 1, branch points 2, stars without display names 15
+Counts: stars 12, edges 13, polylines 1, branch points 3, stars without display names 9
 
 ### Polylines
 
-1. HIP 56561 -> HIP 57439 -> HIP 55425 -> HIP 59449 -> HIP 59196 -> HIP 60823 -> HIP 61622 -> HIP 61932 -> HIP 66657 -> Hadar -> HIP 66657 -> Rigil Kentaurus -> HIP 66657 -> Theta Centauri -> HIP 67472 -> HIP 67464 -> HIP 65109 -> HIP 67464 -> Menkent -> HIP 67464 -> HIP 68245 -> HIP 71352 -> HIP 73334
+1. HIP 61932 -> HIP 66657 -> Hadar -> HIP 71681 -> Hadar -> HIP 66657 -> Theta Centauri -> HIP 61932 -> Theta Centauri -> HIP 68323 -> HIP 68245 -> HIP 71352 -> HIP 68245 -> HIP 68862 -> HIP 70090 -> Menkent -> HIP 67347 -> Theta Centauri
 
 ### Edges
 
-- HIP 56561 -- HIP 57439  |  HIP 56561 -- HIP 57439
-- HIP 57439 -- HIP 55425  |  HIP 57439 -- HIP 55425
-- HIP 55425 -- HIP 59449  |  HIP 55425 -- HIP 59449
-- HIP 59449 -- HIP 59196  |  HIP 59449 -- HIP 59196
-- HIP 59196 -- HIP 60823  |  HIP 59196 -- HIP 60823
-- HIP 60823 -- HIP 61622  |  HIP 60823 -- HIP 61622
-- HIP 61622 -- HIP 61932  |  HIP 61622 -- HIP 61932
 - HIP 61932 -- HIP 66657  |  HIP 61932 -- HIP 66657
-- HIP 66657 -- Hadar  |  HIP 66657 -- ハダル
-- HIP 66657 -- Rigil Kentaurus  |  HIP 66657 -- リギル・ケンタウルス
+- HIP 61932 -- Theta Centauri  |  HIP 61932 -- シータ・ケンタウリ
 - HIP 66657 -- Theta Centauri  |  HIP 66657 -- シータ・ケンタウリ
-- Theta Centauri -- HIP 67472  |  シータ・ケンタウリ -- HIP 67472
-- HIP 67472 -- HIP 67464  |  HIP 67472 -- HIP 67464
-- HIP 67464 -- HIP 65109  |  HIP 67464 -- HIP 65109
-- HIP 67464 -- Menkent  |  HIP 67464 -- メンケント
-- HIP 67464 -- HIP 68245  |  HIP 67464 -- HIP 68245
+- HIP 66657 -- Hadar  |  HIP 66657 -- ハダル
+- HIP 67347 -- Theta Centauri  |  HIP 67347 -- シータ・ケンタウリ
+- HIP 67347 -- Menkent  |  HIP 67347 -- メンケント
+- Theta Centauri -- HIP 68323  |  シータ・ケンタウリ -- HIP 68323
+- HIP 68245 -- HIP 68323  |  HIP 68245 -- HIP 68323
+- HIP 68245 -- HIP 68862  |  HIP 68245 -- HIP 68862
 - HIP 68245 -- HIP 71352  |  HIP 68245 -- HIP 71352
-- HIP 71352 -- HIP 73334  |  HIP 71352 -- HIP 73334
+- Hadar -- HIP 71681  |  ハダル -- HIP 71681
+- HIP 68862 -- HIP 70090  |  HIP 68862 -- HIP 70090
+- Menkent -- HIP 70090  |  メンケント -- HIP 70090
 
 ### Branch Points
 
-- HIP 66657 / HIP 66657 (HIP 66657): degree 4
-- HIP 67464 / HIP 67464 (HIP 67464): degree 4
+- HIP 66657 / HIP 66657 (HIP 66657): degree 3
+- Theta Centauri / シータ・ケンタウリ (HIP 68002): degree 4
+- HIP 68245 / HIP 68245 (HIP 68245): degree 3
 
 ### Stars
 
-- HIP 55425 / HIP 55425 (HIP 55425, mag 3.90, RA 11.3501h, Dec -54.4910deg) [no display name]
-- HIP 56561 / HIP 56561 (HIP 56561, mag 3.11, RA 11.5964h, Dec -63.0198deg) [no display name]
-- HIP 57439 / HIP 57439 (HIP 57439, mag 4.11, RA 11.7752h, Dec -61.1784deg) [no display name]
-- HIP 59196 / HIP 59196 (HIP 59196, mag 2.58, RA 12.1393h, Dec -50.7224deg) [no display name]
-- HIP 59449 / HIP 59449 (HIP 59449, mag 3.97, RA 12.1942h, Dec -52.3685deg) [no display name]
-- HIP 60823 / HIP 60823 (HIP 60823, mag 3.91, RA 12.4673h, Dec -50.2306deg) [no display name]
-- HIP 61622 / HIP 61622 (HIP 61622, mag 3.85, RA 12.6284h, Dec -48.5413deg) [no display name]
 - HIP 61932 / HIP 61932 (HIP 61932, mag 2.20, RA 12.6920h, Dec -48.9599deg) [no display name]
-- HIP 65109 / HIP 65109 (HIP 65109, mag 2.75, RA 13.3433h, Dec -36.7123deg) [no display name]
 - HIP 66657 / HIP 66657 (HIP 66657, mag 2.29, RA 13.6648h, Dec -53.4664deg) [no display name]
-- HIP 67464 / HIP 67464 (HIP 67464, mag 3.41, RA 13.8251h, Dec -41.6877deg) [no display name]
-- HIP 67472 / HIP 67472 (HIP 67472, mag 3.47, RA 13.8269h, Dec -42.4737deg) [no display name]
+- HIP 67347 / HIP 67347 (HIP 67347, mag 7.99, RA 13.8034h, Dec -42.1847deg) [no display name]
 - Theta Centauri / シータ・ケンタウリ (HIP 68002, mag 2.30, RA 13.9257h, Dec -47.2884deg)
 - HIP 68245 / HIP 68245 (HIP 68245, mag 3.83, RA 13.9712h, Dec -42.1008deg) [no display name]
+- HIP 68323 / HIP 68323 (HIP 68323, mag 7.38, RA 13.9860h, Dec -45.4690deg) [no display name]
 - Hadar / ハダル (HIP 68702, mag 0.61, RA 14.0637h, Dec -60.3730deg)
+- HIP 68862 / HIP 68862 (HIP 68862, mag 4.36, RA 14.1008h, Dec -41.1796deg) [no display name]
 - Menkent / メンケント (HIP 68933, mag 2.06, RA 14.1114h, Dec -36.3700deg)
+- HIP 70090 / HIP 70090 (HIP 70090, mag 4.05, RA 14.3426h, Dec -37.8853deg) [no display name]
 - HIP 71352 / HIP 71352 (HIP 71352, mag 2.33, RA 14.5918h, Dec -42.1578deg) [no display name]
-- Rigil Kentaurus / リギル・ケンタウルス (HIP 71683, mag -0.27, RA 14.6601h, Dec -60.8351deg)
-- HIP 73334 / HIP 73334 (HIP 73334, mag 3.13, RA 14.9860h, Dec -42.1042deg) [no display name]
+- HIP 71681 / HIP 71681 (HIP 71681, mag 1.35, RA 14.6603h, Dec -60.8383deg) [no display name]
 
 ## CEP -- Cepheus / ケフェウス座
 
-Counts: stars 5, edges 5, polylines 1, branch points 0, stars without display names 1
+Counts: stars 10, edges 11, polylines 2, branch points 3, stars without display names 6
 
 ### Polylines
 
-1. Errai -> Alfirk -> Alderamin -> Zeta Cephei -> HIP 112724 -> Errai
+1. HIP 102422 -> Alderamin -> Alfirk -> HIP 112724 -> Alfirk -> Errai -> HIP 112724 -> HIP 110991 -> Zeta Cephei -> HIP 109857 -> HIP 107259 -> Alderamin
+2. HIP 101093 -> HIP 102422
 
 ### Edges
 
-- Errai -- Alfirk  |  エライ -- アルフィルク
-- Alfirk -- Alderamin  |  アルフィルク -- アルデラミン
-- Alderamin -- Zeta Cephei  |  アルデラミン -- ゼータ・ケフェイ
-- Zeta Cephei -- HIP 112724  |  ゼータ・ケフェイ -- HIP 112724
+- HIP 101093 -- HIP 102422  |  HIP 101093 -- HIP 102422
+- HIP 102422 -- Alderamin  |  HIP 102422 -- アルデラミン
+- Alderamin -- Alfirk  |  アルデラミン -- アルフィルク
+- Alderamin -- HIP 107259  |  アルデラミン -- HIP 107259
+- Alfirk -- HIP 112724  |  アルフィルク -- HIP 112724
+- Alfirk -- Errai  |  アルフィルク -- エライ
+- HIP 107259 -- HIP 109857  |  HIP 107259 -- HIP 109857
+- Zeta Cephei -- HIP 109857  |  ゼータ・ケフェイ -- HIP 109857
+- Zeta Cephei -- HIP 110991  |  ゼータ・ケフェイ -- HIP 110991
+- HIP 110991 -- HIP 112724  |  HIP 110991 -- HIP 112724
 - HIP 112724 -- Errai  |  HIP 112724 -- エライ
+
+### Branch Points
+
+- Alderamin / アルデラミン (HIP 105199): degree 3
+- Alfirk / アルフィルク (HIP 106032): degree 3
+- HIP 112724 / HIP 112724 (HIP 112724): degree 3
 
 ### Stars
 
+- HIP 101093 / HIP 101093 (HIP 101093, mag 4.21, RA 20.4930h, Dec 62.9941deg) [no display name]
+- HIP 102422 / HIP 102422 (HIP 102422, mag 3.41, RA 20.7548h, Dec 61.8388deg) [no display name]
 - Alderamin / アルデラミン (HIP 105199, mag 2.45, RA 21.3096h, Dec 62.5856deg)
 - Alfirk / アルフィルク (HIP 106032, mag 3.23, RA 21.4777h, Dec 70.5607deg)
+- HIP 107259 / HIP 107259 (HIP 107259, mag 4.23, RA 21.7251h, Dec 58.7800deg) [no display name]
 - Zeta Cephei / ゼータ・ケフェイ (HIP 109492, mag 3.35, RA 22.1809h, Dec 58.2012deg)
+- HIP 109857 / HIP 109857 (HIP 109857, mag 4.18, RA 22.2505h, Dec 57.0436deg) [no display name]
+- HIP 110991 / HIP 110991 (HIP 110991, mag 4.07, RA 22.4862h, Dec 58.4152deg) [no display name]
 - HIP 112724 / HIP 112724 (HIP 112724, mag 3.50, RA 22.8280h, Dec 66.2004deg) [no display name]
 - Errai / エライ (HIP 116727, mag 3.21, RA 23.6558h, Dec 77.6323deg)
 
@@ -644,24 +660,24 @@ Counts: stars 13, edges 14, polylines 1, branch points 2, stars without display 
 
 ### Polylines
 
-1. Baten Kaitos -> HIP 11484 -> HIP 12828 -> HIP 13954 -> Menkar -> Baten Kaitos -> HIP 12387 -> Mira -> HIP 8645 -> HIP 6537 -> HIP 5364 -> Diphda -> HIP 6960 -> HIP 9347 -> HIP 8645
+1. Baten Kaitos -> Menkar -> HIP 13954 -> HIP 12828 -> HIP 11484 -> Baten Kaitos -> HIP 12387 -> Mira -> HIP 8645 -> HIP 8102 -> Diphda -> HIP 1562 -> HIP 5364 -> HIP 6537 -> HIP 8645
 
 ### Edges
 
-- Baten Kaitos -- HIP 11484  |  バテン・カイトス -- HIP 11484
+- HIP 1562 -- Diphda  |  HIP 1562 -- ディフダ
+- HIP 1562 -- HIP 5364  |  HIP 1562 -- HIP 5364
+- Diphda -- HIP 8102  |  ディフダ -- HIP 8102
+- HIP 5364 -- HIP 6537  |  HIP 5364 -- HIP 6537
+- HIP 6537 -- HIP 8645  |  HIP 6537 -- HIP 8645
+- HIP 8102 -- HIP 8645  |  HIP 8102 -- HIP 8645
+- HIP 8645 -- Mira  |  HIP 8645 -- ミラ
+- Mira -- HIP 12387  |  ミラ -- HIP 12387
+- HIP 11484 -- Baten Kaitos  |  HIP 11484 -- バテン・カイトス
 - HIP 11484 -- HIP 12828  |  HIP 11484 -- HIP 12828
+- HIP 12387 -- Baten Kaitos  |  HIP 12387 -- バテン・カイトス
+- Baten Kaitos -- Menkar  |  バテン・カイトス -- メンカル
 - HIP 12828 -- HIP 13954  |  HIP 12828 -- HIP 13954
 - HIP 13954 -- Menkar  |  HIP 13954 -- メンカル
-- Menkar -- Baten Kaitos  |  メンカル -- バテン・カイトス
-- Baten Kaitos -- HIP 12387  |  バテン・カイトス -- HIP 12387
-- HIP 12387 -- Mira  |  HIP 12387 -- ミラ
-- Mira -- HIP 8645  |  ミラ -- HIP 8645
-- HIP 8645 -- HIP 6537  |  HIP 8645 -- HIP 6537
-- HIP 6537 -- HIP 5364  |  HIP 6537 -- HIP 5364
-- HIP 5364 -- Diphda  |  HIP 5364 -- ディフダ
-- Diphda -- HIP 6960  |  ディフダ -- HIP 6960
-- HIP 6960 -- HIP 9347  |  HIP 6960 -- HIP 9347
-- HIP 9347 -- HIP 8645  |  HIP 9347 -- HIP 8645
 
 ### Branch Points
 
@@ -670,12 +686,12 @@ Counts: stars 13, edges 14, polylines 1, branch points 2, stars without display 
 
 ### Stars
 
+- HIP 1562 / HIP 1562 (HIP 1562, mag 3.56, RA 0.3238h, Dec -8.8239deg) [no display name]
 - Diphda / ディフダ (HIP 3419, mag 2.04, RA 0.7265h, Dec -17.9866deg)
 - HIP 5364 / HIP 5364 (HIP 5364, mag 3.46, RA 1.1432h, Dec -10.1823deg) [no display name]
 - HIP 6537 / HIP 6537 (HIP 6537, mag 3.60, RA 1.4004h, Dec -8.1833deg) [no display name]
-- HIP 6960 / HIP 6960 (HIP 6960, mag 5.11, RA 1.4934h, Dec -21.6293deg) [no display name]
+- HIP 8102 / HIP 8102 (HIP 8102, mag 3.49, RA 1.7345h, Dec -15.9375deg) [no display name]
 - HIP 8645 / HIP 8645 (HIP 8645, mag 3.74, RA 1.8577h, Dec -10.3350deg) [no display name]
-- HIP 9347 / HIP 9347 (HIP 9347, mag 3.99, RA 2.0001h, Dec -21.0778deg) [no display name]
 - Mira / ミラ (HIP 10826, mag 3.00, RA 2.3224h, Dec -2.9776deg)
 - HIP 11484 / HIP 11484 (HIP 11484, mag 4.30, RA 2.4693h, Dec 8.4601deg) [no display name]
 - HIP 12387 / HIP 12387 (HIP 12387, mag 4.08, RA 2.6580h, Dec 0.3285deg) [no display name]
@@ -686,26 +702,30 @@ Counts: stars 13, edges 14, polylines 1, branch points 2, stars without display 
 
 ## CHA -- Chamaeleon / カメレオン座
 
-Counts: stars 5, edges 5, polylines 1, branch points 0, stars without display names 2
+Counts: stars 5, edges 5, polylines 1, branch points 1, stars without display names 1
 
 ### Polylines
 
-1. Alpha Chamaeleontis -> HIP 40888 -> HIP 52595 -> Beta Chamaeleontis -> Gamma Chamaeleontis -> Alpha Chamaeleontis
+1. Alpha Chamaeleontis -> Gamma Chamaeleontis -> Delta Chamaeleontis -> Beta Chamaeleontis -> HIP 58484 -> Gamma Chamaeleontis
 
 ### Edges
 
-- Alpha Chamaeleontis -- HIP 40888  |  アルファ・カメレオン -- HIP 40888
-- HIP 40888 -- HIP 52595  |  HIP 40888 -- HIP 52595
-- HIP 52595 -- Beta Chamaeleontis  |  HIP 52595 -- ベータ・カメレオン
-- Beta Chamaeleontis -- Gamma Chamaeleontis  |  ベータ・カメレオン -- ガンマ・カメレオン
-- Gamma Chamaeleontis -- Alpha Chamaeleontis  |  ガンマ・カメレオン -- アルファ・カメレオン
+- Alpha Chamaeleontis -- Gamma Chamaeleontis  |  アルファ・カメレオン -- ガンマ・カメレオン
+- Gamma Chamaeleontis -- Delta Chamaeleontis  |  ガンマ・カメレオン -- デルタ・カメレオン
+- Gamma Chamaeleontis -- HIP 58484  |  ガンマ・カメレオン -- HIP 58484
+- Delta Chamaeleontis -- Beta Chamaeleontis  |  デルタ・カメレオン -- ベータ・カメレオン
+- HIP 58484 -- Beta Chamaeleontis  |  HIP 58484 -- ベータ・カメレオン
+
+### Branch Points
+
+- Gamma Chamaeleontis / ガンマ・カメレオン (HIP 51839): degree 3
 
 ### Stars
 
 - Alpha Chamaeleontis / アルファ・カメレオン (HIP 40702, mag 4.07, RA 8.3088h, Dec -76.9197deg)
-- HIP 40888 / HIP 40888 (HIP 40888, mag 4.34, RA 8.3441h, Dec -77.4845deg) [no display name]
 - Gamma Chamaeleontis / ガンマ・カメレオン (HIP 51839, mag 4.11, RA 10.5920h, Dec -78.6078deg)
-- HIP 52595 / HIP 52595 (HIP 52595, mag 5.46, RA 10.7545h, Dec -80.4696deg) [no display name]
+- Delta Chamaeleontis / デルタ・カメレオン (HIP 52633, mag 4.45, RA 10.7630h, Dec -80.5402deg)
+- HIP 58484 / HIP 58484 (HIP 58484, mag 4.88, RA 11.9938h, Dec -78.2218deg) [no display name]
 - Beta Chamaeleontis / ベータ・カメレオン (HIP 60000, mag 4.24, RA 12.3058h, Dec -79.3122deg)
 
 ## CIR -- Circinus / コンパス座
@@ -729,20 +749,21 @@ Counts: stars 3, edges 2, polylines 1, branch points 0, stars without display na
 
 ## COL -- Columba / はと座
 
-Counts: stars 7, edges 6, polylines 1, branch points 1, stars without display names 2
+Counts: stars 6, edges 5, polylines 3, branch points 1, stars without display names 0
 
 ### Polylines
 
-1. Delta Columbae -> HIP 29807 -> Gamma Columbae -> Wazn -> Eta Columbae -> Wazn -> Phact -> HIP 24659
+1. Phact -> Wazn
+2. Epsilon Columbae -> Phact
+3. Eta Columbae -> Wazn -> Gamma Columbae -> Delta Columbae
 
 ### Edges
 
-- Delta Columbae -- HIP 29807  |  デルタ・はと -- HIP 29807
-- HIP 29807 -- Gamma Columbae  |  HIP 29807 -- ガンマ・はと
-- Gamma Columbae -- Wazn  |  ガンマ・はと -- ワズン
+- Epsilon Columbae -- Phact  |  イプシロン・はと -- ファクト
+- Phact -- Wazn  |  ファクト -- ワズン
+- Wazn -- Gamma Columbae  |  ワズン -- ガンマ・はと
 - Wazn -- Eta Columbae  |  ワズン -- イータ・はと
-- Wazn -- Phact  |  ワズン -- ファクト
-- Phact -- HIP 24659  |  ファクト -- HIP 24659
+- Gamma Columbae -- Delta Columbae  |  ガンマ・はと -- デルタ・はと
 
 ### Branch Points
 
@@ -750,12 +771,11 @@ Counts: stars 7, edges 6, polylines 1, branch points 1, stars without display na
 
 ### Stars
 
-- HIP 24659 / HIP 24659 (HIP 24659, mag 4.81, RA 5.2914h, Dec -34.8952deg) [no display name]
+- Epsilon Columbae / イプシロン・はと (HIP 25859, mag 3.86, RA 5.5202h, Dec -35.4705deg)
 - Phact / ファクト (HIP 26634, mag 2.65, RA 5.6608h, Dec -34.0741deg)
 - Wazn / ワズン (HIP 27628, mag 3.12, RA 5.8493h, Dec -35.7683deg)
 - Gamma Columbae / ガンマ・はと (HIP 28199, mag 4.36, RA 5.9589h, Dec -35.2833deg)
 - Eta Columbae / イータ・はと (HIP 28328, mag 3.96, RA 5.9858h, Dec -42.8151deg)
-- HIP 29807 / HIP 29807 (HIP 29807, mag 4.37, RA 6.2759h, Dec -35.1405deg) [no display name]
 - Delta Columbae / デルタ・はと (HIP 30277, mag 3.85, RA 6.3686h, Dec -33.4364deg)
 
 ## COM -- Coma Berenices / かみのけ座
@@ -779,24 +799,22 @@ Counts: stars 3, edges 2, polylines 1, branch points 0, stars without display na
 
 ## CRA -- Corona Australis / みなみのかんむり座
 
-Counts: stars 6, edges 5, polylines 1, branch points 0, stars without display names 2
+Counts: stars 5, edges 4, polylines 1, branch points 0, stars without display names 2
 
 ### Polylines
 
-1. Epsilon Coronae Australis -> Gamma Coronae Australis -> Alpha Coronae Australis -> Beta Coronae Australis -> HIP 94005 -> HIP 93542
+1. Gamma Coronae Australis -> Alpha Coronae Australis -> Beta Coronae Australis -> HIP 94005 -> HIP 90982
 
 ### Edges
 
-- Epsilon Coronae Australis -- Gamma Coronae Australis  |  イプシロン・みなみのかんむり -- ガンマ・みなみのかんむり
+- HIP 90982 -- HIP 94005  |  HIP 90982 -- HIP 94005
 - Gamma Coronae Australis -- Alpha Coronae Australis  |  ガンマ・みなみのかんむり -- アルファ・みなみのかんむり
+- HIP 94005 -- Beta Coronae Australis  |  HIP 94005 -- ベータ・みなみのかんむり
 - Alpha Coronae Australis -- Beta Coronae Australis  |  アルファ・みなみのかんむり -- ベータ・みなみのかんむり
-- Beta Coronae Australis -- HIP 94005  |  ベータ・みなみのかんむり -- HIP 94005
-- HIP 94005 -- HIP 93542  |  HIP 94005 -- HIP 93542
 
 ### Stars
 
-- Epsilon Coronae Australis / イプシロン・みなみのかんむり (HIP 93174, mag 4.87, RA 18.9787h, Dec -37.1074deg)
-- HIP 93542 / HIP 93542 (HIP 93542, mag 4.74, RA 19.0519h, Dec -42.0951deg) [no display name]
+- HIP 90982 / HIP 90982 (HIP 90982, mag 4.62, RA 18.5584h, Dec -42.3125deg) [no display name]
 - Gamma Coronae Australis / ガンマ・みなみのかんむり (HIP 93825, mag 4.23, RA 19.1069h, Dec -37.0634deg)
 - HIP 94005 / HIP 94005 (HIP 94005, mag 4.57, RA 19.1392h, Dec -40.4967deg) [no display name]
 - Alpha Coronae Australis / アルファ・みなみのかんむり (HIP 94114, mag 4.10, RA 19.1579h, Dec -37.9045deg)
@@ -894,52 +912,65 @@ Counts: stars 8, edges 8, polylines 1, branch points 2, stars without display na
 
 ## CRU -- Crux / みなみじゅうじ座
 
-Counts: stars 2, edges 1, polylines 1, branch points 0, stars without display names 0
+Counts: stars 4, edges 2, polylines 3, branch points 0, stars without display names 0
 
 ### Polylines
 
-1. Mimosa -> Delta Crucis
+1. Acrux -> Gacrux
+2. Mimosa -> Delta Crucis
+3. Mimosa -> Delta Crucis
 
 ### Edges
 
-- Mimosa -- Delta Crucis  |  ミモザ -- デルタ・クルキス
+- Delta Crucis -- Mimosa  |  デルタ・クルキス -- ミモザ
+- Acrux -- Gacrux  |  アクルックス -- ガクルックス
 
 ### Stars
 
 - Delta Crucis / デルタ・クルキス (HIP 59747, mag 2.79, RA 12.2524h, Dec -58.7489deg)
+- Acrux / アクルックス (HIP 60718, mag 0.77, RA 12.4433h, Dec -63.0991deg)
+- Gacrux / ガクルックス (HIP 61084, mag 1.63, RA 12.5194h, Dec -57.1132deg)
 - Mimosa / ミモザ (HIP 62434, mag 1.25, RA 12.7953h, Dec -59.6888deg)
 
 ## CYG -- Cygnus / はくちょう座
 
-Counts: stars 8, edges 7, polylines 1, branch points 1, stars without display names 3
+Counts: stars 10, edges 11, polylines 1, branch points 3, stars without display names 5
 
 ### Polylines
 
-1. Albireo -> HIP 98110 -> Sadr -> Gienah -> HIP 104732 -> Gienah -> Sadr -> Deneb -> Sadr -> Delta Cygni -> HIP 95853
+1. Deneb -> Sadr -> Gienah -> Sadr -> Albireo -> Sadr -> Delta Cygni -> HIP 95853 -> HIP 94779 -> HIP 95853 -> HIP 99848 -> Deneb -> HIP 103413 -> HIP 104732 -> Gienah
 
 ### Edges
 
-- Albireo -- HIP 98110  |  アルビレオ -- HIP 98110
-- HIP 98110 -- Sadr  |  HIP 98110 -- サドル
-- Sadr -- Gienah  |  サドル -- ギェナー
-- Gienah -- HIP 104732  |  ギェナー -- HIP 104732
+- HIP 94779 -- HIP 95853  |  HIP 94779 -- HIP 95853
+- HIP 95853 -- Delta Cygni  |  HIP 95853 -- デルタ・キグニ
+- HIP 95853 -- HIP 99848  |  HIP 95853 -- HIP 99848
+- Albireo -- Sadr  |  アルビレオ -- サドル
+- Delta Cygni -- Sadr  |  デルタ・キグニ -- サドル
+- HIP 99848 -- Deneb  |  HIP 99848 -- デネブ
 - Sadr -- Deneb  |  サドル -- デネブ
-- Sadr -- Delta Cygni  |  サドル -- デルタ・キグニ
-- Delta Cygni -- HIP 95853  |  デルタ・キグニ -- HIP 95853
+- Sadr -- Gienah  |  サドル -- ギェナー
+- Deneb -- HIP 103413  |  デネブ -- HIP 103413
+- Gienah -- HIP 104732  |  ギェナー -- HIP 104732
+- HIP 103413 -- HIP 104732  |  HIP 103413 -- HIP 104732
 
 ### Branch Points
 
+- HIP 95853 / HIP 95853 (HIP 95853): degree 3
 - Sadr / サドル (HIP 100453): degree 4
+- Deneb / デネブ (HIP 102098): degree 3
 
 ### Stars
 
+- HIP 94779 / HIP 94779 (HIP 94779, mag 3.80, RA 19.2850h, Dec 53.3685deg) [no display name]
 - HIP 95853 / HIP 95853 (HIP 95853, mag 3.76, RA 19.4951h, Dec 51.7298deg) [no display name]
 - Albireo / アルビレオ (HIP 95947, mag 3.08, RA 19.5120h, Dec 27.9597deg)
 - Delta Cygni / デルタ・キグニ (HIP 97165, mag 2.87, RA 19.7494h, Dec 45.1308deg)
-- HIP 98110 / HIP 98110 (HIP 98110, mag 3.89, RA 19.9384h, Dec 35.0834deg) [no display name]
+- HIP 99848 / HIP 99848 (HIP 99848, mag 3.96, RA 20.2579h, Dec 47.7142deg) [no display name]
 - Sadr / サドル (HIP 100453, mag 2.23, RA 20.3705h, Dec 40.2567deg)
 - Deneb / デネブ (HIP 102098, mag 1.25, RA 20.6905h, Dec 45.2803deg)
 - Gienah / ギェナー (HIP 102488, mag 2.48, RA 20.7702h, Dec 33.9703deg)
+- HIP 103413 / HIP 103413 (HIP 103413, mag 3.94, RA 20.9529h, Dec 41.1671deg) [no display name]
 - HIP 104732 / HIP 104732 (HIP 104732, mag 3.21, RA 21.2156h, Dec 30.2269deg) [no display name]
 
 ## DEL -- Delphinus / いるか座
@@ -1001,38 +1032,38 @@ Counts: stars 6, edges 5, polylines 1, branch points 1, stars without display na
 
 ## DRA -- Draco / りゅう座
 
-Counts: stars 16, edges 16, polylines 1, branch points 1, stars without display names 12
+Counts: stars 15, edges 15, polylines 1, branch points 3, stars without display names 11
 
 ### Polylines
 
-1. HIP 87585 -> Eltanin -> Rastaban -> HIP 85819 -> HIP 87585 -> HIP 94376 -> HIP 97433 -> HIP 89937 -> HIP 86614 -> HIP 83895 -> HIP 80331 -> HIP 78527 -> Edasich -> Thuban -> HIP 61281 -> HIP 56211 -> HIP 47193
+1. HIP 56211 -> HIP 61281 -> Thuban -> Edasich -> HIP 78527 -> HIP 80331 -> HIP 83895 -> HIP 89908 -> HIP 89937 -> HIP 89908 -> HIP 94376 -> HIP 97433 -> HIP 94376 -> HIP 87585 -> HIP 85829 -> Rastaban -> Eltanin -> HIP 87585 -> HIP 94376
 
 ### Edges
 
+- HIP 56211 -- HIP 61281  |  HIP 56211 -- HIP 61281
+- HIP 61281 -- Thuban  |  HIP 61281 -- トゥバン
+- Thuban -- Edasich  |  トゥバン -- エダシク
+- Edasich -- HIP 78527  |  エダシク -- HIP 78527
+- HIP 78527 -- HIP 80331  |  HIP 78527 -- HIP 80331
+- HIP 80331 -- HIP 83895  |  HIP 80331 -- HIP 83895
+- HIP 83895 -- HIP 89908  |  HIP 83895 -- HIP 89908
+- Rastaban -- HIP 85829  |  ラスタバン -- HIP 85829
+- Rastaban -- Eltanin  |  ラスタバン -- エルタニン
+- HIP 85829 -- HIP 87585  |  HIP 85829 -- HIP 87585
 - HIP 87585 -- Eltanin  |  HIP 87585 -- エルタニン
-- Eltanin -- Rastaban  |  エルタニン -- ラスタバン
-- Rastaban -- HIP 85819  |  ラスタバン -- HIP 85819
-- HIP 85819 -- HIP 87585  |  HIP 85819 -- HIP 87585
 - HIP 87585 -- HIP 94376  |  HIP 87585 -- HIP 94376
+- HIP 89908 -- HIP 89937  |  HIP 89908 -- HIP 89937
+- HIP 89908 -- HIP 94376  |  HIP 89908 -- HIP 94376
 - HIP 94376 -- HIP 97433  |  HIP 94376 -- HIP 97433
-- HIP 97433 -- HIP 89937  |  HIP 97433 -- HIP 89937
-- HIP 89937 -- HIP 86614  |  HIP 89937 -- HIP 86614
-- HIP 86614 -- HIP 83895  |  HIP 86614 -- HIP 83895
-- HIP 83895 -- HIP 80331  |  HIP 83895 -- HIP 80331
-- HIP 80331 -- HIP 78527  |  HIP 80331 -- HIP 78527
-- HIP 78527 -- Edasich  |  HIP 78527 -- エダシク
-- Edasich -- Thuban  |  エダシク -- トゥバン
-- Thuban -- HIP 61281  |  トゥバン -- HIP 61281
-- HIP 61281 -- HIP 56211  |  HIP 61281 -- HIP 56211
-- HIP 56211 -- HIP 47193  |  HIP 56211 -- HIP 47193
 
 ### Branch Points
 
 - HIP 87585 / HIP 87585 (HIP 87585): degree 3
+- HIP 89908 / HIP 89908 (HIP 89908): degree 3
+- HIP 94376 / HIP 94376 (HIP 94376): degree 3
 
 ### Stars
 
-- HIP 47193 / HIP 47193 (HIP 47193, mag 4.28, RA 9.6182h, Dec 81.3264deg) [no display name]
 - HIP 56211 / HIP 56211 (HIP 56211, mag 3.82, RA 11.5234h, Dec 69.3311deg) [no display name]
 - HIP 61281 / HIP 61281 (HIP 61281, mag 3.85, RA 12.5581h, Dec 69.7882deg) [no display name]
 - Thuban / トゥバン (HIP 68756, mag 3.65, RA 14.0732h, Dec 64.3759deg)
@@ -1041,34 +1072,32 @@ Counts: stars 16, edges 16, polylines 1, branch points 1, stars without display 
 - HIP 80331 / HIP 80331 (HIP 80331, mag 2.73, RA 16.3999h, Dec 61.5142deg) [no display name]
 - HIP 83895 / HIP 83895 (HIP 83895, mag 3.17, RA 17.1464h, Dec 65.7147deg) [no display name]
 - Rastaban / ラスタバン (HIP 85670, mag 2.79, RA 17.5072h, Dec 52.3014deg)
-- HIP 85819 / HIP 85819 (HIP 85819, mag 4.89, RA 17.5363h, Dec 55.1842deg) [no display name]
-- HIP 86614 / HIP 86614 (HIP 86614, mag 4.57, RA 17.6990h, Dec 72.1488deg) [no display name]
+- HIP 85829 / HIP 85829 (HIP 85829, mag 4.86, RA 17.5378h, Dec 55.1730deg) [no display name]
 - HIP 87585 / HIP 87585 (HIP 87585, mag 3.73, RA 17.8921h, Dec 56.8726deg) [no display name]
 - Eltanin / エルタニン (HIP 87833, mag 2.24, RA 17.9434h, Dec 51.4889deg)
+- HIP 89908 / HIP 89908 (HIP 89908, mag 4.22, RA 18.3460h, Dec 71.3378deg) [no display name]
 - HIP 89937 / HIP 89937 (HIP 89937, mag 3.55, RA 18.3507h, Dec 72.7328deg) [no display name]
 - HIP 94376 / HIP 94376 (HIP 94376, mag 3.07, RA 19.2092h, Dec 67.6615deg) [no display name]
 - HIP 97433 / HIP 97433 (HIP 97433, mag 3.84, RA 19.8028h, Dec 70.2679deg) [no display name]
 
 ## EQU -- Equuleus / こうま座
 
-Counts: stars 4, edges 3, polylines 1, branch points 0, stars without display names 0
+Counts: stars 3, edges 2, polylines 1, branch points 0, stars without display names 0
 
 ### Polylines
 
-1. Alpha Equulei -> Beta Equulei -> Delta Equulei -> Gamma Equulei
+1. Alpha Equulei -> Delta Equulei -> Gamma Equulei
 
 ### Edges
 
-- Alpha Equulei -- Beta Equulei  |  アルファ・こうま -- ベータ・こうま
-- Beta Equulei -- Delta Equulei  |  ベータ・こうま -- デルタ・こうま
-- Delta Equulei -- Gamma Equulei  |  デルタ・こうま -- ガンマ・こうま
+- Gamma Equulei -- Delta Equulei  |  ガンマ・こうま -- デルタ・こうま
+- Delta Equulei -- Alpha Equulei  |  デルタ・こうま -- アルファ・こうま
 
 ### Stars
 
 - Gamma Equulei / ガンマ・こうま (HIP 104521, mag 4.69, RA 21.1724h, Dec 10.1316deg)
 - Delta Equulei / デルタ・こうま (HIP 104858, mag 4.49, RA 21.2413h, Dec 10.0069deg)
 - Alpha Equulei / アルファ・こうま (HIP 104987, mag 3.92, RA 21.2637h, Dec 5.2479deg)
-- Beta Equulei / ベータ・こうま (HIP 105570, mag 5.16, RA 21.3815h, Dec 6.8111deg)
 
 ## ERI -- Eridanus / エリダヌス座
 
@@ -1222,27 +1251,26 @@ Counts: stars 18, edges 17, polylines 1, branch points 4, stars without display 
 
 ## GRU -- Grus / つる座
 
-Counts: stars 9, edges 8, polylines 1, branch points 2, stars without display names 3
+Counts: stars 7, edges 7, polylines 1, branch points 2, stars without display names 2
 
 ### Polylines
 
-1. Aldhanab -> HIP 109111 -> Delta Gruis -> Tiaki -> Alnair -> Tiaki -> Epsilon Gruis -> HIP 113638 -> Epsilon Gruis -> Iota Gruis -> HIP 114131
+1. Aldhanab -> HIP 109111 -> Delta Gruis -> Alnair -> Tiaki -> Delta Gruis -> Tiaki -> Epsilon Gruis -> HIP 113638
 
 ### Edges
 
 - Aldhanab -- HIP 109111  |  アルダナブ -- HIP 109111
 - HIP 109111 -- Delta Gruis  |  HIP 109111 -- デルタ・つる
+- Alnair -- Delta Gruis  |  アルナイル -- デルタ・つる
+- Alnair -- Tiaki  |  アルナイル -- ティアキ
 - Delta Gruis -- Tiaki  |  デルタ・つる -- ティアキ
-- Tiaki -- Alnair  |  ティアキ -- アルナイル
 - Tiaki -- Epsilon Gruis  |  ティアキ -- イプシロン・つる
 - Epsilon Gruis -- HIP 113638  |  イプシロン・つる -- HIP 113638
-- Epsilon Gruis -- Iota Gruis  |  イプシロン・つる -- イオタ・つる
-- Iota Gruis -- HIP 114131  |  イオタ・つる -- HIP 114131
 
 ### Branch Points
 
+- Delta Gruis / デルタ・つる (HIP 110997): degree 3
 - Tiaki / ティアキ (HIP 112122): degree 3
-- Epsilon Gruis / イプシロン・つる (HIP 112623): degree 3
 
 ### Stars
 
@@ -1253,50 +1281,59 @@ Counts: stars 9, edges 8, polylines 1, branch points 2, stars without display na
 - Tiaki / ティアキ (HIP 112122, mag 2.07, RA 22.7111h, Dec -46.8846deg)
 - Epsilon Gruis / イプシロン・つる (HIP 112623, mag 3.49, RA 22.8092h, Dec -51.3169deg)
 - HIP 113638 / HIP 113638 (HIP 113638, mag 4.11, RA 23.0147h, Dec -52.7541deg) [no display name]
-- HIP 114131 / HIP 114131 (HIP 114131, mag 4.28, RA 23.1147h, Dec -43.5204deg) [no display name]
-- Iota Gruis / イオタ・つる (HIP 114421, mag 3.88, RA 23.1726h, Dec -45.2467deg)
 
 ## HER -- Hercules / ヘルクレス座
 
-Counts: stars 13, edges 13, polylines 1, branch points 4, stars without display names 7
+Counts: stars 17, edges 18, polylines 1, branch points 6, stars without display names 9
 
 ### Polylines
 
-1. Epsilon Herculis -> Pi Herculis -> HIP 87808 -> HIP 86414 -> HIP 87808 -> Pi Herculis -> Eta Herculis -> HIP 81126 -> HIP 79992 -> HIP 81126 -> Eta Herculis -> Zeta Herculis -> Kornephoros -> Zeta Herculis -> Epsilon Herculis -> Maasym -> HIP 86974 -> HIP 87933 -> HIP 88794
+1. Maasym -> Rasalgethi -> Kornephoros -> Sarin -> Kornephoros -> Zeta Herculis -> Epsilon Herculis -> Zeta Herculis -> Eta Herculis -> HIP 81126 -> HIP 79992 -> HIP 81126 -> Eta Herculis -> Pi Herculis -> HIP 85112 -> HIP 87808 -> HIP 86414 -> HIP 87808 -> HIP 85112 -> Pi Herculis -> Epsilon Herculis -> Maasym -> HIP 85693 -> HIP 86974 -> HIP 87933 -> HIP 88794
 
 ### Edges
 
-- Epsilon Herculis -- Pi Herculis  |  イプシロン・ヘルクレス -- パイ・ヘルクレス
-- Pi Herculis -- HIP 87808  |  パイ・ヘルクレス -- HIP 87808
-- HIP 87808 -- HIP 86414  |  HIP 87808 -- HIP 86414
-- Pi Herculis -- Eta Herculis  |  パイ・ヘルクレス -- イータ・ヘルクレス
-- Eta Herculis -- HIP 81126  |  イータ・ヘルクレス -- HIP 81126
-- HIP 81126 -- HIP 79992  |  HIP 81126 -- HIP 79992
-- Eta Herculis -- Zeta Herculis  |  イータ・ヘルクレス -- ゼータ・ヘルクレス
-- Zeta Herculis -- Kornephoros  |  ゼータ・ヘルクレス -- コルネフォロス
+- HIP 79992 -- HIP 81126  |  HIP 79992 -- HIP 81126
+- Sarin -- Kornephoros  |  サリン -- コルネフォロス
+- Kornephoros -- Zeta Herculis  |  コルネフォロス -- ゼータ・ヘルクレス
+- Kornephoros -- Rasalgethi  |  コルネフォロス -- ラスアルゲティ
+- HIP 81126 -- Eta Herculis  |  HIP 81126 -- イータ・ヘルクレス
+- Zeta Herculis -- Eta Herculis  |  ゼータ・ヘルクレス -- イータ・ヘルクレス
 - Zeta Herculis -- Epsilon Herculis  |  ゼータ・ヘルクレス -- イプシロン・ヘルクレス
+- Eta Herculis -- Pi Herculis  |  イータ・ヘルクレス -- パイ・ヘルクレス
 - Epsilon Herculis -- Maasym  |  イプシロン・ヘルクレス -- マーシム
-- Maasym -- HIP 86974  |  マーシム -- HIP 86974
+- Epsilon Herculis -- Pi Herculis  |  イプシロン・ヘルクレス -- パイ・ヘルクレス
+- Rasalgethi -- Maasym  |  ラスアルゲティ -- マーシム
+- Maasym -- HIP 85693  |  マーシム -- HIP 85693
+- Pi Herculis -- HIP 85112  |  パイ・ヘルクレス -- HIP 85112
+- HIP 85112 -- HIP 87808  |  HIP 85112 -- HIP 87808
+- HIP 85693 -- HIP 86974  |  HIP 85693 -- HIP 86974
+- HIP 86414 -- HIP 87808  |  HIP 86414 -- HIP 87808
 - HIP 86974 -- HIP 87933  |  HIP 86974 -- HIP 87933
 - HIP 87933 -- HIP 88794  |  HIP 87933 -- HIP 88794
 
 ### Branch Points
 
+- Kornephoros / コルネフォロス (HIP 80816): degree 3
 - Zeta Herculis / ゼータ・ヘルクレス (HIP 81693): degree 3
 - Eta Herculis / イータ・ヘルクレス (HIP 81833): degree 3
 - Epsilon Herculis / イプシロン・ヘルクレス (HIP 83207): degree 3
+- Maasym / マーシム (HIP 84379): degree 3
 - Pi Herculis / パイ・ヘルクレス (HIP 84380): degree 3
 
 ### Stars
 
 - HIP 79992 / HIP 79992 (HIP 79992, mag 3.91, RA 16.3290h, Dec 46.3134deg) [no display name]
+- Sarin / サリン (HIP 80170, mag 3.13, RA 16.3290h, Dec 19.1530deg)
 - Kornephoros / コルネフォロス (HIP 80816, mag 2.77, RA 16.5037h, Dec 21.4896deg)
 - HIP 81126 / HIP 81126 (HIP 81126, mag 4.20, RA 16.5684h, Dec 42.4370deg) [no display name]
 - Zeta Herculis / ゼータ・ヘルクレス (HIP 81693, mag 2.81, RA 16.6881h, Dec 31.6031deg)
 - Eta Herculis / イータ・ヘルクレス (HIP 81833, mag 3.48, RA 16.7149h, Dec 38.9223deg)
 - Epsilon Herculis / イプシロン・ヘルクレス (HIP 83207, mag 3.91, RA 17.0048h, Dec 30.9264deg)
+- Rasalgethi / ラスアルゲティ (HIP 84345, mag 3.35, RA 17.2441h, Dec 14.3903deg)
 - Maasym / マーシム (HIP 84379, mag 4.41, RA 17.2505h, Dec 24.8392deg)
 - Pi Herculis / パイ・ヘルクレス (HIP 84380, mag 3.16, RA 17.2508h, Dec 36.8092deg)
+- HIP 85112 / HIP 85112 (HIP 85112, mag 4.15, RA 17.3947h, Dec 37.1459deg) [no display name]
+- HIP 85693 / HIP 85693 (HIP 85693, mag 4.41, RA 17.5123h, Dec 26.1106deg) [no display name]
 - HIP 86414 / HIP 86414 (HIP 86414, mag 3.82, RA 17.6577h, Dec 46.0063deg) [no display name]
 - HIP 86974 / HIP 86974 (HIP 86974, mag 3.42, RA 17.7743h, Dec 27.7207deg) [no display name]
 - HIP 87808 / HIP 87808 (HIP 87808, mag 3.86, RA 17.9376h, Dec 37.2505deg) [no display name]
@@ -1305,31 +1342,27 @@ Counts: stars 13, edges 13, polylines 1, branch points 4, stars without display 
 
 ## HOR -- Horologium / とけい座
 
-Counts: stars 8, edges 7, polylines 1, branch points 0, stars without display names 4
+Counts: stars 6, edges 5, polylines 1, branch points 0, stars without display names 3
 
 ### Polylines
 
-1. Beta Horologii -> HIP 14240 -> HIP 12484 -> Eta Horologii -> HIP 12653 -> HIP 13502 -> Alpha Horologii -> Delta Horologii
+1. Alpha Horologii -> HIP 12653 -> Eta Horologii -> HIP 12484 -> HIP 14240 -> Beta Horologii
 
 ### Edges
 
-- Beta Horologii -- HIP 14240  |  ベータ・とけい -- HIP 14240
-- HIP 14240 -- HIP 12484  |  HIP 14240 -- HIP 12484
-- HIP 12484 -- Eta Horologii  |  HIP 12484 -- イータ・とけい
+- Eta Horologii -- HIP 12484  |  イータ・とけい -- HIP 12484
 - Eta Horologii -- HIP 12653  |  イータ・とけい -- HIP 12653
-- HIP 12653 -- HIP 13502  |  HIP 12653 -- HIP 13502
-- HIP 13502 -- Alpha Horologii  |  HIP 13502 -- アルファ・とけい
-- Alpha Horologii -- Delta Horologii  |  アルファ・とけい -- デルタ・とけい
+- HIP 12484 -- HIP 14240  |  HIP 12484 -- HIP 14240
+- HIP 12653 -- Alpha Horologii  |  HIP 12653 -- アルファ・とけい
+- Beta Horologii -- HIP 14240  |  ベータ・とけい -- HIP 14240
 
 ### Stars
 
 - Eta Horologii / イータ・とけい (HIP 12225, mag 5.31, RA 2.6234h, Dec -52.5431deg)
 - HIP 12484 / HIP 12484 (HIP 12484, mag 5.21, RA 2.6777h, Dec -54.5499deg) [no display name]
 - HIP 12653 / HIP 12653 (HIP 12653, mag 5.40, RA 2.7093h, Dec -50.8003deg) [no display name]
-- HIP 13502 / HIP 13502 (HIP 13502, mag 7.22, RA 2.8980h, Dec -49.8896deg) [no display name]
 - Beta Horologii / ベータ・とけい (HIP 13884, mag 4.98, RA 2.9793h, Dec -64.0713deg)
 - HIP 14240 / HIP 14240 (HIP 14240, mag 5.12, RA 3.0602h, Dec -59.7378deg) [no display name]
-- Delta Horologii / デルタ・とけい (HIP 19515, mag 4.93, RA 4.1807h, Dec -41.9937deg)
 - Alpha Horologii / アルファ・とけい (HIP 19747, mag 3.86, RA 4.2334h, Dec -42.2944deg)
 
 ## HYA -- Hydra / うみへび座
@@ -1390,75 +1423,71 @@ Counts: stars 4, edges 4, polylines 1, branch points 0, stars without display na
 
 ### Polylines
 
-1. Alpha Hydri -> HIP 12394 -> Gamma Hydri -> Beta Hydri -> Alpha Hydri
+1. Beta Hydri -> Gamma Hydri -> HIP 11001 -> Alpha Hydri -> Beta Hydri
 
 ### Edges
 
-- Alpha Hydri -- HIP 12394  |  アルファ・みずへび -- HIP 12394
-- HIP 12394 -- Gamma Hydri  |  HIP 12394 -- ガンマ・みずへび
-- Gamma Hydri -- Beta Hydri  |  ガンマ・みずへび -- ベータ・みずへび
 - Beta Hydri -- Alpha Hydri  |  ベータ・みずへび -- アルファ・みずへび
+- Beta Hydri -- Gamma Hydri  |  ベータ・みずへび -- ガンマ・みずへび
+- Alpha Hydri -- HIP 11001  |  アルファ・みずへび -- HIP 11001
+- HIP 11001 -- Gamma Hydri  |  HIP 11001 -- ガンマ・みずへび
 
 ### Stars
 
 - Beta Hydri / ベータ・みずへび (HIP 2021, mag 2.80, RA 0.4276h, Dec -77.2542deg)
 - Alpha Hydri / アルファ・みずへび (HIP 9236, mag 2.86, RA 1.9795h, Dec -61.5699deg)
-- HIP 12394 / HIP 12394 (HIP 12394, mag 4.12, RA 2.6598h, Dec -68.2669deg) [no display name]
+- HIP 11001 / HIP 11001 (HIP 11001, mag 4.08, RA 2.3625h, Dec -68.6594deg) [no display name]
 - Gamma Hydri / ガンマ・みずへび (HIP 17678, mag 3.26, RA 3.7873h, Dec -74.2390deg)
 
 ## IND -- Indus / インディアン座
 
-Counts: stars 6, edges 5, polylines 1, branch points 1, stars without display names 2
+Counts: stars 5, edges 5, polylines 1, branch points 0, stars without display names 1
 
 ### Polylines
 
-1. Alpha Indi -> Theta Indi -> Delta Indi -> HIP 108870 -> Delta Indi -> Theta Indi -> HIP 104085 -> Beta Indi
+1. Beta Indi -> HIP 102333 -> Alpha Indi -> Theta Indi -> Delta Indi -> Beta Indi
 
 ### Edges
 
+- Alpha Indi -- HIP 102333  |  アルファ・インディアン -- HIP 102333
 - Alpha Indi -- Theta Indi  |  アルファ・インディアン -- シータ・インディアン
+- HIP 102333 -- Beta Indi  |  HIP 102333 -- ベータ・インディアン
+- Beta Indi -- Delta Indi  |  ベータ・インディアン -- デルタ・インディアン
 - Theta Indi -- Delta Indi  |  シータ・インディアン -- デルタ・インディアン
-- Delta Indi -- HIP 108870  |  デルタ・インディアン -- HIP 108870
-- Theta Indi -- HIP 104085  |  シータ・インディアン -- HIP 104085
-- HIP 104085 -- Beta Indi  |  HIP 104085 -- ベータ・インディアン
-
-### Branch Points
-
-- Theta Indi / シータ・インディアン (HIP 105319): degree 3
 
 ### Stars
 
 - Alpha Indi / アルファ・インディアン (HIP 101772, mag 3.11, RA 20.6261h, Dec -47.2915deg)
+- HIP 102333 / HIP 102333 (HIP 102333, mag 4.51, RA 20.7340h, Dec -51.9210deg) [no display name]
 - Beta Indi / ベータ・インディアン (HIP 103227, mag 3.67, RA 20.9135h, Dec -58.4541deg)
-- HIP 104085 / HIP 104085 (HIP 104085, mag 5.17, RA 21.0873h, Dec -54.7270deg) [no display name]
 - Theta Indi / シータ・インディアン (HIP 105319, mag 4.39, RA 21.3311h, Dec -53.4494deg)
 - Delta Indi / デルタ・インディアン (HIP 108431, mag 4.40, RA 21.9653h, Dec -54.9926deg)
-- HIP 108870 / HIP 108870 (HIP 108870, mag 4.69, RA 22.0555h, Dec -56.7860deg) [no display name]
 
 ## LAC -- Lacerta / とかげ座 REVIEW PRIORITY
 
-Counts: stars 9, edges 9, polylines 1, branch points 2, stars without display names 4
+Counts: stars 9, edges 10, polylines 1, branch points 2, stars without display names 4
 
 ### Polylines
 
-1. 1 Lacertae -> HIP 109754 -> HIP 111104 -> 11 Lacertae -> HIP 111104 -> HIP 110351 -> HIP 111104 -> 5 Lacertae -> HIP 110609 -> Beta Lacertae -> Alpha Lacertae -> 5 Lacertae
+1. 5 Lacertae -> Alpha Lacertae -> Beta Lacertae -> HIP 110609 -> 5 Lacertae -> HIP 110351 -> HIP 111104 -> 11 Lacertae -> HIP 111104 -> 11 Lacertae -> 5 Lacertae -> 11 Lacertae -> HIP 111104 -> HIP 109754 -> 1 Lacertae
 
 ### Edges
 
-- 1 Lacertae -- HIP 109754  |  1・とかげ -- HIP 109754
+- HIP 109754 -- 1 Lacertae  |  HIP 109754 -- 1・とかげ
 - HIP 109754 -- HIP 111104  |  HIP 109754 -- HIP 111104
-- HIP 111104 -- 11 Lacertae  |  HIP 111104 -- 11・とかげ
-- HIP 111104 -- HIP 110351  |  HIP 111104 -- HIP 110351
-- HIP 111104 -- 5 Lacertae  |  HIP 111104 -- 5・とかげ
-- 5 Lacertae -- HIP 110609  |  5・とかげ -- HIP 110609
-- HIP 110609 -- Beta Lacertae  |  HIP 110609 -- ベータ・とかげ
+- HIP 110351 -- 5 Lacertae  |  HIP 110351 -- 5・とかげ
+- HIP 110351 -- HIP 111104  |  HIP 110351 -- HIP 111104
+- Beta Lacertae -- HIP 110609  |  ベータ・とかげ -- HIP 110609
 - Beta Lacertae -- Alpha Lacertae  |  ベータ・とかげ -- アルファ・とかげ
-- Alpha Lacertae -- 5 Lacertae  |  アルファ・とかげ -- 5・とかげ
+- HIP 110609 -- 5 Lacertae  |  HIP 110609 -- 5・とかげ
+- 5 Lacertae -- Alpha Lacertae  |  5・とかげ -- アルファ・とかげ
+- 5 Lacertae -- 11 Lacertae  |  5・とかげ -- 11・とかげ
+- HIP 111104 -- 11 Lacertae  |  HIP 111104 -- 11・とかげ
 
 ### Branch Points
 
-- 5 Lacertae / 5・とかげ (HIP 111022): degree 3
-- HIP 111104 / HIP 111104 (HIP 111104): degree 4
+- 5 Lacertae / 5・とかげ (HIP 111022): degree 4
+- HIP 111104 / HIP 111104 (HIP 111104): degree 3
 
 ### Stars
 
@@ -1518,74 +1547,100 @@ Counts: stars 12, edges 12, polylines 1, branch points 3, stars without display 
 
 ## LMI -- Leo Minor / こじし座
 
-Counts: stars 3, edges 2, polylines 1, branch points 0, stars without display names 0
+Counts: stars 5, edges 5, polylines 1, branch points 1, stars without display names 2
 
 ### Polylines
 
-1. Praecipua -> Beta Leonis Minoris -> 21 Leonis Minoris
+1. HIP 46952 -> 21 Leonis Minoris -> Beta Leonis Minoris -> Praecipua -> HIP 51056 -> 21 Leonis Minoris
 
 ### Edges
 
-- Praecipua -- Beta Leonis Minoris  |  プレキプア -- ベータ・こじし
-- Beta Leonis Minoris -- 21 Leonis Minoris  |  ベータ・こじし -- 21・こじし
+- HIP 46952 -- 21 Leonis Minoris  |  HIP 46952 -- 21・こじし
+- 21 Leonis Minoris -- HIP 51056  |  21・こじし -- HIP 51056
+- 21 Leonis Minoris -- Beta Leonis Minoris  |  21・こじし -- ベータ・こじし
+- HIP 51056 -- Praecipua  |  HIP 51056 -- プレキプア
+- Beta Leonis Minoris -- Praecipua  |  ベータ・こじし -- プレキプア
+
+### Branch Points
+
+- 21 Leonis Minoris / 21・こじし (HIP 49593): degree 3
 
 ### Stars
 
+- HIP 46952 / HIP 46952 (HIP 46952, mag 4.54, RA 9.5704h, Dec 36.3976deg) [no display name]
 - 21 Leonis Minoris / 21・こじし (HIP 49593, mag 4.48, RA 10.1238h, Dec 35.2447deg)
+- HIP 51056 / HIP 51056 (HIP 51056, mag 4.72, RA 10.4319h, Dec 33.7961deg) [no display name]
 - Beta Leonis Minoris / ベータ・こじし (HIP 51233, mag 4.21, RA 10.4647h, Dec 36.7072deg)
 - Praecipua / プレキプア (HIP 53229, mag 3.83, RA 10.8885h, Dec 34.2149deg)
 
 ## LEP -- Lepus / うさぎ座
 
-Counts: stars 6, edges 5, polylines 1, branch points 1, stars without display names 1
+Counts: stars 11, edges 12, polylines 3, branch points 3, stars without display names 4
 
 ### Polylines
 
-1. Epsilon Leporis -> Nihal -> Arneb -> Mu Leporis -> Arneb -> Zeta Leporis -> HIP 28103
+1. Epsilon Leporis -> Mu Leporis -> Arneb -> Nihal -> Epsilon Leporis
+2. HIP 24845 -> Mu Leporis -> HIP 24327
+3. Nihal -> Gamma Leporis -> Delta Leporis -> HIP 28910 -> HIP 28103 -> Zeta Leporis -> Arneb
 
 ### Edges
 
+- Epsilon Leporis -- Mu Leporis  |  イプシロン・うさぎ -- ミュー・うさぎ
 - Epsilon Leporis -- Nihal  |  イプシロン・うさぎ -- ニハル
+- Mu Leporis -- HIP 24327  |  ミュー・うさぎ -- HIP 24327
+- Mu Leporis -- HIP 24845  |  ミュー・うさぎ -- HIP 24845
+- Mu Leporis -- Arneb  |  ミュー・うさぎ -- アルネブ
 - Nihal -- Arneb  |  ニハル -- アルネブ
-- Arneb -- Mu Leporis  |  アルネブ -- ミュー・うさぎ
+- Nihal -- Gamma Leporis  |  ニハル -- ガンマ・うさぎ
 - Arneb -- Zeta Leporis  |  アルネブ -- ゼータ・うさぎ
+- Gamma Leporis -- Delta Leporis  |  ガンマ・うさぎ -- デルタ・うさぎ
 - Zeta Leporis -- HIP 28103  |  ゼータ・うさぎ -- HIP 28103
+- Delta Leporis -- HIP 28910  |  デルタ・うさぎ -- HIP 28910
+- HIP 28103 -- HIP 28910  |  HIP 28103 -- HIP 28910
 
 ### Branch Points
 
+- Mu Leporis / ミュー・うさぎ (HIP 24305): degree 4
+- Nihal / ニハル (HIP 25606): degree 3
 - Arneb / アルネブ (HIP 25985): degree 3
 
 ### Stars
 
 - Epsilon Leporis / イプシロン・うさぎ (HIP 23685, mag 3.19, RA 5.0910h, Dec -22.3710deg)
 - Mu Leporis / ミュー・うさぎ (HIP 24305, mag 3.29, RA 5.2155h, Dec -16.2055deg)
+- HIP 24327 / HIP 24327 (HIP 24327, mag 4.36, RA 5.2205h, Dec -12.9413deg) [no display name]
+- HIP 24845 / HIP 24845 (HIP 24845, mag 4.29, RA 5.3263h, Dec -13.1768deg) [no display name]
 - Nihal / ニハル (HIP 25606, mag 2.81, RA 5.4708h, Dec -20.7594deg)
 - Arneb / アルネブ (HIP 25985, mag 2.58, RA 5.5455h, Dec -17.8223deg)
+- Gamma Leporis / ガンマ・うさぎ (HIP 27072, mag 3.59, RA 5.7411h, Dec -22.4484deg)
 - Zeta Leporis / ゼータ・うさぎ (HIP 27288, mag 3.55, RA 5.7826h, Dec -14.8219deg)
+- Delta Leporis / デルタ・うさぎ (HIP 27654, mag 3.76, RA 5.8554h, Dec -20.8791deg)
 - HIP 28103 / HIP 28103 (HIP 28103, mag 3.71, RA 5.9401h, Dec -14.1677deg) [no display name]
+- HIP 28910 / HIP 28910 (HIP 28910, mag 4.67, RA 6.1026h, Dec -14.9353deg) [no display name]
 
 ## LIB -- Libra / てんびん座
 
-Counts: stars 7, edges 7, polylines 1, branch points 2, stars without display names 4
+Counts: stars 6, edges 6, polylines 3, branch points 2, stars without display names 3
 
 ### Polylines
 
-1. HIP 77853 -> HIP 76333 -> Zubeneschamali -> Zubenelgenubi -> Brachium -> Zubeneschamali -> Brachium -> HIP 76470 -> HIP 76600
+1. Zubenelgenubi -> Zubeneschamali
+2. Zubenelgenubi -> Brachium
+3. Zubeneschamali -> HIP 76333 -> Zubenelgenubi -> HIP 76333 -> HIP 76470 -> HIP 76600
 
 ### Edges
 
-- HIP 77853 -- HIP 76333  |  HIP 77853 -- HIP 76333
-- HIP 76333 -- Zubeneschamali  |  HIP 76333 -- ズベンエスカマリ
-- Zubeneschamali -- Zubenelgenubi  |  ズベンエスカマリ -- ズベンエルゲヌビ
 - Zubenelgenubi -- Brachium  |  ズベンエルゲヌビ -- ブラキウム
-- Brachium -- Zubeneschamali  |  ブラキウム -- ズベンエスカマリ
-- Brachium -- HIP 76470  |  ブラキウム -- HIP 76470
+- Zubenelgenubi -- Zubeneschamali  |  ズベンエルゲヌビ -- ズベンエスカマリ
+- Zubenelgenubi -- HIP 76333  |  ズベンエルゲヌビ -- HIP 76333
+- Zubeneschamali -- HIP 76333  |  ズベンエスカマリ -- HIP 76333
+- HIP 76333 -- HIP 76470  |  HIP 76333 -- HIP 76470
 - HIP 76470 -- HIP 76600  |  HIP 76470 -- HIP 76600
 
 ### Branch Points
 
-- Brachium / ブラキウム (HIP 73714): degree 3
-- Zubeneschamali / ズベンエスカマリ (HIP 74785): degree 3
+- Zubenelgenubi / ズベンエルゲヌビ (HIP 72622): degree 3
+- HIP 76333 / HIP 76333 (HIP 76333): degree 3
 
 ### Stars
 
@@ -1595,40 +1650,38 @@ Counts: stars 7, edges 7, polylines 1, branch points 2, stars without display na
 - HIP 76333 / HIP 76333 (HIP 76333, mag 3.91, RA 15.5921h, Dec -14.7895deg) [no display name]
 - HIP 76470 / HIP 76470 (HIP 76470, mag 3.60, RA 15.6171h, Dec -28.1351deg) [no display name]
 - HIP 76600 / HIP 76600 (HIP 76600, mag 3.66, RA 15.6443h, Dec -29.7778deg) [no display name]
-- HIP 77853 / HIP 77853 (HIP 77853, mag 4.13, RA 15.8971h, Dec -16.7293deg) [no display name]
 
 ## LUP -- Lupus / おおかみ座 REVIEW PRIORITY
 
-Counts: stars 11, edges 11, polylines 1, branch points 2, stars without display names 6
+Counts: stars 9, edges 10, polylines 1, branch points 3, stars without display names 4
 
 ### Polylines
 
-1. HIP 78918 -> HIP 78384 -> Gamma Lupi -> HIP 75264 -> HIP 74376 -> HIP 74395 -> Men -> Beta Lupi -> Delta Lupi -> Gamma Lupi -> Delta Lupi -> Upsilon Librae -> HIP 77634
+1. Men -> HIP 74395 -> HIP 75264 -> Gamma Lupi -> Delta Lupi -> Beta Lupi -> Delta Lupi -> Gamma Lupi -> HIP 78384 -> Upsilon Librae -> HIP 77634 -> HIP 78384 -> HIP 74395
 
 ### Edges
 
-- HIP 78918 -- HIP 78384  |  HIP 78918 -- HIP 78384
-- HIP 78384 -- Gamma Lupi  |  HIP 78384 -- ガンマ・おおかみ
-- Gamma Lupi -- HIP 75264  |  ガンマ・おおかみ -- HIP 75264
-- HIP 75264 -- HIP 74376  |  HIP 75264 -- HIP 74376
-- HIP 74376 -- HIP 74395  |  HIP 74376 -- HIP 74395
-- HIP 74395 -- Men  |  HIP 74395 -- メン
-- Men -- Beta Lupi  |  メン -- ベータ・おおかみ
+- Men -- HIP 74395  |  メン -- HIP 74395
 - Beta Lupi -- Delta Lupi  |  ベータ・おおかみ -- デルタ・おおかみ
+- HIP 74395 -- HIP 75264  |  HIP 74395 -- HIP 75264
+- HIP 74395 -- HIP 78384  |  HIP 74395 -- HIP 78384
 - Delta Lupi -- Gamma Lupi  |  デルタ・おおかみ -- ガンマ・おおかみ
-- Delta Lupi -- Upsilon Librae  |  デルタ・おおかみ -- ウプシロン・てんびん
 - Upsilon Librae -- HIP 77634  |  ウプシロン・てんびん -- HIP 77634
+- Upsilon Librae -- HIP 78384  |  ウプシロン・てんびん -- HIP 78384
+- HIP 75264 -- Gamma Lupi  |  HIP 75264 -- ガンマ・おおかみ
+- Gamma Lupi -- HIP 78384  |  ガンマ・おおかみ -- HIP 78384
+- HIP 77634 -- HIP 78384  |  HIP 77634 -- HIP 78384
 
 ### Branch Points
 
-- Delta Lupi / デルタ・おおかみ (HIP 75141): degree 3
+- HIP 74395 / HIP 74395 (HIP 74395): degree 3
 - Gamma Lupi / ガンマ・おおかみ (HIP 76297): degree 3
+- HIP 78384 / HIP 78384 (HIP 78384): degree 4
 
 ### Stars
 
 - Men / メン (HIP 71860, mag 2.30, RA 14.6988h, Dec -47.3882deg)
 - Beta Lupi / ベータ・おおかみ (HIP 73273, mag 2.68, RA 14.9755h, Dec -43.1339deg)
-- HIP 74376 / HIP 74376 (HIP 74376, mag 3.88, RA 15.1989h, Dec -48.7378deg) [no display name]
 - HIP 74395 / HIP 74395 (HIP 74395, mag 3.41, RA 15.2048h, Dec -52.0992deg) [no display name]
 - Delta Lupi / デルタ・おおかみ (HIP 75141, mag 3.22, RA 15.3027h, Dec -40.6475deg)
 - Upsilon Librae / ウプシロン・てんびん (HIP 75177, mag 3.60, RA 15.3089h, Dec -28.1351deg)
@@ -1636,7 +1689,6 @@ Counts: stars 11, edges 11, polylines 1, branch points 2, stars without display 
 - Gamma Lupi / ガンマ・おおかみ (HIP 76297, mag 2.78, RA 15.5857h, Dec -41.1668deg)
 - HIP 77634 / HIP 77634 (HIP 77634, mag 3.97, RA 15.8493h, Dec -33.6272deg) [no display name]
 - HIP 78384 / HIP 78384 (HIP 78384, mag 3.42, RA 16.0020h, Dec -38.3967deg) [no display name]
-- HIP 78918 / HIP 78918 (HIP 78918, mag 4.22, RA 16.1099h, Dec -36.8023deg) [no display name]
 
 ## LYN -- Lynx / やまねこ座
 
@@ -1697,66 +1749,62 @@ Counts: stars 5, edges 5, polylines 1, branch points 1, stars without display na
 
 ## MEN -- Mensa / テーブルさん座
 
-Counts: stars 4, edges 3, polylines 1, branch points 0, stars without display names 1
+Counts: stars 2, edges 1, polylines 1, branch points 0, stars without display names 0
 
 ### Polylines
 
-1. Alpha Mensae -> Gamma Mensae -> HIP 22871 -> Beta Mensae
+1. Alpha Mensae -> Beta Mensae
 
 ### Edges
 
-- Alpha Mensae -- Gamma Mensae  |  アルファ・テーブルさん -- ガンマ・テーブルさん
-- Gamma Mensae -- HIP 22871  |  ガンマ・テーブルさん -- HIP 22871
-- HIP 22871 -- Beta Mensae  |  HIP 22871 -- ベータ・テーブルさん
+- Beta Mensae -- Alpha Mensae  |  ベータ・テーブルさん -- アルファ・テーブルさん
 
 ### Stars
 
-- HIP 22871 / HIP 22871 (HIP 22871, mag 5.47, RA 4.9198h, Dec -74.9369deg) [no display name]
 - Beta Mensae / ベータ・テーブルさん (HIP 23467, mag 5.31, RA 5.0453h, Dec -71.3143deg)
-- Gamma Mensae / ガンマ・テーブルさん (HIP 25918, mag 5.19, RA 5.5314h, Dec -76.3417deg)
 - Alpha Mensae / アルファ・テーブルさん (HIP 29271, mag 5.09, RA 6.1707h, Dec -74.7530deg)
 
 ## MIC -- Microscopium / けんびきょう座
 
-Counts: stars 4, edges 3, polylines 1, branch points 0, stars without display names 1
+Counts: stars 2, edges 1, polylines 1, branch points 0, stars without display names 1
 
 ### Polylines
 
-1. HIP 105382 -> Epsilon Microscopii -> Gamma Microscopii -> Alpha Microscopii
+1. Alpha Microscopii -> HIP 102989
 
 ### Edges
 
-- HIP 105382 -- Epsilon Microscopii  |  HIP 105382 -- イプシロン・けんびきょう
-- Epsilon Microscopii -- Gamma Microscopii  |  イプシロン・けんびきょう -- ガンマ・けんびきょう
-- Gamma Microscopii -- Alpha Microscopii  |  ガンマ・けんびきょう -- アルファ・けんびきょう
+- Alpha Microscopii -- HIP 102989  |  アルファ・けんびきょう -- HIP 102989
 
 ### Stars
 
 - Alpha Microscopii / アルファ・けんびきょう (HIP 102831, mag 4.88, RA 20.8328h, Dec -33.7797deg)
-- Gamma Microscopii / ガンマ・けんびきょう (HIP 103738, mag 4.67, RA 21.0215h, Dec -32.2578deg)
-- Epsilon Microscopii / イプシロン・けんびきょう (HIP 105140, mag 4.71, RA 21.2986h, Dec -32.1725deg)
-- HIP 105382 / HIP 105382 (HIP 105382, mag 4.80, RA 21.3460h, Dec -40.8095deg) [no display name]
+- HIP 102989 / HIP 102989 (HIP 102989, mag 6.06, RA 20.8663h, Dec -33.1780deg) [no display name]
 
 ## MON -- Monoceros / いっかくじゅう座
 
-Counts: stars 8, edges 7, polylines 1, branch points 1, stars without display names 5
+Counts: stars 9, edges 9, polylines 1, branch points 3, stars without display names 6
 
 ### Polylines
 
-1. HIP 31216 -> Epsilon Monocerotis -> HIP 32578 -> Delta Monocerotis -> Beta Monocerotis -> HIP 29651 -> Beta Monocerotis -> Delta Monocerotis -> HIP 37447 -> HIP 39863
+1. HIP 31978 -> HIP 31216 -> Epsilon Monocerotis -> Epsilon Monocerotis -> HIP 32578 -> HIP 31216 -> HIP 32578 -> Delta Monocerotis -> Beta Monocerotis -> HIP 29651 -> Beta Monocerotis -> Delta Monocerotis -> HIP 39863 -> HIP 37447
 
 ### Edges
 
-- HIP 31216 -- Epsilon Monocerotis  |  HIP 31216 -- イプシロン・いっかくじゅう
+- HIP 29651 -- Beta Monocerotis  |  HIP 29651 -- ベータ・いっかくじゅう
+- Epsilon Monocerotis -- HIP 31216  |  イプシロン・いっかくじゅう -- HIP 31216
 - Epsilon Monocerotis -- HIP 32578  |  イプシロン・いっかくじゅう -- HIP 32578
+- Beta Monocerotis -- Delta Monocerotis  |  ベータ・いっかくじゅう -- デルタ・いっかくじゅう
+- HIP 31216 -- HIP 31978  |  HIP 31216 -- HIP 31978
+- HIP 31216 -- HIP 32578  |  HIP 31216 -- HIP 32578
 - HIP 32578 -- Delta Monocerotis  |  HIP 32578 -- デルタ・いっかくじゅう
-- Delta Monocerotis -- Beta Monocerotis  |  デルタ・いっかくじゅう -- ベータ・いっかくじゅう
-- Beta Monocerotis -- HIP 29651  |  ベータ・いっかくじゅう -- HIP 29651
-- Delta Monocerotis -- HIP 37447  |  デルタ・いっかくじゅう -- HIP 37447
+- Delta Monocerotis -- HIP 39863  |  デルタ・いっかくじゅう -- HIP 39863
 - HIP 37447 -- HIP 39863  |  HIP 37447 -- HIP 39863
 
 ### Branch Points
 
+- HIP 31216 / HIP 31216 (HIP 31216): degree 3
+- HIP 32578 / HIP 32578 (HIP 32578): degree 3
 - Delta Monocerotis / デルタ・いっかくじゅう (HIP 34769): degree 3
 
 ### Stars
@@ -1765,6 +1813,7 @@ Counts: stars 8, edges 7, polylines 1, branch points 1, stars without display na
 - Epsilon Monocerotis / イプシロン・いっかくじゅう (HIP 30419, mag 4.39, RA 6.3961h, Dec 4.5929deg)
 - Beta Monocerotis / ベータ・いっかくじゅう (HIP 30867, mag 3.76, RA 6.4803h, Dec -7.0329deg)
 - HIP 31216 / HIP 31216 (HIP 31216, mag 4.47, RA 6.5484h, Dec 7.3330deg) [no display name]
+- HIP 31978 / HIP 31978 (HIP 31978, mag 4.66, RA 6.6830h, Dec 9.8958deg) [no display name]
 - HIP 32578 / HIP 32578 (HIP 32578, mag 4.48, RA 6.7977h, Dec 2.4122deg) [no display name]
 - Delta Monocerotis / デルタ・いっかくじゅう (HIP 34769, mag 4.15, RA 7.1977h, Dec -0.4928deg)
 - HIP 37447 / HIP 37447 (HIP 37447, mag 3.94, RA 7.6875h, Dec -9.5511deg) [no display name]
@@ -1772,23 +1821,24 @@ Counts: stars 8, edges 7, polylines 1, branch points 1, stars without display na
 
 ## MUS -- Musca / はえ座
 
-Counts: stars 6, edges 5, polylines 1, branch points 1, stars without display names 2
+Counts: stars 6, edges 6, polylines 1, branch points 1, stars without display names 2
 
 ### Polylines
 
-1. Beta Muscae -> Alpha Muscae -> Delta Muscae -> Alpha Muscae -> Gamma Muscae -> Alpha Muscae -> HIP 59929 -> HIP 57363
+1. HIP 57363 -> HIP 59929 -> Alpha Muscae -> Beta Muscae -> Delta Muscae -> Gamma Muscae -> Alpha Muscae
 
 ### Edges
 
-- Beta Muscae -- Alpha Muscae  |  ベータ・はえ -- アルファ・はえ
-- Alpha Muscae -- Delta Muscae  |  アルファ・はえ -- デルタ・はえ
-- Alpha Muscae -- Gamma Muscae  |  アルファ・はえ -- ガンマ・はえ
-- Alpha Muscae -- HIP 59929  |  アルファ・はえ -- HIP 59929
-- HIP 59929 -- HIP 57363  |  HIP 59929 -- HIP 57363
+- HIP 57363 -- HIP 59929  |  HIP 57363 -- HIP 59929
+- HIP 59929 -- Alpha Muscae  |  HIP 59929 -- アルファ・はえ
+- Gamma Muscae -- Alpha Muscae  |  ガンマ・はえ -- アルファ・はえ
+- Gamma Muscae -- Delta Muscae  |  ガンマ・はえ -- デルタ・はえ
+- Alpha Muscae -- Beta Muscae  |  アルファ・はえ -- ベータ・はえ
+- Beta Muscae -- Delta Muscae  |  ベータ・はえ -- デルタ・はえ
 
 ### Branch Points
 
-- Alpha Muscae / アルファ・はえ (HIP 61585): degree 4
+- Alpha Muscae / アルファ・はえ (HIP 61585): degree 3
 
 ### Stars
 
@@ -1801,20 +1851,23 @@ Counts: stars 6, edges 5, polylines 1, branch points 1, stars without display na
 
 ## NOR -- Norma / じょうぎ座
 
-Counts: stars 3, edges 2, polylines 1, branch points 0, stars without display names 0
+Counts: stars 4, edges 4, polylines 1, branch points 0, stars without display names 0
 
 ### Polylines
 
-1. Epsilon Normae -> Gamma2 Normae -> Eta Normae
+1. Eta Normae -> Gamma2 Normae -> Epsilon Normae -> Delta Normae -> Eta Normae
 
 ### Edges
 
-- Epsilon Normae -- Gamma2 Normae  |  イプシロン・じょうぎ -- ガンマ2・じょうぎ
-- Gamma2 Normae -- Eta Normae  |  ガンマ2・じょうぎ -- イータ・じょうぎ
+- Eta Normae -- Delta Normae  |  イータ・じょうぎ -- デルタ・じょうぎ
+- Eta Normae -- Gamma2 Normae  |  イータ・じょうぎ -- ガンマ2・じょうぎ
+- Delta Normae -- Epsilon Normae  |  デルタ・じょうぎ -- イプシロン・じょうぎ
+- Gamma2 Normae -- Epsilon Normae  |  ガンマ2・じょうぎ -- イプシロン・じょうぎ
 
 ### Stars
 
 - Eta Normae / イータ・じょうぎ (HIP 78639, mag 4.65, RA 16.0536h, Dec -49.2297deg)
+- Delta Normae / デルタ・じょうぎ (HIP 78914, mag 4.73, RA 16.1082h, Dec -45.1733deg)
 - Gamma2 Normae / ガンマ2・じょうぎ (HIP 80000, mag 4.02, RA 16.3307h, Dec -50.1554deg)
 - Epsilon Normae / イプシロン・じょうぎ (HIP 80582, mag 4.47, RA 16.4531h, Dec -47.5547deg)
 
@@ -1840,76 +1893,92 @@ Counts: stars 3, edges 3, polylines 1, branch points 0, stars without display na
 
 ## OPH -- Ophiuchus / へびつかい座
 
-Counts: stars 8, edges 8, polylines 1, branch points 0, stars without display names 4
+Counts: stars 11, edges 12, polylines 1, branch points 3, stars without display names 7
 
 ### Polylines
 
-1. Rasalhague -> HIP 83000 -> HIP 80883 -> Yed Prior -> HIP 79882 -> HIP 81377 -> Sabik -> Cebalrai -> Rasalhague
+1. Rasalhague -> HIP 83000 -> HIP 80883 -> Yed Prior -> HIP 79882 -> HIP 80628 -> HIP 81377 -> HIP 80628 -> HIP 79882 -> Yed Prior -> HIP 80883 -> HIP 83000 -> HIP 81377 -> Sabik -> Cebalrai -> HIP 87108 -> HIP 88048 -> HIP 87108 -> Cebalrai -> Rasalhague
 
 ### Edges
 
-- Rasalhague -- HIP 83000  |  ラスアルハゲ -- HIP 83000
-- HIP 83000 -- HIP 80883  |  HIP 83000 -- HIP 80883
-- HIP 80883 -- Yed Prior  |  HIP 80883 -- イェド・プリオル
 - Yed Prior -- HIP 79882  |  イェド・プリオル -- HIP 79882
-- HIP 79882 -- HIP 81377  |  HIP 79882 -- HIP 81377
+- Yed Prior -- HIP 80883  |  イェド・プリオル -- HIP 80883
+- HIP 79882 -- HIP 80628  |  HIP 79882 -- HIP 80628
+- HIP 80628 -- HIP 81377  |  HIP 80628 -- HIP 81377
+- HIP 80883 -- HIP 83000  |  HIP 80883 -- HIP 83000
+- HIP 81377 -- HIP 83000  |  HIP 81377 -- HIP 83000
 - HIP 81377 -- Sabik  |  HIP 81377 -- サビク
+- HIP 83000 -- Rasalhague  |  HIP 83000 -- ラスアルハゲ
 - Sabik -- Cebalrai  |  サビク -- ケバルライ
-- Cebalrai -- Rasalhague  |  ケバルライ -- ラスアルハゲ
+- Rasalhague -- Cebalrai  |  ラスアルハゲ -- ケバルライ
+- Cebalrai -- HIP 87108  |  ケバルライ -- HIP 87108
+- HIP 87108 -- HIP 88048  |  HIP 87108 -- HIP 88048
+
+### Branch Points
+
+- HIP 81377 / HIP 81377 (HIP 81377): degree 3
+- HIP 83000 / HIP 83000 (HIP 83000): degree 3
+- Cebalrai / ケバルライ (HIP 86742): degree 3
 
 ### Stars
 
 - Yed Prior / イェド・プリオル (HIP 79593, mag 2.73, RA 16.2391h, Dec -3.6943deg)
 - HIP 79882 / HIP 79882 (HIP 79882, mag 3.23, RA 16.3054h, Dec -4.6925deg) [no display name]
+- HIP 80628 / HIP 80628 (HIP 80628, mag 4.62, RA 16.4634h, Dec -8.3717deg) [no display name]
 - HIP 80883 / HIP 80883 (HIP 80883, mag 3.82, RA 16.5152h, Dec 1.9839deg) [no display name]
 - HIP 81377 / HIP 81377 (HIP 81377, mag 2.54, RA 16.6193h, Dec -10.5671deg) [no display name]
 - HIP 83000 / HIP 83000 (HIP 83000, mag 3.19, RA 16.9611h, Dec 9.3750deg) [no display name]
 - Sabik / サビク (HIP 84012, mag 2.43, RA 17.1729h, Dec -15.7249deg)
 - Rasalhague / ラスアルハゲ (HIP 86032, mag 2.08, RA 17.5822h, Dec 12.5600deg)
 - Cebalrai / ケバルライ (HIP 86742, mag 2.76, RA 17.7245h, Dec 4.5673deg)
+- HIP 87108 / HIP 87108 (HIP 87108, mag 3.75, RA 17.7982h, Dec 2.7073deg) [no display name]
+- HIP 88048 / HIP 88048 (HIP 88048, mag 3.32, RA 17.9838h, Dec -9.7736deg) [no display name]
 
 ## ORI -- Orion / オリオン座
 
-Counts: stars 21, edges 23, polylines 1, branch points 6, stars without display names 13
+Counts: stars 22, edges 23, polylines 5, branch points 5, stars without display names 14
 
 ### Polylines
 
-1. Alnitak -> Saiph -> Rigel -> Mintaka -> Bellatrix -> Meissa -> Betelgeuse -> HIP 28614 -> HIP 29426 -> HIP 29038 -> HIP 27913 -> HIP 28716 -> HIP 29426 -> HIP 28614 -> Betelgeuse -> Alnitak -> Alnilam -> Mintaka -> Bellatrix -> HIP 22449 -> HIP 22549 -> HIP 22797 -> HIP 23123 -> HIP 22797 -> HIP 22549 -> HIP 22449 -> HIP 22509 -> HIP 22957 -> HIP 23607 -> HIP 24010
+1. Betelgeuse -> Alnitak -> Saiph -> Alnitak -> Alnilam -> Mintaka -> Bellatrix -> Mintaka -> HIP 25281 -> Rigel
+2. Betelgeuse -> Bellatrix -> Meissa -> Meissa -> Betelgeuse
+3. HIP 23607 -> HIP 22957 -> HIP 22845 -> HIP 22509 -> HIP 22449 -> Bellatrix -> HIP 22449 -> HIP 22549 -> HIP 22797 -> HIP 23123
+4. Betelgeuse -> HIP 28614 -> HIP 29038
+5. HIP 29426 -> HIP 28716 -> HIP 27913 -> HIP 29038
 
 ### Edges
 
-- Alnitak -- Saiph  |  アルニタク -- サイフ
-- Saiph -- Rigel  |  サイフ -- リゲル
-- Rigel -- Mintaka  |  リゲル -- ミンタカ
-- Mintaka -- Bellatrix  |  ミンタカ -- ベラトリックス
-- Bellatrix -- Meissa  |  ベラトリックス -- メイサ
-- Meissa -- Betelgeuse  |  メイサ -- ベテルギウス
-- Betelgeuse -- HIP 28614  |  ベテルギウス -- HIP 28614
-- HIP 28614 -- HIP 29426  |  HIP 28614 -- HIP 29426
-- HIP 29426 -- HIP 29038  |  HIP 29426 -- HIP 29038
-- HIP 29038 -- HIP 27913  |  HIP 29038 -- HIP 27913
-- HIP 27913 -- HIP 28716  |  HIP 27913 -- HIP 28716
-- HIP 28716 -- HIP 29426  |  HIP 28716 -- HIP 29426
-- Betelgeuse -- Alnitak  |  ベテルギウス -- アルニタク
-- Alnitak -- Alnilam  |  アルニタク -- アルニラム
-- Alnilam -- Mintaka  |  アルニラム -- ミンタカ
-- Bellatrix -- HIP 22449  |  ベラトリックス -- HIP 22449
+- HIP 22449 -- HIP 22509  |  HIP 22449 -- HIP 22509
 - HIP 22449 -- HIP 22549  |  HIP 22449 -- HIP 22549
+- HIP 22449 -- Bellatrix  |  HIP 22449 -- ベラトリックス
+- HIP 22509 -- HIP 22845  |  HIP 22509 -- HIP 22845
 - HIP 22549 -- HIP 22797  |  HIP 22549 -- HIP 22797
 - HIP 22797 -- HIP 23123  |  HIP 22797 -- HIP 23123
-- HIP 22449 -- HIP 22509  |  HIP 22449 -- HIP 22509
-- HIP 22509 -- HIP 22957  |  HIP 22509 -- HIP 22957
+- HIP 22845 -- HIP 22957  |  HIP 22845 -- HIP 22957
 - HIP 22957 -- HIP 23607  |  HIP 22957 -- HIP 23607
-- HIP 23607 -- HIP 24010  |  HIP 23607 -- HIP 24010
+- Rigel -- HIP 25281  |  リゲル -- HIP 25281
+- HIP 25281 -- Mintaka  |  HIP 25281 -- ミンタカ
+- Bellatrix -- Mintaka  |  ベラトリックス -- ミンタカ
+- Bellatrix -- Meissa  |  ベラトリックス -- メイサ
+- Bellatrix -- Betelgeuse  |  ベラトリックス -- ベテルギウス
+- Mintaka -- Alnilam  |  ミンタカ -- アルニラム
+- Meissa -- Betelgeuse  |  メイサ -- ベテルギウス
+- Alnilam -- Alnitak  |  アルニラム -- アルニタク
+- Alnitak -- Saiph  |  アルニタク -- サイフ
+- Alnitak -- Betelgeuse  |  アルニタク -- ベテルギウス
+- HIP 27913 -- HIP 28716  |  HIP 27913 -- HIP 28716
+- HIP 27913 -- HIP 29038  |  HIP 27913 -- HIP 29038
+- Betelgeuse -- HIP 28614  |  ベテルギウス -- HIP 28614
+- HIP 28614 -- HIP 29038  |  HIP 28614 -- HIP 29038
+- HIP 28716 -- HIP 29426  |  HIP 28716 -- HIP 29426
 
 ### Branch Points
 
 - HIP 22449 / HIP 22449 (HIP 22449): degree 3
-- Bellatrix / ベラトリックス (HIP 25336): degree 3
+- Bellatrix / ベラトリックス (HIP 25336): degree 4
 - Mintaka / ミンタカ (HIP 25930): degree 3
 - Alnitak / アルニタク (HIP 26727): degree 3
-- Betelgeuse / ベテルギウス (HIP 27989): degree 3
-- HIP 29426 / HIP 29426 (HIP 29426): degree 3
+- Betelgeuse / ベテルギウス (HIP 27989): degree 4
 
 ### Stars
 
@@ -1917,11 +1986,12 @@ Counts: stars 21, edges 23, polylines 1, branch points 6, stars without display 
 - HIP 22509 / HIP 22509 (HIP 22509, mag 4.35, RA 4.8435h, Dec 8.9002deg) [no display name]
 - HIP 22549 / HIP 22549 (HIP 22549, mag 3.68, RA 4.8534h, Dec 5.6051deg) [no display name]
 - HIP 22797 / HIP 22797 (HIP 22797, mag 3.71, RA 4.9042h, Dec 2.4407deg) [no display name]
+- HIP 22845 / HIP 22845 (HIP 22845, mag 4.64, RA 4.9149h, Dec 10.1508deg) [no display name]
 - HIP 22957 / HIP 22957 (HIP 22957, mag 4.06, RA 4.9395h, Dec 13.5145deg) [no display name]
 - HIP 23123 / HIP 23123 (HIP 23123, mag 4.47, RA 4.9758h, Dec 1.7140deg) [no display name]
 - HIP 23607 / HIP 23607 (HIP 23607, mag 4.65, RA 5.0762h, Dec 15.4041deg) [no display name]
-- HIP 24010 / HIP 24010 (HIP 24010, mag 4.81, RA 5.1617h, Dec 15.5972deg) [no display name]
 - Rigel / リゲル (HIP 24436, mag 0.13, RA 5.2423h, Dec -8.2016deg)
+- HIP 25281 / HIP 25281 (HIP 25281, mag 3.35, RA 5.4079h, Dec -2.3971deg) [no display name]
 - Bellatrix / ベラトリックス (HIP 25336, mag 1.64, RA 5.4188h, Dec 6.3497deg)
 - Mintaka / ミンタカ (HIP 25930, mag 2.23, RA 5.5334h, Dec -0.2991deg)
 - Meissa / メイサ (HIP 26207, mag 3.39, RA 5.5856h, Dec 9.9342deg)
@@ -1937,28 +2007,33 @@ Counts: stars 21, edges 23, polylines 1, branch points 6, stars without display 
 
 ## PAV -- Pavo / くじゃく座
 
-Counts: stars 10, edges 10, polylines 1, branch points 1, stars without display names 5
+Counts: stars 11, edges 12, polylines 3, branch points 2, stars without display names 6
 
 ### Polylines
 
-1. Peacock -> Beta Pavonis -> Gamma Pavonis -> Beta Pavonis -> HIP 98495 -> HIP 91792 -> Eta Pavonis -> HIP 88866 -> HIP 90098 -> HIP 92609 -> Delta Pavonis -> Beta Pavonis
+1. Peacock -> Delta Pavonis -> Beta Pavonis
+2. Peacock -> Gamma Pavonis -> Beta Pavonis
+3. HIP 91792 -> Delta Pavonis -> HIP 98495 -> Delta Pavonis -> HIP 93015 -> HIP 88866 -> Eta Pavonis -> HIP 88866 -> HIP 90098 -> HIP 92609 -> Delta Pavonis
 
 ### Edges
 
-- Peacock -- Beta Pavonis  |  ピーコック -- ベータ・くじゃく
-- Beta Pavonis -- Gamma Pavonis  |  ベータ・くじゃく -- ガンマ・くじゃく
-- Beta Pavonis -- HIP 98495  |  ベータ・くじゃく -- HIP 98495
-- HIP 98495 -- HIP 91792  |  HIP 98495 -- HIP 91792
-- HIP 91792 -- Eta Pavonis  |  HIP 91792 -- イータ・くじゃく
 - Eta Pavonis -- HIP 88866  |  イータ・くじゃく -- HIP 88866
 - HIP 88866 -- HIP 90098  |  HIP 88866 -- HIP 90098
+- HIP 88866 -- HIP 93015  |  HIP 88866 -- HIP 93015
 - HIP 90098 -- HIP 92609  |  HIP 90098 -- HIP 92609
+- HIP 91792 -- Delta Pavonis  |  HIP 91792 -- デルタ・くじゃく
 - HIP 92609 -- Delta Pavonis  |  HIP 92609 -- デルタ・くじゃく
+- HIP 93015 -- Delta Pavonis  |  HIP 93015 -- デルタ・くじゃく
+- HIP 98495 -- Delta Pavonis  |  HIP 98495 -- デルタ・くじゃく
+- Delta Pavonis -- Peacock  |  デルタ・くじゃく -- ピーコック
 - Delta Pavonis -- Beta Pavonis  |  デルタ・くじゃく -- ベータ・くじゃく
+- Peacock -- Gamma Pavonis  |  ピーコック -- ガンマ・くじゃく
+- Beta Pavonis -- Gamma Pavonis  |  ベータ・くじゃく -- ガンマ・くじゃく
 
 ### Branch Points
 
-- Beta Pavonis / ベータ・くじゃく (HIP 102395): degree 4
+- HIP 88866 / HIP 88866 (HIP 88866): degree 3
+- Delta Pavonis / デルタ・くじゃく (HIP 99240): degree 6
 
 ### Stars
 
@@ -1967,6 +2042,7 @@ Counts: stars 10, edges 10, polylines 1, branch points 1, stars without display 
 - HIP 90098 / HIP 90098 (HIP 90098, mag 4.35, RA 18.3871h, Dec -61.4939deg) [no display name]
 - HIP 91792 / HIP 91792 (HIP 91792, mag 4.01, RA 18.7173h, Dec -71.4281deg) [no display name]
 - HIP 92609 / HIP 92609 (HIP 92609, mag 4.22, RA 18.8703h, Dec -62.1876deg) [no display name]
+- HIP 93015 / HIP 93015 (HIP 93015, mag 4.40, RA 18.9492h, Dec -67.2335deg) [no display name]
 - HIP 98495 / HIP 98495 (HIP 98495, mag 3.97, RA 20.0098h, Dec -72.9105deg) [no display name]
 - Delta Pavonis / デルタ・くじゃく (HIP 99240, mag 3.55, RA 20.1452h, Dec -66.1821deg)
 - Peacock / ピーコック (HIP 100751, mag 1.94, RA 20.4275h, Dec -56.7351deg)
@@ -2012,64 +2088,82 @@ Counts: stars 9, edges 9, polylines 1, branch points 2, stars without display na
 
 ## PER -- Perseus / ペルセウス座
 
-Counts: stars 8, edges 7, polylines 1, branch points 1, stars without display names 5
+Counts: stars 13, edges 15, polylines 1, branch points 6, stars without display names 9
 
 ### Polylines
 
-1. Algol -> HIP 14668 -> Mirfak -> Gamma Persei -> Mirfak -> HIP 17358 -> HIP 18532 -> HIP 18614 -> HIP 18246
+1. Atik -> HIP 18246 -> HIP 18614 -> HIP 18532 -> HIP 17358 -> Mirfak -> Gamma Persei -> HIP 13268 -> HIP 13531 -> Gamma Persei -> HIP 13531 -> HIP 14632 -> Mirfak -> HIP 14632 -> HIP 14668 -> Algol -> HIP 18532 -> Algol -> HIP 14354
 
 ### Edges
 
+- HIP 13268 -- HIP 13531  |  HIP 13268 -- HIP 13531
+- HIP 13268 -- Gamma Persei  |  HIP 13268 -- ガンマ・ペルセイ
+- HIP 13531 -- Gamma Persei  |  HIP 13531 -- ガンマ・ペルセイ
+- HIP 13531 -- HIP 14632  |  HIP 13531 -- HIP 14632
+- Gamma Persei -- Mirfak  |  ガンマ・ペルセイ -- ミルファク
+- HIP 14354 -- Algol  |  HIP 14354 -- アルゴル
 - Algol -- HIP 14668  |  アルゴル -- HIP 14668
-- HIP 14668 -- Mirfak  |  HIP 14668 -- ミルファク
-- Mirfak -- Gamma Persei  |  ミルファク -- ガンマ・ペルセイ
+- Algol -- HIP 18532  |  アルゴル -- HIP 18532
+- HIP 14632 -- HIP 14668  |  HIP 14632 -- HIP 14668
+- HIP 14632 -- Mirfak  |  HIP 14632 -- ミルファク
 - Mirfak -- HIP 17358  |  ミルファク -- HIP 17358
 - HIP 17358 -- HIP 18532  |  HIP 17358 -- HIP 18532
+- Atik -- HIP 18246  |  アティク -- HIP 18246
+- HIP 18246 -- HIP 18614  |  HIP 18246 -- HIP 18614
 - HIP 18532 -- HIP 18614  |  HIP 18532 -- HIP 18614
-- HIP 18614 -- HIP 18246  |  HIP 18614 -- HIP 18246
 
 ### Branch Points
 
+- HIP 13531 / HIP 13531 (HIP 13531): degree 3
+- Gamma Persei / ガンマ・ペルセイ (HIP 14328): degree 3
+- Algol / アルゴル (HIP 14576): degree 3
+- HIP 14632 / HIP 14632 (HIP 14632): degree 3
 - Mirfak / ミルファク (HIP 15863): degree 3
+- HIP 18532 / HIP 18532 (HIP 18532): degree 3
 
 ### Stars
 
+- HIP 13268 / HIP 13268 (HIP 13268, mag 3.77, RA 2.8449h, Dec 55.8955deg) [no display name]
+- HIP 13531 / HIP 13531 (HIP 13531, mag 3.93, RA 2.9043h, Dec 52.7625deg) [no display name]
 - Gamma Persei / ガンマ・ペルセイ (HIP 14328, mag 2.93, RA 3.0799h, Dec 53.5064deg)
+- HIP 14354 / HIP 14354 (HIP 14354, mag 3.32, RA 3.0863h, Dec 38.8403deg) [no display name]
 - Algol / アルゴル (HIP 14576, mag 2.09, RA 3.1361h, Dec 40.9556deg)
+- HIP 14632 / HIP 14632 (HIP 14632, mag 4.05, RA 3.1510h, Dec 49.6133deg) [no display name]
 - HIP 14668 / HIP 14668 (HIP 14668, mag 3.79, RA 3.1583h, Dec 44.8575deg) [no display name]
 - Mirfak / ミルファク (HIP 15863, mag 1.79, RA 3.4054h, Dec 49.8612deg)
 - HIP 17358 / HIP 17358 (HIP 17358, mag 3.01, RA 3.7154h, Dec 47.7876deg) [no display name]
+- Atik / アティク (HIP 17448, mag 3.84, RA 3.7387h, Dec 32.2883deg)
 - HIP 18246 / HIP 18246 (HIP 18246, mag 2.84, RA 3.9022h, Dec 31.8836deg) [no display name]
 - HIP 18532 / HIP 18532 (HIP 18532, mag 2.90, RA 3.9642h, Dec 40.0102deg) [no display name]
 - HIP 18614 / HIP 18614 (HIP 18614, mag 3.98, RA 3.9827h, Dec 35.7910deg) [no display name]
 
 ## PHE -- Phoenix / ほうおう座
 
-Counts: stars 7, edges 7, polylines 1, branch points 1, stars without display names 1
+Counts: stars 6, edges 7, polylines 2, branch points 1, stars without display names 0
 
 ### Polylines
 
-1. Ankaa -> Beta Phoenicis -> Gamma Phoenicis -> Delta Phoenicis -> Gamma Phoenicis -> Beta Phoenicis -> Wurren -> HIP 3405 -> Epsilon Phoenicis -> Ankaa
+1. Ankaa -> Beta Phoenicis -> Gamma Phoenicis
+2. Ankaa -> Epsilon Phoenicis -> Beta Phoenicis -> Wurren -> Delta Phoenicis -> Gamma Phoenicis
 
 ### Edges
 
-- Ankaa -- Beta Phoenicis  |  アンカー -- ベータ・ほうおう
-- Beta Phoenicis -- Gamma Phoenicis  |  ベータ・ほうおう -- ガンマ・ほうおう
-- Gamma Phoenicis -- Delta Phoenicis  |  ガンマ・ほうおう -- デルタ・ほうおう
-- Beta Phoenicis -- Wurren  |  ベータ・ほうおう -- ウレン
-- Wurren -- HIP 3405  |  ウレン -- HIP 3405
-- HIP 3405 -- Epsilon Phoenicis  |  HIP 3405 -- イプシロン・ほうおう
 - Epsilon Phoenicis -- Ankaa  |  イプシロン・ほうおう -- アンカー
+- Epsilon Phoenicis -- Beta Phoenicis  |  イプシロン・ほうおう -- ベータ・ほうおう
+- Ankaa -- Beta Phoenicis  |  アンカー -- ベータ・ほうおう
+- Beta Phoenicis -- Wurren  |  ベータ・ほうおう -- ウレン
+- Beta Phoenicis -- Gamma Phoenicis  |  ベータ・ほうおう -- ガンマ・ほうおう
+- Wurren -- Delta Phoenicis  |  ウレン -- デルタ・ほうおう
+- Gamma Phoenicis -- Delta Phoenicis  |  ガンマ・ほうおう -- デルタ・ほうおう
 
 ### Branch Points
 
-- Beta Phoenicis / ベータ・ほうおう (HIP 5165): degree 3
+- Beta Phoenicis / ベータ・ほうおう (HIP 5165): degree 4
 
 ### Stars
 
 - Epsilon Phoenicis / イプシロン・ほうおう (HIP 765, mag 3.88, RA 0.1568h, Dec -45.7474deg)
 - Ankaa / アンカー (HIP 2081, mag 2.40, RA 0.4381h, Dec -42.3060deg)
-- HIP 3405 / HIP 3405 (HIP 3405, mag 4.36, RA 0.7226h, Dec -57.4631deg) [no display name]
 - Beta Phoenicis / ベータ・ほうおう (HIP 5165, mag 3.32, RA 1.1014h, Dec -46.7184deg)
 - Wurren / ウレン (HIP 5348, mag 3.94, RA 1.1397h, Dec -55.2458deg)
 - Gamma Phoenicis / ガンマ・ほうおう (HIP 6867, mag 3.41, RA 1.4728h, Dec -43.3182deg)
@@ -2150,32 +2244,33 @@ Counts: stars 17, edges 18, polylines 1, branch points 2, stars without display 
 
 ## PSA -- Piscis Austrinus / みなみのうお座
 
-Counts: stars 10, edges 10, polylines 1, branch points 0, stars without display names 6
+Counts: stars 8, edges 9, polylines 1, branch points 1, stars without display names 4
 
 ### Polylines
 
-1. Fomalhaut -> HIP 111954 -> HIP 109789 -> HIP 108661 -> HIP 107608 -> HIP 107380 -> HIP 109285 -> Beta Piscis Austrini -> Gamma Piscis Austrini -> Delta Piscis Austrini -> Fomalhaut
+1. Fomalhaut -> Delta Piscis Austrini -> Gamma Piscis Austrini -> Beta Piscis Austrini -> HIP 109285 -> HIP 107380 -> HIP 107608 -> HIP 109285 -> HIP 111954 -> Fomalhaut
 
 ### Edges
 
-- Fomalhaut -- HIP 111954  |  フォーマルハウト -- HIP 111954
-- HIP 111954 -- HIP 109789  |  HIP 111954 -- HIP 109789
-- HIP 109789 -- HIP 108661  |  HIP 109789 -- HIP 108661
-- HIP 108661 -- HIP 107608  |  HIP 108661 -- HIP 107608
-- HIP 107608 -- HIP 107380  |  HIP 107608 -- HIP 107380
+- HIP 107380 -- HIP 107608  |  HIP 107380 -- HIP 107608
 - HIP 107380 -- HIP 109285  |  HIP 107380 -- HIP 109285
+- HIP 107608 -- HIP 109285  |  HIP 107608 -- HIP 109285
 - HIP 109285 -- Beta Piscis Austrini  |  HIP 109285 -- ベータ・みなみのうお
+- HIP 109285 -- HIP 111954  |  HIP 109285 -- HIP 111954
 - Beta Piscis Austrini -- Gamma Piscis Austrini  |  ベータ・みなみのうお -- ガンマ・みなみのうお
+- HIP 111954 -- Fomalhaut  |  HIP 111954 -- フォーマルハウト
 - Gamma Piscis Austrini -- Delta Piscis Austrini  |  ガンマ・みなみのうお -- デルタ・みなみのうお
 - Delta Piscis Austrini -- Fomalhaut  |  デルタ・みなみのうお -- フォーマルハウト
+
+### Branch Points
+
+- HIP 109285 / HIP 109285 (HIP 109285): degree 4
 
 ### Stars
 
 - HIP 107380 / HIP 107380 (HIP 107380, mag 4.35, RA 21.7491h, Dec -33.0258deg) [no display name]
 - HIP 107608 / HIP 107608 (HIP 107608, mag 5.02, RA 21.7956h, Dec -30.8983deg) [no display name]
-- HIP 108661 / HIP 108661 (HIP 108661, mag 5.43, RA 22.0140h, Dec -28.4537deg) [no display name]
 - HIP 109285 / HIP 109285 (HIP 109285, mag 4.50, RA 22.1397h, Dec -32.9885deg) [no display name]
-- HIP 109789 / HIP 109789 (HIP 109789, mag 5.45, RA 22.2385h, Dec -27.7669deg) [no display name]
 - Beta Piscis Austrini / ベータ・みなみのうお (HIP 111188, mag 4.29, RA 22.5251h, Dec -32.3460deg)
 - HIP 111954 / HIP 111954 (HIP 111954, mag 4.18, RA 22.6776h, Dec -27.0436deg) [no display name]
 - Gamma Piscis Austrini / ガンマ・みなみのうお (HIP 112948, mag 4.46, RA 22.8754h, Dec -32.8754deg)
@@ -2184,35 +2279,34 @@ Counts: stars 10, edges 10, polylines 1, branch points 0, stars without display 
 
 ## PUP -- Puppis / とも座
 
-Counts: stars 9, edges 9, polylines 1, branch points 0, stars without display names 6
+Counts: stars 9, edges 8, polylines 1, branch points 0, stars without display names 6
 
 ### Polylines
 
-1. Tureis -> HIP 38170 -> HIP 37229 -> HIP 36917 -> Azmidi -> HIP 31685 -> HIP 32768 -> HIP 36377 -> Naos -> Tureis
+1. HIP 39855 -> Naos -> Tureis -> HIP 38170 -> HIP 37229 -> HIP 36917 -> Azmidi -> HIP 31685 -> HIP 30581
 
 ### Edges
 
-- Tureis -- HIP 38170  |  トゥレイス -- HIP 38170
-- HIP 38170 -- HIP 37229  |  HIP 38170 -- HIP 37229
-- HIP 37229 -- HIP 36917  |  HIP 37229 -- HIP 36917
-- HIP 36917 -- Azmidi  |  HIP 36917 -- アズミディ
-- Azmidi -- HIP 31685  |  アズミディ -- HIP 31685
-- HIP 31685 -- HIP 32768  |  HIP 31685 -- HIP 32768
-- HIP 32768 -- HIP 36377  |  HIP 32768 -- HIP 36377
-- HIP 36377 -- Naos  |  HIP 36377 -- ナオス
+- HIP 30581 -- HIP 31685  |  HIP 30581 -- HIP 31685
+- HIP 31685 -- Azmidi  |  HIP 31685 -- アズミディ
+- Azmidi -- HIP 36917  |  アズミディ -- HIP 36917
+- HIP 36917 -- HIP 37229  |  HIP 36917 -- HIP 37229
+- HIP 37229 -- HIP 38170  |  HIP 37229 -- HIP 38170
+- HIP 38170 -- Tureis  |  HIP 38170 -- トゥレイス
 - Naos -- Tureis  |  ナオス -- トゥレイス
+- Naos -- HIP 39855  |  ナオス -- HIP 39855
 
 ### Stars
 
+- HIP 30581 / HIP 30581 (HIP 30581, mag 8.69, RA 6.4278h, Dec -51.1342deg) [no display name]
 - HIP 31685 / HIP 31685 (HIP 31685, mag 3.17, RA 6.6294h, Dec -43.1959deg) [no display name]
-- HIP 32768 / HIP 32768 (HIP 32768, mag 2.94, RA 6.8323h, Dec -50.6146deg) [no display name]
 - Azmidi / アズミディ (HIP 35264, mag 3.25, RA 7.2857h, Dec -37.0975deg)
-- HIP 36377 / HIP 36377 (HIP 36377, mag 3.25, RA 7.4872h, Dec -43.3014deg) [no display name]
 - HIP 36917 / HIP 36917 (HIP 36917, mag 4.65, RA 7.5897h, Dec -28.3693deg) [no display name]
 - HIP 37229 / HIP 37229 (HIP 37229, mag 3.80, RA 7.6472h, Dec -26.8038deg) [no display name]
 - HIP 38170 / HIP 38170 (HIP 38170, mag 3.34, RA 7.8216h, Dec -24.8598deg) [no display name]
 - Naos / ナオス (HIP 39429, mag 2.21, RA 8.0597h, Dec -40.0031deg)
 - Tureis / トゥレイス (HIP 39757, mag 2.83, RA 8.1257h, Dec -24.3043deg)
+- HIP 39855 / HIP 39855 (HIP 39855, mag 8.81, RA 8.1424h, Dec -46.2605deg) [no display name]
 
 ## PYX -- Pyxis / らしんばん座
 
@@ -2235,25 +2329,23 @@ Counts: stars 3, edges 2, polylines 1, branch points 0, stars without display na
 
 ## RET -- Reticulum / レチクル座
 
-Counts: stars 5, edges 5, polylines 1, branch points 0, stars without display names 2
+Counts: stars 4, edges 4, polylines 1, branch points 0, stars without display names 1
 
 ### Polylines
 
-1. Alpha Reticuli -> Epsilon Reticuli -> HIP 18597 -> HIP 18744 -> Beta Reticuli -> Alpha Reticuli
+1. Alpha Reticuli -> Beta Reticuli -> HIP 18597 -> Epsilon Reticuli -> Alpha Reticuli
 
 ### Edges
 
-- Alpha Reticuli -- Epsilon Reticuli  |  アルファ・レチクル -- イプシロン・レチクル
-- Epsilon Reticuli -- HIP 18597  |  イプシロン・レチクル -- HIP 18597
-- HIP 18597 -- HIP 18744  |  HIP 18597 -- HIP 18744
-- HIP 18744 -- Beta Reticuli  |  HIP 18744 -- ベータ・レチクル
+- Beta Reticuli -- HIP 18597  |  ベータ・レチクル -- HIP 18597
 - Beta Reticuli -- Alpha Reticuli  |  ベータ・レチクル -- アルファ・レチクル
+- HIP 18597 -- Epsilon Reticuli  |  HIP 18597 -- イプシロン・レチクル
+- Alpha Reticuli -- Epsilon Reticuli  |  アルファ・レチクル -- イプシロン・レチクル
 
 ### Stars
 
 - Beta Reticuli / ベータ・レチクル (HIP 17440, mag 3.84, RA 3.7367h, Dec -64.8069deg)
 - HIP 18597 / HIP 18597 (HIP 18597, mag 4.56, RA 3.9791h, Dec -61.4002deg) [no display name]
-- HIP 18744 / HIP 18744 (HIP 18744, mag 4.48, RA 4.0149h, Dec -62.1593deg) [no display name]
 - Alpha Reticuli / アルファ・レチクル (HIP 19780, mag 3.35, RA 4.2404h, Dec -62.4739deg)
 - Epsilon Reticuli / イプシロン・レチクル (HIP 19921, mag 4.44, RA 4.2747h, Dec -59.3017deg)
 
@@ -2284,82 +2376,57 @@ Counts: stars 4, edges 3, polylines 1, branch points 1, stars without display na
 
 ## SGR -- Sagittarius / いて座
 
-Counts: stars 21, edges 21, polylines 1, branch points 6, stars without display names 15
+Counts: stars 8, edges 11, polylines 1, branch points 4, stars without display names 2
 
 ### Polylines
 
-1. HIP 95347 -> HIP 98032 -> HIP 95241 -> HIP 98032 -> HIP 98412 -> HIP 98688 -> HIP 98162 -> HIP 96465 -> HIP 93864 -> Nunki -> HIP 93683 -> HIP 94141 -> HIP 95168 -> HIP 95176 -> HIP 95168 -> HIP 94141 -> HIP 93683 -> HIP 93085 -> HIP 93683 -> Nunki -> HIP 92041 -> Ascella -> HIP 93864 -> Ascella -> HIP 92041 -> Kaus Borealis -> Kaus Media -> Alnasl -> Kaus Media -> Kaus Australis -> HIP 89642
+1. Kaus Australis -> Alnasl -> Kaus Media -> Kaus Australis -> Kaus Media -> Kaus Borealis -> HIP 92041 -> Kaus Media -> HIP 92041 -> Nunki -> HIP 93864 -> Ascella -> HIP 92041 -> Ascella -> Kaus Australis
 
 ### Edges
 
-- HIP 95347 -- HIP 98032  |  HIP 95347 -- HIP 98032
-- HIP 98032 -- HIP 95241  |  HIP 98032 -- HIP 95241
-- HIP 98032 -- HIP 98412  |  HIP 98032 -- HIP 98412
-- HIP 98412 -- HIP 98688  |  HIP 98412 -- HIP 98688
-- HIP 98688 -- HIP 98162  |  HIP 98688 -- HIP 98162
-- HIP 98162 -- HIP 96465  |  HIP 98162 -- HIP 96465
-- HIP 96465 -- HIP 93864  |  HIP 96465 -- HIP 93864
-- HIP 93864 -- Nunki  |  HIP 93864 -- ヌンキ
-- Nunki -- HIP 93683  |  ヌンキ -- HIP 93683
-- HIP 93683 -- HIP 94141  |  HIP 93683 -- HIP 94141
-- HIP 94141 -- HIP 95168  |  HIP 94141 -- HIP 95168
-- HIP 95168 -- HIP 95176  |  HIP 95168 -- HIP 95176
-- HIP 93683 -- HIP 93085  |  HIP 93683 -- HIP 93085
-- Nunki -- HIP 92041  |  ヌンキ -- HIP 92041
-- HIP 92041 -- Ascella  |  HIP 92041 -- アスケラ
-- Ascella -- HIP 93864  |  アスケラ -- HIP 93864
-- HIP 92041 -- Kaus Borealis  |  HIP 92041 -- カウス・ボレアリス
-- Kaus Borealis -- Kaus Media  |  カウス・ボレアリス -- カウス・メディア
-- Kaus Media -- Alnasl  |  カウス・メディア -- アルナスル
+- Alnasl -- Kaus Media  |  アルナスル -- カウス・メディア
+- Alnasl -- Kaus Australis  |  アルナスル -- カウス・アウストラリス
 - Kaus Media -- Kaus Australis  |  カウス・メディア -- カウス・アウストラリス
-- Kaus Australis -- HIP 89642  |  カウス・アウストラリス -- HIP 89642
+- Kaus Media -- Kaus Borealis  |  カウス・メディア -- カウス・ボレアリス
+- Kaus Media -- HIP 92041  |  カウス・メディア -- HIP 92041
+- Kaus Australis -- Ascella  |  カウス・アウストラリス -- アスケラ
+- Kaus Borealis -- HIP 92041  |  カウス・ボレアリス -- HIP 92041
+- HIP 92041 -- Nunki  |  HIP 92041 -- ヌンキ
+- HIP 92041 -- Ascella  |  HIP 92041 -- アスケラ
+- Nunki -- HIP 93864  |  ヌンキ -- HIP 93864
+- Ascella -- HIP 93864  |  アスケラ -- HIP 93864
 
 ### Branch Points
 
-- Kaus Media / カウス・メディア (HIP 89931): degree 3
-- HIP 92041 / HIP 92041 (HIP 92041): degree 3
-- Nunki / ヌンキ (HIP 92855): degree 3
-- HIP 93683 / HIP 93683 (HIP 93683): degree 3
-- HIP 93864 / HIP 93864 (HIP 93864): degree 3
-- HIP 98032 / HIP 98032 (HIP 98032): degree 3
+- Kaus Media / カウス・メディア (HIP 89931): degree 4
+- Kaus Australis / カウス・アウストラリス (HIP 90185): degree 3
+- HIP 92041 / HIP 92041 (HIP 92041): degree 4
+- Ascella / アスケラ (HIP 93506): degree 3
 
 ### Stars
 
 - Alnasl / アルナスル (HIP 88635, mag 2.98, RA 18.0968h, Dec -30.4241deg)
-- HIP 89642 / HIP 89642 (HIP 89642, mag 3.10, RA 18.2938h, Dec -36.7617deg) [no display name]
 - Kaus Media / カウス・メディア (HIP 89931, mag 2.72, RA 18.3499h, Dec -29.8281deg)
 - Kaus Australis / カウス・アウストラリス (HIP 90185, mag 1.79, RA 18.4029h, Dec -34.3846deg)
 - Kaus Borealis / カウス・ボレアリス (HIP 90496, mag 2.82, RA 18.4662h, Dec -25.4217deg)
 - HIP 92041 / HIP 92041 (HIP 92041, mag 3.17, RA 18.7609h, Dec -26.9908deg) [no display name]
 - Nunki / ヌンキ (HIP 92855, mag 2.05, RA 18.9211h, Dec -26.2967deg)
-- HIP 93085 / HIP 93085 (HIP 93085, mag 3.52, RA 18.9622h, Dec -21.1067deg) [no display name]
 - Ascella / アスケラ (HIP 93506, mag 2.60, RA 19.0435h, Dec -29.8801deg)
-- HIP 93683 / HIP 93683 (HIP 93683, mag 3.76, RA 19.0781h, Dec -21.7415deg) [no display name]
 - HIP 93864 / HIP 93864 (HIP 93864, mag 3.32, RA 19.1157h, Dec -27.6704deg) [no display name]
-- HIP 94141 / HIP 94141 (HIP 94141, mag 2.88, RA 19.1627h, Dec -21.0236deg) [no display name]
-- HIP 95168 / HIP 95168 (HIP 95168, mag 3.92, RA 19.3612h, Dec -17.8472deg) [no display name]
-- HIP 95176 / HIP 95176 (HIP 95176, mag 4.52, RA 19.3621h, Dec -15.9550deg) [no display name]
-- HIP 95241 / HIP 95241 (HIP 95241, mag 3.96, RA 19.3773h, Dec -44.4590deg) [no display name]
-- HIP 95347 / HIP 95347 (HIP 95347, mag 3.96, RA 19.3981h, Dec -40.6159deg) [no display name]
-- HIP 96465 / HIP 96465 (HIP 96465, mag 4.59, RA 19.6118h, Dec -24.8836deg) [no display name]
-- HIP 98032 / HIP 98032 (HIP 98032, mag 4.12, RA 19.9210h, Dec -41.8683deg) [no display name]
-- HIP 98162 / HIP 98162 (HIP 98162, mag 4.54, RA 19.9491h, Dec -27.1699deg) [no display name]
-- HIP 98412 / HIP 98412 (HIP 98412, mag 4.37, RA 19.9956h, Dec -35.2763deg) [no display name]
-- HIP 98688 / HIP 98688 (HIP 98688, mag 4.43, RA 20.0443h, Dec -27.7098deg) [no display name]
 
 ## SCO -- Scorpius / さそり座
 
-Counts: stars 15, edges 14, polylines 1, branch points 1, stars without display names 9
+Counts: stars 16, edges 15, polylines 1, branch points 1, stars without display names 9
 
 ### Polylines
 
-1. HIP 78821 -> Alniyat -> Dschubba -> Alniyat -> HIP 78265 -> Alniyat -> Antares -> HIP 81266 -> HIP 82396 -> HIP 82514 -> HIP 82729 -> HIP 84143 -> Sargas -> HIP 87073 -> HIP 86670 -> Shaula -> Lesath
+1. Acrab -> Dschubba -> HIP 78265 -> Dschubba -> Alniyat -> Antares -> HIP 81266 -> HIP 82396 -> HIP 82514 -> HIP 82729 -> HIP 84143 -> Sargas -> HIP 87073 -> HIP 86670 -> Lesath -> Shaula -> HIP 87261
 
 ### Edges
 
-- HIP 78821 -- Alniyat  |  HIP 78821 -- アルニヤト
-- Alniyat -- Dschubba  |  アルニヤト -- ジュバ
-- Alniyat -- HIP 78265  |  アルニヤト -- HIP 78265
+- HIP 78265 -- Dschubba  |  HIP 78265 -- ジュバ
+- Dschubba -- Acrab  |  ジュバ -- アクラブ
+- Dschubba -- Alniyat  |  ジュバ -- アルニヤト
 - Alniyat -- Antares  |  アルニヤト -- アンタレス
 - Antares -- HIP 81266  |  アンタレス -- HIP 81266
 - HIP 81266 -- HIP 82396  |  HIP 81266 -- HIP 82396
@@ -2367,20 +2434,21 @@ Counts: stars 15, edges 14, polylines 1, branch points 1, stars without display 
 - HIP 82514 -- HIP 82729  |  HIP 82514 -- HIP 82729
 - HIP 82729 -- HIP 84143  |  HIP 82729 -- HIP 84143
 - HIP 84143 -- Sargas  |  HIP 84143 -- サルガス
+- Lesath -- Shaula  |  レサト -- シャウラ
+- Lesath -- HIP 86670  |  レサト -- HIP 86670
+- Shaula -- HIP 87261  |  シャウラ -- HIP 87261
 - Sargas -- HIP 87073  |  サルガス -- HIP 87073
-- HIP 87073 -- HIP 86670  |  HIP 87073 -- HIP 86670
-- HIP 86670 -- Shaula  |  HIP 86670 -- シャウラ
-- Shaula -- Lesath  |  シャウラ -- レサト
+- HIP 86670 -- HIP 87073  |  HIP 86670 -- HIP 87073
 
 ### Branch Points
 
-- Alniyat / アルニヤト (HIP 80112): degree 4
+- Dschubba / ジュバ (HIP 78401): degree 3
 
 ### Stars
 
 - HIP 78265 / HIP 78265 (HIP 78265, mag 2.89, RA 15.9809h, Dec -26.1141deg) [no display name]
 - Dschubba / ジュバ (HIP 78401, mag 2.32, RA 16.0056h, Dec -22.6217deg)
-- HIP 78821 / HIP 78821 (HIP 78821, mag 4.90, RA 16.0907h, Dec -19.8019deg) [no display name]
+- Acrab / アクラブ (HIP 78820, mag 2.56, RA 16.0906h, Dec -19.8055deg)
 - Alniyat / アルニヤト (HIP 80112, mag 2.89, RA 16.3532h, Dec -25.5928deg)
 - Antares / アンタレス (HIP 80763, mag 1.06, RA 16.4901h, Dec -26.4319deg)
 - HIP 81266 / HIP 81266 (HIP 81266, mag 2.82, RA 16.5980h, Dec -28.2160deg) [no display name]
@@ -2393,6 +2461,7 @@ Counts: stars 15, edges 14, polylines 1, branch points 1, stars without display 
 - Sargas / サルガス (HIP 86228, mag 1.86, RA 17.6220h, Dec -42.9978deg)
 - HIP 86670 / HIP 86670 (HIP 86670, mag 2.39, RA 17.7081h, Dec -39.0300deg) [no display name]
 - HIP 87073 / HIP 87073 (HIP 87073, mag 2.99, RA 17.7931h, Dec -40.1270deg) [no display name]
+- HIP 87261 / HIP 87261 (HIP 87261, mag 3.19, RA 17.8310h, Dec -37.0433deg) [no display name]
 
 ## SCL -- Sculptor / ちょうこくしつ座
 
@@ -2417,52 +2486,50 @@ Counts: stars 4, edges 3, polylines 1, branch points 0, stars without display na
 
 ## SCT -- Scutum / たて座
 
-Counts: stars 4, edges 3, polylines 1, branch points 1, stars without display names 1
+Counts: stars 4, edges 4, polylines 1, branch points 0, stars without display names 0
 
 ### Polylines
 
-1. Beta Scuti -> Alpha Scuti -> Gamma Scuti -> Alpha Scuti -> HIP 90135
+1. Beta Scuti -> Alpha Scuti -> Gamma Scuti -> Delta Scuti -> Beta Scuti
 
 ### Edges
 
-- Beta Scuti -- Alpha Scuti  |  ベータ・たて -- アルファ・たて
-- Alpha Scuti -- Gamma Scuti  |  アルファ・たて -- ガンマ・たて
-- Alpha Scuti -- HIP 90135  |  アルファ・たて -- HIP 90135
-
-### Branch Points
-
-- Alpha Scuti / アルファ・たて (HIP 91117): degree 3
+- Gamma Scuti -- Alpha Scuti  |  ガンマ・たて -- アルファ・たて
+- Gamma Scuti -- Delta Scuti  |  ガンマ・たて -- デルタ・たて
+- Alpha Scuti -- Beta Scuti  |  アルファ・たて -- ベータ・たて
+- Delta Scuti -- Beta Scuti  |  デルタ・たて -- ベータ・たて
 
 ### Stars
 
-- HIP 90135 / HIP 90135 (HIP 90135, mag 4.66, RA 18.3943h, Dec -8.9344deg) [no display name]
 - Gamma Scuti / ガンマ・たて (HIP 90595, mag 4.67, RA 18.4866h, Dec -14.5658deg)
 - Alpha Scuti / アルファ・たて (HIP 91117, mag 3.85, RA 18.5868h, Dec -8.2441deg)
+- Delta Scuti / デルタ・たて (HIP 91726, mag 4.72, RA 18.7046h, Dec -9.0526deg)
 - Beta Scuti / ベータ・たて (HIP 92175, mag 4.22, RA 18.7862h, Dec -4.7478deg)
 
 ## SER -- Serpens / へび座
 
-Counts: stars 12, edges 12, polylines 2, branch points 1, stars without display names 5
+Counts: stars 14, edges 13, polylines 2, branch points 1, stars without display names 5
 
 ### Polylines
 
-1. HIP 84880 -> Xi Serpentis -> HIP 86565 -> Eta Serpentis -> HIP 92951
-2. Beta Serpentis -> HIP 77450 -> Gamma Serpentis -> Beta Serpentis -> Delta Serpentis -> Unukalhai -> Epsilon Serpentis -> HIP 77516 -> HIP 84880
+1. Beta Serpentis -> Gamma Serpentis -> HIP 77450 -> HIP 76852 -> Beta Serpentis -> Delta Serpentis -> Unukalhai -> Epsilon Serpentis -> HIP 77516 -> Yed Prior
+2. Sabik -> Xi Serpentis -> HIP 88048 -> Eta Serpentis -> HIP 92946
 
 ### Edges
 
-- HIP 84880 -- Xi Serpentis  |  HIP 84880 -- クシー・へび
-- Xi Serpentis -- HIP 86565  |  クシー・へび -- HIP 86565
-- HIP 86565 -- Eta Serpentis  |  HIP 86565 -- イータ・へび
-- Eta Serpentis -- HIP 92951  |  イータ・へび -- HIP 92951
-- Beta Serpentis -- HIP 77450  |  ベータ・へび -- HIP 77450
-- HIP 77450 -- Gamma Serpentis  |  HIP 77450 -- ガンマ・へび
-- Gamma Serpentis -- Beta Serpentis  |  ガンマ・へび -- ベータ・へび
-- Beta Serpentis -- Delta Serpentis  |  ベータ・へび -- デルタ・へび
 - Delta Serpentis -- Unukalhai  |  デルタ・へび -- ウヌカルハイ
+- Delta Serpentis -- Beta Serpentis  |  デルタ・へび -- ベータ・へび
+- HIP 76852 -- Beta Serpentis  |  HIP 76852 -- ベータ・へび
+- HIP 76852 -- HIP 77450  |  HIP 76852 -- HIP 77450
 - Unukalhai -- Epsilon Serpentis  |  ウヌカルハイ -- イプシロン・へび
-- Epsilon Serpentis -- HIP 77516  |  イプシロン・へび -- HIP 77516
-- HIP 77516 -- HIP 84880  |  HIP 77516 -- HIP 84880
+- Beta Serpentis -- Gamma Serpentis  |  ベータ・へび -- ガンマ・へび
+- HIP 77450 -- Gamma Serpentis  |  HIP 77450 -- ガンマ・へび
+- HIP 77516 -- Epsilon Serpentis  |  HIP 77516 -- イプシロン・へび
+- HIP 77516 -- Yed Prior  |  HIP 77516 -- イェド・プリオル
+- Sabik -- Xi Serpentis  |  サビク -- クシー・へび
+- Xi Serpentis -- HIP 88048  |  クシー・へび -- HIP 88048
+- HIP 88048 -- Eta Serpentis  |  HIP 88048 -- イータ・へび
+- Eta Serpentis -- HIP 92946  |  イータ・へび -- HIP 92946
 
 ### Branch Points
 
@@ -2471,17 +2538,19 @@ Counts: stars 12, edges 12, polylines 2, branch points 1, stars without display 
 ### Stars
 
 - Delta Serpentis / デルタ・へび (HIP 76276, mag 3.80, RA 15.5800h, Dec 10.5389deg)
+- HIP 76852 / HIP 76852 (HIP 76852, mag 4.51, RA 15.6925h, Dec 19.6704deg) [no display name]
 - Unukalhai / ウヌカルハイ (HIP 77070, mag 2.63, RA 15.7378h, Dec 6.4256deg)
 - Beta Serpentis / ベータ・へび (HIP 77233, mag 3.65, RA 15.7698h, Dec 15.4218deg)
 - HIP 77450 / HIP 77450 (HIP 77450, mag 4.09, RA 15.8123h, Dec 18.1416deg) [no display name]
 - HIP 77516 / HIP 77516 (HIP 77516, mag 3.54, RA 15.8270h, Dec -3.4302deg) [no display name]
 - Epsilon Serpentis / イプシロン・へび (HIP 77622, mag 3.71, RA 15.8469h, Dec 4.4777deg)
 - Gamma Serpentis / ガンマ・へび (HIP 78072, mag 3.85, RA 15.9409h, Dec 15.6616deg)
-- HIP 84880 / HIP 84880 (HIP 84880, mag 4.32, RA 17.3471h, Dec -12.8469deg) [no display name]
+- Yed Prior / イェド・プリオル (HIP 79593, mag 2.73, RA 16.2391h, Dec -3.6943deg)
+- Sabik / サビク (HIP 84012, mag 2.43, RA 17.1729h, Dec -15.7249deg)
 - Xi Serpentis / クシー・へび (HIP 86263, mag 3.54, RA 17.6264h, Dec -15.3986deg)
-- HIP 86565 / HIP 86565 (HIP 86565, mag 4.24, RA 17.6902h, Dec -12.8753deg) [no display name]
+- HIP 88048 / HIP 88048 (HIP 88048, mag 3.32, RA 17.9838h, Dec -9.7736deg) [no display name]
 - Eta Serpentis / イータ・へび (HIP 89962, mag 3.23, RA 18.3552h, Dec -2.8988deg)
-- HIP 92951 / HIP 92951 (HIP 92951, mag 4.98, RA 18.9374h, Dec 4.2021deg) [no display name]
+- HIP 92946 / HIP 92946 (HIP 92946, mag 4.62, RA 18.9370h, Dec 4.2036deg) [no display name]
 
 ## SEX -- Sextans / ろくぶんぎ座
 
@@ -2504,21 +2573,23 @@ Counts: stars 3, edges 2, polylines 1, branch points 0, stars without display na
 
 ## TAU -- Taurus / おうし座
 
-Counts: stars 8, edges 7, polylines 1, branch points 1, stars without display names 4
+Counts: stars 9, edges 8, polylines 2, branch points 1, stars without display names 5
 
 ### Polylines
 
-1. HIP 26451 -> Aldebaran -> HIP 20205 -> HIP 18724 -> HIP 15900 -> HIP 18724 -> HIP 20205 -> Delta1 Tauri -> Hyadum I -> Elnath
+1. HIP 26451 -> Aldebaran -> HIP 20894 -> HIP 20205 -> Delta1 Tauri -> Hyadum I -> Elnath
+2. HIP 20205 -> HIP 18724 -> HIP 16083
 
 ### Edges
 
-- HIP 26451 -- Aldebaran  |  HIP 26451 -- アルデバラン
-- Aldebaran -- HIP 20205  |  アルデバラン -- HIP 20205
-- HIP 20205 -- HIP 18724  |  HIP 20205 -- HIP 18724
-- HIP 18724 -- HIP 15900  |  HIP 18724 -- HIP 15900
+- HIP 16083 -- HIP 18724  |  HIP 16083 -- HIP 18724
+- HIP 18724 -- HIP 20205  |  HIP 18724 -- HIP 20205
 - HIP 20205 -- Delta1 Tauri  |  HIP 20205 -- デルタ1・おうし
+- HIP 20205 -- HIP 20894  |  HIP 20205 -- HIP 20894
 - Delta1 Tauri -- Hyadum I  |  デルタ1・おうし -- ヒアドゥムI
 - Hyadum I -- Elnath  |  ヒアドゥムI -- エルナト
+- HIP 20894 -- Aldebaran  |  HIP 20894 -- アルデバラン
+- Aldebaran -- HIP 26451  |  アルデバラン -- HIP 26451
 
 ### Branch Points
 
@@ -2526,11 +2597,12 @@ Counts: stars 8, edges 7, polylines 1, branch points 1, stars without display na
 
 ### Stars
 
-- HIP 15900 / HIP 15900 (HIP 15900, mag 3.61, RA 3.4136h, Dec 9.0289deg) [no display name]
+- HIP 16083 / HIP 16083 (HIP 16083, mag 3.73, RA 3.4528h, Dec 9.7327deg) [no display name]
 - HIP 18724 / HIP 18724 (HIP 18724, mag 3.41, RA 4.0113h, Dec 12.4903deg) [no display name]
 - HIP 20205 / HIP 20205 (HIP 20205, mag 3.65, RA 4.3299h, Dec 15.6276deg) [no display name]
 - Delta1 Tauri / デルタ1・おうし (HIP 20455, mag 3.76, RA 4.3823h, Dec 17.5425deg)
 - Hyadum I / ヒアドゥムI (HIP 20889, mag 3.40, RA 4.3823h, Dec 17.5425deg)
+- HIP 20894 / HIP 20894 (HIP 20894, mag 3.40, RA 4.4777h, Dec 15.8709deg) [no display name]
 - Aldebaran / アルデバラン (HIP 21421, mag 0.85, RA 4.5987h, Dec 16.5093deg)
 - Elnath / エルナト (HIP 25428, mag 1.65, RA 5.4382h, Dec 28.6075deg)
 - HIP 26451 / HIP 26451 (HIP 26451, mag 2.97, RA 5.6274h, Dec 21.1425deg) [no display name]
@@ -2758,74 +2830,95 @@ Counts: stars 11, edges 11, polylines 1, branch points 0, stars without display 
 
 ## VIR -- Virgo / おとめ座
 
-Counts: stars 5, edges 5, polylines 1, branch points 0, stars without display names 2
+Counts: stars 14, edges 14, polylines 1, branch points 3, stars without display names 9
 
 ### Polylines
 
-1. Spica -> HIP 64238 -> Porrima -> HIP 63090 -> Heze -> Spica
+1. HIP 60129 -> HIP 58948 -> HIP 57380 -> Zavijava -> HIP 60129 -> Porrima -> HIP 63090 -> Vindemiatrix -> HIP 63090 -> Porrima -> HIP 64238 -> Spica -> HIP 64238 -> Porrima -> Heze -> HIP 68520 -> HIP 72220 -> HIP 68520 -> Heze -> HIP 69701 -> HIP 71957
 
 ### Edges
 
-- Spica -- HIP 64238  |  スピカ -- HIP 64238
-- HIP 64238 -- Porrima  |  HIP 64238 -- ポリマ
+- HIP 57380 -- Zavijava  |  HIP 57380 -- ザヴィヤヴァ
+- HIP 57380 -- HIP 58948  |  HIP 57380 -- HIP 58948
+- Zavijava -- HIP 60129  |  ザヴィヤヴァ -- HIP 60129
+- HIP 58948 -- HIP 60129  |  HIP 58948 -- HIP 60129
+- HIP 60129 -- Porrima  |  HIP 60129 -- ポリマ
 - Porrima -- HIP 63090  |  ポリマ -- HIP 63090
-- HIP 63090 -- Heze  |  HIP 63090 -- ヘゼ
-- Heze -- Spica  |  ヘゼ -- スピカ
-
-### Stars
-
-- Porrima / ポリマ (HIP 61941, mag 2.74, RA 12.6943h, Dec -1.4494deg)
-- HIP 63090 / HIP 63090 (HIP 63090, mag 3.39, RA 12.9267h, Dec 3.3975deg) [no display name]
-- HIP 64238 / HIP 64238 (HIP 64238, mag 4.38, RA 13.1658h, Dec -5.5390deg) [no display name]
-- Spica / スピカ (HIP 65474, mag 0.98, RA 13.4199h, Dec -11.1613deg)
-- Heze / ヘゼ (HIP 66249, mag 3.38, RA 13.5782h, Dec -0.5958deg)
-
-## VOL -- Volans / とびうお座
-
-Counts: stars 6, edges 6, polylines 1, branch points 1, stars without display names 1
-
-### Polylines
-
-1. Alpha Volantis -> Beta Volantis -> HIP 39794 -> Delta Volantis -> Gamma2 Volantis -> Zeta Volantis -> HIP 39794
-
-### Edges
-
-- Alpha Volantis -- Beta Volantis  |  アルファ・とびうお -- ベータ・とびうお
-- Beta Volantis -- HIP 39794  |  ベータ・とびうお -- HIP 39794
-- HIP 39794 -- Delta Volantis  |  HIP 39794 -- デルタ・とびうお
-- Delta Volantis -- Gamma2 Volantis  |  デルタ・とびうお -- ガンマ2・とびうお
-- Gamma2 Volantis -- Zeta Volantis  |  ガンマ2・とびうお -- ゼータ・とびうお
-- Zeta Volantis -- HIP 39794  |  ゼータ・とびうお -- HIP 39794
+- Porrima -- HIP 64238  |  ポリマ -- HIP 64238
+- Porrima -- Heze  |  ポリマ -- ヘゼ
+- HIP 63090 -- Vindemiatrix  |  HIP 63090 -- ヴィンデミアトリックス
+- HIP 64238 -- Spica  |  HIP 64238 -- スピカ
+- Heze -- HIP 68520  |  ヘゼ -- HIP 68520
+- Heze -- HIP 69701  |  ヘゼ -- HIP 69701
+- HIP 68520 -- HIP 72220  |  HIP 68520 -- HIP 72220
+- HIP 69701 -- HIP 71957  |  HIP 69701 -- HIP 71957
 
 ### Branch Points
 
-- HIP 39794 / HIP 39794 (HIP 39794): degree 3
+- HIP 60129 / HIP 60129 (HIP 60129): degree 3
+- Porrima / ポリマ (HIP 61941): degree 4
+- Heze / ヘゼ (HIP 66249): degree 3
+
+### Stars
+
+- HIP 57380 / HIP 57380 (HIP 57380, mag 4.04, RA 11.7643h, Dec 6.5294deg) [no display name]
+- Zavijava / ザヴィヤヴァ (HIP 57757, mag 3.59, RA 11.8449h, Dec 1.7647deg)
+- HIP 58948 / HIP 58948 (HIP 58948, mag 4.12, RA 12.0868h, Dec 8.7330deg) [no display name]
+- HIP 60129 / HIP 60129 (HIP 60129, mag 3.89, RA 12.3318h, Dec -0.6668deg) [no display name]
+- Porrima / ポリマ (HIP 61941, mag 2.74, RA 12.6943h, Dec -1.4494deg)
+- HIP 63090 / HIP 63090 (HIP 63090, mag 3.39, RA 12.9267h, Dec 3.3975deg) [no display name]
+- Vindemiatrix / ヴィンデミアトリックス (HIP 63608, mag 2.85, RA 13.0363h, Dec 10.9591deg)
+- HIP 64238 / HIP 64238 (HIP 64238, mag 4.38, RA 13.1658h, Dec -5.5390deg) [no display name]
+- Spica / スピカ (HIP 65474, mag 0.98, RA 13.4199h, Dec -11.1613deg)
+- Heze / ヘゼ (HIP 66249, mag 3.38, RA 13.5782h, Dec -0.5958deg)
+- HIP 68520 / HIP 68520 (HIP 68520, mag 4.23, RA 14.0274h, Dec 1.5445deg) [no display name]
+- HIP 69701 / HIP 69701 (HIP 69701, mag 4.07, RA 14.2669h, Dec -6.0005deg) [no display name]
+- HIP 71957 / HIP 71957 (HIP 71957, mag 3.87, RA 14.7177h, Dec -5.6582deg) [no display name]
+- HIP 72220 / HIP 72220 (HIP 72220, mag 3.73, RA 14.7708h, Dec 1.8929deg) [no display name]
+
+## VOL -- Volans / とびうお座
+
+Counts: stars 5, edges 6, polylines 1, branch points 1, stars without display names 1
+
+### Polylines
+
+1. Alpha Volantis -> Beta Volantis -> HIP 39794 -> Delta Volantis -> Gamma2 Volantis -> HIP 39794 -> Alpha Volantis
+
+### Edges
+
+- Gamma2 Volantis -- Delta Volantis  |  ガンマ2・とびうお -- デルタ・とびうお
+- Gamma2 Volantis -- HIP 39794  |  ガンマ2・とびうお -- HIP 39794
+- Delta Volantis -- HIP 39794  |  デルタ・とびうお -- HIP 39794
+- HIP 39794 -- Beta Volantis  |  HIP 39794 -- ベータ・とびうお
+- HIP 39794 -- Alpha Volantis  |  HIP 39794 -- アルファ・とびうお
+- Beta Volantis -- Alpha Volantis  |  ベータ・とびうお -- アルファ・とびうお
+
+### Branch Points
+
+- HIP 39794 / HIP 39794 (HIP 39794): degree 4
 
 ### Stars
 
 - Gamma2 Volantis / ガンマ2・とびうお (HIP 34481, mag 3.78, RA 7.1458h, Dec -70.4989deg)
 - Delta Volantis / デルタ・とびうお (HIP 35228, mag 3.98, RA 7.2805h, Dec -67.9572deg)
-- Zeta Volantis / ゼータ・とびうお (HIP 37504, mag 3.93, RA 7.6970h, Dec -72.6061deg)
 - HIP 39794 / HIP 39794 (HIP 39794, mag 4.35, RA 8.1322h, Dec -68.6171deg) [no display name]
 - Beta Volantis / ベータ・とびうお (HIP 41312, mag 3.75, RA 8.4289h, Dec -66.1369deg)
 - Alpha Volantis / アルファ・とびうお (HIP 44382, mag 4.00, RA 9.0408h, Dec -66.3958deg)
 
 ## VUL -- Vulpecula / こぎつね座
 
-Counts: stars 3, edges 2, polylines 1, branch points 0, stars without display names 2
+Counts: stars 2, edges 1, polylines 1, branch points 0, stars without display names 1
 
 ### Polylines
 
-1. HIP 94703 -> Anser -> HIP 97886
+1. Anser -> HIP 97886
 
 ### Edges
 
-- HIP 94703 -- Anser  |  HIP 94703 -- アンサー
 - Anser -- HIP 97886  |  アンサー -- HIP 97886
 
 ### Stars
 
-- HIP 94703 / HIP 94703 (HIP 94703, mag 4.76, RA 19.2703h, Dec 21.3904deg) [no display name]
 - Anser / アンサー (HIP 95771, mag 4.44, RA 19.4784h, Dec 24.6649deg)
 - HIP 97886 / HIP 97886 (HIP 97886, mag 4.57, RA 19.8910h, Dec 24.0796deg) [no display name]
 
