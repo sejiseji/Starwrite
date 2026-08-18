@@ -146,6 +146,12 @@ BODY_LINE_STEP = 15
 BODY_COMPACT_LINE_STEP = 13
 LETTER_ORIGINAL_SECTION_GAP = BODY_LINE_STEP
 JAPANESE_CONSTELLATION_LABEL_LIMIT = 8
+CONSTELLATION_LABEL_OFFSETS: dict[str, tuple[int, int]] = {
+    # Serpens wraps around Ophiuchus, so their averaged label centers tend to
+    # converge after the reviewed line-profile update.
+    "OPH": (-18, -12),
+    "SER": (14, 14),
+}
 FEATURE_COLOR = 11
 LETTER_LACE_COLOR = 13
 LETTER_LACE_DIM_COLOR = 1
@@ -889,8 +895,9 @@ def _constellation_label_layout(
     center_x, center_y = center
     label = constellation_name(constellation, language)
     width = display_text_width(label)
-    label_x = max(4, min(pyxel.width - width - 4, center_x + 10))
-    label_y = max(88, min(pyxel.height - 76, center_y - 18 + (index % 3) * 12))
+    offset_x, offset_y = CONSTELLATION_LABEL_OFFSETS.get(constellation.id, (0, 0))
+    label_x = max(4, min(pyxel.width - width - 4, center_x + 10 + offset_x))
+    label_y = max(88, min(pyxel.height - 76, center_y - 18 + (index % 3) * 12 + offset_y))
     return label_x, label_y, width
 
 
