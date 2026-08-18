@@ -127,7 +127,7 @@ class CatalogTests(unittest.TestCase):
             for star_id in edge
         }
 
-        self.assertEqual(edge_count, 685)
+        self.assertEqual(edge_count, 686)
         self.assertEqual(len(endpoint_ids), 694)
 
     def test_constellation_star_references_exist(self) -> None:
