@@ -119,7 +119,8 @@ class SkyRenderer:
         )
         if show_constellations:
             self.draw_constellations(points, constellations, selected_constellation)
-        self.draw_stars(points, moon_light)
+        constellation_endpoint_ids = _constellation_endpoint_ids(constellations) if show_constellations else set()
+        self.draw_stars(points, moon_light, constellation_endpoint_ids)
         self.draw_moon(moon_state, camera, width, height, observer_latitude_deg)
         if meteor_event is not None:
             self.draw_meteors(meteor_event, width, height)
@@ -129,11 +130,17 @@ class SkyRenderer:
             color = 1 if y < height * 0.65 else 0
             pyxel.line(0, y, width, y, color)
 
-    def draw_stars(self, points: dict[int, ScreenPoint], moon_light: float = 0.0) -> None:
+    def draw_stars(
+        self,
+        points: dict[int, ScreenPoint],
+        moon_light: float = 0.0,
+        forced_star_ids: set[int] | None = None,
+    ) -> None:
         frame_count = pyxel.frame_count
         effective_limit_mag = BASE_LIMIT_MAG - moon_light * 1.5
+        forced_star_ids = forced_star_ids or set()
         for star_id, point in sorted(points.items(), key=lambda item: item[1].magnitude, reverse=True):
-            if point.magnitude > effective_limit_mag and star_id != POLARIS_ID:
+            if point.magnitude > effective_limit_mag and star_id != POLARIS_ID and star_id not in forced_star_ids:
                 continue
             x = int(point.x)
             y = int(point.y)
@@ -406,9 +413,6 @@ class SkyRenderer:
                 if a is None or b is None:
                     continue
                 pyxel.line(int(a.x), int(a.y), int(b.x), int(b.y), col)
-                endpoint_color = LINE_SELECTED if constellation.id == selected_constellation.id else HORIZON
-                pyxel.pset(int(a.x), int(a.y), endpoint_color)
-                pyxel.pset(int(b.x), int(b.y), endpoint_color)
 
     def draw_horizon(self, camera: SkyCamera, width: int, height: int) -> None:
         last: tuple[float, float] | None = None
@@ -426,6 +430,15 @@ class SkyRenderer:
                 last = (x, y)
             else:
                 last = None
+
+
+def _constellation_endpoint_ids(constellations: tuple[Constellation, ...]) -> set[int]:
+    endpoint_ids: set[int] = set()
+    for constellation in constellations:
+        for a_id, b_id in constellation.edges:
+            endpoint_ids.add(a_id)
+            endpoint_ids.add(b_id)
+    return endpoint_ids
 
 
 def _pseudo_random(seed: int) -> float:
