@@ -21,6 +21,10 @@ IPHONE16_MIN_SCREEN_WIDTH = 396
 IPHONE16_MAX_SCREEN_WIDTH = 430
 SMARTPHONE_FIRST_SCREEN_SIZE = (IPHONE16_MIN_SCREEN_WIDTH, IPHONE16_SCREEN_HEIGHT)
 SETTINGS_KEY = "starwrite_v02_settings"
+SESSION_SETTINGS_ATTR = "starwriteSessionSettings"
+# Keep the setup flow ephemeral by default. Letter logs and captures use separate
+# storage keys and are not controlled by this flag.
+PERSIST_SETTINGS_HISTORY = False
 IMPORT_DIRS = (
     "src",
     "src/astronomy",
@@ -405,6 +409,8 @@ def _screen_size() -> tuple[int, int]:
 
 
 def _load_settings() -> dict:
+    if not PERSIST_SETTINGS_HISTORY:
+        return {}
     try:
         from js import window  # type: ignore
 
@@ -415,10 +421,32 @@ def _load_settings() -> dict:
 
 
 def _save_settings(settings: dict) -> None:
+    if not PERSIST_SETTINGS_HISTORY:
+        return
     try:
         from js import window  # type: ignore
 
         window.localStorage.setItem(SETTINGS_KEY, json.dumps(settings))
+    except Exception:
+        pass
+
+
+def _clear_settings_history() -> None:
+    if PERSIST_SETTINGS_HISTORY:
+        return
+    try:
+        from js import window  # type: ignore
+
+        window.localStorage.removeItem(SETTINGS_KEY)
+    except Exception:
+        pass
+
+
+def _set_session_settings(settings: dict) -> None:
+    try:
+        from js import window  # type: ignore
+
+        setattr(window, SESSION_SETTINGS_ATTR, json.dumps(settings))
     except Exception:
         pass
 
@@ -469,6 +497,7 @@ def _unique_paths(paths: tuple[str, ...] | list[str]) -> list[str]:
 class BootstrapApp:
     def __init__(self) -> None:
         self.width, self.height = _screen_size()
+        _clear_settings_history()
         settings = _load_settings()
         setup_is_complete = bool(settings.get("setup_complete"))
         setup_requested = _setup_requested()
@@ -553,9 +582,13 @@ class BootstrapApp:
         return 0
 
     def _return_to_setup(self) -> None:
+        current_language = getattr(self.main_app, "language", None)
         settings = _load_settings()
         language = settings.get("language")
-        self.language = language if language in ("ja", "en") else _detect_language()
+        if current_language in ("ja", "en"):
+            self.language = current_language
+        else:
+            self.language = language if language in ("ja", "en") else _detect_language()
         default_country = "JP" if self.language == "ja" else "US"
         saved_country = settings.get("location_country", default_country)
         self.country_index = COUNTRIES.index(saved_country) if saved_country in COUNTRIES else COUNTRIES.index(default_country)
@@ -796,19 +829,20 @@ class BootstrapApp:
 
     def _save_selection(self) -> None:
         name, latitude, longitude = self.city
-        settings = _load_settings()
-        settings.update(
-            {
-                "latitude": latitude,
-                "longitude": longitude,
-                "language": self.language,
-                "location_country": self.country,
-                "location_city": name,
-                "utc_offset_minutes": self.city_utc_offset_minutes,
-                "setup_complete": True,
-            }
-        )
-        _save_settings(settings)
+        selection = {
+            "latitude": latitude,
+            "longitude": longitude,
+            "language": self.language,
+            "location_country": self.country,
+            "location_city": name,
+            "utc_offset_minutes": self.city_utc_offset_minutes,
+            "setup_complete": True,
+        }
+        _set_session_settings(selection)
+        if PERSIST_SETTINGS_HISTORY:
+            settings = _load_settings()
+            settings.update(selection)
+            _save_settings(settings)
 
     def _enter_loading(self) -> None:
         self.state = "LOADING"

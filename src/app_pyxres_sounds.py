@@ -128,6 +128,10 @@ IPHONE16_MIN_SCREEN_WIDTH = 396
 IPHONE16_MAX_SCREEN_WIDTH = 430
 SMARTPHONE_FIRST_SCREEN_SIZE = (IPHONE16_MIN_SCREEN_WIDTH, IPHONE16_SCREEN_HEIGHT)
 SETTINGS_KEY = "starwrite_v02_settings"
+SESSION_SETTINGS_ATTR = "starwriteSessionSettings"
+# Keep the setup flow ephemeral by default. Letter logs and captures use separate
+# storage keys and are not controlled by this flag.
+PERSIST_SETTINGS_HISTORY = False
 CAPTURE_KEY = "starwrite_v01_latest_capture"
 LETTER_STORE_KEY = "starwrite_v01_letter_store"
 CUT_IN_FRAMES = 150
@@ -213,17 +217,32 @@ def _storage():
 
 
 def _load_json(key: str) -> dict:
+    if key == SETTINGS_KEY and not PERSIST_SETTINGS_HISTORY:
+        storage = _storage()
+        if storage is not None:
+            try:
+                storage.removeItem(key)
+            except Exception:
+                pass
+        return _load_session_settings()
     storage = _storage()
     if storage is None:
-        return {}
+        return _load_session_settings() if key == SETTINGS_KEY else {}
     try:
         raw = storage.getItem(key)
-        return json.loads(raw) if raw else {}
+        value = json.loads(raw) if raw else {}
     except Exception:
-        return {}
+        value = {}
+    if key == SETTINGS_KEY:
+        session_settings = _load_session_settings()
+        if session_settings:
+            value.update(session_settings)
+    return value
 
 
 def _save_json(key: str, value: dict) -> None:
+    if key == SETTINGS_KEY and not PERSIST_SETTINGS_HISTORY:
+        return
     storage = _storage()
     if storage is None:
         return
@@ -231,6 +250,16 @@ def _save_json(key: str, value: dict) -> None:
         storage.setItem(key, json.dumps(value))
     except Exception:
         pass
+
+
+def _load_session_settings() -> dict:
+    try:
+        from js import window  # type: ignore
+
+        raw = getattr(window, SESSION_SETTINGS_ATTR, "")
+        return json.loads(str(raw)) if raw else {}
+    except Exception:
+        return {}
 
 
 def _timezone_from_offset(offset_minutes: int) -> timezone:
