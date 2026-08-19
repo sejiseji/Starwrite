@@ -127,8 +127,8 @@ class CatalogTests(unittest.TestCase):
             for star_id in edge
         }
 
-        self.assertEqual(edge_count, 795)
-        self.assertEqual(len(endpoint_ids), 800)
+        self.assertEqual(edge_count, 757)
+        self.assertEqual(len(endpoint_ids), 773)
 
     def test_constellation_star_references_exist(self) -> None:
         for constellation in CONSTELLATIONS:
@@ -154,6 +154,58 @@ class CatalogTests(unittest.TestCase):
                 undirected = frozenset((a_id, b_id))
                 self.assertNotIn(undirected, seen_edges, constellation_id)
                 seen_edges.add(undirected)
+
+    def test_japanese_reaudit_override_targets_are_consistent(self) -> None:
+        target_edge_counts = {
+            'AND': 15,
+            'APS': 3,
+            'AQR': 17,
+            'BOO': 13,
+            'CAR': 12,
+            'CEN': 25,
+            'CEP': 9,
+            'CET': 15,
+            'LUP': 15,
+            'MIC': 5,
+            'PHE': 7,
+            'SCT': 2,
+            'SGR': 19,
+            'TAU': 20,
+            'VUL': 2,
+        }
+        expected_johanley_targets = {
+            'APS',
+            'AQR',
+            'CAR',
+            'CEN',
+            'CEP',
+            'CET',
+            'LUP',
+            'MIC',
+            'PHE',
+            'SCT',
+            'SGR',
+            'TAU',
+            'VUL',
+        }
+
+        self.assertEqual(set(target_edge_counts) - expected_johanley_targets, {'AND', 'BOO'})
+
+        for constellation_id, expected_edge_count in target_edge_counts.items():
+            rebuilt_edges = tuple(
+                (polyline[index], polyline[index + 1])
+                for polyline in CONSTELLATION_LINE_POLYLINES_HIP[constellation_id]
+                for index in range(len(polyline) - 1)
+            )
+            endpoint_ids = {
+                star_id
+                for edge in CONSTELLATION_LINE_EDGES_HIP[constellation_id]
+                for star_id in edge
+            }
+
+            self.assertEqual(len(CONSTELLATION_LINE_EDGES_HIP[constellation_id]), expected_edge_count)
+            self.assertEqual(rebuilt_edges, CONSTELLATION_LINE_EDGES_HIP[constellation_id])
+            self.assertEqual(set(CONSTELLATION_MAIN_STAR_IDS_HIP[constellation_id]), endpoint_ids)
 
     def test_feature_edges_are_not_merged_into_constellation_edges(self) -> None:
         constellation_edges = {

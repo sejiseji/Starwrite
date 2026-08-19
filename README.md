@@ -168,10 +168,15 @@ uses a reviewed display profile for consistency:
   audit dated 2026-08-18, using Honda / AstroArts-style Japanese familiar
   figures as the visual reference and implementation data from
   ConstellationLines, Stellarium-style modern lines, Johan Ley-style line data,
-  and Starwrite custom HIP reconstructions where needed. Taurus, Centaurus,
-  and Cetus use the Japanese familiar HIP reconstructions to keep their shapes
-  aligned with the Honda / AstroArts-style figures.
-- Runtime line endpoints: 795 constellation-line segments using 800 HIP stars.
+  and Starwrite custom HIP reconstructions where needed.
+- Japanese HIP re-audit override `japanese_hip_reaudit_b15`, applied to
+  `AND APS AQR BOO CAR CEN CEP CET LUP MIC PHE SCT SGR TAU VUL`, supersedes
+  the corresponding prior profile entries. Its source is the Japanese
+  "星座名・星座線データ" article and raw HIP line list
+  (`https://star-records.blog.jp/archives/14120953.html`). No explicit reuse
+  license was visible on that source, so attribution is kept here and
+  redistribution terms should be confirmed before commercial release.
+- Runtime line endpoints: 757 constellation-line segments using 773 HIP stars.
 - Feature / Asterism overlays such as the Big Dipper, seasonal triangles,
   Pleiades, Hyades, and Southern Cross remain separate from constellation body
   lines.
