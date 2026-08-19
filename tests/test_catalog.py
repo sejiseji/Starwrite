@@ -127,7 +127,7 @@ class CatalogTests(unittest.TestCase):
             for star_id in edge
         }
 
-        self.assertEqual(edge_count, 757)
+        self.assertEqual(edge_count, 756)
         self.assertEqual(len(endpoint_ids), 773)
 
     def test_constellation_star_references_exist(self) -> None:
@@ -166,7 +166,7 @@ class CatalogTests(unittest.TestCase):
             'CAR': 12,
             'CEN': 25,
             'CEP': 9,
-            'CET': 15,
+            'CET': 14,
             'CHA': 5,
             'CMA': 13,
             'COL': 6,
@@ -221,6 +221,30 @@ class CatalogTests(unittest.TestCase):
             self.assertEqual(len(CONSTELLATION_LINE_EDGES_HIP[constellation_id]), expected_edge_count)
             self.assertEqual(rebuilt_edges, CONSTELLATION_LINE_EDGES_HIP[constellation_id])
             self.assertEqual(set(CONSTELLATION_MAIN_STAR_IDS_HIP[constellation_id]), endpoint_ids)
+
+    def test_cetus_head_loop_is_separate_from_baten_kaitos_body_line(self) -> None:
+        edges = {frozenset(edge) for edge in CONSTELLATION_LINE_EDGES_HIP['CET']}
+        head_ids = {11484, 12828, 13954, 14135, 12706}
+
+        for edge in (
+            (11484, 12828),
+            (12828, 13954),
+            (13954, 14135),
+            (14135, 12706),
+            (12706, 11484),
+        ):
+            self.assertIn(frozenset(edge), edges)
+
+        for edge in (
+            (6537, 8645),
+            (8645, 10826),
+            (8102, 8645),
+        ):
+            self.assertIn(frozenset(edge), edges)
+
+        self.assertNotIn(frozenset((12387, 11484)), edges)
+        for head_id in head_ids:
+            self.assertNotIn(frozenset((8645, head_id)), edges)
 
     def test_feature_edges_are_not_merged_into_constellation_edges(self) -> None:
         constellation_edges = {
