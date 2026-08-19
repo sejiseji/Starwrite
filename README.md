@@ -169,9 +169,9 @@ uses a reviewed display profile for consistency:
   figures as the visual reference and implementation data from
   ConstellationLines, Stellarium-style modern lines, Johan Ley-style line data,
   and Starwrite custom HIP reconstructions where needed. Taurus, Centaurus,
-  and Cetus use local Starwrite overrides to avoid lines that read as extra
-  limbs, dense branches, or Feature/Asterism overlays on the phone display.
-- Runtime line endpoints: 770 constellation-line segments using 776 HIP stars.
+  and Cetus use the Japanese familiar HIP reconstructions to keep their shapes
+  aligned with the Honda / AstroArts-style figures.
+- Runtime line endpoints: 795 constellation-line segments using 800 HIP stars.
 - Feature / Asterism overlays such as the Big Dipper, seasonal triangles,
   Pleiades, Hyades, and Southern Cross remain separate from constellation body
   lines.
