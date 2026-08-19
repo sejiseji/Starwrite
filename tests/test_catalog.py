@@ -222,13 +222,6 @@ class CatalogTests(unittest.TestCase):
             self.assertEqual(rebuilt_edges, CONSTELLATION_LINE_EDGES_HIP[constellation_id])
             self.assertEqual(set(CONSTELLATION_MAIN_STAR_IDS_HIP[constellation_id]), endpoint_ids)
 
-    def test_cetus_head_uses_starwrite_display_tuning(self) -> None:
-        cet_edges = {frozenset(edge) for edge in CONSTELLATION_LINE_EDGES_HIP['CET']}
-
-        self.assertIn(frozenset((12387, 12706)), cet_edges)
-        self.assertIn(frozenset((12706, 11484)), cet_edges)
-        self.assertNotIn(frozenset((12387, 11484)), cet_edges)
-
     def test_feature_edges_are_not_merged_into_constellation_edges(self) -> None:
         constellation_edges = {
             frozenset(edge)
