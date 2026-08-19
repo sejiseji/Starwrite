@@ -155,41 +155,56 @@ class CatalogTests(unittest.TestCase):
                 self.assertNotIn(undirected, seen_edges, constellation_id)
                 seen_edges.add(undirected)
 
-    def test_japanese_reaudit_override_targets_are_consistent(self) -> None:
+    def test_japanese_focused_final49_targets_are_consistent(self) -> None:
         target_edge_counts = {
             'AND': 15,
+            'ANT': 3,
             'APS': 3,
             'AQR': 17,
             'BOO': 13,
+            'CAP': 9,
             'CAR': 12,
             'CEN': 25,
             'CEP': 9,
             'CET': 15,
+            'CHA': 5,
+            'CMA': 13,
+            'COL': 6,
+            'CRA': 5,
+            'HER': 22,
+            'HOR': 7,
+            'HYI': 4,
+            'LAC': 7,
+            'LIB': 7,
+            'LMI': 3,
             'LUP': 15,
+            'MEN': 3,
             'MIC': 5,
+            'OPH': 18,
+            'PER': 21,
             'PHE': 7,
+            'PUP': 11,
+            'SCO': 17,
             'SCT': 2,
             'SGR': 19,
             'TAU': 20,
+            'VIR': 15,
+            'VOL': 6,
             'VUL': 2,
         }
-        expected_johanley_targets = {
-            'APS',
+        priority_targets = {
+            'AND',
             'AQR',
-            'CAR',
+            'BOO',
             'CEN',
-            'CEP',
             'CET',
             'LUP',
-            'MIC',
-            'PHE',
-            'SCT',
             'SGR',
             'TAU',
-            'VUL',
         }
 
-        self.assertEqual(set(target_edge_counts) - expected_johanley_targets, {'AND', 'BOO'})
+        self.assertEqual(len(target_edge_counts), 34)
+        self.assertLessEqual(priority_targets, set(target_edge_counts))
 
         for constellation_id, expected_edge_count in target_edge_counts.items():
             rebuilt_edges = tuple(

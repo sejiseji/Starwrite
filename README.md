@@ -169,9 +169,9 @@ uses a reviewed display profile for consistency:
   figures as the visual reference and implementation data from
   ConstellationLines, Stellarium-style modern lines, Johan Ley-style line data,
   and Starwrite custom HIP reconstructions where needed.
-- Japanese HIP re-audit override `japanese_hip_reaudit_b15`, applied to
-  `AND APS AQR BOO CAR CEN CEP CET LUP MIC PHE SCT SGR TAU VUL`, supersedes
-  the corresponding prior profile entries. Its source is the Japanese
+- Focused Japanese-recognized final49 patch `starwrite_japanese_recognized_final49`
+  reviewed 49 constellations and replaces 34 focused targets, including
+  `TAU CET CEN LUP BOO AQR AND SGR`. Its Japanese HIP source is the
   "星座名・星座線データ" article and raw HIP line list
   (`https://star-records.blog.jp/archives/14120953.html`). No explicit reuse
   license was visible on that source, so attribution is kept here and
