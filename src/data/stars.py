@@ -159,7 +159,8 @@ NAMED_STARS: tuple[Star, ...] = (
     star_from_hours(3419, 0.7265, -17.9866, 2.04, 1.02),  # Diphda
     star_from_hours(14135, 3.0379, 4.0897, 2.54, 1.63),  # Menkar
     star_from_hours(10826, 2.3224, -2.9776, 3.00, 1.60),  # Mira
-    star_from_hours(12706, 2.7217, -10.6780, 3.73, 1.05),  # Baten Kaitos
+    star_from_hours(12706, 2.721678, 3.235818, 3.47, 0.093),  # Kaffaljidhma
+    star_from_hours(8645, 1.857676, -10.335038, 3.74, 1.136),  # Baten Kaitos
     star_from_hours(9487, 2.0341, 2.7638, 3.82, 0.04),  # Alrescha
     star_from_hours(7097, 1.5247, 15.3458, 4.27, 0.95),  # Kullat Nunu
     star_from_hours(8198, 1.7566, 9.1577, 4.27, 1.00),  # Torcular
@@ -567,7 +568,8 @@ STAR_NAMES: dict[int, str] = {
     3419: "Diphda",
     14135: "Menkar",
     10826: "Mira",
-    12706: "Baten Kaitos",
+    12706: "Kaffaljidhma",
+    8645: "Baten Kaitos",
     9487: "Alrescha",
     7097: "Kullat Nunu",
     8198: "Torcular",

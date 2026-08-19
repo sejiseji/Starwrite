@@ -176,7 +176,7 @@ uses a reviewed display profile for consistency:
   (`https://star-records.blog.jp/archives/14120953.html`). No explicit reuse
   license was visible on that source, so attribution is kept here and
   redistribution terms should be confirmed before commercial release.
-- Runtime line endpoints: 756 constellation-line segments using 773 HIP stars.
+- Runtime line endpoints: 757 constellation-line segments using 773 HIP stars.
 - Feature / Asterism overlays such as the Big Dipper, seasonal triangles,
   Pleiades, Hyades, and Southern Cross remain separate from constellation body
   lines.
