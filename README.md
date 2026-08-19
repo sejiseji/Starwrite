@@ -176,6 +176,9 @@ uses a reviewed display profile for consistency:
   (`https://star-records.blog.jp/archives/14120953.html`). No explicit reuse
   license was visible on that source, so attribution is kept here and
   redistribution terms should be confirmed before commercial release.
+- Cetus keeps the same 15-star endpoint set, with a Starwrite display tuning at
+  the head/neck join so the whale head reads clearly under the in-game sky
+  projection.
 - Runtime line endpoints: 757 constellation-line segments using 773 HIP stars.
 - Feature / Asterism overlays such as the Big Dipper, seasonal triangles,
   Pleiades, Hyades, and Southern Cross remain separate from constellation body
