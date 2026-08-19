@@ -164,10 +164,12 @@ uses a reviewed display profile for consistency:
   `10.5281/zenodo.10397192`, CC BY 4.0.
 - HR-to-HIP crosswalk and endpoint coordinates: HYG Database v4.1 by David Nash
   / Astronexus and contributors, CC BY-SA 4.0.
-- Review profile: Starwrite `reviewed_pyxel` constellation figure audit dated
-  2026-08-18, aligned to common modern Stellarium / Sky & Telescope-style
-  stick figures while keeping dense Pyxel linework readable.
-- Runtime line endpoints: 685 constellation-line segments using 694 HIP stars.
+- Review profile: Starwrite `honda_astroarts_familiar_ja` constellation figure
+  audit dated 2026-08-18, using Honda / AstroArts-style Japanese familiar
+  figures as the visual reference and implementation data from
+  ConstellationLines, Stellarium-style modern lines, Johan Ley-style line data,
+  and Starwrite custom HIP reconstructions where needed.
+- Runtime line endpoints: 807 constellation-line segments using 810 HIP stars.
 - Feature / Asterism overlays such as the Big Dipper, seasonal triangles,
   Pleiades, Hyades, and Southern Cross remain separate from constellation body
   lines.
@@ -261,6 +263,7 @@ license in this section.
 - Pyxel Web custom tag article by Pyxel author: https://tkitao.hatenablog.com/entry/2022/10/08/174438
 - ConstellationLines: https://github.com/MarcvdSluys/ConstellationLines
 - ConstellationLines DOI: https://doi.org/10.5281/zenodo.10397192
+- Stellarium sky cultures: https://github.com/Stellarium/stellarium
 - HYG Database: https://github.com/astronexus/HYG-Database
 - International Meteor Organization, major meteor showers: https://www.imo.net/observations/methods/visual-observation/major/
 - International Meteor Organization, meteor shower calendar archive / working list context: https://www.imo.net/resources/calendar/2019/
