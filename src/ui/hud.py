@@ -1089,6 +1089,13 @@ def focused_moon_hit_rect(point: tuple[float, float], moon: MoonState, language:
     return (x1, y1, x2 - x1, y2 - y1)
 
 
+def moon_body_hit_rect(point: tuple[float, float]) -> tuple[int, int, int, int]:
+    x = int(point[0])
+    y = int(point[1])
+    tap_radius = 18
+    return (x - tap_radius, y - tap_radius, tap_radius * 2 + 1, tap_radius * 2 + 1)
+
+
 def draw_focus_lock_reticle(color: int, out_of_range: bool = False) -> None:
     x = pyxel.width // 2
     y = pyxel.height // 2

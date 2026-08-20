@@ -94,6 +94,7 @@ from ui.hud import (
     focused_star_hit_rect,
     menu_button_rect,
     menu_close_rect,
+    moon_body_hit_rect,
     log_item_rects,
     letter_close_rect,
     letter_panel_rect,
@@ -1503,9 +1504,14 @@ class StarSkyApp:
         if self.moon.state is None:
             return False
         moon_point = moon_screen_point(self.moon.state, self.camera, SCREEN_WIDTH, SCREEN_HEIGHT)
-        if moon_point is None or not self._point_near_center(moon_point, 46):
+        if moon_point is None:
             return False
-        if not self._point_in_rect(point, focused_moon_hit_rect(moon_point, self.moon.state, self.language)):
+        hit_focused_label = (
+            self._point_near_center(moon_point, 46)
+            and self._point_in_rect(point, focused_moon_hit_rect(moon_point, self.moon.state, self.language))
+        )
+        hit_body = self._point_in_rect(point, moon_body_hit_rect(moon_point))
+        if not hit_focused_label and not hit_body:
             return False
         self.selected_star_id = None
         self.selected_feature_id = None
