@@ -9,10 +9,11 @@ from ui.localization import sky_feature_name
 
 
 class SkyFeatureTests(unittest.TestCase):
-    def test_summer_triangle_uses_three_named_stars(self) -> None:
-        features = {feature.id: feature for feature in ASTERISMS}
+    def setUp(self) -> None:
+        self.features = {feature.id: feature for feature in ASTERISMS}
 
-        summer_triangle = features["SUMMER_TRIANGLE"]
+    def test_summer_triangle_uses_three_named_stars(self) -> None:
+        summer_triangle = self.features["SUMMER_TRIANGLE"]
 
         self.assertEqual(summer_triangle.star_ids, (91262, 97649, 102098))
         self.assertEqual(len(summer_triangle.edges), 3)
@@ -56,17 +57,37 @@ class SkyFeatureTests(unittest.TestCase):
         self.assertEqual(sky_feature_name(feature, "ja"), "夏の大三角")
 
     def test_added_feature_names_are_localized(self) -> None:
-        features = {feature.id: feature for feature in ASTERISMS}
         paths = {path.id: path for path in SKY_PATHS}
 
-        self.assertEqual(sky_feature_name(features["GREAT_SQUARE"], "ja"), "秋の四辺形")
-        self.assertEqual(sky_feature_name(features["NORTHERN_CROSS"], "ja"), "北十字")
-        self.assertEqual(sky_feature_name(features["TEAPOT"], "en"), "Teapot")
-        self.assertEqual(sky_feature_name(features["SCORPIUS_HOOK"], "ja"), "さそりの釣り針")
-        self.assertEqual(sky_feature_name(features["FALSE_CROSS"], "en"), "False Cross")
+        self.assertEqual(sky_feature_name(self.features["GREAT_SQUARE"], "ja"), "秋の四辺形")
+        self.assertEqual(sky_feature_name(self.features["NORTHERN_CROSS"], "ja"), "北十字")
+        self.assertEqual(sky_feature_name(self.features["TEAPOT"], "en"), "Teapot")
+        self.assertEqual(sky_feature_name(self.features["SCORPIUS_HOOK"], "ja"), "さそりの釣り針")
+        self.assertEqual(sky_feature_name(self.features["FALSE_CROSS"], "en"), "False Cross")
         self.assertEqual(sky_feature_name(paths["MAGELLAN_CLOUD_REGION"], "ja"), "マゼラン雲の領域")
-        self.assertEqual(sky_feature_name(features["PLEIADES"], "ja"), "プレアデス星団")
-        self.assertEqual(sky_feature_name(features["KEYSTONE_OF_HERCULES"], "en"), "Keystone of Hercules")
+        self.assertEqual(sky_feature_name(self.features["PLEIADES"], "ja"), "プレアデス星団")
+        self.assertEqual(sky_feature_name(self.features["KEYSTONE_OF_HERCULES"], "en"), "Keystone of Hercules")
+
+    def test_safe_feature_patch_shapes_are_applied(self) -> None:
+        self.assertIn((59774, 54061), self.features["BIG_DIPPER"].edges)
+        self.assertEqual(
+            self.features["SPRING_ARC"].edges,
+            ((62956, 65378), (65378, 67301), (67301, 69673), (69673, 65474)),
+        )
+        self.assertEqual(len(self.features["TEAPOT"].star_ids), 8)
+        self.assertEqual(len(self.features["TEAPOT"].edges), 11)
+        self.assertEqual(self.features["SCORPIUS_HOOK"].edges[-1], (85696, 85927))
+        self.assertEqual(
+            self.features["WATER_JAR"].edges,
+            ((110960, 110395), (110960, 111497), (110960, 110672)),
+        )
+
+    def test_safe_feature_patch_catalog_names_are_corrected(self) -> None:
+        self.assertEqual(STAR_NAMES[45941], "Markeb")
+        self.assertEqual(STAR_NAMES[42913], "Alsephina")
+        self.assertEqual(STAR_NAMES[20889], "Epsilon Tauri")
+        self.assertEqual(STAR_NAMES[92041], "Phi Sagittarii")
+        self.assertEqual(STAR_NAMES[115738], "Kappa Piscium")
 
 
 if __name__ == "__main__":

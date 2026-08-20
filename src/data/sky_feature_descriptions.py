@@ -26,7 +26,7 @@ SKY_FEATURE_DESCRIPTIONS: dict[str, dict[str, tuple[str, str]]] = {'SUMMER_TRIAN
  'CASSIOPEIA_W': {'ja': ('五つの星が鋭いW字を描く。', '北の空で見つけやすい形。'),
                   'en': ('Five stars trace a sharp W.', 'It stands out in northern skies.')},
  'POINTER_STARS': {'ja': ('ドゥーベとメラクを結んで延ばす。', 'その先に北極星が待っている。'),
-                   'en': ('Extend Dubhe through Merak north.', 'The line leads to Polaris.')},
+                   'en': ('Extend Merak through Dubhe north.', 'The line leads to Polaris.')},
  'SOUTHERN_CROSS': {'ja': ('南天に小さく鋭い十字を描く。', '南の方角を知る手がかりになる。'),
                     'en': ('A compact cross marks the south.', 'It helps reveal due south.')},
  'SOUTHERN_POINTERS': {'ja': ('明るい二星が南十字を指し示す。', '南天の目印を探す助けになる。'),

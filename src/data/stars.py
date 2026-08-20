@@ -78,7 +78,7 @@ NAMED_STARS: tuple[Star, ...] = (
     star_from_hours(54879, 11.2373, 15.4296, 3.33, 0.31),  # Chertan
     star_from_hours(25428, 5.4382, 28.6075, 1.65, -0.13),  # Elnath
     star_from_hours(17702, 3.7914, 24.1051, 2.87, -0.09),  # Alcyone
-    star_from_hours(20889, 4.3823, 17.5425, 3.40, 0.98),  # Hyadum I
+    star_from_hours(20889, 4.476943, 19.180431, 3.53, 1.014),  # Epsilon Tauri
     star_from_hours(36850, 7.5766, 31.8886, 1.58, 0.03),  # Castor
     star_from_hours(31681, 6.6285, 16.3993, 1.93, 0.00),  # Alhena
     star_from_hours(35550, 7.3354, 21.9823, 3.53, 0.35),  # Wasat
@@ -215,8 +215,8 @@ NAMED_STARS: tuple[Star, ...] = (
     star_from_hours(35264, 7.2857, -37.0975, 3.25, 1.20),  # Azmidi
     star_from_hours(44816, 9.1333, -43.4326, 2.21, 1.70),  # Suhail
     star_from_hours(39953, 8.1589, -47.3366, 1.75, -0.22),  # Regor
-    star_from_hours(45941, 9.3686, -55.0107, 1.96, 0.00),  # Alsephina
-    star_from_hours(42913, 8.7451, -54.7088, 2.47, -0.18),  # Markeb Velae
+    star_from_hours(45941, 9.3686, -55.0107, 1.96, 0.00),  # Markeb
+    star_from_hours(42913, 8.7451, -54.7088, 2.47, -0.18),  # Alsephina
     star_from_hours(71860, 14.6988, -47.3882, 2.30, -0.20),  # Men
     star_from_hours(73273, 14.9755, -43.1339, 2.68, -0.20),  # Beta Lupi
     star_from_hours(76297, 15.5857, -41.1668, 2.78, -0.18),  # Gamma Lupi
@@ -404,6 +404,7 @@ NAMED_STARS: tuple[Star, ...] = (
     star_from_hours(35228, 7.2805, -67.9572, 3.98, 1.04),  # Delta Volantis
     star_from_hours(44382, 9.0408, -66.3958, 4.00, 0.28),  # Alpha Volantis
     # Feature support stars.
+    star_from_hours(20205, 4.329889, 15.627642, 3.65, 0.981),  # Gamma Tauri
     star_from_hours(49583, 10.1222, 16.7627, 3.52, -0.03),  # Eta Leonis
     star_from_hours(50335, 10.2782, 23.4173, 3.44, 0.31),  # Zeta Leonis
     star_from_hours(48455, 9.8794, 26.0069, 3.88, 1.22),  # Mu Leonis
@@ -418,8 +419,21 @@ NAMED_STARS: tuple[Star, ...] = (
     star_from_hours(17579, 3.7651, 24.5546, 5.76, -0.04),  # Sterope
     star_from_hours(17847, 3.8194, 24.0534, 3.62, -0.06),  # Atlas
     star_from_hours(17851, 3.8198, 24.1368, 5.05, -0.08),  # Pleione
+    star_from_hours(76127, 15.548829, 31.359133, 4.14, -0.127),  # Theta Coronae Borealis
+    star_from_hours(78159, 15.959794, 26.877880, 4.14, 1.231),  # Epsilon Coronae Borealis
+    star_from_hours(78493, 16.024047, 29.851061, 4.98, -0.05),  # Iota Coronae Borealis
+    star_from_hours(81266, 16.598043, -28.216016, 2.82, -0.206),  # Tau Scorpii
+    star_from_hours(82396, 16.836080, -34.293232, 2.29, 1.144),  # Epsilon Scorpii
+    star_from_hours(82514, 16.864509, -38.047380, 3.00, -0.2),  # Mu1 Scorpii
+    star_from_hours(82729, 16.909731, -42.361313, 3.62, 1.393),  # Zeta2 Scorpii
+    star_from_hours(84143, 17.202552, -43.239189, 3.32, 0.441),  # Eta Scorpii
+    star_from_hours(86670, 17.708132, -39.029983, 2.39, -0.171),  # Kappa Scorpii
+    star_from_hours(87073, 17.793078, -40.126997, 2.99, 0.509),  # Iota1 Scorpii
+    star_from_hours(92041, 18.760940, -26.990778, 3.17, -0.107),  # Phi Sagittarii
+    star_from_hours(93864, 19.115670, -27.670423, 3.32, 1.169),  # Tau Sagittarii
     star_from_hours(114971, 23.2861, 3.2823, 3.70, 0.92),  # Gamma Piscium
     star_from_hours(115227, 23.3390, 5.3813, 5.05, 1.05),  # 7 Piscium
+    star_from_hours(115738, 23.448876, 1.255608, 4.95, 0.036),  # Kappa Piscium
     star_from_hours(115830, 23.4661, 6.3791, 4.27, 1.07),  # Theta Piscium
     star_from_hours(116771, 23.6658, 5.6263, 4.13, 0.50),  # Iota Piscium
     star_from_hours(116928, 23.7008, 1.7800, 4.50, 1.00),  # Lambda Piscium
@@ -487,7 +501,7 @@ STAR_NAMES: dict[int, str] = {
     54879: "Chertan",
     25428: "Elnath",
     17702: "Alcyone",
-    20889: "Hyadum I",
+    20889: "Epsilon Tauri",
     36850: "Castor",
     31681: "Alhena",
     35550: "Wasat",
@@ -624,8 +638,8 @@ STAR_NAMES: dict[int, str] = {
     35264: "Azmidi",
     44816: "Suhail",
     39953: "Regor",
-    45941: "Alsephina",
-    42913: "Markeb Velae",
+    45941: "Markeb",
+    42913: "Alsephina",
     71860: "Men",
     73273: "Beta Lupi",
     76297: "Gamma Lupi",
@@ -813,12 +827,25 @@ STAR_NAMES: dict[int, str] = {
     35228: 'Delta Volantis',
     44382: 'Alpha Volantis',
     # Feature support stars.
+    20205: 'Gamma Tauri',
     49583: 'Eta Leonis',
     50335: 'Zeta Leonis',
     48455: 'Mu Leonis',
     47908: 'Epsilon Leonis',
     20455: 'Delta1 Tauri',
     20885: 'Theta Tauri',
+    76127: 'Theta Coronae Borealis',
+    78159: 'Epsilon Coronae Borealis',
+    78493: 'Iota Coronae Borealis',
+    81266: 'Tau Scorpii',
+    82396: 'Epsilon Scorpii',
+    82514: 'Mu1 Scorpii',
+    82729: 'Zeta2 Scorpii',
+    84143: 'Eta Scorpii',
+    86670: 'Kappa Scorpii',
+    87073: 'Iota1 Scorpii',
+    92041: 'Phi Sagittarii',
+    93864: 'Tau Sagittarii',
     17573: 'Maia',
     17499: 'Electra',
     17608: 'Merope',
@@ -829,6 +856,7 @@ STAR_NAMES: dict[int, str] = {
     17851: 'Pleione',
     114971: 'Gamma Piscium',
     115227: '7 Piscium',
+    115738: 'Kappa Piscium',
     115830: 'Theta Piscium',
     116771: 'Iota Piscium',
     116928: 'Lambda Piscium',
