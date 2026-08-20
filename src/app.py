@@ -104,6 +104,7 @@ from ui.hud import (
     panel_toggle_rects,
     rotate_camera_speed_control_rects,
     rotate_speed_control_rects,
+    selected_summary_panel_rect,
     set_desktop_letter_text_mode,
     sky_feature_label_hit_rects,
     slider_rects,
@@ -786,7 +787,8 @@ class StarSkyApp:
         return self._point_in_rect(point, rects["panel"])
 
     def _handle_focus_lock_button_click(self, point: tuple[int, int]) -> bool:
-        if not self._point_in_rect(point, focus_lock_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT)):
+        button_rect = focus_lock_button_rect(SCREEN_WIDTH, SCREEN_HEIGHT, self._active_summary_panel_rect())
+        if not self._point_in_rect(point, self._expanded_rect(button_rect, 5)):
             return False
         if self.focus_lock.enabled:
             self._disable_focus_lock()
@@ -1399,6 +1401,16 @@ class StarSkyApp:
         if letter is None:
             return letter_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
         return letter_view_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT, letter, self.language)
+
+    def _active_summary_panel_rect(self) -> tuple[int, int, int, int]:
+        x, y, w, h = selected_summary_panel_rect(SCREEN_WIDTH, SCREEN_HEIGHT)
+        start_frame = self.summary_panel_animation_start_frame
+        if start_frame is not None:
+            age = pyxel.frame_count - start_frame
+            if 0 <= age < SUMMARY_PANEL_ANIMATION_FRAMES:
+                progress = max(0.0, min(1.0, age / float(SUMMARY_PANEL_ANIMATION_FRAMES - 1)))
+                y -= int((1.0 - progress) * (1.0 - progress) * 7)
+        return (x, y, w, h)
 
     def _point_in_rect(self, point: tuple[int, int], rect: tuple[int, int, int, int]) -> bool:
         px, py = point
