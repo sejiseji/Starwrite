@@ -588,12 +588,12 @@ class StarSkyApp:
         self._handle_mouse()
         if self.ui_state == "SKY":
             self._update_constellation_auto_pan()
+            self.moon.update(self.clock.current_time, self.observer.latitude_deg, self.observer.longitude_deg)
             self._update_focus_lock()
         if self.ui_state != "SKY":
             if pyxel.frame_count % 30 == 0:
                 self._save_settings()
             return
-        self.moon.update(self.clock.current_time, self.observer.latitude_deg, self.observer.longitude_deg)
         self.projected = project_visible_stars(
             STARS,
             self.observer,
@@ -1815,7 +1815,7 @@ class StarSkyApp:
                     return None
                 return FocusTarget(FocusTargetKind.SKY_PATH, feature.id, anchor[0], anchor[1])
         if self.selected_moon:
-            return None
+            return FocusTarget(FocusTargetKind.MOON, "MOON")
         return FocusTarget(FocusTargetKind.CONSTELLATION, self.selected_constellation.id)
 
     def _clear_detail_selection(self) -> None:
@@ -1852,6 +1852,8 @@ class StarSkyApp:
             return 10
         if target.kind in (FocusTargetKind.ASTERISM, FocusTargetKind.SKY_PATH):
             return 11
+        if target.kind is FocusTargetKind.MOON:
+            return 10
         return 10
 
     def _constellation_for_star(self, star_id: int) -> Constellation | None:
@@ -1923,6 +1925,11 @@ class StarSkyApp:
             if target.anchor_ra_rad is None or target.anchor_dec_rad is None:
                 return None
             direction = self._equatorial_direction(target.anchor_ra_rad, target.anchor_dec_rad)
+            return direction, (direction,)
+        if target.kind is FocusTargetKind.MOON:
+            if self.moon.state is None:
+                return None
+            direction = moon_direction(self.moon.state)
             return direction, (direction,)
         return None
 

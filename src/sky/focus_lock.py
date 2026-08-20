@@ -17,6 +17,7 @@ class FocusTargetKind(Enum):
     CONSTELLATION = auto()
     ASTERISM = auto()
     SKY_PATH = auto()
+    MOON = auto()
 
 
 class FocusLockPhase(Enum):

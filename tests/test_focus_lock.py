@@ -72,6 +72,14 @@ class FocusLockTests(unittest.TestCase):
         self.assertEqual(state.hidden_frames, 0)
         self.assertEqual(state.visible_frames, 0)
 
+    def test_moon_can_be_a_focus_lock_target(self) -> None:
+        target = FocusTarget(FocusTargetKind.MOON, "MOON")
+
+        self.assertIs(target.kind, FocusTargetKind.MOON)
+        self.assertEqual(target.target_id, "MOON")
+        self.assertIsNone(target.anchor_ra_rad)
+        self.assertIsNone(target.anchor_dec_rad)
+
     def test_focus_lock_is_not_serialized_in_capture(self) -> None:
         capture = SkyCapture(
             schema_version=1,
