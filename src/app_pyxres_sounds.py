@@ -220,12 +220,6 @@ def _storage():
 
 def _load_json(key: str) -> dict:
     if key == SETTINGS_KEY and not PERSIST_SETTINGS_HISTORY:
-        storage = _storage()
-        if storage is not None:
-            try:
-                storage.removeItem(key)
-            except Exception:
-                pass
         return _load_session_settings()
     storage = _storage()
     if storage is None:
@@ -235,6 +229,8 @@ def _load_json(key: str) -> dict:
         value = json.loads(raw) if raw else {}
     except Exception:
         value = {}
+    if not isinstance(value, dict):
+        value = {}
     if key == SETTINGS_KEY:
         session_settings = _load_session_settings()
         if session_settings:
@@ -242,16 +238,17 @@ def _load_json(key: str) -> dict:
     return value
 
 
-def _save_json(key: str, value: dict) -> None:
+def _save_json(key: str, value: dict) -> bool:
     if key == SETTINGS_KEY and not PERSIST_SETTINGS_HISTORY:
-        return
+        return True
     storage = _storage()
     if storage is None:
-        return
+        return False
     try:
         storage.setItem(key, json.dumps(value))
     except Exception:
-        pass
+        return False
+    return True
 
 
 def _load_session_settings() -> dict:
@@ -259,7 +256,8 @@ def _load_session_settings() -> dict:
         from js import window  # type: ignore
 
         raw = getattr(window, SESSION_SETTINGS_ATTR, "")
-        return json.loads(str(raw)) if raw else {}
+        value = json.loads(str(raw)) if raw else {}
+        return value if isinstance(value, dict) else {}
     except Exception:
         return {}
 
@@ -271,7 +269,7 @@ def _timezone_from_offset(offset_minutes: int) -> timezone:
 def _coerce_utc_offset(value: object) -> int | None:
     try:
         minutes = int(value)  # type: ignore[arg-type]
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return None
     return max(-720, min(840, minutes))
 
@@ -287,7 +285,7 @@ def _coerce_search_scrolls(value: object) -> dict[str, int]:
     for tab in SEARCH_TABS:
         try:
             scrolls[tab] = max(0, int(value.get(tab, 0)))
-        except (TypeError, ValueError):
+        except (TypeError, ValueError, OverflowError):
             scrolls[tab] = 0
     return scrolls
 
@@ -307,11 +305,47 @@ def _location_utc_offset_minutes(settings: dict) -> int:
     if stored is not None:
         return stored
 
-    try:
-        longitude = float(settings.get("longitude", 139.7))
-    except (TypeError, ValueError):
-        longitude = 139.7
+    longitude = _finite_setting(settings.get("longitude"), 139.7, -180.0, 180.0)
     return max(-720, min(840, int(round(longitude / 15.0) * 60)))
+
+
+def _finite_setting(value: object, default: float, low: float = -math.inf, high: float = math.inf) -> float:
+    try:
+        number = float(value)
+    except (TypeError, ValueError, OverflowError):
+        return default
+    return number if math.isfinite(number) and low <= number <= high else default
+
+
+def _int_setting(value: object, default: int) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError, OverflowError):
+        return default
+
+
+def _validate_capture(capture: SkyCapture) -> None:
+    """Reject unusable stored captures without rewriting the source data."""
+    if capture.schema_version != 1 or capture.captured_at.tzinfo is None:
+        raise ValueError("Unsupported capture version or naive timestamp")
+    Observer(capture.latitude_deg, capture.longitude_deg)
+    for number in (capture.camera_yaw, capture.camera_pitch, capture.camera_roll, capture.fov_deg):
+        if not math.isfinite(number):
+            raise ValueError("Non-finite capture camera")
+    for value in (capture.selected_constellation_id, capture.selected_feature_id, capture.selected_event_id):
+        if value is not None and not isinstance(value, str):
+            raise ValueError("Invalid capture identifier")
+    if capture.selected_star_id is not None and type(capture.selected_star_id) is not int:
+        raise ValueError("Invalid star identifier")
+    if capture.moon is not None:
+        if not isinstance(capture.moon, dict):
+            raise ValueError("Invalid moon data")
+        moon = moon_state_from_dict(capture.moon)
+        if moon is not None and not all(math.isfinite(value) for value in (
+            moon.azimuth_deg, moon.altitude_deg, moon.right_ascension_deg,
+            moon.declination_deg, moon.illumination, moon.phase_angle_deg, moon.distance_km,
+        )):
+            raise ValueError("Non-finite moon data")
 
 
 def _current_observation_datetime(offset_minutes: int | None = None) -> datetime:
@@ -324,18 +358,18 @@ def _current_observation_datetime(offset_minutes: int | None = None) -> datetime
 class StarSkyApp:
     def __init__(self, start_pyxel: bool = True) -> None:
         settings = _load_json(SETTINGS_KEY)
-        self.location_country = settings.get("location_country")
-        self.location_city = settings.get("location_city")
+        self.location_country = settings.get("location_country") if isinstance(settings.get("location_country"), str) else None
+        self.location_city = settings.get("location_city") if isinstance(settings.get("location_city"), str) else None
         self.utc_offset_minutes = _location_utc_offset_minutes(settings)
         self.observer = Observer(
-            float(settings.get("latitude", 35.7)),
-            float(settings.get("longitude", 139.7)),
+            _finite_setting(settings.get("latitude"), 35.7, -90.0, 90.0),
+            _finite_setting(settings.get("longitude"), 139.7, -180.0, 180.0),
         )
         self.clock = SimulationClock(_current_observation_datetime(self.utc_offset_minutes))
         self.camera = SkyCamera(
-            float(settings.get("yaw", 0.0)),
-            float(settings.get("pitch", math.radians(45.0))),
-            float(settings.get("fov", 75.0)),
+            _finite_setting(settings.get("yaw"), 0.0),
+            _finite_setting(settings.get("pitch"), math.radians(45.0)),
+            _finite_setting(settings.get("fov"), 75.0),
         )
         self.renderer = SkyRenderer()
         self.moon = MoonController()
@@ -351,10 +385,10 @@ class StarSkyApp:
         self.show_month_slider = bool(settings.get("show_month_slider", False))
         self.show_event_slider = bool(settings.get("show_event_slider", False))
         self.rotate_time = bool(settings.get("rotate_time", False))
-        self.rotate_time_speed_level = int(settings.get("rotate_time_speed_level", 2))
+        self.rotate_time_speed_level = _int_setting(settings.get("rotate_time_speed_level"), 2)
         self.rotate_time_speed_level = max(-3, min(3, self.rotate_time_speed_level))
         self.rotate_camera = bool(settings.get("rotate_camera", False))
-        self.rotate_camera_speed_level = int(settings.get("rotate_camera_speed_level", 1))
+        self.rotate_camera_speed_level = _int_setting(settings.get("rotate_camera_speed_level"), 1)
         self.rotate_camera_speed_level = max(-3, min(3, self.rotate_camera_speed_level))
         self.sound_enabled = bool(settings.get("sound_enabled", True))
         self.bgm_enabled = bool(settings.get("bgm_enabled", True))
@@ -375,7 +409,7 @@ class StarSkyApp:
         self.constellation_list_pointer_dragged = False
         self.constellation_auto_pan: dict[str, object] | None = None
         self.focus_lock = FocusLockState()
-        self.selected_index = int(settings.get("selected_index", 0)) % len(CONSTELLATIONS)
+        self.selected_index = _int_setting(settings.get("selected_index"), 0) % len(CONSTELLATIONS)
         self.constellation_star_ids = {star_id for constellation in CONSTELLATIONS for star_id in constellation.main_star_ids}
         self.latest_capture = self._load_capture()
         self.letters: tuple[PresetLetter, ...] = ()
@@ -402,6 +436,8 @@ class StarSkyApp:
         self.cut_in_start_frame: int | None = None
         self.cut_in_message = ""
         self.cut_in_position = "top"
+        self.storage_notice_start_frame: int | None = None
+        self.capture_background_cache = None
         self.last_mouse: tuple[int, int] | None = None
         self.sky_pointer_down: tuple[int, int] | None = None
         self.sky_pointer_dragged = False
@@ -519,24 +555,38 @@ class StarSkyApp:
         if not data:
             return None
         try:
-            return capture_from_dict(data)
+            capture = capture_from_dict(data)
+            _validate_capture(capture)
+            return capture
         except Exception:
             return None
 
     def _load_letter_store(self) -> dict:
         data = _load_json(LETTER_STORE_KEY)
-        if int(data.get("schema_version", 1)) != 1:
+        if not isinstance(data, dict) or _int_setting(data.get("schema_version", 1), 0) != 1:
             return {"logs": (), "seen_letter_ids": set(), "unread_log_id": None}
         logs = []
-        for item in data.get("logs", []):
+        stored_logs = data.get("logs", [])
+        for item in stored_logs if isinstance(stored_logs, list) else []:
             try:
-                logs.append(log_from_dict(item))
+                if not isinstance(item, dict) or not isinstance(item.get("id"), str) or not isinstance(item.get("received_letter_id"), str):
+                    continue
+                log = log_from_dict(item)
+                _validate_capture(log.capture)
+                if log.received_at.tzinfo is None:
+                    continue
+                logs.append(log)
             except Exception:
                 continue
+        stored_seen = data.get("seen_letter_ids", [])
+        seen_ids = {value for value in stored_seen if isinstance(value, str)} if isinstance(stored_seen, list) else set()
+        # Never subtract ambiguous legacy IDs. Valid delivered logs also count.
+        seen_ids.update(log.received_letter_id for log in logs)
+        unread_id = data.get("unread_log_id")
         return {
             "logs": tuple(logs[-100:]),
-            "seen_letter_ids": {str(value) for value in data.get("seen_letter_ids", [])},
-            "unread_log_id": data.get("unread_log_id"),
+            "seen_letter_ids": seen_ids,
+            "unread_log_id": unread_id if isinstance(unread_id, str) else None,
         }
 
     def _ensure_letters_loaded(self) -> None:
@@ -2329,7 +2379,7 @@ class StarSkyApp:
             render_seed=pyxel.frame_count,
             moon=moon_state_to_dict(self.moon.state) if self.moon.state is not None else None,
         )
-        _save_json(CAPTURE_KEY, capture_to_dict(self.latest_capture))
+        self._save_user_data(CAPTURE_KEY, capture_to_dict(self.latest_capture))
         if self.pending_deliver_frame is not None:
             return
         recent_ids = tuple(log.received_letter_id for log in self.exchange_logs[-30:])
@@ -2339,8 +2389,7 @@ class StarSkyApp:
         self.pending_capture = self.latest_capture
         self.pending_letter_id = letter.id
         self.pending_deliver_frame = pyxel.frame_count + delay_frames
-        self.seen_letter_ids.add(letter.id)
-        self._save_letter_store()
+        # The pending delivery is ephemeral; mark it seen only after delivery.
 
     def _update_pending_receive(self) -> None:
         if self.pending_deliver_frame is None or pyxel.frame_count < self.pending_deliver_frame:
@@ -2356,6 +2405,7 @@ class StarSkyApp:
             received_at=received_at,
         )
         self.exchange_logs = append_log(self.exchange_logs, log)
+        self.seen_letter_ids.add(log.received_letter_id)
         self.unread_log_id = log.id
         self.cut_in_start_frame = pyxel.frame_count
         self.cut_in_position = "lower"
@@ -2477,8 +2527,14 @@ class StarSkyApp:
                 remaining.append((play_frame, sound_id))
         self.scheduled_ui_sounds = remaining
 
-    def _save_letter_store(self) -> None:
-        _save_json(
+    def _save_user_data(self, key: str, value: dict) -> bool:
+        saved = _save_json(key, value)
+        if not saved:
+            self.storage_notice_start_frame = pyxel.frame_count
+        return saved
+
+    def _save_letter_store(self) -> bool:
+        return self._save_user_data(
             LETTER_STORE_KEY,
             {
                 "schema_version": 1,
@@ -2683,6 +2739,12 @@ class StarSkyApp:
         self._signal_ready()
 
     def _draw_active_cut_in(self) -> None:
+        if self.storage_notice_start_frame is not None:
+            age = pyxel.frame_count - self.storage_notice_start_frame
+            if age < CUT_IN_FRAMES:
+                draw_cut_in("SAVE FAILED", age, CUT_IN_FRAMES, "top")
+                return
+            self.storage_notice_start_frame = None
         if self.cut_in_start_frame is not None:
             age = pyxel.frame_count - self.cut_in_start_frame
             if age < CUT_IN_FRAMES:
@@ -2700,7 +2762,10 @@ class StarSkyApp:
             return None
         return age
 
-    def _draw_capture_background(self, capture: SkyCapture) -> None:
+    def _capture_background_geometry(self, capture: SkyCapture):
+        key = (self.selected_log_id, capture, SCREEN_WIDTH, SCREEN_HEIGHT)
+        if self.capture_background_cache is not None and self.capture_background_cache[0] == key:
+            return self.capture_background_cache[1]
         observer = Observer(capture.latitude_deg, capture.longitude_deg)
         camera = SkyCamera(capture.camera_yaw, capture.camera_pitch, capture.fov_deg)
         projected = project_visible_stars(
@@ -2711,9 +2776,15 @@ class StarSkyApp:
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
         )
-        selected_constellation = self._constellation_by_id(capture.selected_constellation_id) or self.selected_constellation
         meteor_event = active_sky_event(SKY_EVENTS, observer, capture.captured_at, camera, SCREEN_WIDTH, SCREEN_HEIGHT)
         projected_sky_paths = self._project_sky_paths_for(camera, observer, capture.captured_at)
+        geometry = (camera, projected, meteor_event, projected_sky_paths)
+        self.capture_background_cache = (key, geometry)
+        return geometry
+
+    def _draw_capture_background(self, capture: SkyCapture) -> None:
+        camera, projected, meteor_event, projected_sky_paths = self._capture_background_geometry(capture)
+        selected_constellation = self._constellation_by_id(capture.selected_constellation_id) or self.selected_constellation
         self.renderer.draw(
             projected,
             CONSTELLATIONS,

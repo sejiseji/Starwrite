@@ -13,6 +13,28 @@ def _clamp(value: float, low: float, high: float) -> float:
     return max(low, min(high, value))
 
 
+@dataclass(slots=True, frozen=True)
+class CameraProjection:
+    """Camera constants shared by one batch; rebuild after camera changes."""
+
+    right: Vec3
+    up: Vec3
+    front: Vec3
+    focal: float
+    center_x: float
+    center_y: float
+
+    def project(self, direction: Vec3) -> tuple[float, float] | None:
+        unit = direction.normalized()
+        cam = Vec3(unit.dot(self.right), unit.dot(self.up), unit.dot(self.front))
+        if cam.z <= 0.0001:
+            return None
+        return (
+            self.center_x + cam.x * self.focal / cam.z,
+            self.center_y - cam.y * self.focal / cam.z,
+        )
+
+
 @dataclass(slots=True)
 class SkyCamera:
     yaw: float
@@ -49,6 +71,18 @@ class SkyCamera:
             unit.dot(self.front()),
         )
 
+    def projection(self, screen_width: int, screen_height: int) -> CameraProjection:
+        right = self.right()
+        front = self.front()
+        return CameraProjection(
+            right,
+            cross(right, front).normalized(),
+            front,
+            min(screen_width, screen_height) * 0.5 / math.tan(math.radians(self.fov_deg) * 0.5),
+            screen_width * 0.5,
+            screen_height * 0.5,
+        )
+
     def project(
         self,
         direction: Vec3,
@@ -62,4 +96,3 @@ class SkyCamera:
         x = screen_width * 0.5 + cam.x * focal / cam.z
         y = screen_height * 0.5 - cam.y * focal / cam.z
         return (x, y)
-

@@ -57,15 +57,15 @@ def project_visible_stars(
     lst = local_sidereal_time(jd, math.radians(observer.longitude_deg))
     lat = math.radians(observer.latitude_deg)
     points: dict[int, ScreenPoint] = {}
+    projection = camera.projection(screen_width, screen_height)
     for star in stars:
         direction = equatorial_to_enu(star.ra_rad, star.dec_rad, lat, lst)
         if direction.z <= 0.0:
             continue
-        projected = camera.project(direction, screen_width, screen_height)
+        projected = projection.project(direction)
         if projected is None:
             continue
         x, y = projected
         if -24 <= x <= screen_width + 24 and -24 <= y <= screen_height + 24:
             points[star.id] = ScreenPoint(x, y, star.magnitude, star.color_index, direction)
     return points
-
