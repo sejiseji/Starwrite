@@ -749,7 +749,32 @@ class StarSkyApp:
     def _key_pressed(self, key_name: str) -> bool:
         return hasattr(pyxel, key_name) and pyxel.btnp(getattr(pyxel, key_name))
 
+    def _discard_cancelled_pointer(self) -> None:
+        try:
+            from js import window  # type: ignore
+
+            sequence = int(getattr(window, "starwriteInputCancelSequence", 0))
+        except Exception:
+            return
+        if sequence == getattr(self, "input_cancel_sequence", 0):
+            return
+        self.input_cancel_sequence = sequence
+        # SDL reports touchcancel as mouse-up. Do not turn that interruption
+        # into a star/list tap, or leave a slider drag active. A new btnp in
+        # this frame still goes through the ordinary input path below.
+        self.last_mouse = None
+        self.sky_pointer_down = None
+        self.sky_pointer_dragged = True
+        self.constellation_list_pointer_down = None
+        self.constellation_list_pointer_last = None
+        self.constellation_list_pointer_dragged = True
+        self.active_slider = None
+        self.slider_last_tick_value = None
+        self.slider_knob_ratio = 0.5
+        self.pinch_ignore_frames = 0
+
     def _handle_mouse(self) -> None:
+        self._discard_cancelled_pointer()
         current = (pyxel.mouse_x, pyxel.mouse_y)
         if self._pinch_input_active():
             if self.ui_state == "SKY":

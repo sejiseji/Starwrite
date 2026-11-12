@@ -1,0 +1,32 @@
+<!doctype html>
+<!-- Serve the repository root locally, open this file, start Pyxel, then run.
+     Uses the real bundled WASM. It injects a missing end intentionally and
+     does not establish that a physical iPhone/Safari generated that loss. --><html><head><meta charset="utf-8"><base href="/"><title>Starwrite touch probe</title>
+<link rel="stylesheet" href="/assets/starwrite.css"><script src="/assets/vendor/pyxel/pyxel.js"></script><script src="/assets/starwrite_input.js?v=touch-input-recovery-1"></script>
+<style>#qa-panel{position:fixed;z-index:2000;top:0;left:0;background:white;color:black;padding:8px;max-width:42vw;font:14px monospace;}#qa-result{white-space:pre-wrap;}</style></head><body>
+<pyxel-run root="." name="tests/fixtures/touch_input_probe.py"></pyxel-run>
+<div id="qa-panel"><button id="qa-run">Run dropped-touch sequence</button><pre id="qa-result">Start Pyxel, then run the test.</pre></div>
+<script>
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const result=document.getElementById('qa-result');
+function state(){return {frame:window.starwriteProbeFrame,presses:window.starwriteProbePresses,down:window.starwriteProbeDown,cancelSequence:window.starwriteInputCancelSequence,pinch:window.starwritePinchActive};}
+function finger(canvas,id){const r=canvas.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;return new Touch({identifier:id,target:canvas,clientX:x,clientY:y,pageX:x,pageY:y,screenX:x,screenY:y,radiusX:1,radiusY:1,force:1});}
+function emit(canvas,type,touches,changed){canvas.dispatchEvent(new TouchEvent(type,{bubbles:true,cancelable:true,touches,targetTouches:touches,changedTouches:changed}));}
+document.getElementById('qa-run').onclick=async()=>{
+ try{
+  const canvas=document.getElementById('canvas');
+  if(!Number.isFinite(window.starwriteProbeFrame))throw new Error('Start Pyxel before running');
+  let report={before:state()}; const a=finger(canvas,101),b=finger(canvas,102),c=finger(canvas,103);
+  emit(canvas,'touchstart',[a],[a]); await wait(150); report.firstDown=state();
+  // Deliberately omit A's end. A no longer exists in the browser's active list.
+  emit(canvas,'touchstart',[b],[b]); await wait(150); report.nextDown=state();
+  emit(canvas,'touchend',[],[b]); await wait(250); report.nextUp=state();
+  emit(canvas,'touchstart',[c],[c]); await wait(150); report.thirdDown=state();
+  emit(canvas,'touchend',[],[c]); await wait(250); report.thirdUp=state();
+  // Cleanup the intentionally stranded ID so the test is repeatable.
+  emit(canvas,'touchcancel',[],[a]); await wait(250); report.cleanup=state();
+  report.recovered=report.nextDown.presses>report.firstDown.presses&&!report.nextUp.down;
+  result.textContent=JSON.stringify(report,null,2);
+ }catch(error){result.textContent=String(error.stack||error);}
+};
+</script></body></html>
