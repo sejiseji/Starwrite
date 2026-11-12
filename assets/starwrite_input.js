@@ -4,6 +4,7 @@
 window.starwriteInputCancelSequence = 0;
 const starwriteForwardedTouches = new Map();
 let starwriteSendingCancel = false;
+let starwriteForegroundRecoveryPending = false;
 
 function starwriteCanvasTouch(touch) {
   return touch.target && touch.target.id === "canvas";
@@ -87,6 +88,7 @@ function starwriteResetTouchInput() {
       }
 
       function starwriteHandlePinchStart(event) {
+        starwriteResumeForeground(event);
         starwriteRecoverMissingTouches(event);
         if (!event.touches || event.touches.length < 2) {
           window.starwritePinchActive = false;
@@ -160,8 +162,30 @@ function starwriteResetTouchInput() {
       document.addEventListener("touchend", starwriteHandlePinchEnd, { passive: false, capture: true });
       document.addEventListener("touchcancel", starwriteHandlePinchEnd, { passive: false, capture: true });
 
-window.addEventListener("blur", starwriteResetTouchInput);
-window.addEventListener("pagehide", starwriteResetTouchInput);
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "hidden") starwriteResetTouchInput();
+function starwriteSuspendForeground() {
+  starwriteForegroundRecoveryPending = true;
+  starwriteResetTouchInput();
+}
+
+function starwriteResumeForeground(event) {
+  if (!starwriteForegroundRecoveryPending || document.visibilityState !== "visible") return;
+  starwriteForegroundRecoveryPending = false;
+  starwriteResetTouchInput();
+  // Pyxel pauses on SDL WINDOWEVENT_HIDDEN, but ignores window focus events.
+  // If the return visibility notification is missed, input reaches SDL while
+  // the app stays paused. Re-send the actual visible state once on return.
+  // Clear pending first so the synthetic notification cannot recurse.
+  if (event.type !== "visibilitychange") {
+    document.dispatchEvent(new Event("visibilitychange"));
+  }
+}
+
+window.addEventListener("blur", starwriteSuspendForeground);
+window.addEventListener("pagehide", starwriteSuspendForeground);
+window.addEventListener("focus", starwriteResumeForeground);
+window.addEventListener("pageshow", starwriteResumeForeground);
+document.addEventListener("pointerdown", starwriteResumeForeground, { capture: true });
+document.addEventListener("visibilitychange", (event) => {
+  if (document.visibilityState === "hidden") starwriteSuspendForeground();
+  else starwriteResumeForeground(event);
 });

@@ -13,8 +13,14 @@ function setup({ unsupportedTouchEvent = false } = {}) {
   // emulated mouse. Later IDs cannot steal it while it is down.
   const mouse = { finger: null, down: false, presses: 0 };
   const cancelled = [];
+  let visibilityEvents = 0;
   const document = {
     visibilityState: 'visible',
+    dispatchEvent(event) {
+      if (event.type === 'visibilitychange') visibilityEvents++;
+      for (const fn of listeners.get(event.type) || []) fn(event);
+      return true;
+    },
     addEventListener(type, fn) {
       if (!listeners.has(type)) listeners.set(type, []);
       listeners.get(type).push(fn);
@@ -49,15 +55,17 @@ function setup({ unsupportedTouchEvent = false } = {}) {
       }
     },
   };
-  vm.runInNewContext(source, { window, document, TouchEvent, Date: { now: () => now } });
+  vm.runInNewContext(source, { window, document, TouchEvent, Event, Date: { now: () => now } });
   function touch(identifier, x = 20) { return { identifier, clientX: x, clientY: 20, target: canvas }; }
   function emit(type, touches, changedTouches = touches) {
     canvas.dispatchEvent({ type, touches, targetTouches: touches, changedTouches, cancelable: true });
   }
   return { window, document, mouse, cancelled, touch, emit,
     advance(ms) { now += ms; },
-    windowEvent(type) { windowListeners.get(type)(); },
-    visibility(value) { document.visibilityState = value; for (const fn of listeners.get('visibilitychange')) fn(); },
+    windowEvent(type) { windowListeners.get(type)({ type }); },
+    documentEvent(type) { document.dispatchEvent({ type }); },
+    visibility(value) { document.visibilityState = value; document.dispatchEvent({ type: 'visibilitychange' }); },
+    get visibilityEvents() { return visibilityEvents; },
   };
 }
 
@@ -164,4 +172,69 @@ test('elapsed time alone never cancels a genuinely held finger', () => {
   s.emit('touchstart', [a, b], [b]);
   assert.equal(s.cancelled.length, 0);
   assert.equal(s.mouse.finger, 1);
+});
+
+for (const kind of ['focus', 'pageshow', 'pointerdown', 'touchstart']) {
+  test(`${kind} resynchronizes visible SDL state once after a lost return event`, () => {
+    const s = setup();
+    s.visibility('hidden');
+    // Simulate actual state returning to visible without its notification.
+    s.document.visibilityState = 'visible';
+    const restore = () => {
+      if (kind === 'touchstart') s.emit('touchstart', [s.touch(41)]);
+      else if (kind === 'pointerdown') s.documentEvent(kind);
+      else s.windowEvent(kind);
+    };
+    restore();
+    assert.equal(s.visibilityEvents, 2);
+    assert.equal(s.window.starwriteInputCancelSequence, 2);
+    if (kind === 'touchstart') {
+      assert.equal(s.mouse.down, true);
+      assert.equal(s.mouse.presses, 1);
+    } else {
+      restore();
+      assert.equal(s.visibilityEvents, 2);
+      assert.equal(s.window.starwriteInputCancelSequence, 2);
+    }
+  });
+}
+
+test('normal visible notification restores without a duplicate synthetic event', () => {
+  const s = setup();
+  s.visibility('hidden'); s.visibility('visible');
+  assert.equal(s.visibilityEvents, 2);
+  s.windowEvent('focus'); s.windowEvent('pageshow'); s.documentEvent('pointerdown');
+  assert.equal(s.visibilityEvents, 2);
+});
+
+test('a focus event while still hidden does not wake the paused app', () => {
+  const s = setup();
+  s.visibility('hidden'); s.windowEvent('focus'); s.windowEvent('pageshow');
+  assert.equal(s.visibilityEvents, 1);
+  s.document.visibilityState = 'visible'; s.windowEvent('focus');
+  assert.equal(s.visibilityEvents, 2);
+});
+
+test('ordinary focus and pointer events do not cancel a live gesture', () => {
+  const s = setup();
+  s.emit('touchstart', [s.touch(1)]);
+  s.windowEvent('focus'); s.windowEvent('pageshow'); s.documentEvent('pointerdown');
+  assert.equal(s.visibilityEvents, 0);
+  assert.equal(s.cancelled.length, 0);
+  assert.equal(s.mouse.down, true);
+});
+
+test('repeated background/foreground cycles each recover once', () => {
+  const s = setup();
+  for (let id = 1; id <= 3; id++) {
+    s.emit('touchstart', [s.touch(id)]);
+    s.windowEvent('blur'); s.windowEvent('pagehide');
+    s.visibility('hidden');
+    s.document.visibilityState = 'visible'; s.windowEvent('pageshow');
+    assert.equal(s.mouse.down, false);
+    assert.equal(s.window.starwritePinchActive, false);
+  }
+  assert.equal(s.visibilityEvents, 6);
+  s.emit('touchstart', [s.touch(4)]);
+  assert.equal(s.mouse.presses, 4);
 });
